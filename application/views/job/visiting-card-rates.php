@@ -363,8 +363,8 @@
 			<input type="hidden" id="original_v_card_qty" name="original_v_card_qty">
 			</td>
 			
-		<td> Paper Type : <span id="show_v_card_type"></span>
-			<input type="hidden" id="v_card_type" name="v_card_type">
+		<td> Paper Type : <span style="display: none;" id="show_v_card_type"></span>
+			<input type="text" style="width: 300px;" class="form-control" onblur="setCustomCardTitle()" id="v_card_type" name="v_card_type">
 		</td>
 		<td> Estimate : <span id="show_v_card_price"></span>
 			<input type="hidden" name="v_card_price" id="v_card_price">
@@ -373,13 +373,13 @@
 		<td> 
 			Paper Code : 
 			<br>
-			<input type="text" id="paper_code" name="paper_code" class="form-control" onblur="setPaperCodeValue();"> 
+			<input type="text" id="paper_code"  style="width: 50px;" name="paper_code" class="form-control" onblur="setPaperCodeValue();"> 
 		</td>
 		
 		<td> 
 			Total Names : 
 			<br>
-			<input type="text" id="v_card_names" name="v_card_names" class="form-control" value="1" onBlur="updateQty()"> 
+			<input type="text" id="v_card_names"  style="width: 50px;" name="v_card_names" class="form-control" value="1" onBlur="updateQty()"> 
 		</td>
 		<td align="center">
 			<input type="hidden" name="paper_side" id="paper_side">
@@ -393,6 +393,10 @@
 </form>
 
 <script>
+
+var customCardTitle = '';
+
+
 jQuery(document).ready(function()
 {
 	jQuery(".price").css('opacity','0.10');
@@ -447,7 +451,17 @@ function setCardPrice(value)
 
 function setCardType(value)
 {
-	jQuery("#v_card_type").val("V_Card_"+value);
+	var prefix = value.substring(0 , 7);
+
+	if(prefix == "V_Card_")
+	{
+		jQuery("#v_card_type").val(value);
+	}
+	else
+	{
+		jQuery("#v_card_type").val("V_Card_"+value);
+	}
+
 	jQuery("#show_v_card_type").html("<h2>"+value+"</h2>");
 }
 
@@ -482,6 +496,7 @@ function getCardQty()
 
 function getCardType()
 {
+	return jQuery("#v_card_type").val();
 	var cardType 	= jQuery("#v_card_type").val();
 	var paperCode 	= getPaperCode();
 	
@@ -599,6 +614,12 @@ function updateQty()
 	
 	setFinalQty(jQuery("#original_v_card_qty").val() * multiple)
 	setCardPrice(jQuery("#original_v_card_price").val() * multiple);
+
+	if(customCardTitle.length > 0 && customCardTitle != '')
+	{
+		setCardType(customCardTitle);			
+		return true;
+	}
 	
 	var cardTitle = jQuery("#original_title").val();
 	
@@ -617,10 +638,21 @@ function updateQty()
 	}
 	
 	var finalTitle =cardTitle+"_"+jQuery("#original_v_card_qty").val()+"*"+multiple;
+
+	if(customCardTitle.length > 0 && customCardTitle != '')
+	{
+		setCardType(customCardTitle);			
+		return true;
+	}
 	
 	
 	setCardType(finalTitle);
 		
 	return true;
+}
+
+function setCustomCardTitle()
+{
+	customCardTitle = jQuery('#v_card_type').val();
 }
 </script>
