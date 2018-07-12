@@ -165,6 +165,22 @@ if ( ! function_exists('test_method'))
 		return $query->result();
 	}
 	
+	function getCustomerById($customerId = null)
+	{
+		if($customerId)	
+		{
+			$ci=& get_instance();
+			$ci->db->select('*')
+				->from('customer')
+				->where("id", $customerId);
+			
+			$query = $ci->db->get();
+			return $query->row();
+		}
+
+		return array();
+	}
+
 	function getCustomerOutside($customerId = null)
 	{
 		if($customerId)
@@ -990,4 +1006,125 @@ function flushDiscountTransaction($jobId = null, $customerId = null, $notes = ''
 	}
 
 	return false;
+}
+
+function sendDealerJobTicket($customer_details, $job_data, $job_details)
+{
+	$created_info 	= get_user_by_param('id',$job_data->user_id);
+	$show_name 		= $customer_details->companyname ? $customer_details->companyname :$customer_details->name;
+	$content ='';
+	$customerTitle = "Name";
+	if($customer_details->ctype == 1 )
+	{
+		$customerTitle = "Dealer";
+	}
+		 for($j=0; $j<1; $j++)
+		 {
+			$mobileNumber = (strlen($job_data->jsmsnumber) > 1 ) ? "-".$job_data->jsmsnumber : '';
+			$mobileNumber = $customer_details->mobile.$mobileNumber;
+
+			$content .= '
+				<table align="center" width="90%" border="0" style="border:0px solid;font-size:9px;height:3in;">
+				<tr>
+				<td width="100%" align="left">
+					<table width="100%"  align="left" style="border:1px solid;font-size:9px;">
+						<tr>
+							<td align="center" style="font-size:12px;" colspan="2">
+								<strong>Estimate</strong>
+							</td>
+						</tr>
+						<tr>
+							<td style="font-size:12px;">'.$customerTitle.' : <strong>'.$show_name.'</strong>
+							</td>
+							<td align="right" style="font-size:12px;">Mobile : <strong>'.$mobileNumber.'</strong> </td>
+						</tr>
+						<tr>
+						<td  style="font-size:12px;" >Est Id : <strong>'.$job_data->id.'</strong> </td>
+							
+							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong></td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center" style="font-size:12px;">
+								Title : <strong>'.$job_data->jobname.'</strong>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<table width="100%" align="center" style="border:1px solid; font-size:9px;">
+									<tr>
+										<td style="font-size:9px;">Sr.</td>
+										<td style="font-size:9px;">Details</td>
+										<td style="font-size:9px;">Qty</td>
+										<td style="font-size:9px;">Rate</td>
+										<td><p align="right" style="font-size:9px;">Amount</p></td>
+									</tr>';
+									 for($i=0;$i<6;$i++) {
+										 $j1 = $i+1;
+										if(isset($job_details[$i]['id'])){
+										$content .= '
+										<tr>
+											<td style="font-size:9px;"> '.$j1 .'</td>
+											<td style="font-size:9px;"> '.$job_details[$i]['jdetails'].'</td>
+											<td style="font-size:9px;"> '.$job_details[$i]['jqty'].'</td>
+											<td style="font-size:9px;"> '.$job_details[$i]['jrate'].' </td>
+											<td style="font-size:9px;" align="right"> '.$job_details[$i]['jamount'].'</td>
+										</tr>';
+										} else {
+											break;
+										}
+									} 
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="2">Receipt Number:'.$job_data->receipt.'</td>
+										<td style="font-size:9px;" colspan="2" align="right">Sub Total :</td>
+										<td style="font-size:9px;" align="right">'.$job_data->subtotal .'</td>
+									</tr>';
+									if(!empty($job_data->tax)) {
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="4" align="right">Tax :</td>
+										<td style="font-size:9px;" align="right">'.$job_data->tax.'</td>
+									</tr>';
+									 } 
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
+										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
+									</tr>';
+									
+									$due = $job_data->due;
+									
+									if(isset($job_data->discount) && $job_data->discount > 0 )
+									{
+										$due = $job_data->due - $job_data->discount;
+										
+										$content .= '<tr>
+											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
+											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
+										</tr>';
+									}
+									
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="4" align="right">Advance :</td>
+										<td style="font-size:9px;" align="right">'.$job_data->advance.'</td>
+									</tr>';
+									
+									
+									$content .=  '<tr>
+										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'</td>
+										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
+										<td style="font-size:9px;" align="right">'. $due .'</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>';
+				$content .= '</td>
+				
+			</tr>';
+			if($j == 0) {
+				$content .= ' <tr><td colspan="2"><br><br></td></tr>';
+			}
+			$content .= '</table>';
+		}
+
+	return $content;
+
 }

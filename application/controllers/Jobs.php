@@ -322,6 +322,36 @@ public function edit($job_id=null)
 					$this->load->model('task_model');
 					$this->task_model->save_scheduler($sdata);
 				}
+
+				$customerInfo = getCustomerById($customer_id);
+
+				if(isset($customerInfo) 
+					&& SEND_DEALER_MAIL 
+					&& $customerType == 1
+					&& $customerInfo->outside == 1)
+				{		
+					$this->load->model('job_model');
+					$job_data 		= $this->job_model->get_job_data($job_id);
+					$job_details 	= $this->job_model->get_job_details($job_id);
+					$customer_details = $this->job_model->get_customer_details($job_data->customer_id);
+
+					if(isset($customer_details->emailid) && $customer_details->emailid != '')
+					{
+						$content = sendDealerJobTicket($customer_details, $job_data, $job_details);
+
+						$to  	 = array($customer_details->emailid);
+						$subject = "Estimate - " . $job_data->jobname;
+
+						/*$status = sendBulkEmail($to, 'er.anujjaha@gmail.com', 'test Mail', 'test content');
+						pr($status);*/
+						$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+
+						//pr($status);
+
+					}
+				}
+
+
                 redirect("jobs/job_print/".$job_id,'refresh');
         }
         $data['paper_gsm']= $this->get_paper_gsm();

@@ -178,32 +178,48 @@ class Estimation extends CI_Controller {
 	{
 		if($_FILES['image']) 
 		{
-			$config = array( 'upload_path'   => 'assets/emailpictures',
+			/*if(move_uploaded_file($_FILES['image']['tmp_name'], 'assets/emailpictures/'.$_FILES['image']['name']))
+			{
+				echo "Yes";
+			}
+			else
+			{
+				echo "NO";
+			}
+			pr($_FILES['image']);*/
+			$config = array( 'upload_path'   => 'assets/emailpictures/',
 							 'allowed_types' => 'gif|jpg|png',
 							 'file_name'     => rand(111111,999999)."_email_template.jpg"
 						);
-				
 			$this->load->library('upload', $config);
 
-			if ( $this->upload->do_upload('image'))
+			$file_name = $_FILES["image"]["name"];
+
+			$imagename = rand(11111, 99999) . '_' . str_replace(' ', '_', $_FILES["image"]["name"]);
+
+			//if( $this->upload->do_upload('image'))
+			if(move_uploaded_file($_FILES['image']['tmp_name'], 'assets/emailpictures/'.$imagename))
 			{
+				
 				$picData = $this->upload->data();  
 			
-				$imageUrl = site_url('assets/emailpictures/'.$picData['file_name']);
-				
+				$imageUrl = site_url('assets/emailpictures/'.$imagename);
+
 				/* FTP Account */
 				$ftp_host 		= 'php-techie.com'; // 'laravel-lab.com'; /* host */
 				$ftp_user_name 	= 'cybnewmedia@php-techie.com'; //'cyberam@laravel-lab.com'; /* username */
 				$ftp_user_pass 	= 'Admin@123'; /* password */
 				
 				
-				$local_file = 'C:\wamp\www\ncybera\assets\emailpictures\xxx'.$picData['file_name'];
-				
-				$local_file = str_replace("xxx","",$local_file);
-				$remote_file = $picData['file_name'];
+				$local_file = 'assets/emailpictures/'.$imagename;
+
+				//$local_file = str_replace("xxx","",$local_file);
+				$remote_file = $imagename;
 				
 				$connect_it = ftp_connect( $ftp_host );
 				$login_result = ftp_login( $connect_it, $ftp_user_name, $ftp_user_pass );
+
+				//pr($local_file);
 				
 				
 				
@@ -212,12 +228,13 @@ class Estimation extends CI_Controller {
 						$status =  "WOOT! Successfully transfer $local_file\n";
 					}
 					else {
+						die("ppp");
 						$status = "Doh! There was a problem\n";
 					}
 					/* Close the connection */
 					ftp_close( $connect_it );
 					
-				$myImageUrl = "http://media.cyberaprint.com/".$picData['file_name'];
+				$myImageUrl = "http://media.cyberaprint.com/".$imagename;
 				echo "<script>top.$('.mce-btn.mce-open').parent().find('.mce-textbox').val('".$myImageUrl."').closest('.mce-window').find('.mce-primary').click();</script>".$imageUrl;
 			}
 			else 
