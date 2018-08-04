@@ -40,12 +40,15 @@ $this->load->helper('form');
 		</div>
 
 		<div class="form-group">
+			<?php
+				$customerSel = $dealer_info->ctype == '0' || $dealer_info->ctype == '2' ? 'selected="selected"' : '';
+				$dealerSel = $dealer_info->ctype == '1' ? 'selected="selected"' : '';
+				
+			?>
 			<label>Customer Type</label>
 			<select class="form-control" name="ctype">
-				<option <?php ( isset($dealer_info->ctype) && $dealer_info->ctype == 0 ) ? 
-				'selected="selected"' : '' ?> value="0">  Customer </option>
-				<option <?php ( isset($dealer_info->ctype) && $dealer_info->ctype == 1 ) ? 
-				'selected="selected"' : '' ?> value="1">  Dealer </option>
+				<option <?php echo $customerSel; ?> value="0">  Customer </option>
+				<option  <?php echo $dealerSel; ?> value="1">  Dealer </option>
 			</select>
 		</div>
 		

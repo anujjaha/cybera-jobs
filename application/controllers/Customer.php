@@ -99,6 +99,7 @@ class Customer extends CI_Controller {
 			$data['state'] = $this->input->post('state');
 			$data['pin'] = $this->input->post('pin');
 			$data['outside'] = $this->input->post('outside');
+			$data['ctype'] = $this->input->post('ctype');
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');
 			if($customer_id) {

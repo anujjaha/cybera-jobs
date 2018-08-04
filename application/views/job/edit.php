@@ -13,8 +13,30 @@ function showRemindContainer()
 	}		
 }
 
+function hideSaveButton()
+{
+	jQuery("#save_button").hide();
+}
+
+function showSaveButton()
+{
+	jQuery("#save_button").show();
+}
+
 $(document).ready(function() 
 {
+
+	jQuery("#save_button").on('click', function(event)
+	{
+		hideSaveButton();
+
+		setTimeout(function()
+		{
+			showSaveButton();
+		}, 5000);
+	});
+
+
 	jQuery(document).on('click', '.show-offset-modal-box', function()
 	{
 		console.log(jQuery(this));
