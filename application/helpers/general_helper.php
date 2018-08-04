@@ -207,8 +207,33 @@ if ( ! function_exists('test_method'))
 	}
 	
 	
-	function getAllEmailBulkCustomersOnly($param=null,$value=null) {
+	function getAllEmailBulkCustomersOnly($param=null,$value=null) 
+	{
 		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 0 order by companyname";
+		if(!empty($param)) {
+			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 0  order by companyname";
+		}
+		$ci=& get_instance();
+		$ci->load->database(); 	
+		$query = $ci->db->query($sql);
+		return $query->result();
+	}
+
+	function getAllEmailBulkCustomersOnlyP1($param=null,$value=null) 
+	{
+		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 0 order by companyname LIMIT 0,450" ;
+		if(!empty($param)) {
+			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 0  order by companyname";
+		}
+		$ci=& get_instance();
+		$ci->load->database(); 	
+		$query = $ci->db->query($sql);
+		return $query->result();
+	}
+
+	function getAllEmailBulkCustomersOnlyP2($param=null,$value=null) 
+	{
+		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 0 order by companyname LIMIT 450, 500" ;
 		if(!empty($param)) {
 			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 0  order by companyname";
 		}

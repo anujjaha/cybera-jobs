@@ -231,6 +231,9 @@ function check_visiting_card(sr) {
 		
 		if($("#category_"+sr).val() == "ROUND CORNER CUTTING") {
 			$("#details_"+sr).val("ROUND CORNER CUTTING");
+
+			$("#rate_"+sr).val(".25");
+			
 		}
 		
 		if($("#category_"+sr).val() == "Offset Print") {
@@ -243,6 +246,11 @@ function check_visiting_card(sr) {
 		if($("#category_"+sr).val() == "Visiting Card Flat") {
 			$("#details_"+sr).val("Visiting Card Flat");
 		}
+
+		if($("#category_"+sr).val() == "Transparent Visiting Card") {
+			$("#details_"+sr).val("Transparent Visiting Card");
+		}
+
 		if($("#category_"+sr).val() == "B/W Xerox") {
 			$("#details_"+sr).val("B/W Xerox");
 		}
@@ -333,6 +341,10 @@ $modified_by = $this->session->userdata['user_id'];
 				<option
 				 <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Visiting Card' ) { echo 'selected="selected"';} ?>>Visiting Card</option>
 				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Visiting Card Flat'  ) { echo 'selected="selected"';} ?>>Visiting Card Flat</option>
+
+				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Transparent Visiting Card'  ) { echo 'selected="selected"';} ?>>Transparent Visiting Card</option>
+
+
 				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Offset Print' ) { echo 'selected="selected"';} ?>>Offset Print</option>
 				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Flex' ) { echo 'selected="selected"';} ?>>Flex</option>
 				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Cutting' ) { echo 'selected="selected"';} ?>>Cutting</option>

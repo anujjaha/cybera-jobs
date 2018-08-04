@@ -125,7 +125,11 @@ function show_due(userid) {
 	  });
 }
 function customer_selected(type,userid) {
-jQuery("#customer_id").val(userid);
+
+	jQuery("#current_customer_type").val(type);
+
+	jQuery("#customer_id").val(userid);
+
     $.ajax({
      type: "POST",
      url: "<?php echo site_url();?>/customer/get_customer_ajax/id/"+userid, 
@@ -381,10 +385,25 @@ function check_visiting_card(sr) {
 		}
 		if($("#category_"+sr).val() == "ROUND CORNER CUTTING") {
 			$("#details_"+sr).val("ROUND CORNER CUTTING");
+
+			if(jQuery("#current_customer_type").val() == 'dealer')
+			{
+				$("#rate_"+sr).val(".25");
+			}
+			else
+			{
+				$("#rate_"+sr).val(".50");	
+			}
 		}
+		
 		if($("#category_"+sr).val() == "Laser Cutting") {
 			$("#details_"+sr).val("Laser Cutting");
 		}
+
+		if($("#category_"+sr).val() == "Transparent Visiting Card") {
+			$("#details_"+sr).val("Transparent Visiting Card");
+		}
+
 		if($("#category_"+sr).val() == "Not Applicable") {
 			$("#details_"+sr).val("Not Applicable");
 			$("#qty_"+sr).val("0");
@@ -399,7 +418,7 @@ function open_price_list(sr)
 	auto_suggest_price(sr);
 	var catValue = jQuery("#category_" + sr ).val();
 	
-	if(catValue == 'Digital Print' || catValue == 'Visiting Card' || catValue == 'Visiting Card Flat')
+	if(catValue == 'Digital Print' || catValue == 'Visiting Card' || catValue == 'Visiting Card Flat' || catValue == 'Transparent Visiting Card' )
 	{
 		$.fancybox({
                 'href': '#fancy_box_demo',
@@ -640,6 +659,7 @@ $this->load->helper('general'); ?>
                             <option>Digital Print</option>
                             <option>Visiting Card</option>
                             <option>Visiting Card Flat</option>
+                            <option>Transparent Visiting Card</option>
                             <option>Offset Print</option>
                             <option>Flex</option>
                             <option>Cutting</option>
@@ -721,6 +741,7 @@ $this->load->helper('general'); ?>
 	</tr>
 	<tr>
 		<td colspan="7" align="right">
+			<input type="hidden" id="current_customer_type" name="current_customer_type" value="normal">
 			<input type="hidden" id="advance" name="advance" value="0">
 			<input type="hidden" id="receipt" name="receipt" value="0">
 			<input type="hidden" id="bill_number" name="bill_number" value="0">

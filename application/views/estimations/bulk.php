@@ -24,11 +24,11 @@
 			
 			<div class="col-md-12">
 				<div class="row">
-					<div class="col-md-4">
-						<h4>Customers (<?php echo count(getAllEmailBulkCustomersOnly());?>)</h4>
+					<div class="col-md-3">
+						<h4>Customers Part A (<?php echo count(getAllEmailBulkCustomersOnlyP1());?>)</h4>
 						<?php 
 							$chtml = '';
-							$all_customer = getAllEmailBulkCustomersOnly(); 
+							$all_customer = getAllEmailBulkCustomersOnlyP1(); 
 							foreach($all_customer as $customer) 
 							{
 								$c_name = $customer->companyname;
@@ -44,7 +44,29 @@
 							</select>
 							
 					</div>
-					<div class="col-md-4">
+
+					<div class="col-md-3">
+						<h4>Customers Part B (<?php echo count(getAllEmailBulkCustomersOnlyP2());?>)</h4>
+						<?php 
+							$chtml = '';
+							$all_customer = getAllEmailBulkCustomersOnlyP2(); 
+							foreach($all_customer as $customer) 
+							{
+								$c_name = $customer->companyname;
+								
+								if(empty($c_name)) {
+									$c_name = $customer->name;
+								}
+								$chtml .= "<option value='".$customer->emailid."'>".$c_name." [".$customer->emailid."]</option>";
+							}
+							?>
+							<select multiple="multiple" class="form-control estimation-customer-list" name="estimation_customer[]" id="estimation_customer">
+								<?php echo $chtml;?>	
+							</select>
+							
+					</div>
+
+					<div class="col-md-3">
 						<h4>Dealers (<?php echo count(getAllEmailBulkDealersOnly());?>)</h4>
 						<?php 
 						$dhtml = '';
@@ -64,7 +86,7 @@
 						</select>
 						
 					</div>
-					<div class="col-md-4">
+					<div class="col-md-3">
 						<h4>Voucher Customers(<?php echo count(getAllEmailBulkVourcherCustomerOnly());?>)</h4>
 						<?php 
 						$vhtml = '';
