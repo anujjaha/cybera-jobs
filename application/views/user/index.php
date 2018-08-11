@@ -147,11 +147,29 @@ if(strtolower($this->session->userdata['department']) == "master")
 				?>
 			
 		</td>
-		<td><?php echo $job['smscount'];?></td>
+		<td><?php echo $job['smscount'];?>
+			<br>
+			<?php
+				$custmerName = $job['companyname'] ? $job['companyname'] : $job['name'];
+				$sms_text = "Dear ".$result->customer_name." Your Job Num ".$job['job_id']." completed and ready for delivery. Thank You for business with Cybera";
+			
+				$whatssUpMsg = urlencode($sms_text);
+				$whatssUpMsg = str_replace('+', '%20', $whatssUpMsg);
+				$url = 'http://api.whatsapp.com/send?phone=91'.$job['mobile'].'&text='.$whatssUpMsg;
+			?>
+			<a target="_blank" href="<?php echo $url;?>">
+				Whatss Up
+			</a>
+
+		</td>
 		<td width="85px;"><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a>
 		| 
 		<a href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a>
-		|	<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
+		|
+		
+		<a target="_blank" href="<?php echo site_url();?>/jobs/job_print_with/<?php echo $job['job_id'];?>#editCuttingSlipLive">Q Edit</a>
+		|
+			<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
 			Print</a>
 			</td>
 		</tr>
