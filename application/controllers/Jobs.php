@@ -479,7 +479,8 @@ public function edit($job_id=null)
 			$data['job_data']=$job_data;
 			
 			
-			if($this->input->post()) {
+			if($this->input->post()) 
+			{
 				
 				$customer_id = $this->input->post('customer_id');
 				$original_customer_id = $this->input->post('original_customer_id');
@@ -636,7 +637,22 @@ public function edit($job_id=null)
 			}
 			
 			
-			
+			$job_data = $this->job_model->get_job_data($job_id);
+			if(isset($customer_details->emailid) && $customer_details->emailid != '')
+					{
+						$content = sendDealerJobTicket($customer_details, $job_data, $job_details);
+
+						$to  	 = array($customer_details->emailid);
+						$subject = "Estimate ( Updated ) - " . $job_data->jobname;
+
+						/*$status = sendBulkEmail($to, 'er.anujjaha@gmail.com', 'test Mail', 'test content');
+						pr($status);*/
+						$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+
+						//pr($status);
+
+					}
+
 			
 			redirect("jobs/job_print/".$job_id,'refresh');	
 			}

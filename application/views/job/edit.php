@@ -340,6 +340,14 @@ function check_visiting_card(sr) {
 		if($("#category_"+sr).val() == "B/W Print") {
 			$("#details_"+sr).val("B/W Print");
 		}
+
+		if($("#category_"+sr).val() == "Card Box") {
+			$("#details_"+sr).val("Card Box");
+			$("#qty_"+sr).val("1");
+			$("#rate_"+sr).val("10");
+			$("#sub_"+sr).val("10");
+		}
+
 		if($("#category_"+sr).val() == "Designing") {
 			$("#details_"+sr).val("Designing");
 		}
@@ -661,6 +669,7 @@ $this->load->helper('general'); ?>
                             <option>Visiting Card Flat</option>
                             <option>Transparent Visiting Card</option>
                             <option>Offset Print</option>
+                            <option>Card Box</option>
                             <option>Flex</option>
                             <option>Cutting</option>
                             <option>Designing</option>

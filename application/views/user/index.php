@@ -148,7 +148,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 			
 		</td>
 		<td><?php echo $job['smscount'];?>
-			<br>
+			<!-- <br>
 			<?php
 				$custmerName = $job['companyname'] ? $job['companyname'] : $job['name'];
 				$sms_text = "Dear ".$result->customer_name." Your Job Num ".$job['job_id']." completed and ready for delivery. Thank You for business with Cybera";
@@ -159,7 +159,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 			?>
 			<a target="_blank" href="<?php echo $url;?>">
 				Whatss Up
-			</a>
+			</a> -->
 
 		</td>
 		<td width="85px;"><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a>
