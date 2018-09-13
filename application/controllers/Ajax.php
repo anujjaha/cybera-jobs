@@ -1251,5 +1251,33 @@ class Ajax extends CI_Controller {
 		));
 		die;	
 	}
+
+	public function send_reminder()
+	{
+		if($this->input->post())
+		{
+			$name 		= $this->input->post('customrName');
+			$balance 	= abs($this->input->post('balance'));
+			$mobile 	= $this->input->post('mobile');
+			$messageO 	= "Dear $name Gentle reminder for overdue outstanding of rs $balance Expecting it at the earliest.";
+
+			$message = str_replace(" ","+",$messageO);
+			send_sms(NULL, 0,$mobile,$message);
+			
+			/*$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$mobile&Text=$msg&GSM=CYBERA";
+			
+			$url = urlencode($url);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, urldecode($url));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+			$response = curl_exec($ch);
+			curl_close($ch);*/
+			
+			//send_sms(NULL, 0,$sms_mobile,$sms_message);
+			echo $messageO;
+		}	
+	}
 }
 

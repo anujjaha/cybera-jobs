@@ -77,6 +77,7 @@ class Customer extends CI_Controller {
 	}
 	
 	public function edit($customer_id=null) {
+
 		$this->load->model('customer_model');
 		$data['title']="Add Customer";
 		$data['heading']="Add Customer";
@@ -100,6 +101,7 @@ class Customer extends CI_Controller {
 			$data['pin'] = $this->input->post('pin');
 			$data['outside'] = $this->input->post('outside');
 			$data['ctype'] = $this->input->post('ctype');
+			$data['extra_amount'] = $this->input->post('extra_amount');
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');
 			if($customer_id) {
@@ -142,15 +144,28 @@ class Customer extends CI_Controller {
 		$this->template->load('customer', 'edit', $data);
 	}
 	
-	public function get_paper_rate() {
+	public function get_paper_rate() 
+	{
 		$paper_gram = $this->input->post('paper_gram');
 		$paper_size = $this->input->post('paper_size');
 		$paper_print = $this->input->post('paper_print');
 		$paper_qty = $this->input->post('paper_qty');
+		$addPerPrint = 0;
 		$data = array();
+		$customerId = $this->input->post('check_customer_id');
+
+		if(isset($customerId) && $customerId != 0)
+		{
+			$customerDetails = $this->customer_model->get_customer_details('id', $customerId);
+
+			$addPerPrint = $customerDetails->extra_amount;
+		}
+
 		$this->load->model('paper_model');
 		$data = $this->paper_model->get_paper_rate($paper_gram,$paper_size,$paper_qty);
 		if(!empty($data)) {
+
+			$data->paper_amount = $data->paper_amount + $addPerPrint;
 			echo json_encode($data,true);
 			die;
 		}

@@ -1,4 +1,3 @@
-
 <?php
 $this->load->helper('form');
  echo form_open('customer/edit');?>
@@ -84,9 +83,13 @@ $this->load->helper('form');
 			<label>Pin</label>
 			<input type="text" class="form-control" name="pin" value="<?php if(!empty($dealer_info->pin)){echo $dealer_info->pin;}?>" placeholder="Pincode">
 		</div>
+
 		<div class="form-group">
-			<br><br><br>
+			<label>Extra Charge</label>
+			<input type="text" class="form-control" name="extra_amount" value="<?php echo $dealer_info->extra_amount;?>" placeholder="Extra Amount">
 		</div>
+
+		
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
 </div>

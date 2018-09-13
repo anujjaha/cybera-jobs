@@ -100,6 +100,8 @@
 		<td><?php echo round($customer->total_debit,2);?></td>
 		<td><?php echo $customer->total_credit;?></td>
 		<td><?php $balance = round($customer->total_credit - $customer->total_debit,0);
+
+		$customerName = $customer->companyname ? $customer->companyname : $customer->name;
 		$show = '<span class="green">'.$balance.'</span>';
 			if($balance < 0 ) {
 				$show = '<span class="red">'.$balance.'</span>';
@@ -117,7 +119,12 @@
 		<td>
 			<a target="_blank" href="<?php echo site_url();?>/account/account_details/<?php echo $customer->id;?>">View</a>
 			||
-			<a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $customer->id;?>">Edit</a></td>
+			<a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $customer->id;?>">Edit</a>
+			||
+			<a href="javascript:void(0);"
+			data-customer="<?php echo $customerName;?>"
+			data-mobile="<?php echo $customer->mobile;?>"
+			 data-balance="<?php echo $balance;?>" class="remind-amount" data-id="<?php echo $customer->id;?>">Remind</a></td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>
@@ -251,6 +258,8 @@ function pagination(value) {
 		});
 }
 
+
+
 function clear_filter() {
 	$("#search_box").val("");
 	$.ajax({
@@ -262,5 +271,35 @@ function clear_filter() {
                   //console.log(data);
             }
 		});
+}
+
+jQuery(document).on('click', '.remind-amount', function(e)
+{
+	if(e.target.getAttribute('data-balance') >= 0 )
+	{
+		alert("NO Due found for " + e.target.getAttribute('data-customer'));
+		return ;
+	}
+
+	remindSms(e.target.getAttribute('data-customer'), e.target.getAttribute('data-mobile'), e.target.getAttribute('data-balance'));
+})
+
+
+function remindSms(customrName, mobile, balance)
+{
+	jQuery.ajax(
+	{
+		type: "POST",
+		url: "<?php echo site_url();?>/ajax/send_reminder", 
+		data : { 
+			customrName: 	customrName,
+			mobile: 		mobile,
+			balance: 	 	balance
+		},
+		success: function(data)
+		{
+			alert("Following Message Sent " + data);
+        }
+	});
 }
 </script>

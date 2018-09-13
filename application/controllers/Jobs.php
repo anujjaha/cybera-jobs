@@ -325,10 +325,7 @@ public function edit($job_id=null)
 
 				$customerInfo = getCustomerById($customer_id);
 
-				if(isset($customerInfo) 
-					&& SEND_DEALER_MAIL 
-					&& $customerType == 1
-					&& $customerInfo->outside == 1)
+				if(isset($customerInfo) && SEND_DEALER_MAIL )
 				{		
 					$this->load->model('job_model');
 					$job_data 		= $this->job_model->get_job_data($job_id);
@@ -645,12 +642,7 @@ public function edit($job_id=null)
 						$to  	 = array($customer_details->emailid);
 						$subject = "Estimate ( Updated ) - " . $job_data->jobname;
 
-						/*$status = sendBulkEmail($to, 'er.anujjaha@gmail.com', 'test Mail', 'test content');
-						pr($status);*/
 						$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
-
-						//pr($status);
-
 					}
 
 			

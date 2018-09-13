@@ -2,6 +2,7 @@
 <script>
 function showRemindContainer()		
 {		
+
 	var value = jQuery("#remindMe").val();		
 	if(value == 1)		
 	{		
@@ -271,8 +272,13 @@ function calculate_paper_cost(){
 	$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/customer/get_paper_rate/", 
-         data:{"paper_gram":paper_gram,"paper_size":paper_size,
-                "paper_print":paper_print,"paper_qty":paper_qty},
+         data:{
+         	"paper_gram":paper_gram,
+         	"paper_size":paper_size,
+            "paper_print":paper_print,
+            "paper_qty":paper_qty,
+            'check_customer_id': jQuery("#customer_id").val()
+       	},
          dataType:"json",
          success: 
               function(data){

@@ -79,6 +79,7 @@
 		<td><?php echo round($customer->total_debit,2);?></td>
 		<td><?php echo $customer->total_credit;?></td>
 		<td><?php $balance = round($customer->total_credit - $customer->total_debit,0);
+		$customerName = $customer->companyname ? $customer->companyname : $customer->name;
 		$show = '<span class="green">'.$balance.'</span>';
 			if($balance < 0 ) {
 				$show = '<span class="red">'.$balance.'</span>';
@@ -95,7 +96,13 @@
 		?></td>
 		<td><a target="_blank" href="<?php echo site_url();?>/account/account_details/<?php echo $customer->id;?>">View</a>
 		||
-			<a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $customer->id;?>">Edit</a></td>
+			<a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $customer->id;?>">Edit</a>
+		||
+			<a href="javascript:void(0);"
+			data-customer="<?php echo $customerName;?>"
+			data-mobile="<?php echo $customer->mobile;?>"
+			 data-balance="<?php echo $balance;?>" class="remind-amount" data-id="<?php echo $customer->id;?>">Remind</a></td>
+		</td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>
