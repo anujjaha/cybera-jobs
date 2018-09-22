@@ -34,6 +34,50 @@ class Dealer extends CI_Controller {
 		$data['customers']= $result;
 		$this->template->load('dealer', 'index', $data);
 	}
+
+	public function print_dealer()
+	{
+		$dealers = $this->dealer_model->get_dealer_details();
+		$html    = '<table style="border: solid 2px black;" class="table" border="2">
+					<tr>
+						<th style="border: solid 2px black;"> Name </th>
+						<th style="border: solid 2px black;"> Contact </th>
+						<th style="border: solid 2px black;"> Other Contact </th>
+						<th style="border: solid 2px black;"> Email </th>
+						<th style="border: solid 2px black;"> Address </th>
+						<th style="border: solid 2px black;"> City </th>
+						<th style="border: solid 2px black;"> Total Transaction </th>
+						<th style="border: solid 2px black;"> Due </th>
+					</tr>';
+
+		$total = 0;
+		$totalDue = 0;
+		foreach($dealers as $dealer)
+		{
+			$dealer = (array)$dealer;
+
+			$total 		= $total + $dealer['total_amount'];
+			$totalDue 	= $totalDue + $dealer['due'];
+			$dealerName = isset($dealer['companyname']) ? $dealer['companyname']  : $dealer['name'];
+
+			$html   .= '<tr>';	
+
+				$html   .= '<td style="border: solid 1px black;"> '. $dealerName .' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['mobile']. ' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['officecontact']. ' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['emailid']. ' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['add1'] . ' '. $dealer['add2'] . ' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['city']. ' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['total_amount']. ' </td>';
+				$html   .= '<td style="border: solid 1px black;"> '. $dealer['due']. ' </td>';
+				
+			$html   .= '</tr>';
+		}
+			$html .= '<tr><td style="border: solid 1px black;" colspan="6"></td><td style="border: solid 1px black;">'. number_format($total, 2) .'</td><td style="border: solid 1px black;">'. number_format($totalDue, 2).'</td></tr>';
+			$html .= '</table>';
+		header("location:".create_pdf($html, 'A4'));
+		exit;
+	}
 	
 	public function vcustomers()
 	{

@@ -57,7 +57,22 @@ class Task_model extends CI_Model {
 		$this->db->delete($this->table);
 		return true;
 	}
-	
+
+	public function getAllSchedules()
+	{
+		$sql 	= 'SELECT job_id from cyb_schedule WHERE job_id IS NOT NULL';
+		$query 	= $this->db->query($sql);
+		$result = $query->result_array();
+
+		$jobIds = array();
+
+		foreach($result as $output)
+		{
+			$jobIds[] = $output['job_id'];
+		}
+		return $jobIds;
+	}
+
 	public function save_scheduler($data) {
 		$data['created'] = date('Y-m-d H:i:s');
 		$this->db->insert($this->table_sc,$data);

@@ -137,6 +137,15 @@
                                 </small>-->
                             </a>
                         </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>dealer/print_dealer">
+                                <i class="fa fa-list"></i> <span>Print Dealer</span>
+                                <!--<small class="badge pull-right bg-red">
+                                <span id="show_dealers"></span>
+                                </small>-->
+                            </a>
+                        </li>
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>customer">
                                 <i class="fa fa-calendar"></i> <span>Customers</span>
@@ -145,6 +154,17 @@
                                 </small>-->
                             </a>
                         </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>customer/print_customer">
+                                <i class="fa fa-list"></i> <span>Print Customers</span>
+                                <!--<small class="badge pull-right bg-red">
+                                <span id="show_dealers"></span>
+                                </small>-->
+                            </a>
+                        </li>
+
+
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>customer/edit">
                                 <i class="fa fa-calendar"></i> <span>Add New Customer</span>

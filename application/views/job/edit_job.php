@@ -515,11 +515,13 @@ $modified_by = $this->session->userdata['user_id'];
 <div id="fancy_box_demo" style="width:100%;display: none;">
 	<div style="width: 100%; margin: 0 auto; padding: 120px 0 40px;">
 		<input type="hidden" name="fancybox_id" id="fancybox_id">
-        <ul class="tabs" data-persist="true">
-            <li><a href="#paper_tab">Paper</a></li>
-            <li><a href="#view2">Visiting Cards</a></li>
-            <li><a href="#view3">Exclusive Visiting Cards</a></li>
-        </ul>
+
+		<ul class="tabs" data-persist="true">
+		    <li><a href="#paper_tab">Paper</a></li>
+		    <li><a href="#view2">300/350 GSM Matt/Gloss Card</a></li>
+		    <li><a href="#view3">Exclusive Visiting Cards</a></li>
+		    <li><a href="#view4">Transparent & White with Multi Color Printing</a></li>
+		</ul>
         <div class="tabcontents">
 			<div id="paper_tab">
 				<div class="row">
@@ -566,14 +568,19 @@ $modified_by = $this->session->userdata['user_id'];
 				</table>
 				</div>
 			</div>
-            <div id="view2">
-                <?php
+             <div id="view2">
+				<?php
 					require_once('visiting-card-rates.php');
 				?>
             </div>
             <div id="view3">
-				<?php
+                <?php
 					require_once('excluive-visiting-card-rates.php');
+				?>
+            </div>
+            <div id="view4">
+                <?php
+					require_once('blak-white-card-rates.php');
 				?>
             </div>
             

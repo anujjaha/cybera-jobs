@@ -131,6 +131,7 @@ class Jobs extends CI_Controller {
 		$this->load->model('job_model');
 		$data = array();
 		$data['jobs'] = $this->job_model->get_job_data();
+		$data['schedule_jobs'] = $this->job_model->get_job_data();
 		
 		//echo "<pre>";
 		//print_r($data);die;
@@ -317,6 +318,7 @@ public function edit($job_id=null)
 					$sdata['reminder_time'] = $this->input->post('reminder_time');
 					$sdata['user_for'] = $this->session->userdata['user_id'];
 					$sdata['is_sms'] = 1;
+					$sdata['job_id'] = $job_id;
 					$sdata['status'] = 0;
 					$sdata['user_creator'] = $this->session->userdata['user_id'];
 					$this->load->model('task_model');
@@ -478,9 +480,10 @@ public function edit($job_id=null)
 			
 			if($this->input->post()) 
 			{
-				
 				$customer_id = $this->input->post('customer_id');
 				$original_customer_id = $this->input->post('original_customer_id');
+
+				flushDiscountTransaction($job_id, $customer_id, 'Visiting Card Special Discount');
 					
 				if($customer_mobile !=  $this->input->post('user_mobile')) 
 				{

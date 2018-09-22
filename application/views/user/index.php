@@ -147,7 +147,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 				?>
 			
 		</td>
-		<td><?php echo $job['smscount'];?>
+		<td>
+			<?php 
+				echo $job['smscount'];
+
+				echo in_array($job['job_id'], $scheduleIds) ? '<br><i class="fa fa-bell"></i>' : '';
+			?>
+
 			<!-- <br>
 			<?php
 				$custmerName = $job['companyname'] ? $job['companyname'] : $job['name'];

@@ -21,6 +21,23 @@ class Dealer_model extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+
+	public function get_customer_details($param=null,$value=null) {
+		if(!empty($param)) {
+			$sql = "SELECT * FROM $this->table WHERE $param = $value";
+			$query = $this->db->query($sql);
+			return $query->row();
+		}
+		$sql = "SELECT *, 
+				(SELECT SUM(total) from job WHERE job.customer_id = $this->table.id)  as 'total_amount' ,
+				(SELECT SUM(due) from job WHERE job.customer_id = $this->table.id)  as 'due' 
+				FROM $this->table WHERE ctype=0 
+				order by name";
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+
 	public function get_voucher_customer_details($param=null,$value=null) {
 		if(!empty($param)) {
 			$sql = "SELECT * FROM $this->table WHERE $param = $value";
