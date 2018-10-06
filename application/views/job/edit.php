@@ -133,12 +133,18 @@ function customer_selected(type,userid) {
 
     $.ajax({
      type: "POST",
+     dataType: 'JSON',
      url: "<?php echo site_url();?>/customer/get_customer_ajax/id/"+userid, 
      success: 
-        function(data){
-		jQuery("#mobile_"+type).val('');
-        jQuery("#mobile_"+type).val(data);
-        show_due(userid);
+        function(data)
+        {
+			jQuery("#mobile_"+type).val('');
+        	jQuery("#mobile_"+type).val(data.mobile);
+        	jQuery("#showEmailId").html("Email Id : " + data.email);
+        	console.log(data.email);
+        	/*console.log(data);
+        	console.log(data.email);*/
+        	show_due(userid);
         }
   });
 }
@@ -369,8 +375,8 @@ function check_visiting_card(sr) {
 		if($("#category_"+sr).val() == "Binding") {
 			$("#details_"+sr).val("Binding");
 		}
-		if($("#category_"+sr).val() == "Packaging and Forwading") {
-			$("#details_"+sr).val("Packaging and Forwading");
+		if($("#category_"+sr).val() == "Packaging and Forwarding") {
+			$("#details_"+sr).val("Packaging and Forwarding");
 		}
 		if($("#category_"+sr).val() == "Transportation") {
 			$("#details_"+sr).val("Transportation");
@@ -511,6 +517,7 @@ $this->load->helper('general'); ?>
         <td colspan="2" align="center">
         <h3>Customer Type</h3>
         <p id="balance"  align="right"><h2 class="red" id="show_balance" ></h2></p>
+        <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
         <div class="row">
             <div class="col-md-3">
                 <span onClick="set_customer('new_customer');">
@@ -685,7 +692,7 @@ $this->load->helper('general'); ?>
                             <option>Lamination</option>
                             <option>Laser Cutting</option>
                             <option>ROUND CORNER CUTTING</option>
-                            <option>Packaging and Forwading</option>
+                            <option>Packaging and Forwarding</option>
                             <option>Transportation</option>
                             <option>B/W Print</option>
                             <option>B/W Xerox</option>

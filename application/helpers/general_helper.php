@@ -1033,6 +1033,20 @@ function flushDiscountTransaction($jobId = null, $customerId = null, $notes = ''
 	return false;
 }
 
+
+
+function isAdmin()
+{
+	$ci = & get_instance();
+
+	if($ci->session->userdata['user_id'] == 1)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 function sendDealerJobTicket($customer_details, $job_data, $job_details)
 {
 	$created_info 	= get_user_by_param('id',$job_data->user_id);

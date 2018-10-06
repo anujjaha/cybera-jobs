@@ -6,6 +6,7 @@ class Attendance extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('attendance_model');
+		$this->load->model('employee_model');
 	}
 
 	/**
@@ -25,11 +26,38 @@ class Attendance extends CI_Controller {
 	 */
 	public function index()
 	{
+		if(isAdmin())
+		{
+			redirect('attendance/admin', "refresh");
+		}
+
 		$data = array();
 		$data['items'] = $this->attendance_model->getAllAttendance();
 		$data['heading'] = $data['title']="Attendance - Cybera Print Art";
 		
 		$this->template->load('attendance', 'index', $data);
+	}
+
+	public function admin()
+	{
+		$data = array();
+		$data['items'] = $this->attendance_model->getAllAttendance();
+		$data['heading'] = $data['title']="Attendance - Cybera Print Art";
+	
+		$this->template->load('attendance', 'admin', $data);
+	}
+
+	public function by_employee($id, $year)
+	{
+		$year = $year ? $year : 1;
+		$data = array();
+		$data['items'] = $this->attendance_model->getEmpAttendanceById($id, $year);
+		$data['employeeInfo'] = $this->employee_model->getEmployeeById($id);
+		$data['heading'] = $data['title']="Attendance - Cybera Print Art";
+
+		//pr($data);
+
+		$this->template->load('attendance', 'admin-emp-attendance', $data);
 	}
 	
 	public function add()
@@ -52,21 +80,23 @@ class Attendance extends CI_Controller {
 	
 	public function edit($id = null)
 	{
-		$data['heading'] = $data['title']="Edit Employee - Cybera Print Art";
-		$data['employeeInfo']  = $this->employee_model->getEmployeeById($id);
-		
+		$data['heading'] 			= $data['title']="Edit Employee - Cybera Print Art";
+		$data['attaendaceInfo']  	= $this->attendance_model->getById($id);
+
 		if($this->input->post())
 		{
 			$data = $this->input->post();
 			
+			$id   = $data['attendance_id'];
+
 			unset($data['save']);
-			unset($data['employeeId']);
-			$employeeId = $this->input->post('employeeId');
-			$this->employee_model->updateEmployee($employeeId, $data);
-				
-			redirect('employee', "refresh");
+			unset($data['attendance_id']);
+
+			$status = $this->attendance_model->updateAttendance($id, $data);
+			
+			redirect('attendance', "refresh");
 		}
-		$this->template->load('employee', 'edit', $data);
+		$this->template->load('attendance', 'admin-edit', $data);
 	}
 	
 	public function deleteEmployee($id)

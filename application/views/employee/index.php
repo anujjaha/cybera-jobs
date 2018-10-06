@@ -52,9 +52,17 @@
 				<a href="<?php echo site_url();?>/employee/edit/<?php echo $item['id'];?>">
 					Edit
 				</a> | 
-				<a onclick="deleteEmployee(<?php echo $item['id'];?>);" href="javascript:void(0);">
-					Delete
-				</a>
+				<?php
+					if(isAdmin())
+					{
+				?>
+					<a href="<?php echo site_url();?>/attendance/by_employee/<?php echo $item['id'];?>">
+						Details
+					</a>
+
+				<?php
+					}
+				?>
 				
 		</td>
 		</tr>

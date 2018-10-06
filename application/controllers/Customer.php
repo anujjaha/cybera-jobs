@@ -109,11 +109,18 @@ class Customer extends CI_Controller {
 			$result = $this->customer_model->get_customer_details($param,$value);
 			if($result) {
 				if($result->mobile) {
-					echo $result->mobile;
+
+					echo json_encode(array(
+						'mobile' 	=> $result->mobile,
+						'email' 	=> $result->emailid,
+					));
 					return true;
 				}
 				if($result->officecontact) {
-					echo $result->officecontact;
+					echo json_encode(array(
+						'mobile' 	=> $result->officecontact,
+						'email' 	=> $result->emailid,
+					));
 					return true;
 				}
 			}

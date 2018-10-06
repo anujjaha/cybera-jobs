@@ -1,12 +1,9 @@
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
 <div class="row">
 <div class="col-md-12">
-	<a href="<?php echo base_url();?>attendance/add">
-		Add New Attendance
-	</a>
 	<hr>
 	<div>
-		<h3> Attendance For <?php echo date('F - Y', strtotime('last month'));?></h3>
+		<h3> Attendance For <?php echo $employeeInfo->name;?></h3>
 	</div>
 	</div>
 </div>
@@ -16,7 +13,7 @@
 		<thead>
 		<tr>
 		<th>Sr</th>
-		<th>Name</th>
+		<th>Month / Year</th>
 		<th>Half Day</th>
 		<th>Full Day</th>
 		<th>Late</th>
@@ -27,19 +24,25 @@
 		<th>Notes</th>
 		<th>Performance</th>
 		<th>Remarks</th>
-		<th>Action</th>
 		</tr>
 		</thead>
 	<tbody>
 		<?php
 		$sr =1;	
-		foreach($items as $item) { 
-			if(!isset($item['name']) || strlen($item['name']) < 2 )
-				continue;
-			?>
+		$sunday = $fullNight = $halfNight = $officehalfDay = $officeLate = $fullDay = $halfDay = 0;
+			foreach($items as $item) 
+			{ 
+				$sunday 		= $sunday + $item['sunday'];
+				$fullNight 		= $fullNight + $item['full_night'];
+				$halfNight 		= $halfNight + $item['half_night'];
+				$officehalfDay 	= $officehalfDay + $item['office_halfday'];
+				$officeLate 	= $officeLate + $item['office_late'];
+				$fullDay 		= $fullDay + $item['full_day'];
+				$halfDay 		= $halfDay +  $item['half_day'];
+		?>
 		<tr id="emp-<?php echo $item['id'];?>">
 		<td><?php echo $sr;?></td>
-		<td><?php echo $item['name'];?></td>
+		<td><?php echo $item['month']. ' ' . $item['year'];?></td>
 		<td><?php echo $item['half_day'];?></td>
 		<td><?php echo $item['full_day'];?></td>
 		<td><?php echo $item['office_late'];?></td>
@@ -50,16 +53,22 @@
 		<td><?php echo $item['notes'];?></td>
 		<td><?php echo $item['result'];?></td>
 		<td><?php echo $item['personal_notes'];?></td>
-		<td>
-				<a  href="<?php echo site_url();?>/attendance/edit/<?php echo $item['id'];?>">
-					Edit
-				</a>
-				<!--<a onclick="deleteEmployee(<?php echo $item['id'];?>);" href="javascript:void(0);">
-					Delete
-				</a>-->
-		</td>
 		</tr>
 		<?php $sr++; } ?>
+		<tr>
+		 	<td><?php echo $sr; ?></td>
+			<td>-</td>
+			<td><?php echo $halfDay;?></td>
+			<td><?php echo $fullDay;?></td>
+			<td><?php echo $officeLate;?></td>
+			<td><?php echo $officehalfDay;?></td>
+			<td><?php echo $halfNight;?></td>
+			<td><?php echo $fullNight;?></td>
+			<td><?php echo $sunday;?></td>
+			<td> - </td>
+			<td> - </td>
+			<td> - </td>
+		</tr>
 	</tfoot>
 	</table>
 	</div><!-- /.box-body -->

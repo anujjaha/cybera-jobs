@@ -197,6 +197,11 @@
                             </a>
                         </li>
                         <li>
+                            <a target="_blank" href="<?php echo base_url();?>employee">
+                                <i class="fa fa-calendar"></i> <span>Employees</span>
+                            </a>
+                        </li>
+                        <li>
                             <a target="_blank" href="<?php echo base_url();?>dealer/outstation">
                                 <i class="fa fa-calendar"></i> <span>Outstation Customers</span>
                                 <!--<small class="badge pull-right bg-red">
