@@ -138,7 +138,9 @@ function calculate_paper_cost(){
          type: "POST",
          url: "<?php echo site_url();?>/customer/get_paper_rate/", 
          data:{"paper_gram":paper_gram,"paper_size":paper_size,
-                "paper_print":paper_print,"paper_qty":paper_qty},
+                "paper_print":paper_print,"paper_qty":paper_qty,
+                'check_customer_id': jQuery("#customer_id").val()
+            	},
          dataType:"json",
          success: 
               function(data){
@@ -462,6 +464,8 @@ $modified_by = $this->session->userdata['user_id'];
 	<div class="col-md-4">
 		<input type="hidden" name="job_id" value="<?php echo $job_data->id;?>">
 		<input type="hidden" name="modified" value="<?php echo $modified_by;?>">
+		
+		<input type="hidden" name="hasDiscount" value="1">
 		
 		Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
 		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">

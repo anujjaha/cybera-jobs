@@ -129,6 +129,18 @@ function customer_selected(type,userid) {
 
 	jQuery("#current_customer_type").val(type);
 
+
+	if(jQuery("#current_customer_type").val() == 'dealer')
+	{
+		jQuery(".dealer").show();
+		jQuery(".other").hide();
+	}
+	else
+	{
+		jQuery(".dealer").hide();
+		jQuery(".other").show();
+	}
+
 	jQuery("#customer_id").val(userid);
 
     $.ajax({

@@ -13,14 +13,26 @@
 <table class="table" border="2">
 	<tr>
 		<td> &nbsp; </td>
-		<td align="center">Transparent Cards
+		<td class="other" align="center">Transparent Cards
 			<br>
 			<!--<strong>Code 01 to 31</strong>-->
 		 </td>
-		<td align="center">Semi Transparent Cards
+
+		<td class="other"  align="center">Semi Transparent Cards
 			<br>
 			<!--<strong>Code 01 to 31</strong>-->
 		 </td>
+
+		<td  class="dealer" align="center">Dealer Transparent Cards
+			<br>
+			<!--<strong>Code 01 to 31</strong>-->
+		 </td>
+
+		<td class="dealer" align="center">Dealer Semi Transparent Cards
+			<br>
+			<!--<strong>Code 01 to 31</strong>-->
+		</td>
+
 		<td colspan="2" align="center">White with Multi Color Printing 
 			<br>
 			<!--<strong>Code 32 to 70</strong>-->
@@ -29,8 +41,10 @@
 	
 	<tr>
 		<td> Qty </td>
-		<td> Single Side / Double Side </td>
-		<td> Single Side / Double Side </td>
+		<td class="other"> Single Side / Double Side </td>
+		<td class="other"> Single Side / Double Side </td>
+		<td class="dealer"> Single Side / Double Side </td>
+		<td class="dealer"> Single Side / Double Side </td>
 		
 		<td> Single Side </td>
 		<td> Double Side </td>
@@ -46,20 +60,30 @@
 		</td>
 		
 		
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="700" data-card="Transparent_Cards" data-type="SS">
 				700
 			</span>
 		</td>
 
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="700" data-card="Semi_Transparent_Cards" data-type="SS">
 				700
 			</span>
 		</td>
 
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="500" data-card="Transparent_Cards" data-type="SS">
+				500
+			</span>
+		</td>
 
-		
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="500" data-card="Semi_Transparent_Cards" data-type="SS">
+				500
+			</span>
+		</td>
+
 		<td> 
 			<span class="price-bw btn btn-primary ptc" data-price="700" data-card="White_with_Multi_Color_Printing" data-type="SS">
 				700
@@ -87,15 +111,27 @@
 		</td>-->
 		
 
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Transparent_Cards" data-type="SS">
 				1300
 			</span>
 		</td>
 		
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Semi_Transparent_Cards" data-type="SS">
 				1300
+			</span>
+		</td>
+
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="1000" data-card="Transparent_Cards" data-type="SS">
+				1000
+			</span>
+		</td>
+		
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="1000" data-card="Semi_Transparent_Cards" data-type="SS">
+				1000
 			</span>
 		</td>
 
@@ -124,15 +160,27 @@
 			</span>
 		</td>-->
 		
-		<td> 
+		<td  class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Transparent_Cards" data-type="SS">
 				1900
 			</span>
 		</td>
 
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Semi_Transparent_Cards" data-type="SS">
 				1900
+			</span>
+		</td>
+
+		<td  class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="1500" data-card="Transparent_Cards" data-type="SS">
+				1500
+			</span>
+		</td>
+
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="1500" data-card="Semi_Transparent_Cards" data-type="SS">
+				1500
 			</span>
 		</td>
 
@@ -162,18 +210,29 @@
 			</span>
 		</td>-->
 		
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Transparent_Cards" data-type="SS">
 				2800
 			</span>
 		</td>
 
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Semi_Transparent_Cards" data-type="SS">
 				2800
 			</span>
 		</td>
 
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="2500" data-card="Transparent_Cards" data-type="SS">
+				2500
+			</span>
+		</td>
+
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="2500" data-card="Semi_Transparent_Cards" data-type="SS">
+				2500
+			</span>
+		</td>
 		
 		<td> 
 			<span class="price-bw btn btn-primary ptc" data-price="2700" data-card="White_with_Multi_Color_Printing" data-type="SS">
@@ -200,15 +259,27 @@
 			</span>
 		</td>-->
 		
-		<td> 
+		<td class="other">  
 			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Transparent_Cards" data-type="SS">
 				5400
 			</span>
 		</td>
 
-		<td> 
+		<td class="other"> 
 			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Semi_Transparent_Cards" data-type="SS">
 				5400
+			</span>
+		</td>
+
+		<td class="dealer">  
+			<span class="price-bw btn btn-primary etc" data-price="5000" data-card="Transparent_Cards" data-type="SS">
+				5000
+			</span>
+		</td>
+
+		<td class="dealer"> 
+			<span class="price-bw btn btn-primary etc" data-price="5000" data-card="Semi_Transparent_Cards" data-type="SS">
+				5000
 			</span>
 		</td>
 

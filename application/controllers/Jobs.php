@@ -149,6 +149,8 @@ public function edit($job_id=null)
         $data['title']="Job - Cybera Print Art";
         $data['heading']="Jobs";
         if($this->input->post()) {
+
+        		
 			    $this->load->model('customer_model');
                 if($this->input->post('customer_type') == 'new') 
                 {
@@ -239,8 +241,9 @@ public function edit($job_id=null)
         $check_rount_cutting = $this->input->post('c_rcorner_'.$i);
         if(!empty($check)) 
         {
-			
-			if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card')
+        	$details = $this->input->post('details_'.$i);
+
+        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card' && strpos($details, '_Transparent') ==  false)
 			{
 				$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
 			}

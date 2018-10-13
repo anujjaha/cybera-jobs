@@ -211,6 +211,7 @@ class Customer extends CI_Controller {
 			$customerDetails = $this->customer_model->get_customer_details('id', $customerId);
 
 			$addPerPrint = $customerDetails->extra_amount;
+			//echo $customerDetails->extra_amount;
 		}
 
 		$this->load->model('paper_model');

@@ -639,11 +639,11 @@ function updateQty()
 	
 	var finalTitle =cardTitle+"_"+jQuery("#original_v_card_qty").val()+"*"+multiple;
 
-	if(customCardTitle.length > 0 && customCardTitle != '')
+	/*if(customCardTitle.length > 0 && customCardTitle != '')
 	{
 		setCardType(customCardTitle);			
 		return true;
-	}
+	}*/
 	
 	
 	setCardType(finalTitle);
