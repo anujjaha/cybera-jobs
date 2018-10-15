@@ -1159,7 +1159,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				
 			</tr>';
 			if($j == 0) {
-				$content .= ' <tr><td colspan="2"><br><br></td></tr>';
+				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2> </center></span> </td></tr>';
 			}
 			$content .= '</table>';
 		}
