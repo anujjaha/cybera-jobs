@@ -70,8 +70,8 @@ function startaudio() {
 		</thead>
 	<tbody>
 		<?php
-		$ctb = "<table><tr><td>Material</td><td>Size</td><td>Print</td><td>Lamination</td>
-							<td>Binding</td><td>Packing</td><td>Details</td><td>Qty</td></tr>";
+		$ctb = "<table><tr><td>Qty</td><td>Size</td><td>Print</td><td>Lamination</td>
+							<td>Binding</td><td>Packing</td><td>Details</td></tr>";
 		$job_count = count($jobs);
 		$sr =1;	
 		foreach($jobs as $job) {
@@ -80,14 +80,14 @@ function startaudio() {
 			$jqty = "";
 				foreach($cutting_details[$job['j_id']] as $cut_data) {
 					$cmaterial .= "<tr>
-									<td>".$cut_data['c_material']."</td>
+									<td>".$cut_data['c_qty']."</td>
 									<td>".$cut_data['c_size']."</td>
 									<td>".$cut_data['c_print']."</td>
 									<td>".$cut_data['c_lamination']."</td>
 									<td>".$cut_data['c_binding']."</td>
 									<td>".$cut_data['c_packing']."</td>
 									<td>".$cut_data['c_details']."</td>
-									<td>".$cut_data['c_qty']."</td>
+									
 									</tr>";
 				}
 			$cmaterial .= "</table>";

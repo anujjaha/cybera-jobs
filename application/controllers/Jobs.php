@@ -568,10 +568,21 @@ public function edit($job_id=null)
 							$job_details['ismodified'] = 1;
 							$job_update_status = $this->job_model->update_job_details($j_details_id,$job_details);
 
-							if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card')
+
+
+							$details = $this->input->post('details_'.$i);
+
+				        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card' && strpos($details, '_Transparent') ==  false)
 							{
 								$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
 							}
+
+
+
+							/*if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card')
+							{
+								$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
+							}*/
 						}
 						else
 						{

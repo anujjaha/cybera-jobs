@@ -120,6 +120,30 @@ class User_model extends CI_Model {
 		return $query->result_array();
 	}
 	
+	public function getTransactionInfo($jobId = null)
+	{
+		if($jobId)
+		{
+			$sql = 'SELECT * FROM user_transactions 
+				WHERE t_type = "credit"
+				AND 
+				amount > 0
+				AND
+				notes != "Apply Discount"
+				AND job_id = "'. $jobId .'" ';
+
+			$query = $this->db->query($sql);
+
+
+			if($query)
+			{
+				return $query->row();
+			}
+		}
+
+		return false;
+	}
+
 	public function search_job_date($search)
 	{
 		$sql = "SELECT *,job.id as job_id, job.created as created FROM job

@@ -1070,6 +1070,9 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 						<tr>
 							<td align="center" style="font-size:12px;" colspan="2">
 								<strong>Estimate</strong>
+								<br>
+
+								This is System generated Email, Please do not reply.
 							</td>
 						</tr>
 						<tr>
@@ -1159,7 +1162,8 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				
 			</tr>';
 			if($j == 0) {
-				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2> </center></span> </td></tr>';
+				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2><br>
+				<strong>Note: No Need to reply, Mail send from automated system.</strong> </center></span> </td></tr>';
 			}
 			$content .= '</table>';
 		}

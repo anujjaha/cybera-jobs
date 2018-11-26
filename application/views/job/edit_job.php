@@ -25,6 +25,13 @@ function customer_selected(type,userid) {
 				 
 				jQuery("#mobile_"+type).val('');
 				jQuery("#mobile_"+type).val(data);
+				jQuery("#showEmailId").html("Email Id : " + data.email);
+
+				if(data.under_revision == 1)
+        	{
+        		alert("Please Collect Payment in Advance for the Job.");
+        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance</span>");
+        	}
 			 }
           });
 }
@@ -35,7 +42,13 @@ function customer_selected_set() {
          url: "<?php echo site_url();?>/customer/get_customer_ajax/id/"+userid, 
          success: 
               function(data){
+              	jQuery("#showEmailId").html("Email Id : " + data.email);
 				jQuery("#mobile_customer").val(data);
+				if(data.under_revision == 1)
+        	{
+        		alert("Please Collect Payment in Advance for the Job.");
+        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance</span>");
+        	}
 			 }
           });
 }
@@ -279,6 +292,12 @@ $modified_by = $this->session->userdata['user_id'];
 ?>
 <form action="<?php echo base_url();?>jobs/edit_job/<?php echo $job_data->id;?>" method="post" onsubmit="return check_form();">
 <div class="col-md-12">
+
+<div class="col-md-12 text-center">
+<p id="balance"  align="right"><h2 class="red" id="show_balance" ></h2></p>
+<p align="right"><h4 class="green" id="showEmailId" ></h4></p>
+</div>
+
 <table width="100%" border="2">
 	<tr>
 		<td colspan="2">

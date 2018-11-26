@@ -55,7 +55,20 @@ if(strtolower($this->session->userdata['department']) == "master")
 			</span>
 		</td>
 		<td width="10px"><?php echo $job['job_id'];?></td>
-		<td><?php echo $job['companyname'] ? $job['companyname'] : $job['name'] ;?></td>
+		<td><?php echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
+
+			if(isset($job['revision']) && $job['revision'] == 1)
+			{
+				?>
+			
+				
+				<br>
+				<span class="red">
+							Please collect Paymebt before Job Complete.
+				</span>
+			<?php } ?>
+
+		</td>
 		<td><?php echo $job['jobname'];?></td>
 		<td><?php echo $job['mobile'];?>
 			<hr>

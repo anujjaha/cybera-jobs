@@ -1,8 +1,15 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css"/>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script src="<?php echo base_url();?>assets/js/job_details.js"></script>
+
+
+
+
+
 <script>
 function showRemindContainer()		
 {		
-
 	var value = jQuery("#remindMe").val();		
 	if(value == 1)		
 	{		
@@ -26,7 +33,6 @@ function showSaveButton()
 
 $(document).ready(function() 
 {
-
 	jQuery("#save_button").on('click', function(event)
 	{
 		hideSaveButton();
@@ -107,6 +113,7 @@ $(document).ready(function()
     });
 	console.log('done');
 });
+
 function show_due(userid) {
 	$.ajax({
 		 type: "POST",
@@ -125,6 +132,8 @@ function show_due(userid) {
 			}
 	  });
 }
+
+
 function customer_selected(type,userid) {
 
 	jQuery("#current_customer_type").val(type);
@@ -153,6 +162,12 @@ function customer_selected(type,userid) {
 			jQuery("#mobile_"+type).val('');
         	jQuery("#mobile_"+type).val(data.mobile);
         	jQuery("#showEmailId").html("Email Id : " + data.email);
+        	if(data.under_revision == 1)
+        	{
+        		alert("Please Collect Payment in Advance for the Job.");
+        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance</span>");
+        	}
+
         	console.log(data.email);
         	/*console.log(data);
         	console.log(data.email);*/
@@ -529,6 +544,8 @@ $this->load->helper('general'); ?>
         <td colspan="2" align="center">
         <h3>Customer Type</h3>
         <p id="balance"  align="right"><h2 class="red" id="show_balance" ></h2></p>
+
+        
         <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
         <div class="row">
             <div class="col-md-3">
@@ -790,9 +807,44 @@ $this->load->helper('general'); ?>
 </table>
 
 <table align="center">		
+	<tr>
+		<td colspan="2">
+			Reference Customer : 
+			<select name="reference_customer_id" id="reference_customer_id">
+				<option value="0">
+					Please Select Reference Customer
+				</option>
+				<?php
+					foreach(get_all_customers() as $customer)
+					{
+				?>
+					<option value="<?php echo $customer->id;?>">
+						<?php echo !empty($customer->companyname) ? $customer->companyname : $customer->name;?>
+					</option>
+				<?php
+					}
+				?>
+				
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+			<br>
+			<div class="col-md-6">
+			Percentage : <input type="number" name="percentage" value="0" min="0" 
+			max="100" step="1">
+			</div>
+
+			<div class="col-md-6">
+			Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
+			max="10000" step="1">
+			</div>
+
+		</td>	
+	</tr>
 	<tr>		
-		<td> Remind Me : </td>		
-		<td>		
+		<td colspan="2" align="center"> Remind Me :
 		<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
 			<option value="0">No</option>		
 			<option value="1">Yes</option>		
@@ -1149,3 +1201,10 @@ for($i=1;$i<6;$i++) { ?>
 
   </div>
 </div>
+
+<script type="text/javascript">
+	setTimeout(function()
+	{
+		jQuery("#reference_customer_id").select2();
+	}, 100);
+</script>

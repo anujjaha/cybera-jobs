@@ -137,6 +137,7 @@ class User extends CI_Controller {
 		if($this->input->post('job_number')) {
 			$search = $this->input->post('job_number');
 			$data['job_data'] = $this->user_model->search_job_num($search);
+			$data['transaction_info'] = $this->user_model->getTransactionInfo($search);
 			$data['search']=$search;
 		}
 		$this->template->load('user', 'search_job', $data);

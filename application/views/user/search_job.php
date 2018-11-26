@@ -90,9 +90,32 @@ function show_job_details(job_id){
 		</td>
 		<td><?php echo date('h:i a d-M-Y',strtotime($job['created']));?></td>
 	
-		<td><?php echo $job['receipt'];?></td>
+		<td>
+			<?php
+				if(isset($transaction_info))
+				{
+					echo $job['receipt'] ? $job['receipt'] : $transaction_info->receipt;
+				}
+				else
+				{
+					echo $job['receipt'];
+				}
+
+		 	?>
+		 </td>
 		<td><?php echo $job['voucher_number'];?></td>
-		<td><?php echo $job['bill_number'];?></td>
+		<td>
+			<?php
+				if(isset($transaction_info))
+				{
+					echo $job['bill_number'] ? $job['bill_number'] : $transaction_info->bill_number;
+				}
+				else
+				{
+					echo $job['bill_number'];
+				}
+			?>
+		</td>
 		<td><a class="fancybox" href="#view_job_status" onclick="show_job_status(<?php echo $job['job_id'];?>);">
 			<?php
 				if(!empty($job['jstatus']) && $job['jstatus'] == JOB_COMPLETE) {

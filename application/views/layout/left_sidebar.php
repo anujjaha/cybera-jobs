@@ -83,11 +83,32 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
+
                         <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>jobs/edit">
                                 <i class="fa fa-dashboard"></i> <span>New Job</span>
                             </a>
                         </li>
+                        
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>account/quick">
+                                <i class="fa fa-dashboard"></i> <span>Quick Account</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>dealer/edit">
+                                <i class="fa fa-dashboard"></i> <span>Add New Dealer</span>
+                            </a>
+                        </li>
+                        
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>customer/edit">
+                                <i class="fa fa-dashboard"></i> <span>Add New Customer</span>
+                            </a>
+                        </li>
+
+
                          <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>jobs/pending">
                                 <i class="fa fa-dashboard"></i> <span>All Pending Jobs</span>
@@ -166,23 +187,7 @@
 
 
                         <li>
-                            <a target="_blank" href="<?php echo base_url();?>customer/edit">
-                                <i class="fa fa-calendar"></i> <span>Add New Customer</span>
-                                <!--<small class="badge pull-right bg-red">
-                                <span id="show_customers"></span>
-                                </small>-->
-                            </a>
-                        </li>
-
-                        <li>
-                            <a target="_blank" href="<?php echo base_url();?>dealer/edit">
-                                <i class="fa fa-calendar"></i> <span>Add New Dealer</span>
-                                <!--<small class="badge pull-right bg-red">
-                                <span id="show_customers"></span>
-                                </small>-->
-                            </a>
-                        </li>
-
+                        
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>dealer/vcustomers">
                                 <i class="fa fa-calendar"></i> <span>Voucher Customers</span>

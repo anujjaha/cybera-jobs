@@ -111,8 +111,9 @@ class Customer extends CI_Controller {
 				if($result->mobile) {
 
 					echo json_encode(array(
-						'mobile' 	=> $result->mobile,
-						'email' 	=> $result->emailid,
+						'mobile' 		=> $result->mobile,
+						'email' 		=> $result->emailid,
+						'under_revision' => $result->under_revision,
 					));
 					return true;
 				}
@@ -120,6 +121,7 @@ class Customer extends CI_Controller {
 					echo json_encode(array(
 						'mobile' 	=> $result->officecontact,
 						'email' 	=> $result->emailid,
+						'under_revision' => $result->under_revision,
 					));
 					return true;
 				}
@@ -153,6 +155,7 @@ class Customer extends CI_Controller {
 			$data['pin'] = $this->input->post('pin');
 			$data['outside'] = $this->input->post('outside');
 			$data['ctype'] = $this->input->post('ctype');
+			$data['under_revision'] = $this->input->post('under_revision');
 			$data['extra_amount'] = $this->input->post('extra_amount');
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');

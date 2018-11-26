@@ -89,6 +89,15 @@ $this->load->helper('form');
 			<input type="text" class="form-control" name="extra_amount" value="<?php echo $dealer_info->extra_amount;?>" placeholder="Extra Amount">
 		</div>
 
+		<div class="form-group">
+			<label>Under Revision</label>
+			<select name="under_revision" class="form-control">
+				<option <?php $dealer_info->under_revision == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php $dealer_info->under_revision == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+				
+			</select>
+		</div>
+
 		
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->

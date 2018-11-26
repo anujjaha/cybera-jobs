@@ -37,6 +37,7 @@
 	</tr>
 	<tr>
 		<td width="5%">Sr</td>
+		<td width="5%">Qty.</td>
 		<td width="10%">Machine</td>
 		<td width="10%">Material</td>
 		<td width="10%">Size</td>
@@ -46,7 +47,7 @@
 		<td width="10%">Packing</td>
 		<td width="5%">Checking</td>
 		<td width="20%">Details</td>
-		<td width="5%">Qty.</td>
+		
 	</tr>
 	<?php 
 	$j=1;
@@ -58,6 +59,9 @@
 		 ?>
 	<tr>
 		<td><?php echo $j;?>
+		<td align="right">
+			<?php echo $c_details['c_qty'];?>
+		</td>
 		<td><?php echo $c_details['c_machine'];?></td>
 		<td><?php echo $c_details['c_material'];?></td>
 		<td>
@@ -87,9 +91,7 @@
 		<td><?php echo $c_details['c_packing'];?></td>
 		<td><?php echo $c_details['c_checking'];?></td>
 		<td><?php echo $c_details['c_details'];?></td>
-		<td align="right">
-			<?php echo $c_details['c_qty'];?>
-		</td>
+		
 	</tr>
 	<?php $j++;} ?>
 	<tr>

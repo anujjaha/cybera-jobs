@@ -266,6 +266,7 @@ class Ajax extends CI_Controller {
 				echo $data->companyname ? $data->companyname : $data->name;
 			}
 		}
+
 		return true;
 	}
 	

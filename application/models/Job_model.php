@@ -166,6 +166,7 @@ class Job_model extends CI_Model {
 		$today = date('Y-m-d');
 		$department = $this->session->userdata['department'];
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
+				customer.under_revision as revision,
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
 				
