@@ -461,17 +461,42 @@ class Job_model extends CI_Model {
 	{
 
 		$userTransactions = "SELECT job_id, bill_number from user_transactions where customer_id = ".$customerId." AND t_type = 'credit' ";
+
+		$receiptTransactions = "SELECT job_id
+								FROM user_transactions
+								WHERE receipt != '' and receipt != 0 
+								and customer_id = '" .$customerId.  "'
+								and job_id != 0
+								ORDER BY id DESC";
+								
+
 		$bQuery 	= $this->db->query($userTransactions);
 		
 		$bResult	= $bQuery->result_array(); 
 		$response 	= array();
+
+		$receiptQuery 	= $this->db->query($receiptTransactions);
+		
+		$receiptResult	= $receiptQuery->result_array(); 
+
+		$getReceiptJobId = array();
+		foreach($receiptResult as $receiptJobIds)
+		{
+			$getReceiptJobId[] = $receiptJobIds['job_id'];
+		}
+		
+
 		$jobIds 	= $this->getJobIdWithoutBill($bResult);
 		$withBill   = array();
 
 		if(count($jobIds))
 		{
 
-		$withBill   = "SELECT DISTINCT(job_id) from user_transactions where customer_id = ".$customerId." AND job_id NOT IN (".implode(',', $jobIds).")";
+		$withBill   = "SELECT DISTINCT(job_id) from user_transactions where customer_id = ".$customerId." AND 
+			job_id NOT IN (".implode(',', $getReceiptJobId).")
+			AND
+			job_id NOT IN (".implode(',', $jobIds).")";
+
 		}
 		else
 		{
@@ -490,6 +515,7 @@ class Job_model extends CI_Model {
 		$results = $query->result_array();
 
 		$myData = array();
+
 		foreach($results as $result)
 		{
 
@@ -499,6 +525,10 @@ class Job_model extends CI_Model {
 			
 			if(in_array($result['job_id'], $billIds))
 				continue;
+
+			if(in_array($result['id'], $getReceiptJobId))
+				continue;
+			
 
 			$myData[] = $result;
 		}
@@ -513,7 +543,7 @@ class Job_model extends CI_Model {
 
 		foreach($records as  $record)
 		{
-			if(strlen($record['bill_number'] > 1))
+			if(strlen($record['bill_number']) > 1)
 			{
 				$response[] = $record['job_id'];
 			}
@@ -533,6 +563,101 @@ class Job_model extends CI_Model {
 
 		return $result;
 	}
+
+	
+	public function addNewBonus($data = array())
+	{
+		$data['created_at'] = date('Y-m-d H:i:s');
+		$data['notes'] 		= "Bonus Generated";
+
+		$this->db->insert("data_bonus_details", $data);
+
+		return $this->db->insert_id();
+	}	
+
+	public function creditBonus($customerId = null, $data = array())
+	{
+		$this->db->select('*')
+				->from('data_bonus_account')
+				->where('customer_id ='.$customerId)
+				->order_by('id', 'desc')
+				->limit(1);
+
+		$query 			= $this->db->get();
+		$creditEntry 	= $query->row();
+
+
+		if($creditEntry && $creditEntry->id)
+		{
+			$data['balance'] = $creditEntry->balance + $data['credit'];
+		}
+		else
+		{
+			$data['balance'] = $data['credit'];
+		}
+
+
+		$data['created_at'] = date('Y-m-d H:i:s');
+		$data['notes'] 		= "Bonus Generated";
+
+		$this->db->insert("data_bonus_account", $data);
+
+		return $this->db->insert_id();
+	}	
+
+	public function debitBonus($data = array())
+	{
+		$this->db->insert("data_bonus_account", $data);
+
+		return $this->db->insert_id();
+	}	
+
+	public function getReferenceDetails($jobId = null)
+	{
+		if($jobId)
+		{
+			$this->db->select('data_bonus_details.*')
+					->from('data_bonus_details')
+					->where('job_id ='.$jobId);
+
+			$result 		= $this->db->get();
+
+			if($result->row())
+			{
+				return $result->row();
+			}
+		}
+
+		return [];
+	}
+
+	public function resetBonus($refCustomerId, $job_id, $data)
+	{
+		$bonusAmount = $data['bonus_amount'];
+
+		$sql = 'SELECT * FROM data_bonus_account WHERE job_id = ' . $job_id . 
+		' order by id desc';
+
+		$query 			= $this->db->query($sql);
+		$bonusRecord 	=  $query->row();		
+
+		$debitData = [
+			'customer_id' => $bonusRecord->customer_id,
+			'job_id'	  => $job_id,
+			'debit'	  	  => $bonusRecord->credit,
+			'balance'	  => $bonusRecord->balance - $bonusRecord->credit,
+			'notes'		  => 'Debit - Due to Job Updated with Ref  ' . $job_id,
+			'created_at'  => date('Y-m-d H:i:s')
+		];
+		
+		$this->debitBonus($debitData);
+
+		$this->db->where('job_id', $job_id);
+
+		$status =  $this->db->update('data_bonus_details', $data);
+	}
 }
+
+
 
 

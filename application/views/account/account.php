@@ -462,6 +462,7 @@ function createBills()
 		dataType: 'JSON',
 		success: function(data)
 		{
+			jQuery("#jobRecords").html('');
 			if(data.status == true)
 			{
 				var appendHtml 	= '',

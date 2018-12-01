@@ -64,7 +64,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 				
 				<br>
 				<span class="red">
-							Please collect Paymebt before Job Complete.
+							Please collect Payment before Job Complete.
 				</span>
 			<?php } ?>
 

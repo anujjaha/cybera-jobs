@@ -8,6 +8,7 @@ class Jobs extends CI_Controller {
 		$this->load->model('dealer_model');
 		$this->load->model('customer_model');
 		$this->load->model('user_model');
+		$this->load->model('job_model');
 		
 	}
 	
@@ -150,6 +151,8 @@ public function edit($job_id=null)
         $data['heading']="Jobs";
         if($this->input->post()) {
 
+
+        	//pr($this->input->post());
         		
 			    $this->load->model('customer_model');
                 if($this->input->post('customer_type') == 'new') 
@@ -349,6 +352,56 @@ public function edit($job_id=null)
 				}
 
 
+				if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
+				{
+					$subTotal 	 	= $this->input->post('subtotal');
+					$percentage  	= $this->input->post('percentage');
+					$fixAmount 	 	= $this->input->post('fix_amount');
+					$refCustomerId  = $this->input->post('reference_customer_id');
+					$fixBonusAmount = $fixAmount;
+					$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
+					$finalBonusAmount = 0 ;
+
+					if($fixBonusAmount == 0)
+					{
+						$finalBonusAmount = $percentageAmount;
+					}
+
+					if($percentageAmount == 0)
+					{
+						$finalBonusAmount = $fixBonusAmount;
+					}
+
+					if($fixBonusAmount > 0 && $percentageAmount > 0)
+					{
+						$finalBonusAmount = $fixBonusAmount > $percentageAmount ? $percentageAmount : $fixBonusAmount;
+					}
+
+					if($finalBonusAmount > 0 )
+					{
+						$bonusData = array(
+							'customer_id' 			=> $refCustomerId,
+							'reference_customer_id' => $job_data->customer_id,
+							'job_id'				=> $job_id,
+							'percentage'			=> $percentage,
+							'fix_amount'			=> $fixAmount,
+							'bonus_amount'			=> $finalBonusAmount,
+							'is_edited'				=> 0
+						);
+
+
+						$this->job_model->addNewBonus($bonusData);
+
+						$creditBonusData = array(
+							'customer_id' => $refCustomerId,
+							'job_id'	  => $job_id,
+							'credit'	  => $finalBonusAmount,
+							'notes'		  => 'Credited with Ref ' . $job_id,
+						);
+						$this->job_model->creditBonus($refCustomerId, $creditBonusData);	
+					}
+				}
+
                 redirect("jobs/job_print/".$job_id,'refresh');
         }
         $data['paper_gsm']= $this->get_paper_gsm();
@@ -474,8 +527,9 @@ public function edit($job_id=null)
 			$data['customer_details']=$customer_details;
 			$data['job_details']=$job_details;
 			$data['job_data']=$job_data;
-			
-			
+			$data['reference_data']=$this->job_model->getReferenceDetails($job_id);
+
+
 			if($this->input->post()) 
 			{
 				$customer_id = $this->input->post('customer_id');
@@ -675,6 +729,59 @@ public function edit($job_id=null)
 					$subject = "Estimate ( Updated ) - " . $job_data->jobname;
 
 					$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+				}
+			}
+
+
+			if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
+			{
+				$subTotal 	 	= $this->input->post('subtotal');
+				$percentage  	= $this->input->post('percentage');
+				$fixAmount 	 	= $this->input->post('fix_amount');
+				$refCustomerId  = $this->input->post('reference_customer_id');
+				$fixBonusAmount = $fixAmount;
+				$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
+				$finalBonusAmount = 0 ;
+
+				if($fixBonusAmount == 0)
+				{
+					$finalBonusAmount = $percentageAmount;
+				}
+
+				if($percentageAmount == 0)
+				{
+					$finalBonusAmount = $fixBonusAmount;
+				}
+
+				if($fixBonusAmount > 0 && $percentageAmount > 0)
+				{
+					$finalBonusAmount = $fixBonusAmount > $percentageAmount ? $percentageAmount : $fixBonusAmount;
+				}
+
+				//pr($finalBonusAmount);
+
+				if($finalBonusAmount > 0 )
+				{
+					$bonusData = array(
+						'customer_id' 			=> $refCustomerId,
+						'reference_customer_id' => $job_data->customer_id,
+						'job_id'				=> $job_id,
+						'percentage'			=> $percentage,
+						'fix_amount'			=> $fixAmount,
+						'bonus_amount'			=> $finalBonusAmount,
+						'is_edited'				=> 1
+					);
+
+
+					$this->job_model->resetBonus($refCustomerId, $job_id, $bonusData);
+
+					$creditBonusData = array(
+						'customer_id' => $refCustomerId,
+						'job_id'	  => $job_id,
+						'credit'	  => $finalBonusAmount,
+						'notes'		  => 'Credited with Ref ' . $job_id,
+					);
+					$this->job_model->creditBonus($refCustomerId, $creditBonusData);	
 				}
 			}
 
