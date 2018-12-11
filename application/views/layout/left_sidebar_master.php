@@ -39,6 +39,13 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>account/quick">
+                                <i class="fa fa-envelope"></i> <span>Quick Account</span>
+                            </a>
+                        </li>
+                        
                         <li>
                             <a href="<?php echo base_url();?>master/all">
                                 <i class="fa fa-envelope"></i> <span>All Jobs</span>

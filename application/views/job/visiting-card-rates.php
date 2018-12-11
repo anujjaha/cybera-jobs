@@ -653,6 +653,6 @@ function updateQty()
 
 function setCustomCardTitle()
 {
-	customCardTitle = jQuery('#v_card_type').val();
+	//customCardTitle = jQuery('#v_card_type').val();
 }
 </script>

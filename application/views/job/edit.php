@@ -1,6 +1,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css"/>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
+ 
+ <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="<?php echo base_url();?>assets/js/job_details.js"></script>
 
 
@@ -33,6 +35,8 @@ function showSaveButton()
 
 $(document).ready(function() 
 {
+	///jQuery( "#tabs" ).tabs();
+
 	jQuery("#save_button").on('click', function(event)
 	{
 		hideSaveButton();
@@ -176,6 +180,7 @@ function customer_selected(type,userid) {
   });
 }
 function auto_suggest_price(id){
+    jQuery("#fancy_box_demo_card_only_id").val(id);
     jQuery("#fancybox_id").val(id);
 }
 function set_cutting_details(id){
@@ -295,7 +300,7 @@ function calculate_paper_cost(){
 	paper_gram = jQuery("#paper_gram").val();
 	paper_size = jQuery("#paper_size").val();
 	paper_print = jQuery("#paper_print").val();
-	id = jQuery("#fancybox_id").val();
+	id 			= jQuery("#fancybox_id") ? jQuery("#fancybox_id").val() : jQuery("#fancy_box_demo_card_only_id");
 	paper_qty = jQuery("#paper_qty").val();
 	ori_paper_qty = jQuery("#paper_qty").val();
 	if(paper_print == "FB") {
@@ -327,7 +332,11 @@ function calculate_paper_cost(){
                   
                   total = (amount * paper_qty )* mby;
                   jQuery("#result_paper_cost").html("--- "+paper_qty +" * "+amount+" [per unit] * "+paper_print+" = "+total );
+
                   jQuery("#details_"+id).val(paper_gram+"_"+paper_size+"_"+paper_print);
+                  
+                  
+
                   if(paper_print == "FB") {
 					jQuery("#rate_"+id).val(amount * 2);
                     if(paper_size == "13X19" || paper_size == "13x19" ) {
@@ -467,8 +476,10 @@ function open_price_list(sr)
 	
 	if(catValue == 'Digital Print' || catValue == 'Visiting Card' || catValue == 'Visiting Card Flat' || catValue == 'Transparent Visiting Card' )
 	{
-		$.fancybox({
-                'href': '#fancy_box_demo',
+		if(jQuery("#category_"+sr).val() == "Digital Print")
+		{
+			$.fancybox({
+                'href': '#fancy_box_demo_paper_only',
                 'width':1000,
 				'height':600,
 				'autoSize' : false,
@@ -481,7 +492,49 @@ function open_price_list(sr)
 					}, 10);
 				}
             });
+		}
+		else
+		{
+			$.fancybox({
+                'href': '#fancy_box_demo_card_only',
+                'width':1000,
+				'height':600,
+				'autoSize' : false,
+				'afterClose':function () {
+					
+					fancy_box_closed();
+					setTimeout(function()
+					{
+						openCuttingSlip(sr, catValue);	
+					}, 10);
+				}
+            });
+		}
+		
+		/*$.fancybox({
+                'href': '#fancy_box_demo',
+                'width':1000,
+				'height':600,
+				'autoSize' : false,
+				afterShow: function () {
+					console.log('aftershow');
+	    		},
+				'afterClose':function () {
+					
+					fancy_box_closed();
+					setTimeout(function()
+					{
+						openCuttingSlip(sr, catValue);	
+					}, 10);
+				}
+            });*/
+
 	}
+	
+}
+
+function hideShow()
+{
 	
 }
 function openCuttingSlip(id, catValue)
@@ -1001,17 +1054,15 @@ $this->load->helper('general'); ?>
     </div>
 </div>
 
-<div id="fancy_box_demo" style="width:100%;display: none;">
+
+<div id="fancy_box_demo_paper_only" style="width:100%;display: none;">
 	<div style="width: 100%; margin: 0 auto; padding: 10px 0 10px;">
 		<input type="hidden" name="fancybox_id" id="fancybox_id">
-        <ul class="tabs" data-persist="true">
-            <li><a href="#paper_tab">Paper</a></li>
-            <li><a href="#view2">300/350 GSM Matt/Gloss Card</a></li>
-            <li><a href="#view3">Exclusive Visiting Cards</a></li>
-            <li><a href="#view4">Transparent & White with Multi Color Printing</a></li>
+        <ul class="tabs" data-persist="true" id="tabs">
+            <li class="paper-tab-header"><a href="#paper_tab">Paper</a></li>
         </ul>
         <div class="tabcontents">
-			<div id="paper_tab">
+			<div id="paper_tab" class="test">
 				<div class="row">
 				<table width="80%" border="2">
 					<tr>
@@ -1056,7 +1107,20 @@ $this->load->helper('general'); ?>
 				</table>
 				</div>
 			</div>
-            <div id="view2">
+        </div>
+    </div>
+</div>
+
+<div id="fancy_box_demo_card_only" style="width:100%;display: none;">
+	<div style="width: 100%; margin: 0 auto; padding: 10px 0 10px;">
+		<input type="hidden" name="fancy_box_demo_card_only_id" id="fancy_box_demo_card_only_id">
+        <ul class="tabs" data-persist="true" id="tabs">
+            <li class="gsm-tab-header"><a href="#view2">300/350 GSM Matt/Gloss Card</a></li>
+            <li class="exlusive-tab-header"><a href="#view3">Exclusive Visiting Cards</a></li>
+            <li class="transparent-tab-header"><a href="#view4">Transparent & White with Multi Color Printing</a></li>
+        </ul>
+        <div class="tabcontents">
+			<div id="view2">
 				<?php
 					require_once('visiting-card-rates.php');
 				?>
@@ -1075,7 +1139,6 @@ $this->load->helper('general'); ?>
         </div>
     </div>
 </div>
-
 <script>
 jQuery(".setCuttingAuto").on('click', function()
 {

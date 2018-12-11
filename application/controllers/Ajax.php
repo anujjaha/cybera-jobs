@@ -714,24 +714,26 @@ class Ajax extends CI_Controller {
 				
 				
 			$cuttingBlock = $cornerBlock = $laserBlock = $laminationBlock = $bindingBlock = '';
-			$pcontent .= '<table align="center" width="90%" align="center" style="border:1px solid;">
+			$pcontent .= '<table align="center" align="center" style="border:1px solid; width: 450px;" width="500px">
 						<tr>
-							<td style="font-size: 15px;" align="left" width="50%">Customer Name : '.$customerDetails->companyname.'</td>
-							<td style="font-size: 15px;" align="right" width="50%">Date : '. date('d-m-Y H:i A', strtotime($jobData->created)).'</td>
+							<td style="font-size: 15px; width: 85%;" align="left" width="85%">Customer Name : '.$customerDetails->companyname.'</td>
+							<td style="font-size: 15px;" align="right" width="15%"> <strong>'.$jobData->id.'</strong>
+							</td>
+							<td width="50px">&nbsp;&nbsp;</td>
 						</tr>
 						<tr>
-							<td style="font-size: 14px;" align="left">Job Name : <strong>'.$jobData->jobname.'</strong></td>
-							<td style="font-size: 14px;" align="right">Job Num : <strong>'.$jobData->id.'</strong></td>
+							<td colspan="3" style="font-size: 14px;" align="left">Job Name : <strong>'.$jobData->jobname.'</strong></td>
 						</tr>
 						<tr>
-							<td colspan="2" style="font-size: 12px;" align="center">Created By : <strong>'. strtoupper( $created_info->nickname ).'</strong></td>
-							
+							<td style="font-size: 12px;" align="left">'. strtoupper( $created_info->nickname ).'</td>
+							<td style="font-size: 15px;" align="left" width="50%">'. date('d-m-Y H:i A', strtotime($jobData->created)).'</td>
+							<td width="10%">&nbsp;&nbsp;</td>
 						</tr></table>';
 
-			$pcontent .='<table align="center" border="2" width="90%" style="border:1px solid;"><tr>';
+			$pcontent .='<table align="center" border="2" width="80%" style="border:1px solid;"><tr>';
 			
 				$pcontent .= '<td>
-							<table align="center" border="2" width="100%" style="border:1px solid;">';
+							<table align="center" border="2" width="550px" style="border:1px solid;">';
 				
 				if(!empty($cutting['c_material'])) {
 					$c_m_label = "Material";
@@ -739,35 +741,48 @@ class Ajax extends CI_Controller {
 							$c_m_label = "";
 					}	
 				}
-				$cuttingBlock .= '<table width="500px" align="center" border="1">
+
+				/** Machine
+
+				<tr>
+					<td   style="width: 100px; font-size:16px;" align="right"> Machine : </td>
+					<td style="font-size:16px;"> '.$cutting['c_machine'].' </td>
+				</tr>
+
+				<tr>
+									<td style="font-size:16px;" align="right"> ' .$c_m_label. ' : </td>
+									<td style="font-size:16px;"> '.$cutting['c_material'].' </td>
+								</tr>
+				**/
+				$cuttingBlock .= '<table width="400px" align="center" border="1">
 								<tr>
 									<td colspan="2" style="font-size: 16px;">
 										<strong>Cutting Details</strong>
 									</td>
 								</tr>
+								
 								<tr>
-									<td   style="width: 100px; font-size:16px;" align="right"> Machine : </td>
-									<td style="font-size:16px;"> '.$cutting['c_machine'].' </td>
+									<td width="20%"  style="font-size:16px;" align="right"> Quantity : </td>
+									<td width="80%" style="font-size:16px;"> '.$cutting['c_qty'].' </td>
 								</tr>
 								<tr>
-									<td style="font-size:16px;" align="right"> ' .$c_m_label. ' : </td>
-									<td style="font-size:16px;"> '.$cutting['c_material'].' </td>
-								</tr>
-								<tr>
-									<td style="font-size:16px;" align="right"> Quantity : </td>
-									<td style="font-size:16px;"> '.$cutting['c_qty'].' </td>
-								</tr>
-								<tr>
-									<td style="font-size:16px;" align="right"> Size : </td>
-									<td style="font-size:16px;"> '.$cutting['c_size'].' </td>
-								</tr>
-								<tr>
-									<td  style="font-size:16px;" align="right"> Print : </td>
-									<td  style="font-size:16px;"> '.$cutting['c_print'].' </td>
-								</tr>
-								<tr>
-									<td  style="font-size:16px;" align="right"> Cutting Details : </td>
-									<td  style="font-size:16px;"> '.$cutting['c_sizeinfo'].' </td>
+									<td colspan="2">
+										<table border="1">
+											<tr>
+												<td width="33%" style="font-size:16px;" align="left"> 
+													Size : '. $cutting['c_size'] .'
+												</td>
+
+												<td width="33%"  style="font-size:16px;" align="center"> 
+													Print : '. $cutting['c_print'] .'
+												</td>
+
+												<td width="33%"  style="font-size:16px;" align="left"> 
+													Cutting Details : '. $cutting['c_sizeinfo'] .'
+												</td>
+											</tr>
+										</table>
+									</td>
 								</tr>
 							</table>';
 				
@@ -888,25 +903,25 @@ class Ajax extends CI_Controller {
 				if(strlen($cuttingBlock) > 1 )
 				{
 					$pcontent .= '<tr><td colspan="2">' .$cuttingBlock.'</td></tr>';
-					$pcontent .= '<tr><td colspan="2"><br></td></tr>';
+					//$pcontent .= '<tr><td colspan="2"><br></td></tr>';
 				}
 				
 				if(strlen($cornerBlock) > 1 )
 				{
 					$pcontent .= '<tr><td colspan="2">' .$cornerBlock.'</td></tr>';
-					$pcontent .= '<tr><td colspan="2"><br></td></tr>';
+					//$pcontent .= '<tr><td colspan="2"><br></td></tr>';
 				}
 				
 				if(strlen($laserBlock) > 1 )
 				{
 					$pcontent .= '<tr><td colspan="2">' .$laserBlock.'</td></tr>';
-					$pcontent .= '<tr><td colspan="2"><br></td></tr>';
+					//$pcontent .= '<tr><td colspan="2"><br></td></tr>';
 				}
 				
 				if(strlen($laminationBlock) > 1 )
 				{
 					$pcontent .= '<tr><td colspan="2">' .$laminationBlock.'</td></tr>';
-					$pcontent .= '<tr><td colspan="2"><br></td></tr>';
+					//$pcontent .= '<tr><td colspan="2"><br></td></tr>';
 				}
 				
 				if(strlen($bindingBlock) > 1 )
@@ -979,19 +994,23 @@ class Ajax extends CI_Controller {
 			$billNumber = $this->input->post('billNumber');
 			
 			$this->load->model('job_model');
-			
-			addBillToJobClearDueAmount($jobId, $billNumber);
-			
-		
-			$status = $this->job_model->addJobBillNumber($jobId, $billNumber);
-			
-			if($status)
+
+			if(strlen($billNumber) > 2)
 			{
-				echo json_encode(array(
-					'status' => true
-				));
+				addBillToJobClearDueAmount($jobId, $billNumber);
+				
 			
-			die;
+				$status = $this->job_model->addJobBillNumber($jobId, $billNumber);
+				
+				if($status)
+				{
+					echo json_encode(array(
+						'status' => true
+					));
+				
+				die;
+			}
+			
 		}
 		
 		echo json_encode(array(

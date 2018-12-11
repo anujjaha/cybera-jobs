@@ -17,6 +17,12 @@
 			<td align="right"> <label>Total Xerox : </label></td>
 			<td> <input type="number" min="0" name="xerox_business" value="0" required="required" class="form-control"> </td>
 		</tr>
+
+		<tr>
+			<td align="right"> <label>Total Card : </label></td>
+			<td> <input type="number" min="0" name="card_business" value="0" required="required" class="form-control"> </td>
+		</tr>
+
 		<tr>
 			<td align="right"> <label>Expense : </label></td>
 			<td> <input type="number" min="0" name="expense" value="0" required="required" class="form-control"> </td>
