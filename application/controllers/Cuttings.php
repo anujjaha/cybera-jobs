@@ -20,10 +20,11 @@ class Cuttings extends CI_Controller {
 	 */
 	public function index()
 	{
-            $this->load->model('job_model');
+		    $this->load->model('job_model');
             $data = array();
-            $data = $this->job_model->get_cutting_dashboard('job.status','1');
+            $data['jobs'] = $this->job_model->get_cutting_dashboard('job.status','1');
             $data['heading'] =$data['title']="Cutting Department - Cybera Print Art";
+
             $this->template->load('cutting', 'index', $data);
 		
 	}

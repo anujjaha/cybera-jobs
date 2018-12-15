@@ -371,6 +371,7 @@ class Job_model extends CI_Model {
 				 ON job.customer_id = customer.id
 				 $condition
 				 order by job.id DESC
+				 LIMIT 10
 				";
 		$query = $this->db->query($sql);
 		$result['jobs'] = $query->result_array();
@@ -392,7 +393,9 @@ class Job_model extends CI_Model {
 		
 		$department = $this->session->userdata['department'];
 		$today = date('Y-m-d');
-		$sql = "SELECT *,job.id as job_id,job.created as 'created',
+
+		// Used NewSql Earlier
+		$newSql = "SELECT *,job.id as job_id,job.created as 'created',
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
 				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
@@ -406,22 +409,31 @@ class Job_model extends CI_Model {
 				 and job.jdate = '".$today."'
 				 group by job.id
 				 order by job.id DESC
+				 LIMIT 10
 				";
+
+		$sql = "SELECT job.*,job.id as job_id,job.created as 'created'
+					FROM job
+					LEFT JOIN customer ON job.customer_id = customer.id 
+ 					WHERE
+  					job.id IN (select j_id from cutting_details where c_status =0) and job.jdate = '2018-12-11' group by job.id order by job.id DESC LIMIT 100";
+		//echo $sql;die('test');
 		$query = $this->db->query($sql);
 		$result['jobs'] = $query->result_array();
-		
-		$sql_cd = "SELECT cd.* from job LEFT JOIN cutting_details cd 
-					ON job.id = cd.j_id
-					 $condition order by job.id DESC";
-		$cd_result = $this->db->query($sql_cd);
-		$j_set = array();
-		
-		foreach($cd_result->result_array() as $ccd) {
-			$j_set[$ccd['j_id']][] = $ccd;
+		$jobIds 		= [];
+
+		foreach($result['jobs'] as $job)
+		{
+			$jobIds[] = $job['id'];
 		}
 		
-		$result['cutting_details'] = $j_set;
-		return $result;
+		$sql_cd = "SELECT * from cutting_details 
+					LEFT JOIN job on job.id = cutting_details.j_id
+					LEFT JOIN customer on customer.id = job.customer_id
+					WHERE j_id IN (".  implode(',', $jobIds) .")
+					";
+		$cd_result = $this->db->query($sql_cd);
+		return $cd_result->result_array();
 	}
 	
 	public function get_all_customers() {

@@ -58,70 +58,71 @@ function startaudio() {
 		<th>Job Num</th>
 		<th>Customer Name</th>
 		<th>Job Name</th>
-		<th>Mobile</th>
 		<th>Details</th>
 		<!--<th>Bill Amount</th>
 		<th>Advance</th>
 		<th>Due</th>-->
 		<th>Date / Time</th>
-		<th>Status</th>
-		<th>Cutting Details</th>
+		<th>View</th>
 		</tr>
 		</thead>
 	<tbody>
 		<?php
-		$ctb = "<table><tr><td>Qty</td><td>Size</td><td>Print</td><td>Lamination</td>
+		/*$ctb = "<table><tr><td>Qty</td><td>Size</td><td>Print</td><td>Lamination</td>
 							<td>Binding</td><td>Packing</td><td>Details</td></tr>";
-		$job_count = count($jobs);
+		$job_count = count($jobs);*/
 		$sr =1;	
 		foreach($jobs as $job) {
-			
-			$cmaterial = $ctb;
-			$jqty = "";
-				foreach($cutting_details[$job['j_id']] as $cut_data) {
-					$cmaterial .= "<tr>
-									<td>".$cut_data['c_qty']."</td>
-									<td>".$cut_data['c_size']."</td>
-									<td>".$cut_data['c_print']."</td>
-									<td>".$cut_data['c_lamination']."</td>
-									<td>".$cut_data['c_binding']."</td>
-									<td>".$cut_data['c_packing']."</td>
-									<td>".$cut_data['c_details']."</td>
+
+			$cmaterial .= "<table border='2'><tr>
+								<td>Details</td>
+								<td>Qty</td>
+								<td>Size</td>
+								<td>Print</td>
+								<td>Lamination</td>
+								<td>Binding</td>
+								<td>Packing</td>
+							</tr>
+							<tr>
+									<td>".$job['c_details']."</td>
+									<td>".$job['c_qty']."</td>
+									<td>".$job['c_size']."</td>
+									<td>".$job['c_print']."</td>
+									<td>".$job['c_lamination']."</td>
+									<td>".$job['c_binding']."</td>
+									<td>".$job['c_packing']."</td>
 									
 									</tr>";
-				}
+			
 			$cmaterial .= "</table>";
 			
 			 ?>
 		<tr>
-		<td>
-		<p id="jview_<?php echo $sr;?>">
-		<?php
-			if($job['j_view']) {
-				echo $sr;
-			}else { ?>
-			<script>startaudio();</script>	
-			 <i class="fa fa-refresh fa-spin fa-4x" onclick="view_job(<?php echo $sr;?>,<?php echo $job['job_id'];?>);"></i><?php } ?>
-		</p>
-		</td>
-		<td><?php echo $job['job_id'];?></td>
+			<td>
+			<p id="jview_<?php echo $job['j_id'];?>">
+				Audio
+			</p>
+			</td>
+		<td><?php echo $job['j_id'];?></td>
 		<td><?php echo $job['companyname'] ? $job['companyname']:$job['name'] ;?></td>
 		<td><?php echo $job['jobname'];?></td>
-		<td><?php echo $job['mobile'];?></td>
-		<td><?php echo $$cmaterial;?></td>
+		<td>
+			<?php echo $cmaterial;?>
+
+		</td>
 		<td><?php echo date('h:i a d-M',strtotime($job['created']));?>
-			<br>
+			<!-- <br>
 			<a href="javascript:void(0);" onclick="quick_update_job_status(<?php echo $sr;?>,<?php echo $job['job_id'];?>,'<?php echo JOB_CUTTING;?>');">
 				Cutting
 			</a>
-			<hr>
-			<a href="javascript:void(0);" onclick="quick_update_job_status(<?php echo $sr;?>,<?php echo $job['job_id'];?>,'<?php echo JOB_CUTTING_COMPLETED;?>');">
+			<hr> -->
+			<a href="javascript:void(0);" onclick="quick_update_job_status(<?php echo $sr;?>,<?php echo $job['j_id'];?>,'<?php echo JOB_CUTTING_COMPLETED;?>');">
 				Cutting-Completed
 			</a>
 			
 			
 		</td>
-		<td><?php echo $job['jstatus'];?></td>
+		<!-- <td><?php echo $job['jstatus'];?></td> -->
 		
 		<td><a class="fancybox" 
 			 onclick="show_cutting_details(<?php echo $job['job_id'];?>,<?php echo $sr;?>);" 
@@ -177,6 +178,7 @@ function quick_update_job_status(sr,id,value) {
          data:{"j_id":id,"j_status":value},
          success: 
               function(data){
+              	alert("Job Updated !");
 	                location.reload();
 			 }
           });
@@ -222,10 +224,11 @@ function loadlink() {
           });
 }
   
-loadlink(); 
-setInterval(function(){
+//loadlink(); 
+
+/*setInterval(function(){
     loadlink();
-}, 10000);
+}, 10000);*/
 
 function view_job(sr,id) {
 	stopaudio();
