@@ -55,15 +55,16 @@ function startaudio() {
 		<thead>
 		<tr>
 		<th>Sr</th>
-		<th>Job Num</th>
-		<th>Customer Name</th>
-		<th>Job Name</th>
+		<th>
+			Details
+			<br>
+			Job Name
+		</th>
 		<th>Details</th>
 		<!--<th>Bill Amount</th>
 		<th>Advance</th>
 		<th>Due</th>-->
 		<th>Date / Time</th>
-		<th>View</th>
 		</tr>
 		</thead>
 	<tbody>
@@ -74,7 +75,8 @@ function startaudio() {
 		$sr =1;	
 		foreach($jobs as $job) {
 
-			$cmaterial .= "<table border='2'><tr>
+			$cmaterial = '';
+			$cmaterial .= "<table width='100%' border='2'><tr>
 								<td>Details</td>
 								<td>Qty</td>
 								<td>Size</td>
@@ -100,13 +102,26 @@ function startaudio() {
 		<tr>
 			<td>
 			<p id="jview_<?php echo $job['j_id'];?>">
-				Audio
+			<?php
+
+				if(in_array($job['j_id'], $view_jobs)) 
+				{
+					echo $job['j_id'];
+				}else { 
+					?>
+				
+				<script>startaudio();</script>	
+				 <i class="fa fa-refresh fa-spin fa-4x" onclick="view_job(<?php echo $sr;?>,<?php echo $job['j_id'];?>);"></i><?php } ?>
 			</p>
 			</td>
-		<td><?php echo $job['j_id'];?></td>
-		<td><?php echo $job['companyname'] ? $job['companyname']:$job['name'] ;?></td>
-		<td><?php echo $job['jobname'];?></td>
 		<td>
+			<?php echo $job['j_id'];?>
+			<hr>
+			<?php echo $job['companyname'] ? $job['companyname']:$job['name'] ;?>
+			<hr>
+			<?php echo $job['jobname'];?>
+			</td>
+		<td width="80%">
 			<?php echo $cmaterial;?>
 
 		</td>
@@ -124,12 +139,6 @@ function startaudio() {
 		</td>
 		<!-- <td><?php echo $job['jstatus'];?></td> -->
 		
-		<td><a class="fancybox" 
-			 onclick="show_cutting_details(<?php echo $job['job_id'];?>,<?php echo $sr;?>);" 
-			 href="#view_job_details">
-			 View
-			 </a>
-		 </td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>
@@ -185,6 +194,7 @@ function quick_update_job_status(sr,id,value) {
 }
 
 function update_datatable_grid() {
+	return ;
 		$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/ajax/ajax_cutting_datatable/jstatus/Pending", 
@@ -209,36 +219,43 @@ function update_datatable_grid() {
 
 function loadlink() {
 		var jcount = jQuery("#cutting_counter").val();
+
 		$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/ajax/ajax_cutting_count/", 
          success: 
             function(data){
-				if(jcount != data) {
-					//alert("Ajax Return	"+data);
+            	if(typeof jcount != "undefined" &&  jcount != data) 
+            	{
+            		jQuery("#cutting_counter").val(data);
 					update_datatable_grid();
-					jQuery("#cutting_counter").val(data);
+
+					setTimeout(function()
+					{
+						location.reload();
+					}, 3000);
 				}
 				return true;
           }
           });
 }
   
-//loadlink(); 
+loadlink(); 
 
-/*setInterval(function(){
+setInterval(function(){
     loadlink();
-}, 10000);*/
+}, 10000);
 
 function view_job(sr,id) {
 	stopaudio();
-	jQuery("#jview_"+sr).html(sr);
+	jQuery("#jview_"+id).html(id);
 	$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/ajax/ajax_job_view", 
          data:{'id':id,'department':'<?php echo $this->session->userdata['department'];?>'},
          success: 
             function(data){
+            	console.log('data');
 				return true;
           }
           });

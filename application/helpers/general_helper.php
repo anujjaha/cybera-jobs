@@ -966,7 +966,7 @@ function addBillToJobClearDueAmount($jobId = null, $billNumber = null)
 			'customer_id' 	=> $jobInfo->customer_id,
 			'job_id' 		=> $jobId,
 			'amount' 		=> $jobInfo->due - $jobInfo->discount,
-			'bill_number' 	=> '',
+			'bill_number' 	=> isset($billNumber) ? $billNumber : '',
 			'other' 		=> 'Bill-Created',
 			'pay_ref' 		=> 'Bill-Created',
 			'notes' 		=> 'Bill-Created - For Job',

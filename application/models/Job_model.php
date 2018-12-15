@@ -412,11 +412,14 @@ class Job_model extends CI_Model {
 				 LIMIT 10
 				";
 
+
 		$sql = "SELECT job.*,job.id as job_id,job.created as 'created'
 					FROM job
 					LEFT JOIN customer ON job.customer_id = customer.id 
  					WHERE
-  					job.id IN (select j_id from cutting_details where c_status =0) and job.jdate = '2018-12-11' group by job.id order by job.id DESC LIMIT 100";
+  					job.id IN (select j_id from cutting_details where c_status =0) and job.jdate = '". $today ."' group by job.id order by job.id
+
+  					 DESC LIMIT 100";
 		//echo $sql;die('test');
 		$query = $this->db->query($sql);
 		$result['jobs'] = $query->result_array();
@@ -667,6 +670,22 @@ class Job_model extends CI_Model {
 		$this->db->where('job_id', $job_id);
 
 		$status =  $this->db->update('data_bonus_details', $data);
+	}
+
+	public function today_view_cuttings()
+	{
+		$today = date('Y-m-d');
+		$sql = 'SELECT DISTINCT(j_id) from job_views where view_date = "'. $today .'" AND department = "cuttings" ';
+		$query = $this->db->query($sql);
+		$jobs  = $query->result_array();
+		$jobIds = [];
+
+		foreach($jobs as $job)
+		{
+			$jobIds[] = $job['j_id'];
+		}
+
+		return $jobIds;
 	}
 }
 

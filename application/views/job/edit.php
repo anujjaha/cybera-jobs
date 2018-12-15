@@ -442,6 +442,7 @@ function check_visiting_card(sr) {
 		if($("#category_"+sr).val() == "ROUND CORNER CUTTING") {
 			$("#details_"+sr).val("ROUND CORNER CUTTING");
 
+
 			if(jQuery("#current_customer_type").val() == 'dealer')
 			{
 				$("#rate_"+sr).val(".25");
@@ -475,8 +476,10 @@ function open_price_list(sr)
 	var catValue = jQuery("#category_" + sr ).val();
 	
 	if(catValue == 'Digital Print' || catValue == 'Visiting Card' || catValue == 'Visiting Card Flat' || catValue == 'Transparent Visiting Card' )
-	{
-		if(jQuery("#category_"+sr).val() == "Digital Print")
+	{	
+		var currentCustomer = jQuery("#current_customer_type").val();
+
+		if(jQuery("#category_"+sr).val() == "Digital Print" && currentCustomer == "dealer")
 		{
 			$.fancybox({
                 'href': '#fancy_box_demo_paper_only',

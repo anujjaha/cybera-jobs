@@ -106,7 +106,8 @@ class Ajax extends CI_Controller {
 		$this->load->model('job_model');
 		$data = array();
 		$data['jobs'] = count($this->job_model->get_today_cutting_details());
-		echo $data['jobs'];return true;
+		echo $data['jobs'];
+		return true;
 	}
 	
 	public function ajax_jobstatus_history($job_id=null) {

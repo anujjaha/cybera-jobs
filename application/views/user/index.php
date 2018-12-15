@@ -41,6 +41,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 	<tbody>
 		<?php
 		$sr =1;	
+		$billNumber = [];
 		foreach($jobs as $job) { 
 			//pr($job);
 			?>
@@ -137,7 +138,20 @@ if(strtolower($this->session->userdata['department']) == "master")
 			<?php echo  str_replace(","," ",$job['receipt'].$job['t_reciept']);?>
 		</td>
 		<td>
-			<?php echo str_replace(","," ",$job['bill_number'].$job['t_bill_number']);?>
+			<?php 
+
+				if(!in_array($job['bill_number'], $billNumber))
+				{
+					echo str_replace(","," ", $job['bill_number']);
+					$billNumber[] = $job['bill_number'];
+				}
+				if(!in_array($job['bill_number'], $billNumber))
+				{
+					echo str_replace(","," ", $job['t_bill_number']);
+					$billNumber[] = $job['bill_number'];
+				}
+
+			?>
 		</td>
 		<td><a class="fancybox" href="#view_job_status" onclick="show_job_status(<?php echo $job['job_id'];?>);">
 			<?php
