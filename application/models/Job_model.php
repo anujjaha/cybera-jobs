@@ -141,12 +141,14 @@ class Job_model extends CI_Model {
 		return $query->row();
 	}
 	
-	public function get_today_details($param=null,$value=null) {
+	public function get_today_details($param=null,$value=null) 
+	{
 		$condition = "";
 		if(!empty($param)) {
 			$condition = "WHERE $param = $value";
 			
 		}
+
 		$department = $this->session->userdata['department'];
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
@@ -371,7 +373,7 @@ class Job_model extends CI_Model {
 				 ON job.customer_id = customer.id
 				 $condition
 				 order by job.id DESC
-				 LIMIT 10
+				 LIMIT 1000
 				";
 		$query = $this->db->query($sql);
 		$result['jobs'] = $query->result_array();

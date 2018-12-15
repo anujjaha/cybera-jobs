@@ -72,6 +72,7 @@ function startaudio() {
 		<?php
 		$job_count = count($jobs);
 		$sr =1;	
+
 		foreach($jobs as $job) { 
 			$jdetails = "";
 			$jqty = "";
@@ -174,7 +175,7 @@ function update_datatable_grid() {
          url: "<?php echo site_url();?>/ajax/ajax_job_datatable/", 
          success: 
             function(data){
-				location.reload();
+				//location.reload();
 				/*
 				jQuery("#job_datatable").html(data);
 				$('#example1').dataTable({
@@ -199,9 +200,18 @@ function loadlink() {
          url: "<?php echo site_url();?>/ajax/ajax_job_count/", 
          success: 
             function(data){
-				if(jcount != data) {
-					jQuery("#get_job_count").val(data);
-					update_datatable_grid();
+				if(jcount != data) 
+				{
+					
+					setTimeout(function()
+					{
+						if(jcount != data)
+						{
+							//jQuery("#get_job_count").val(data);
+							location.reload();
+						}						
+					}, 3000);
+					//update_datatable_grid();
 				}
 				return true;
           }

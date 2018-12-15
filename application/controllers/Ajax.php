@@ -99,8 +99,16 @@ class Ajax extends CI_Controller {
 			$value = "'".date('Y-m-d')."'";
 		}
 		$data = array();
-		$data['jobs'] = count($this->job_model->get_today_details("job.$param","$value"));
-		echo $data['jobs'];return true;
+
+		$today 	= date('Y-m-d');
+        $data 	= $this->job_model->get_print_dashboard('job.jdate',"'".$today."'");
+
+        echo count($data['jobs']);
+        return;
+		/*$data['jobs'] = count($this->job_model->get_today_details("job.$param","$value"));
+		pr($this->job_model->get_today_details("job.$param","$value"))
+		echo $data['jobs'];return true;*/
+		
 	}
 	public function ajax_cutting_count($param='jstatus',$value='Pending') {
 		$this->load->model('job_model');
