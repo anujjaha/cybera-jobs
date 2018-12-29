@@ -158,6 +158,10 @@ class Customer extends CI_Controller {
 			$data['ctype'] = $this->input->post('ctype');
 			$data['under_revision'] = $this->input->post('under_revision');
 			$data['extra_amount'] = $this->input->post('extra_amount');
+			$data['description'] = $this->input->post('description');
+			$data['is_block'] = $this->input->post('is_block');
+
+
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');
 			if($customer_id) {

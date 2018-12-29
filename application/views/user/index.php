@@ -55,7 +55,27 @@ if(strtolower($this->session->userdata['department']) == "master")
 				<?php echo 	date('h:i A',strtotime($job['created']));?>
 			</span>
 		</td>
-		<td width="10px"><?php echo $job['job_id'];?></td>
+		<td width="10px">
+
+				
+			<?php
+				if(isset($job['is_hold']) && $job['is_hold'] == 1)
+				{
+					echo '<span class="red">' .   $job['job_id'] . '</span>';
+					echo '<br><span class="red"> Payment Pending </span>';
+				}
+
+				else if(isset($job['cyb_delivery']) && $job['cyb_delivery'] == 0)
+				{
+					echo '<span class="bold-font">' .   $job['job_id'] . '</span>';
+					echo '<br><span class="green"> Cybera Delivery Pending </span>';
+				}
+				else
+				{
+					echo $job['job_id'];
+				}
+			?>
+		</td>
 		<td><?php echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
 
 			if(isset($job['revision']) && $job['revision'] == 1)
@@ -281,6 +301,8 @@ function update_job_status(id, defaultstatus) {
 	var value = $( "input:radio[name=jstatus]:checked" ).val();
 	var send_sms = $( "input:radio[name=send_sms]:checked" ).val();
 	var is_delivered = $( "input:radio[name=is_delivered]:checked" ).val();
+	var is_hold = $( "input:radio[name=is_hold]:checked" ).val();
+	var cyb_delivery = $( "input:radio[name=cyb_delivery]:checked" ).val();
 	var bill_number = $( "#bill_number").val();
 	var voucher_number = $( "#voucher_number").val();
 	var receipt = $( "#receipt").val();
@@ -292,11 +314,17 @@ function update_job_status(id, defaultstatus) {
 		alert('Job Status Updated');
 		jQuery("#jobStatusTbl").hide();
 	}
-	
+	var params = {"j_id":id, "is_delivered": is_delivered,"j_status":value,"send_sms" : send_sms,"receipt":receipt,"bill_number":bill_number,"voucher_number":voucher_number,
+         "is_hold": is_hold,
+         "cyb_delivery": cyb_delivery
+     };	
+
+    console.log(params);
+
 	$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/prints/update_job_status/"+id, 
-         data:{"j_id":id, "is_delivered": is_delivered,"j_status":value,"send_sms" : send_sms,"receipt":receipt,"bill_number":bill_number,"voucher_number":voucher_number},
+         data: params,
          success: 
               function(data){
 				  console.log(data);

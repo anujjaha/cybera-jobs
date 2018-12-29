@@ -36,6 +36,7 @@ $('#example1').dataTable( {
 		<th>Switch To Dealer</th>
 		<th>Switch To Voucher</th>
 		<th>Created</th>
+		<th>Block</th>
 		<th>View</th>
 		<th>Edit</th>
 		<th>Delete</th>
@@ -67,6 +68,18 @@ $('#example1').dataTable( {
 			<a href="javascript:void(0);" onclick="switch_customer(<?php echo $customer->id;?>,2);">Set Voucher</a>
 		</td>
 		<td><?php echo date('h:i A', strtotime($customer->created));?></td>
+		<td>
+			<?php 
+				if($customer->is_block == 1)
+				{
+					echo "<span class='red'>Yes</span>";
+				}
+				else
+				{
+					echo "<span class='green'>No</span>";
+				}
+			?>
+		</td>
 		<td>
 			<a class="fancybox" href="#view_customer_info" onclick="show_customer(<?php echo $customer->id;?>,0);">
 				View

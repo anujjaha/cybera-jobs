@@ -58,8 +58,12 @@ if ( ! function_exists('test_method'))
   	}
     
     function create_customer_dropdown($type,$flag=null) {
+
 		if($type == "customer") {
-			$sql = "SELECT id,name,companyname FROM customer WHERE ctype = 0 order by companyname";
+			$sql = "SELECT id,name,companyname FROM customer 
+				WHERE ctype = 0
+				AND is_block = 0
+				 order by companyname";
 			$ci=& get_instance();
 			$ci->load->database(); 	
 			$query = $ci->db->query($sql);
@@ -144,9 +148,11 @@ if ( ! function_exists('test_method'))
 	
 	
     function get_all_customers($param=null,$value=null) {
-		$sql = "SELECT * FROM customer order by companyname";
+		$sql = "SELECT * FROM customer WHERE is_block = 0 order by companyname";
 		if(!empty($param)) {
-			$sql = "SELECT * FROM customer where $param = '".$value."' order by companyname";
+			$sql = "SELECT * FROM customer where
+
+				 $param = '".$value."' order by companyname";
 		}
 		$ci=& get_instance();
 		$ci->load->database(); 	
@@ -1195,3 +1201,27 @@ function getJobReceiptNumber($jobId)
 
 	return '';
 }
+
+function getJobBillNumber($jobId)
+{
+	$sql = "SELECT bill_number from user_transactions 
+		WHERE job_id = ". $jobId ."
+		AND
+		bill_number != ''
+		LIMIT 1
+		";
+
+	$ci=& get_instance();
+	$ci->load->database(); 	
+
+	$query = $ci->db->query($sql);
+	$result =  $query->row();
+
+	if($result)
+	{
+		return $result->bill_number;	
+	}
+
+	return '';
+}
+

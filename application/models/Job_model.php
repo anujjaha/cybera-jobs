@@ -183,7 +183,9 @@ class Job_model extends CI_Model {
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
 				 WHERE 
-				 job.status != 0 OR job.jdate = '".$today."' OR is_delivered = 0
+				 job.status != 0 OR job.is_hold = 1 
+				 OR job.cyb_delivery = 0
+				 OR job.jdate = '".$today."' OR is_delivered = 0
 				 order by job.id DESC
 				";
 		

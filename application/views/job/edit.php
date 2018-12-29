@@ -156,7 +156,8 @@ function customer_selected(type,userid) {
 
 	jQuery("#customer_id").val(userid);
 
-    $.ajax({
+    $.ajax(
+    {
      type: "POST",
      dataType: 'JSON',
      url: "<?php echo site_url();?>/customer/get_customer_ajax/id/"+userid, 

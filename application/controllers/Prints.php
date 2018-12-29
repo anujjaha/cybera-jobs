@@ -38,12 +38,16 @@ class Prints extends CI_Controller {
             $data = array('j_status'=>$this->input->post('j_status'),'j_id'=>$this->input->post('j_id'));
             $flag = false;
 
+            $jdata['is_hold'] = $this->input->post('is_hold');
+            $jdata['cyb_delivery'] = $this->input->post('cyb_delivery');
+
             if($this->input->post('bill_number')) 
             {
 				$jdata['bill_number'] = $this->input->post('bill_number');
 				$flag = true;
 			}
-            if($this->input->post('voucher_number')) 
+
+			if($this->input->post('voucher_number')) 
             {
 				$jdata['voucher_number'] = $this->input->post('voucher_number');
 				$flag = true;
@@ -53,6 +57,7 @@ class Prints extends CI_Controller {
 				$jdata['receipt'] = $this->input->post('receipt');
 				$flag = true;
 			}
+
 			if($flag) 
 			{
 				$jdata['is_delivered'] = $this->input->post('is_delivered');

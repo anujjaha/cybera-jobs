@@ -284,6 +284,30 @@ if(strlen($job_data->bill_number) < 2)
 					<br>
 					<label><input type="radio" id="is_delivered"  <?php if($job_data->is_delivered == 0) echo 'checked="checked"';?> name="is_delivered" value="0">Un Delivered</label>
 				</td>
+
+				<td>
+					<label>
+					<input type="radio" id="is_hold" <?php if($job_data->is_hold == 1) echo 'checked="checked"';?> name="is_hold" value="1">
+						Payment
+					</label>
+					<br>
+					<label>
+						<input type="radio"  <?php if($job_data->is_hold == 0) echo 'checked="checked"';?> name="is_hold" value="0">
+						Payment Received
+					</label>
+				</td>
+
+				<td>
+					<label>
+					<input type="radio" id="cyb_delivery" <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> name="cyb_delivery" value="1">
+						Delivery Done
+					</label>
+					<br>
+					<label>
+						<input type="radio"  <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
+						Cybera Delivery
+					</label>
+				</td>
 				<td>
 						<center>
 						<label><input type="radio" id="send_sms" name="send_sms" value="Yes">Send SMS</label>
@@ -610,6 +634,5 @@ jQuery("#addDiscount").on('click', function()
 			}
 	});
 	jQuery("#amountDiscount").val();
-		alert('etst');
 });
 </script>

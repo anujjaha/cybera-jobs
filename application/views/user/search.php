@@ -101,7 +101,6 @@
 		<td><?php echo $job['jstatus'];?></td>
 		<td>
 		<?php 
-
 			if(strlen($job['receipt']) > 0)
 			{
 				echo $job['receipt'];
@@ -112,10 +111,20 @@
 			}
 
 		?>
-			
-
 		</td>
-		<td><?php echo $job['bill_number'];?></td>
+		<td>
+			<?php 
+
+				if(strlen($job['bill_number']) > 0)
+				{
+					echo $job['bill_number'];
+				}	
+				else
+				{
+					echo getJobBillNumber($job['job_id']);
+				}
+			?>
+		</td>
 		<td>
 			<?php
 			$user_bal = get_balance($job['customer_id']) ;

@@ -51,6 +51,10 @@ $this->load->helper('form');
 			</select>
 		</div>
 		
+		<div class="form-group">
+			<label>Extra Charge</label>
+			<input type="text" class="form-control" name="extra_amount" value="<?php echo $dealer_info->extra_amount;?>" placeholder="Extra Amount">
+		</div>
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
 </div>
@@ -84,10 +88,7 @@ $this->load->helper('form');
 			<input type="text" class="form-control" name="pin" value="<?php if(!empty($dealer_info->pin)){echo $dealer_info->pin;}?>" placeholder="Pincode">
 		</div>
 
-		<div class="form-group">
-			<label>Extra Charge</label>
-			<input type="text" class="form-control" name="extra_amount" value="<?php echo $dealer_info->extra_amount;?>" placeholder="Extra Amount">
-		</div>
+		
 
 		<div class="form-group">
 			<label>Under Revision</label>
@@ -98,6 +99,19 @@ $this->load->helper('form');
 			</select>
 		</div>
 
+		<div class="form-group">
+			<label>Mark As Block</label>
+			<select name="is_block" id="is_block" class="form-control">
+				<option value="0">No </option>
+				<option  value="1">Yes </option>
+				
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>Special Rates</label>
+			<textarea class="form-control" name="description"><?php isset($dealer_info->description) ?$dealer_info->description : '' ?></textarea>
+		</div>
 		
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
@@ -140,3 +154,9 @@ $this->load->helper('form');
 		</div>
 </div>
 </form>
+
+
+<script type="text/javascript">
+	
+	jQuery("#is_block").val(<?php echo $dealer_info->is_block;?>);
+</script>
