@@ -37,6 +37,7 @@ class Dealer extends CI_Controller {
 
 	public function print_dealer()
 	{
+		die("BLOCKED");
 		$dealers = $this->dealer_model->get_dealer_details();
 		$html    = '<table style="border: solid 2px black;" class="table" border="2">
 					<tr>

@@ -44,6 +44,7 @@ function direct_verify_job(id) {
 		<th>Date / Time</th>
 		<th>View</th>
 		<th>Verify</th>
+		<th>Edit</th>
 		</tr>
 		</thead>
 	<tbody>
@@ -74,6 +75,9 @@ function direct_verify_job(id) {
 			<span id="verify_<?php echo $job['job_id'];?>">
 				<a href="javascript:void(0);" onclick="direct_verify_job(<?php echo $job['job_id'];?>)">Verify</a>
 			</span>
+		</td>
+		<td>
+			<a target="_blank" href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a>
 		</td>
 		</tr>
 		<?php $sr++; } ?>

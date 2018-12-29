@@ -143,13 +143,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 				if(!in_array($job['bill_number'], $billNumber))
 				{
 					echo str_replace(","," ", $job['bill_number']);
-					$billNumber[] = $job['bill_number'];
+					//$billNumber[] = $job['bill_number'];
 				}
-				if(!in_array($job['bill_number'], $billNumber))
+				/*if(!in_array($job['bill_number'], $billNumber))
 				{
 					echo str_replace(","," ", $job['t_bill_number']);
-					$billNumber[] = $job['bill_number'];
-				}
+					//$billNumber[] = $job['bill_number'];
+				}*/
 
 			?>
 		</td>
@@ -386,3 +386,28 @@ function setDelievered(jobId)
     <div id="job_view"></div>
 </div>
 </div>
+
+
+<script>
+if(jQuery("#customer"))
+{
+	jQuery("#customer").on('change', function()
+	{
+		var userId = jQuery("#customer").val();
+
+	    $.ajax(
+	    {
+	     	type: "POST",
+	     	dataType: 'JSON',
+	     	url: "<?php echo site_url();?>/customer/get_customer_ajax/id/"+userId, 
+	     	success: 
+	        function(data)
+	        {
+				jQuery("#sms_mobile").val(data.mobile);
+	        }
+	  });
+
+
+	});
+}
+</script>

@@ -56,11 +56,36 @@ class Account extends CI_Controller {
 		$pdfFileName = array_pop($fileName);
 
 		$attachment ="account_pdf_report/".$pdfFileName;
+
 		$content = "Hello Shaishav, \n\n <br><br>
 						Send an Email - ".date('d-m-Y H:i A')."
 						Please find attached PDF For Due Amount List with Company Names." ;
 		$subject = 'List of Companies Due Amount - '.date('d-m-Y H:i A');
 		$status = send_email_attachment('cyberaprintart@gmail.com', $subject, $content, $attachment);
+		
+		if($status)
+		{
+			redirect('user/index','refresh');
+		}
+	}
+
+	public function report()
+	{
+		$message = getAccountInfo();
+		$pdfFile = create_pdf($message);
+		$fileName = explode("/", $pdfFile);
+		$pdfFileName = array_pop($fileName);
+
+		$attachment ="account_pdf_report/".$pdfFileName;
+
+
+		header("location: ".base_url() . $attachment);
+		die('d');
+		/*$content = "Hello Shaishav, \n\n <br><br>
+						Send an Email - ".date('d-m-Y H:i A')."
+						Please find attached PDF For Due Amount List with Company Names." ;
+		$subject = 'List of Companies Due Amount - '.date('d-m-Y H:i A');
+		$status = send_email_attachment('cyberaprintart@gmail.com', $subject, $content, $attachment);*/
 		
 		if($status)
 		{

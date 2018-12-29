@@ -155,6 +155,8 @@
                             </a>
                         </li>
 
+                        <?php
+                        /*
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>dealer/print_dealer">
                                 <i class="fa fa-list"></i> <span>Print Dealer</span>
@@ -163,6 +165,7 @@
                                 </small>-->
                             </a>
                         </li>
+                        */?>
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>customer">
                                 <i class="fa fa-calendar"></i> <span>Customers</span>
@@ -172,6 +175,8 @@
                             </a>
                         </li>
 
+                        <?php
+                        /*
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>customer/print_customer">
                                 <i class="fa fa-list"></i> <span>Print Customers</span>
@@ -180,7 +185,7 @@
                                 </small>-->
                             </a>
                         </li>
-
+                        */?>
 
                         <li>
                         
@@ -210,6 +215,9 @@
                                 </small>-->
                             </a>
                         </li>
+
+                        <?php
+                        /*
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>customer/prospects">
                                 <i class="fa fa-calendar"></i> <span>Business Prospects</span>
@@ -218,6 +226,8 @@
                                 </small>-->
                             </a>
                         </li>
+                        */?>
+                        
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>jobs/estimation_sms">
                                 <i class="fa fa-calendar"></i> <span>Estimation SMS</span>
@@ -238,6 +248,14 @@
                                 <i class="fa fa-envelope"></i> <span>Account Email</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>account/report">
+                                <i class="fa fa-envelope"></i> <span>Account Report</span>
+                            </a>
+                        </li>
+
+
                         <li>
                             <a href="#">
                                 <i class="fa fa-envelope"></i> <span>Inbox</span>

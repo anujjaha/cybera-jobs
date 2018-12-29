@@ -99,6 +99,7 @@ class User extends CI_Controller {
 			//print_r($data);
 			$data['job_details'] = $this->user_model->search_jobdetails($search);
 			$data['search']=$search;
+
 		}
 		$this->template->load('user', 'search', $data);
 	}

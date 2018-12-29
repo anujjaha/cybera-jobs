@@ -99,7 +99,22 @@
 		<td><?php echo $job['advance'];?></td>
 		<td><?php echo date('h:i a d-M-Y',strtotime($job['created']));?></td>
 		<td><?php echo $job['jstatus'];?></td>
-		<td><?php echo $job['receipt'];?></td>
+		<td>
+		<?php 
+
+			if(strlen($job['receipt']) > 0)
+			{
+				echo $job['receipt'];
+			}	
+			else
+			{
+				echo getJobReceiptNumber($job['job_id']);
+			}
+
+		?>
+			
+
+		</td>
 		<td><?php echo $job['bill_number'];?></td>
 		<td>
 			<?php

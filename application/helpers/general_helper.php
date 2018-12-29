@@ -1171,3 +1171,27 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 	return $content;
 
 }
+
+
+function getJobReceiptNumber($jobId)
+{
+	$sql = "SELECT receipt from user_transactions 
+		WHERE job_id = ". $jobId ."
+		AND
+		receipt != ''
+		LIMIT 1
+		";
+
+	$ci=& get_instance();
+	$ci->load->database(); 	
+
+	$query = $ci->db->query($sql);
+	$result =  $query->row();
+
+	if($result)
+	{
+		return $result->receipt;	
+	}
+
+	return '';
+}

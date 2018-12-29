@@ -36,6 +36,7 @@ class Customer extends CI_Controller {
 
 	public function print_customer()
 	{
+		die("BLOCKED");
 		$this->load->model('dealer_model');
 		$dealers = $this->dealer_model->get_customer_details();
 		$html    = '<table style="border: solid 2px black;" class="table" border="2">
