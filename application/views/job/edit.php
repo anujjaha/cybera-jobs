@@ -170,7 +170,18 @@ function customer_selected(type,userid) {
         	if(data.under_revision == 1)
         	{
         		alert("Please Collect Payment in Advance for the Job.");
-        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance</span>");
+
+        		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 34px;'> <br>"+ data.message +"</span>");
+        		jQuery("#save_button").hide();
+        		 $('input[type=submit]', this).attr('disabled', 'disabled');
+        		 jQuery("#jobname").val('');
+        		 jQuery("#jobname").attr('disabled', 'disabled');
+        	}
+        	else
+        	{
+        		jQuery("#save_button").show();	
+        		jQuery("#jobname").removeAttr('disabled', 'disabled');
+        		$('input[type=submit]', this).removeAttr('disabled', 'disabled');
         	}
 
         	console.log(data.email);

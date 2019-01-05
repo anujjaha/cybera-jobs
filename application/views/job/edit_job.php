@@ -33,7 +33,8 @@ function customer_selected(type,userid) {
 				if(data.under_revision == 1)
         	{
         		alert("Please Collect Payment in Advance for the Job.");
-        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance</span>");
+
+        		jQuery("#showEmailId").append("<br> <span class='red'>"+ data.message +"</span><br><span class='red>'"+  + "'</span>");
         	}
 			 }
           });
@@ -53,7 +54,7 @@ function customer_selected_set() {
 	        	if(data.under_revision == 1)
         	{
         		alert("Please Collect Payment in Advance for the Job.");
-        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance</span>");
+        		jQuery("#showEmailId").append("<br> <span class='red'>Collect Payment in Advance<br>"+ data.message +"</span>");
         	}
 			 }
           });

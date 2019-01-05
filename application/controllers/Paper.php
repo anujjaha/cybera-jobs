@@ -74,6 +74,8 @@ class Paper extends CI_Controller {
 		if($this->input->post()) {
 			$id = $this->input->post('id');
 			$data['paper_amount']= $this->input->post('value');
+			$data['paper_qty_min']= $this->input->post('start');
+			$data['paper_qty_max']= $this->input->post('end');
 			$this->load->model('paper_model');
 			if($this->paper_model->update_paper_details($id,$data)) {
 				echo $data['paper_amount'];

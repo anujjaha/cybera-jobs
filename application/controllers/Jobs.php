@@ -213,6 +213,16 @@ public function edit($job_id=null)
 
 
                 $this->load->model('job_model');
+                if($customer_id == NULL || $customer_id == '' || strlen($customer_id) == 0 )
+                {
+                	redirect("jobs/edit",'refresh');
+                }
+
+                if($this->input->post('jobname') == '' || strlen($this->input->post('jobname')) < 1)
+                {
+                	redirect("jobs/edit",'refresh');	
+                }
+                
                 $jobdata = array();
                 $jobdata['customer_id'] = $customer_id;
                 $jobdata['user_id'] = $this->session->userdata['user_id'];

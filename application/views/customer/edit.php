@@ -92,7 +92,7 @@ $this->load->helper('form');
 
 		<div class="form-group">
 			<label>Under Revision</label>
-			<select name="under_revision" class="form-control">
+			<select name="under_revision"  id="under_revision" class="form-control">
 				<option <?php $dealer_info->under_revision == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
 				<option <?php $dealer_info->under_revision == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
 				
@@ -109,8 +109,9 @@ $this->load->helper('form');
 		</div>
 
 		<div class="form-group">
-			<label>Special Rates</label>
-			<textarea class="form-control" name="description"><?php isset($dealer_info->description) ?$dealer_info->description : '' ?></textarea>
+			<label>Special Notes</label>
+
+			<textarea class="form-control" name="description"><?php echo  isset($dealer_info->description) ? $dealer_info->description : '' ?></textarea>
 		</div>
 		
 	</div><!-- /.box-body -->
@@ -159,4 +160,5 @@ $this->load->helper('form');
 <script type="text/javascript">
 	
 	jQuery("#is_block").val(<?php echo $dealer_info->is_block;?>);
+	jQuery("#under_revision").val(<?php echo $dealer_info->under_revision;?>);
 </script>

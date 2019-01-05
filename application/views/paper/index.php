@@ -31,9 +31,11 @@
 		<td><?php echo $paper['paper_name'];?></td>
 		<td><?php echo $paper['paper_gram'];?></td>
 		<td><?php echo $paper['paper_size'];?></td>
-		<td><?php echo $paper['paper_qty_min']."-".$paper['paper_qty_max'];?></td>
+		<td id="range_<?php echo $paper['id'];?>">
+
+			<?php echo $paper['paper_qty_min']."-".$paper['paper_qty_max'];?></td>
 		<td id="cost_<?php echo $paper['id'];?>"><?php echo $paper['paper_amount'];?></td>
-		<td><a href="javascript:void(main)" onclick="edit_paper(<?php echo $paper['id'];?>,<?php echo $paper['paper_amount'];?>);">Edit</a></td>
+		<td><a href="javascript:void(main)" onclick="edit_paper(<?php echo $paper['id'];?>,<?php echo $paper['paper_amount'];?>, <?php echo $paper['paper_qty_min'];?>, <?php echo $paper['paper_qty_max'];?>);">Edit</a></td>
 		<td><a href="javascript:void(main)" onclick="delete_paper(<?php echo $paper['id'];?>);">Delete</a></td>
 		</tr>
 		<?php $sr++; } ?>
@@ -75,22 +77,36 @@ function delete_paper(id) {
           });
     }
 }
-function edit_paper(id,value) {
+function edit_paper(id,value, start, end) {
 	jQuery("#cost_"+id).html("<input type='text' id='update_"+id+"' name='update_"+id+"' value='"+value+"' style='width:50px;'><a href='javascript:void(main)' onclick='save_job("+id+","+value+")' class='glyphicon glyphicon-ok'></a>");
+
+
+	jQuery("#range_"+id).html("<input type='text' id='update_start_range_"+id+"' name='update_start_range_"+id+"' value='"+start+"' style='width:50px;'>-<input type='text' id='update_end_range_"+id+"' name='update_end_range_"+id+"' value='"+end+"' style='width:50px;'>");
+
 }
 
+
+
 function save_job(id,value) {
-	var value = jQuery("#update_"+id).val();
+	var value = jQuery("#update_"+id).val(),
+		start = jQuery("#update_start_range_"+id).val(),
+		end   = jQuery("#update_end_range_"+id).val();
 	
 	if(id) {
 	$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/paper/update_paper/", 
-         data:{'id':id,'value':value},
+         data:{
+         	'id':id,
+         	'value':value,
+         	'start': start,
+    		'end': end
+         },
          success: 
               function(data){
 				 jQuery("#cost_"+id).html(data);
-			 }
+				 jQuery("#range_"+id).html(start + ' - ' + end);
+			}
           });
     }
 	

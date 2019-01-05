@@ -115,6 +115,7 @@ class Customer extends CI_Controller {
 						'mobile' 		=> $result->mobile,
 						'email' 		=> $result->emailid,
 						'under_revision' => $result->under_revision,
+						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
 				}
@@ -123,6 +124,7 @@ class Customer extends CI_Controller {
 						'mobile' 	=> $result->officecontact,
 						'email' 	=> $result->emailid,
 						'under_revision' => $result->under_revision,
+						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
 				}
