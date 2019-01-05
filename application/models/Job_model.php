@@ -19,7 +19,7 @@ class Job_model extends CI_Model {
 		{
 			$data['tax'] = 0;
 		}
-		
+
 		$this->db->insert($this->table,$data);
 		$job_id = $this->db->insert_id();
 		$transaction_data['job_id']=$job_id;
@@ -62,6 +62,11 @@ class Job_model extends CI_Model {
 	}
 	public function insert_transaction($data=array()) {
 		$data['created'] = date('Y-m-d H:i:s');
+		if(isset($data['amountby']) && $data['amountby'] == '')
+		{
+			$data['amountby'] = 0;
+		}
+		
 		$this->db->insert($this->table_transaction,$data);
 		return $this->db->insert_id();
 	}
