@@ -15,6 +15,11 @@ class Job_model extends CI_Model {
 	
 	public function insert_job($data) {
 		$data['created'] = date('Y-m-d H:i:s');
+		if(isset($data['tax']) && $data['tax'] == '')
+		{
+			$data['tax'] = 0;
+		}
+		
 		$this->db->insert($this->table,$data);
 		$job_id = $this->db->insert_id();
 		$transaction_data['job_id']=$job_id;

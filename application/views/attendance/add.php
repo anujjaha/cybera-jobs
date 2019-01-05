@@ -40,6 +40,9 @@
 					<option> December </option> */?>
 					<option><?php echo date('F', strtotime('Last Month'));?></option>
 					<option><?php echo date('F', strtotime('-2 Month'));?></option>
+
+					<option><?php echo date('F', strtotime('-3 Month'));?></option>
+
 					<option><?php echo date('F');?></option>
 				</select>
 			</p>
