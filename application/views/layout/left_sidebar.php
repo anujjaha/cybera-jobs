@@ -91,6 +91,12 @@
                         </li>
                         
                         <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>customer/special_rates">
+                                <i class="fa fa-dashboard"></i> <span>Special Rates</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>account/quick">
                                 <i class="fa fa-dashboard"></i> <span>Quick Account</span>
                             </a>

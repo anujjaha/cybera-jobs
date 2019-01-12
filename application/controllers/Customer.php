@@ -34,6 +34,77 @@ class Customer extends CI_Controller {
 		$this->template->load('customer', 'index', $data);
 	}
 
+	public function special_rates()
+	{
+		$result = $this->customer_model->getAllSpecialRates();
+
+		$data['title']	= "Special Rates";
+		$data['heading']= "Special Rates";
+		$data['rates']	= $result;
+
+		$this->template->load('customer', 'show-special-rates', $data);
+	}
+
+	public function save_special()
+	{
+		if($this->input->post()) 
+		{
+			$inputData = [
+				'customer_id' 	=> $this->input->post('customer_id'),
+				'title'			=> $this->input->post('title'),
+				'qty'			=> $this->input->post('qty'),
+				'rate'			=> $this->input->post('rate'),
+				'description'	=> $this->input->post('description'),
+				'created_by'	=> 1,
+				'created_at'	=> date('Y-m-d H:i:s')
+
+			];
+
+			$result = $this->customer_model->addSpecialRates($inputData);
+
+			redirect("customer/special_rates",'refresh');
+		}
+	}
+	
+	public function update_special()
+	{
+		if($this->input->post()) 
+		{
+			$id 	 	= $this->input->post('id');
+			$inputData 	= [
+				'customer_id' 	=> $this->input->post('customer_id'),
+				'title'			=> $this->input->post('title'),
+				'qty'			=> $this->input->post('qty'),
+				'rate'			=> $this->input->post('rate'),
+				'description'	=> $this->input->post('description'),
+				'created_by'	=> 1,
+				'created_at'	=> date('Y-m-d H:i:s')
+
+			];
+
+			$result = $this->customer_model->updateSpecialRates($id, $inputData);
+
+			redirect("customer/special_rates",'refresh');
+		}
+	}
+
+	public function add_special()
+	{
+		$data['title']="Add Special Rates";
+		$data['heading']="Add Special Rates";
+		
+		$this->template->load('customer', 'add-specialrate', $data);
+	}
+	
+	public function edit_rate($id)
+	{
+		$data['title']="Edit Special Rates";
+		$data['heading']="Edit Special Rates";
+		$data['rate']	= $this->customer_model->getSpecialRate($id);
+
+		$this->template->load('customer', 'edit-specialrate', $data);
+	}
+
 	public function print_customer()
 	{
 		die("BLOCKED");
@@ -276,4 +347,6 @@ class Customer extends CI_Controller {
 		
 		$this->template->load('customer', 'prospect', $data);
 	}
+
+
 }

@@ -264,4 +264,48 @@ class Customer_model extends CI_Model {
 			return $this->db->update($this->table, $data);
 		}
 	}
+
+	/**
+ 	 * Add Special Rates
+	 */
+	public function addSpecialRates($inputData = array())
+	{
+		return $this->db->insert('data_special_rates', $inputData);		
+	}
+
+	public function getAllSpecialRates($inputData = array())
+	{
+		$sql = "SELECT *, data_special_rates.id as rate_id,
+			data_special_rates.description as rate_description
+			FROM data_special_rates
+			LEFT join customer on customer.id = data_special_rates.customer_id
+			order by data_special_rates.id";
+		
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
+
+	public function deleteSpecialRate($id)
+	{
+		$sql = "DELETE from data_special_rates WHERE id = " . $id;
+		return  $this->db->query($sql);
+	}
+
+	public function getSpecialRate($id)
+	{
+		$sql = "SELECT *
+			FROM data_special_rates
+			WHERE id = ".$id."";
+		
+		$query = $this->db->query($sql);
+		return $query->row();
+	}
+
+	public function updateSpecialRates($id, $data)
+	{
+		$this->db->where('id = '.$id);
+		$this->db->update('data_special_rates', $data);
+		
+		return true;
+	}
 }

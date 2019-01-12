@@ -361,6 +361,14 @@ class Ajax extends CI_Controller {
 		}
 		return false;
 	}
+
+	public function ajax_delete_rate($id=null) {
+		if($id) {
+			$this->load->model('customer_model');
+			return $this->customer_model->deleteSpecialRate($id);
+		}
+		return false;
+	}
 	
 	public function ajax_old_job_details($id=null) {
 		$this->load->model('user_model');
