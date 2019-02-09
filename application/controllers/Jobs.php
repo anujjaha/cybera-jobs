@@ -256,8 +256,9 @@ public function edit($job_id=null)
         {
         	$details = $this->input->post('details_'.$i);
 
-        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card' && strpos($details, '_Transparent') ==  false)
+        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card')
 			{
+				// && strpos($details, '_Transparent') ==  false
 				$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
 			}
 			
@@ -636,8 +637,9 @@ public function edit($job_id=null)
 
 							$details = $this->input->post('details_'.$i);
 
-				        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card' && strpos($details, '_Transparent') ==  false)
+				        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card' )
 							{
+								//&& strpos($details, '_Transparent') ==  false
 								$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
 							}
 

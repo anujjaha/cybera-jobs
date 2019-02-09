@@ -1,4 +1,4 @@
-<?php
+update_job_status<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Prints extends CI_Controller {
@@ -44,6 +44,24 @@ class Prints extends CI_Controller {
             if($this->input->post('bill_number')) 
             {
 				$jdata['bill_number'] = $this->input->post('bill_number');
+				$flag = true;
+			}
+
+			if($this->input->post('bill_number')) 
+            {
+				$jdata['bill_number'] = $this->input->post('bill_number');
+				$flag = true;
+			}
+
+			if(strlen($this->input->post('is_pickup')) > 0) 
+            {
+				$jdata['is_pickup'] = $this->input->post('is_pickup');
+				$flag = true;
+			}
+
+			if($this->input->post('pickup_details')) 
+            {
+				$jdata['pickup_details'] = $this->input->post('pickup_details');
 				$flag = true;
 			}
 

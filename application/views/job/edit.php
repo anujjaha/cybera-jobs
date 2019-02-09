@@ -64,6 +64,13 @@ $(document).ready(function()
 		'width':1000,
         'height':600,
         'autoSize' : false,
+         afterShow: function(){
+         	var fancyBoxId = jQuery("#fancybox_id").val();
+
+         	jQuery("#details").val(jQuery("#details_"+fancyBoxId).val());
+
+      		console.log('// fancybox is open, run myFunct()');
+   		},
         'afterClose':function () {
 			fancy_box_closed();
 		},

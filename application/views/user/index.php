@@ -74,7 +74,12 @@ if(strtolower($this->session->userdata['department']) == "master")
 				{
 					echo $job['job_id'];
 				}
-			?>
+
+				if(isset($job['is_pickup']) && $job['is_pickup'] == 1)
+				{
+					echo '<br><span class="green"> Cybera Pickup </span>';	
+				}
+			?>	
 		</td>
 		<td><?php echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
 
@@ -87,7 +92,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 				<span class="red">
 							Please collect Payment before Job Complete.
 				</span>
-			<?php } ?>
+			<?php }
+				
+				if(isset($job['is_pickup']) && $job['is_pickup'] == 1)
+				{
+					echo '<br><span class="green">'. $job['pickup_details'] .'</span>';
+				}
+			 ?>
 
 		</td>
 		<td><?php echo $job['jobname'];?></td>
@@ -301,9 +312,11 @@ function update_job_status(id, defaultstatus) {
 	var value = $( "input:radio[name=jstatus]:checked" ).val();
 	var send_sms = $( "input:radio[name=send_sms]:checked" ).val();
 	var is_delivered = $( "input:radio[name=is_delivered]:checked" ).val();
+	var is_pickup = $( "input:radio[name=is_pickup]:checked" ).val();
 	var is_hold = $( "input:radio[name=is_hold]:checked" ).val();
 	var cyb_delivery = $( "input:radio[name=cyb_delivery]:checked" ).val();
 	var bill_number = $( "#bill_number").val();
+	var pickup_details = $( "#pickup_details").val();
 	var voucher_number = $( "#voucher_number").val();
 	var receipt = $( "#receipt").val();
 	
@@ -316,7 +329,9 @@ function update_job_status(id, defaultstatus) {
 	}
 	var params = {"j_id":id, "is_delivered": is_delivered,"j_status":value,"send_sms" : send_sms,"receipt":receipt,"bill_number":bill_number,"voucher_number":voucher_number,
          "is_hold": is_hold,
-         "cyb_delivery": cyb_delivery
+         "cyb_delivery": cyb_delivery,
+         "is_pickup": is_pickup,
+         "pickup_details": pickup_details
      };	
 
     console.log(params);

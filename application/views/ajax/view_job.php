@@ -249,46 +249,54 @@ if(strlen($job_data->bill_number) < 2)
 <div class="col-md-12">
 		   <table id="jobStatusTbl" align="center" border="0" width="100%">
 			<tr>
-				<td> 
-					<label>
-						<input type="radio" <?php if($job_data->jstatus == JOB_PENDING){ echo "checked='checked'"; };?> name="jstatus" value="Pending">
-						<?php echo JOB_PENDING;?>
-						</label>
-				</td>
-				<td> 
-					<label>
-						<input type="radio" <?php if($job_data->jstatus == JOB_EDIT){ echo "checked='checked'"; };?> name="jstatus" value="Edited">
-						<?php echo JOB_EDIT;?>
-						</label>
-				</td>
-				<td> 
-					<label>
-						<input type="radio" <?php if($job_data->jstatus == JOB_HOLD){ echo "checked='checked'"; };?> name="jstatus" value="Hold">
-						<?php echo JOB_HOLD;?>
-						</label>
-				</td>
-				<td> 
-					<label>
-						<input type="radio" <?php if($job_data->jstatus == JOB_COMPLETE){ echo "checked='checked'"; };?> name="jstatus" value="<?php echo JOB_COMPLETE;?>">
-						<?php echo JOB_COMPLETE;?>
-						</label>
-				</td>
-				<td> 
-					<label>
-						<input type="radio" <?php if($job_data->jstatus == JOB_CLOSE){ echo "checked='checked'"; };?> name="jstatus" value="<?php echo JOB_CLOSE;?>">
-						<?php echo JOB_CLOSE;?>
-						</label>
-				</td>
 				<td>
 					<label><input type="radio" id="is_delivered" <?php if($job_data->is_delivered == 1) echo 'checked="checked"';?> name="is_delivered" value="1">Mark Delivered</label>
 					<br>
 					<label><input type="radio" id="is_delivered"  <?php if($job_data->is_delivered == 0) echo 'checked="checked"';?> name="is_delivered" value="0">Un Delivered</label>
 				</td>
 
-				<td>
+				
+
+				<td> 
+					<!-- <label>
+						<input type="radio" <?php if($job_data->jstatus == JOB_EDIT){ echo "checked='checked'"; };?> name="jstatus" value="Edited">
+						<?php echo JOB_EDIT;?>
+						</label>
+					<br>
+					<label>
+						<input type="radio" <?php if($job_data->jstatus == JOB_HOLD){ echo "checked='checked'"; };?> name="jstatus" value="Hold">
+						<?php echo JOB_HOLD;?>
+						</label>
+					<br> -->
+					<label>
+						<input type="radio" <?php if($job_data->jstatus == JOB_COMPLETE){ echo "checked='checked'"; };?> name="jstatus" value="<?php echo JOB_COMPLETE;?>">
+						<?php echo JOB_COMPLETE;?>
+						</label>
+						<br>
+						<label><input type="radio" id="send_sms" name="send_sms" value="Yes">Send SMS</label>
+						<br>
+						<label><input type="radio" id="send_sms" name="send_sms" checked="checked" value="No">No</label>
+					<br>
+					<label>
+						<input type="radio" <?php if($job_data->jstatus == JOB_PENDING){ echo "checked='checked'"; };?> name="jstatus" value="Pending">
+						<?php echo JOB_PENDING;?>
+						</label>	
+				</td>
+
+				<td style="width: 120px;">
+					<label>
+						<input type="radio"  <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
+						Cybera Delivery
+					</label>
+					<br>
 					<label>
 					<input type="radio" id="is_hold" <?php if($job_data->is_hold == 1) echo 'checked="checked"';?> name="is_hold" value="1">
-						Payment
+						Payment Pending
+					</label>
+					<br>
+					<label>
+					<input type="radio" id="cyb_delivery" <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> name="cyb_delivery" value="1">
+						Delivery Done
 					</label>
 					<br>
 					<label>
@@ -296,34 +304,31 @@ if(strlen($job_data->bill_number) < 2)
 						Payment Received
 					</label>
 				</td>
-
+				
 				<td>
-					<label>
-					<input type="radio" id="cyb_delivery" <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> name="cyb_delivery" value="1">
-						Delivery Done
-					</label>
-					<br>
-					<label>
-						<input type="radio"  <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
-						Cybera Delivery
-					</label>
+					
+					<button id="saveJobStatusBtn" class="btn btn-success btn-sm text-center"  onclick="update_job_status(<?php echo $job_data->id;?>)">Save Job</button>
 				</td>
 				<td>
-						<center>
-						<label><input type="radio" id="send_sms" name="send_sms" value="Yes">Send SMS</label>
-						<label><input type="radio" id="send_sms" name="send_sms" checked="checked" value="No">No</label>
-						<br>
-						<button id="saveJobStatusBtn" class="btn btn-success btn-sm text-center"  onclick="update_job_status(<?php echo $job_data->id;?>)">Save Job</button>
-						</center>
+					<label>
+						<input type="radio"  <?php if($job_data->is_pickup == 1) echo 'checked="checked"';?> name="is_pickup" value="1">
+						Cybera Pickup
+					</label>
+
+					<label>
+						<input type="radio"  <?php if($job_data->is_pickup == 0) echo 'checked="checked"';?> name="is_pickup" value="0">
+						Pickup Done
+					</label>
+
+					<br>
+					<input type="text" name="pickup_details" id="pickup_details"  class="form-control" value="<?=$job_data->pickup_details?>">
 				</td>
 			</tr>
 		</table>
     </div>
 </div>
-
-<hr>
 <center>
-	<a target="_blank" id="copyJobFunction" onclick="copyJobFunction();" href="<?php echo site_url();?>/jobs/copyjob/<?php echo $job_data->id;?>" class="btn btn-primary">Copy Job</a>
+	<a style="margin-top: 20px;" target="_blank" id="copyJobFunction" onclick="copyJobFunction();" href="<?php echo site_url();?>/jobs/copyjob/<?php echo $job_data->id;?>" class="btn btn-primary">Copy Job</a>
 </center>
 <center>
 	Job Created by : <?php echo $userInfo->nickname;?>

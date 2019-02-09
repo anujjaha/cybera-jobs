@@ -488,7 +488,6 @@ class Job_model extends CI_Model {
 	
 	public function getJobsWithoutBill($customerId = null)
 	{
-
 		$userTransactions = "SELECT job_id, bill_number from user_transactions where customer_id = ".$customerId." AND t_type = 'credit' ";
 
 		$receiptTransactions = "SELECT job_id
@@ -520,7 +519,11 @@ class Job_model extends CI_Model {
 
 		if(count($jobIds))
 		{
-
+		if(count($getReceiptJobId) == 0)
+		{
+			$getReceiptJobId[0]	 = 0;
+		}
+		
 		$withBill   = "SELECT DISTINCT(job_id) from user_transactions where customer_id = ".$customerId." AND 
 			job_id NOT IN (".implode(',', $getReceiptJobId).")
 			AND
@@ -702,7 +705,3 @@ class Job_model extends CI_Model {
 		return $jobIds;
 	}
 }
-
-
-
-

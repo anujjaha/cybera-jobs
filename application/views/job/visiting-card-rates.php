@@ -14,7 +14,9 @@
 	<tr>
 		<td> &nbsp; </td>
 		<!--<td colspan="2" align="center">300 GSM Matt Card </td>-->
-		<td colspan="2" align="center">300/350 GSM Matt/Gloss Card </td>
+		<td colspan="2" align="center">350 GSM Matt Card </td>
+
+		<td colspan="2" align="center">350 GSM Gloss Card </td>
 		<!--<td colspan="2" align="center">350 GSM Gloss Card </td>-->
 		<td colspan="2" align="center">350 GSM Matt Laminated Card </td>
 		<!--<td colspan="2" align="center">Premium Texture Card <br> ( Code No. 32 - 70 ) </td>-->
@@ -23,10 +25,10 @@
 	<tr>
 		<td> Qty </td>
 		<!--<td> Single Side </td>
-		<td> Double Side </td>
+		<td> Double Side </td>-->
 		
 		<td> Single Side </td>
-		<td> Double Side </td>-->
+		<td> Double Side </td>
 		
 		<td> Single Side </td>
 		<td> Double Side </td>
@@ -58,12 +60,26 @@
 		</td>-->
 		
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="200" data-card="300/350_GSM_Matt/Gloss_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="200" data-card="350_GSM_Matt_Card" data-type="SS">
 				200
 			</span>
 		</td>
+
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="350" data-card="300/350_GSM_Matt/Gloss_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="350" data-card="350_GSM_Matt_Card" data-type="FB">
+				350
+			</span>
+		 </td>
+		 
+		<td> 
+			<span class="price btn btn-primary gsm350" data-price="200" data-card="350_GSM_Gloss_Card" data-type="SS">
+				200
+			</span>
+		</td>
+
+
+		 <td>
+			<span class="price btn btn-primary gsm350" data-price="350" data-card="350_GSM_Gloss_Card" data-type="FB">
 				350
 			</span>
 		 </td>
@@ -80,12 +96,12 @@
 		 </td>-->
 
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="450" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="450" data-card="350_GSM_Matt_Laminated_Card" data-type="SS">
 				450
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="450" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="450" data-card="350_GSM_Matt_Laminated_Card" data-type="FB">
 				450
 			</span>
 		 </td>
@@ -121,12 +137,23 @@
 		</td>-->
 		
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="300" data-card="300/350_GSM_Matt/Gloss_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="300" data-card="350_GSM_Matt_Card" data-type="SS">
 				300
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="500" data-card="300/350_GSM_Matt/Gloss_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="500" data-card="350_GSM_Matt_Card" data-type="FB">
+				500
+			</span>
+		 </td>
+
+		 <td> 
+			<span class="price btn btn-primary gsm350" data-price="300" data-card="350_GSM_Gloss_Card" data-type="SS">
+				300
+			</span>
+		</td>
+		<td>
+			<span class="price btn btn-primary gsm350" data-price="500" data-card="350_GSM_Gloss_Card" data-type="FB">
 				500
 			</span>
 		 </td>
@@ -143,12 +170,12 @@
 		 </td>-->
 		 
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="700" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="700" data-card="350_GSM_Matt_Laminated_Card" data-type="SS">
 				700
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="700" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="700" data-card="350_GSM_Matt_Laminated_Card" data-type="FB">
 				700
 			</span>
 		 </td>
@@ -184,12 +211,24 @@
 		 </td>-->
 		
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="400" data-card="300/350_GSM_Matt/Gloss_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="400" data-card="350_GSM_Matt_Card" data-type="SS">
 				400
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="700" data-card="300/350_GSM_Matt/Gloss_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="700" data-card="350_GSM_Matt_Card" data-type="FB">
+				700
+			</span>
+		 </td>
+
+
+		<td> 
+			<span class="price btn btn-primary gsm350" data-price="400" data-card="350_GSM_Gloss_Card" data-type="SS">
+				400
+			</span>
+		</td>
+		<td>
+			<span class="price btn btn-primary gsm350" data-price="700" data-card="350_GSM_Gloss_Card" data-type="FB">
 				700
 			</span>
 		 </td>
@@ -206,12 +245,12 @@
 		 </td>-->
 
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="950" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="950" data-card="350_GSM_Matt_Laminated_Card" data-type="SS">
 				950
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="950" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="950" data-card="350_GSM_Matt_Laminated_Card" data-type="FB">
 				950
 			</span>
 		 </td>
@@ -247,12 +286,23 @@
 		</td>-->
 		
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="600" data-card="300/350_GSM_Matt/Gloss_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="600" data-card="350_GSM_Matt_Card" data-type="SS">
 				600
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="900" data-card="300/350_GSM_Matt/Gloss_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="900" data-card="350_GSM_Matt_Card" data-type="FB">
+				900
+			</span>
+		</td>
+
+		<td> 
+			<span class="price btn btn-primary gsm350" data-price="600" data-card="350_GSM_Gloss_Card" data-type="SS">
+				600
+			</span>
+		</td>
+		<td>
+			<span class="price btn btn-primary gsm350" data-price="900" data-card="350_GSM_Gloss_Card" data-type="FB">
 				900
 			</span>
 		 </td>
@@ -269,12 +319,12 @@
 		 </td>-->
 
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="1400" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="1400" data-card="350_GSM_Matt_Laminated_Card" data-type="SS">
 				1400
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="1400" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="1400" data-card="350_GSM_Matt_Laminated_Card" data-type="FB">
 				1400
 			</span>
 		 </td>
@@ -310,12 +360,23 @@
 		</td>-->
 
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="1100" data-card="300/350_GSM_Matt/Gloss_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="1100" data-card="350_GSM_Matt_Card" data-type="SS">
 				1100
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="1600" data-card="300/350_GSM_Matt/Gloss_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="1600" data-card="350_GSM_Matt_Card" data-type="FB">
+				1600
+			</span>
+		 </td>
+
+		<td> 
+			<span class="price btn btn-primary gsm350" data-price="1100" data-card="350_GSM_Gloss_Card" data-type="SS">
+				1100
+			</span>
+		</td>
+		<td>
+			<span class="price btn btn-primary gsm350" data-price="1600" data-card="350_GSM_Gloss_Card" data-type="FB">
 				1600
 			</span>
 		 </td>
@@ -333,12 +394,12 @@
 		 </td>-->
 
 		<td> 
-			<span class="price btn btn-primary gsm350" data-price="2700" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="SS">
+			<span class="price btn btn-primary gsm350" data-price="2700" data-card="350_GSM_Matt_Laminated_Card" data-type="SS">
 				2700
 			</span>
 		</td>
 		<td>
-			<span class="price btn btn-primary gsm350" data-price="2700" data-card="350_GSM_Matt/Gloss_Laminated_Card" data-type="FB">
+			<span class="price btn btn-primary gsm350" data-price="2700" data-card="350_GSM_Matt_Laminated_Card" data-type="FB">
 				2700
 			</span>
 		 </td>
