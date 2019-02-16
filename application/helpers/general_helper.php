@@ -748,7 +748,7 @@ function  getEmployeeSelectBox()
 	$query = $ci->db->query($sql);
 	$extra ="";
 	
-	$dropdown = "<select  class='form-control select-customer' name='emp_id' ><option value=0> Select Emplooyee</option>";
+	$dropdown = "<select  class='form-control select-customer' id='emp_id' name='emp_id' ><option value=0> Select Emplooyee</option>";
 	
 	foreach($query->result() as $customer) 
 	{

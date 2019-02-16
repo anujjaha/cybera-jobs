@@ -283,7 +283,7 @@ class Job_model extends CI_Model {
     }
     
     public function get_paper_gsm() {
-		$sql = "SELECT paper_gram from paper_details group by paper_gram";
+		$sql = "SELECT paper_gram, paper_name from paper_details group by paper_gram";
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
@@ -299,10 +299,17 @@ class Job_model extends CI_Model {
 			$data['j_time']= date('H:i A');
 			$data['j_date']= date('Y-m-d');
 			$data['created_date']= date('Y-m-d H:i:s');
+			if(!isset($data['j_status']))
+			{
+				$data['j_status'] = JOB_PENDING;
+			}
+
 			if($data['j_status'] == JOB_COMPLETE) {
 				$update_job['status']=0;
 				$this->update_job($data['j_id'],$update_job);
 			}
+
+
 			$this->db->insert($this->table_job_transaction,$data);
 			return $this->db->insert_id();
 		}

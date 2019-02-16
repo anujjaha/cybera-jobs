@@ -59,29 +59,68 @@ if(strtolower($this->session->userdata['department']) == "master")
 
 				
 			<?php
+				$isShowJobId = true;
+				
 				if(isset($job['is_hold']) && $job['is_hold'] == 1)
 				{
 					echo '<span class="red">' .   $job['job_id'] . '</span>';
-					echo '<br><span class="red"> Payment Pending </span>';
-				}
-
-				else if(isset($job['cyb_delivery']) && $job['cyb_delivery'] == 0)
-				{
-					echo '<span class="bold-font">' .   $job['job_id'] . '</span>';
-					echo '<br><span class="green"> Cybera Delivery Pending </span>';
+					echo '<br><span class="red"> Payment </span>';
+					$isShowJobId = false;
 				}
 				else
 				{
-					echo $job['job_id'];
+					echo '<br>';
 				}
 
+				if(isset($job['cyb_delivery']) && $job['cyb_delivery'] == 0)
+				{
+					if($isShowJobId)
+					{
+						echo '<span class="bold-font">' .   $job['job_id'] . '</span>';
+					}
+					echo '<br><span class="green"> Delivery </span>';
+					$isShowJobId = false;
+				}
+				else
+				{
+					echo '<br>';
+				}
+				
+				if($isShowJobId)
+				{
+					echo $job['job_id'];
+				}
+				
 				if(isset($job['is_pickup']) && $job['is_pickup'] == 1)
 				{
-					echo '<br><span class="green"> Cybera Pickup </span>';	
+					echo '<br><span class="blue"> Pickup </span>';	
+				}
+				else
+				{
+					echo '<br>';
 				}
 			?>	
 		</td>
 		<td><?php echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
+
+			if(isset($job['is_hold']) && $job['is_hold'] == 1)
+			{
+				echo '<br><span class="red">' .   $job['payment_details'] . '</span>';
+			}
+			else
+			{
+				echo '<br>';
+			}
+
+			if(isset($job['cyb_delivery']) && $job['cyb_delivery'] == 0)
+			{
+				echo '<br><span class="bold-font green">' .   $job['delivery_details'] . '</span>';
+			}
+			else
+			{
+				echo '<br>';
+			}
+
 
 			if(isset($job['revision']) && $job['revision'] == 1)
 			{
@@ -96,7 +135,11 @@ if(strtolower($this->session->userdata['department']) == "master")
 				
 				if(isset($job['is_pickup']) && $job['is_pickup'] == 1)
 				{
-					echo '<br><span class="green">'. $job['pickup_details'] .'</span>';
+					echo '<br><span class="blue">'. $job['pickup_details'] .'</span>';
+				}
+				else
+				{
+					echo '<br>';
 				}
 			 ?>
 
@@ -318,6 +361,10 @@ function update_job_status(id, defaultstatus) {
 	var bill_number = $( "#bill_number").val();
 	var pickup_details = $( "#pickup_details").val();
 	var voucher_number = $( "#voucher_number").val();
+
+	var payment_details = $("#payment_details").val();
+	var delivery_details = $("#delivery_details").val();
+
 	var receipt = $( "#receipt").val();
 	
 	jQuery("#saveJobStatusBtn").attr('disabled', true);
@@ -331,7 +378,9 @@ function update_job_status(id, defaultstatus) {
          "is_hold": is_hold,
          "cyb_delivery": cyb_delivery,
          "is_pickup": is_pickup,
-         "pickup_details": pickup_details
+         "pickup_details": pickup_details,
+         "payment_details": payment_details,
+         "delivery_details": delivery_details
      };	
 
     console.log(params);

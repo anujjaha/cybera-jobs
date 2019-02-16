@@ -26,6 +26,16 @@
 			</td>
 		</tr>
 		<tr>
+			<td align="right"> <label>Salary : </label></td>
+			<td> <input type="number" name="salary" value="<?php echo $employeeInfo->salary;?>" required="required" class="form-control"> </td>
+			
+			<td>&nbsp;</td>
+			
+			<td align="right"> <label>Max Limit  : </label></td>
+			<td> <input type="number" name="max_limit" required="required" value="<?php echo $employeeInfo->max_limit;?>" class="form-control"> </td>
+		</tr>
+
+		<tr>
 			<td align="right"> <label>Mobile : </label></td>
 			<td> <input type="text" name="mobile" value="<?php echo $employeeInfo->mobile;?>" required="required" class="form-control"> </td>
 			

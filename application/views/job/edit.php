@@ -918,6 +918,63 @@ $this->load->helper('general'); ?>
 
 		</td>	
 	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<table border="2" class="table">
+				<tr>
+					
+					<td>
+						<label>
+							<input type="checkbox" name="is_hold" value="0">
+							Payment Pending
+						</label>
+
+						<!-- <label>
+							<input type="radio" id="is_hold" checked="checked" name="is_hold" value="1">
+							Payment Pending
+						</label>
+						<label>
+							<input type="radio" name="is_hold" value="0">
+							Payment Received
+						</label> -->
+						<br>
+						<input type="text" name="payment_details" id="payment_details"  class="form-control" value="">
+					</td>
+					<td>
+						<label>
+							<input type="checkbox" name="is_pickup" value="0">
+							Cybera Pickup
+						</label>
+						<!-- <label>
+						<input type="radio" checked="checked" name="is_pickup" value="1">
+						Cybera Pickup
+						</label>
+
+						<label>
+							<input type="radio" name="is_pickup" value="0">
+							Pickup Done
+						</label> -->
+
+						<br>
+						<input type="text" name="pickup_details" id="pickup_details"  class="form-control" value="">
+					</td>
+
+					<td>
+						<label>
+							<input type="checkbox" name="cyb_delivery" value="0">
+							Cybera Delivery
+						</label>
+						<!-- <label>
+							<input type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
+							Delivery Done
+						</label> -->
+						<br>
+						<input type="text" name="delivery_details" id="delivery_details"  class="form-control" value="">
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 	<tr>		
 		<td colspan="2" align="center"> Remind Me :
 		<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		

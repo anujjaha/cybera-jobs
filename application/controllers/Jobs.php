@@ -226,7 +226,19 @@ public function edit($job_id=null)
                 $jobdata = array();
                 $jobdata['customer_id'] = $customer_id;
                 $jobdata['user_id'] = $this->session->userdata['user_id'];
+
                 $jobdata['jobname'] = $this->input->post('jobname');
+
+                // Delivery Details
+                $jobdata['delivery_details']= $this->input->post('delivery_details');
+                $jobdata['payment_details'] = $this->input->post('payment_details');
+                $jobdata['pickup_details'] 	= $this->input->post('pickup_details');
+
+                // Delivery Options
+                $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;
+                $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') ? $this->input->post('cyb_delivery') : 1;
+                $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
+
                 $jobdata['subtotal'] = $this->input->post('subtotal');
                 $jobdata['tax'] = $this->input->post('tax');
                 $jobdata['total'] = $this->input->post('total');
@@ -564,7 +576,19 @@ public function edit($job_id=null)
 						$this->account_model->update_job_transactions($job_id,$customer_id);
 						$update_advance = false;
 				}
-				
+
+				// Delivery Details
+                $jobdata['delivery_details']= $this->input->post('delivery_details');
+                $jobdata['payment_details'] = $this->input->post('payment_details');
+                $jobdata['pickup_details'] 	= $this->input->post('pickup_details');
+
+                // Delivery Options
+                $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;
+                $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') ? $this->input->post('cyb_delivery') : 1;
+                $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
+
+                //pr($jobdata);
+
 				$jobdata['jobname'] = $this->input->post('jobname');
 				$jobdata['subtotal'] = $this->input->post('subtotal');
 				$jobdata['tax'] = $this->input->post('tax');

@@ -247,7 +247,7 @@ if(strlen($job_data->bill_number) < 2)
 
 <hr>
 <div class="col-md-12">
-		   <table id="jobStatusTbl" align="center" border="0" width="100%">
+		   <table id="jobStatusTbl" align="center" border="2" width="100%">
 			<tr>
 				<td>
 					<label><input type="radio" id="is_delivered" <?php if($job_data->is_delivered == 1) echo 'checked="checked"';?> name="is_delivered" value="1">Mark Delivered</label>
@@ -283,31 +283,20 @@ if(strlen($job_data->bill_number) < 2)
 						</label>	
 				</td>
 
-				<td style="width: 120px;">
-					<label>
-						<input type="radio"  <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
-						Cybera Delivery
-					</label>
-					<br>
+
+
+				<td>
 					<label>
 					<input type="radio" id="is_hold" <?php if($job_data->is_hold == 1) echo 'checked="checked"';?> name="is_hold" value="1">
 						Payment Pending
 					</label>
-					<br>
-					<label>
-					<input type="radio" id="cyb_delivery" <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> name="cyb_delivery" value="1">
-						Delivery Done
-					</label>
-					<br>
+					
 					<label>
 						<input type="radio"  <?php if($job_data->is_hold == 0) echo 'checked="checked"';?> name="is_hold" value="0">
 						Payment Received
 					</label>
-				</td>
-				
-				<td>
-					
-					<button id="saveJobStatusBtn" class="btn btn-success btn-sm text-center"  onclick="update_job_status(<?php echo $job_data->id;?>)">Save Job</button>
+					<br>
+					<input style="width: 160px;" type="text" name="payment_details" id="payment_details"  class="form-control"  value="<?=$job_data->payment_details?>">
 				</td>
 				<td>
 					<label>
@@ -321,14 +310,33 @@ if(strlen($job_data->bill_number) < 2)
 					</label>
 
 					<br>
-					<input type="text" name="pickup_details" id="pickup_details"  class="form-control" value="<?=$job_data->pickup_details?>">
+					<input style="width: 160px;" type="text" name="pickup_details" id="pickup_details"  class="form-control" value="<?=$job_data->pickup_details?>">
+				</td>
+
+				<td>
+					<label>
+						<input type="radio"  <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
+						Cybera Delivery
+					</label>
+					
+					<label>
+					<input type="radio" id="cyb_delivery" <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> name="cyb_delivery" value="1">
+						Delivery Done
+					</label>
+					<br>
+					<input style="width: 160px;" type="text" name="delivery_details" id="delivery_details"  class="form-control"  value="<?=$job_data->delivery_details?>">
+				</td>
+
+				<td>
+					
+					<button id="saveJobStatusBtn" class="btn btn-success btn-sm text-center"  onclick="update_job_status(<?php echo $job_data->id;?>)">Save Job</button>
 				</td>
 			</tr>
 		</table>
     </div>
 </div>
 <center>
-	<a style="margin-top: 20px;" target="_blank" id="copyJobFunction" onclick="copyJobFunction();" href="<?php echo site_url();?>/jobs/copyjob/<?php echo $job_data->id;?>" class="btn btn-primary">Copy Job</a>
+	<a style="margin-top: 30px;" target="_blank" id="copyJobFunction" onclick="copyJobFunction();" data-url="<?php echo site_url();?>/jobs/copyjob/<?php echo $job_data->id;?>" href="javascript:void(0);" class="btn btn-primary">Copy Job</a>
 </center>
 <center>
 	Job Created by : <?php echo $userInfo->nickname;?>
@@ -518,8 +526,15 @@ if(count($cuttingInfo) > 0 )
 <script>
 function copyJobFunction()
 {
-	alert("Copy Job Done!");
-	$.fancybox.close();	
+	var copyJob = confirm("Do You want to Copy Job?");
+
+	if(copyJob)
+	{
+		alert("Copy Job Done!");
+		window.location.assign(document.getElementById('copyJobFunction').getAttribute('data-url'));
+		$.fancybox.close();	
+	}
+	
 }
 function fill_account() {
 	var s_receipt = $("#receipt").val();

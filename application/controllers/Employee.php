@@ -31,6 +31,17 @@ class Employee extends CI_Controller {
 		
 		$this->template->load('employee', 'index', $data);
 	}
+
+	public function advance()
+	{
+		$data = array();
+		$data['items'] = $this->employee_model->getAllEmployeeAdvance();
+		$data['heading'] = $data['title']="Advance Salary - Cybera Print Art";
+			
+		$this->template->load('employee', 'advance', $data);
+	}
+
+
 	
 	public function add()
 	{
@@ -48,6 +59,26 @@ class Employee extends CI_Controller {
 		}
 		$this->template->load('employee', 'add', $data);
 	}
+
+	public function add_advance()
+	{
+		$data['heading'] = $data['title']="Add New Advance - Cybera Print Art";
+		
+		if($this->input->post())
+		{
+			$data = $this->input->post();
+			
+			unset($data['save']);
+
+			$this->employee_model->createEmployeeAdvance($data);
+
+			redirect('employee/advance', "refresh");
+		}
+
+		$this->template->load('employee', 'add-advance', $data);
+	}
+
+	
 	
 	public function edit($id = null)
 	{
@@ -84,4 +115,57 @@ class Employee extends CI_Controller {
 		echo json_encode(array('status'=>false));
 		die;
 	}
+
+	
+	public function deleteEmployeeAdvance($id)
+	{
+		if($this->input->post())
+		{
+			$id = $this->input->post('id');
+			$status = $this->employee_model->deleteEmployeeAdvance($id);	
+			
+			if($status)
+			{
+				echo json_encode(array('status'=>true));
+				die;
+			}
+		}
+		echo json_encode(array('status'=>false));
+		die;
+	}
+
+	public function getEmployeeAdvance()
+	{
+		if($this->input->post())
+		{
+			$id = $this->input->post('empId');
+			$result = $this->employee_model->getEmployeeAdvance($id);	
+			
+			if(isset($result) && count($result))
+			{
+				echo json_encode(array('status'=>true, 'data' => $result));
+				die;
+			}
+		}
+		echo json_encode(array('status'=>false));
+		die;
+	}
+	
+	public function getEmployeeSalaryDetails()
+	{
+		if($this->input->post())
+		{
+			$id = $this->input->post('empId');
+			$result = $this->employee_model->getEmployeeById($id);	
+			
+			if(isset($result) && count($result))
+			{
+				echo json_encode(array('status'=>true, 'data' => $result));
+				die;
+			}
+		}
+		echo json_encode(array('status'=>false));
+		die;
+	}
+	
 }

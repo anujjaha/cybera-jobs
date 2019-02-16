@@ -52,6 +52,8 @@ class Employee_model extends CI_Model
 		return false;
 	}
 	
+
+	
 	public function updateEmployee($id=null, $data) {
 		if($id)
 		{
@@ -60,5 +62,58 @@ class Employee_model extends CI_Model
 			return true;
 		}
 		return false;
+	}
+
+	public function getAllEmployeeAdvance($month = null)
+	{
+		$currentMonth 	= $month ? $month : date('M-Y');
+		$sql 			= 'SELECT advance_salary.*,
+				employees.name
+				FROM advance_salary 
+				LEFT JOIN employees ON
+				employees.id = advance_salary.emp_id
+				WHERE month = "'. $currentMonth .'"
+				';
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}	
+
+	public function deleteEmployeeAdvance($id=null) {
+		if($id) {
+			$this->db->where('id',$id);
+			$this->db->delete('advance_salary');
+			return true;
+		}
+		return false;
+	}
+
+	public function getEmployeeAdvance($empId = null)
+	{
+		if($empId)	
+		{
+
+			$query =$this->db->select('*')
+				->from('advance_salary')
+				->where('emp_id', $empId);
+			
+			$query = $this->db->get();
+
+			return $query->result_array();
+		}	
+
+		return false;
+	}
+
+	public function createEmployeeAdvance($data)
+	{
+		$employee = $this->getEmployeeById($data['emp_id']);
+		$data 	  = array_merge($data, array(
+			'salary' 	=> $employee->salary,
+			'max_limit' => $employee->max_limit,
+			'date' 		=> date('Y-m-d'),
+			'month' 	=> date('M-Y')
+		));
+
+		return $this->db->insert('advance_salary', $data);
 	}
 }

@@ -1,8 +1,12 @@
+<?php
+if(isAdmin())
+{
+?>
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
 <div class="row">
 <div class="col-md-12">
-	<a href="<?php echo base_url();?>employee/add">
-		Add New Employee
+	<a href="<?php echo base_url();?>employee/add_advance">
+		Add New Advance
 	</a>
 	</div>
 </div>
@@ -14,22 +18,11 @@
 		<tr>
 		<th>Sr</th>
 		<th>Name</th>
-		<th>Department</th>
-		<?php
-			if(isAdmin())
-			{
-		?>	
-			<th>Salary</th>
-			<th>Max Limit</th>
-		<?php
-			}
-		?>
-		<th>Department</th>
-		<th>Mobile</th>
-		<th>Email Id</th>
-		<th>Aadhar Card</th>
-		<th>Blood Group</th>
-		<th>Birth Date</th>
+		<th>Salary</th>
+		<th>Max Limit</th>
+		<th>Advance</th>
+		<th>Date</th>
+		<th>Notes</th>
 		<th>Action</th>
 		</tr>
 		</thead>
@@ -41,45 +34,17 @@
 		<tr id="emp-<?php echo $item['id'];?>">
 		<td><?php echo $sr;?></td>
 		<td><?php echo $item['name'];?></td>
-		<td><?php echo $item['department'];?></td>
+		<td><?php echo $item['salary'];?></td>
+		<td><?php echo $item['max_limit'];?></td>
+		<td><?php echo $item['advance'];?></td>
+		<td><?php echo date('d-m-Y', strtotime($item['date']));?></td>
+		<td><?php echo $item['notes'];?></td>
 		
-			<td><?php echo $item['salary'];?></td>
-			<td><?php echo $item['max_limit'];?></td>
-		
-		<td><?php echo $item['mobile'];?></td>
-		<td><?php echo $item['emailid'];?></td>
-		<td><?php echo $item['aadharcard'];?></td>
-		<td><?php echo $item['bgroup'];?></td>
-		<td><?php echo date('d-m-Y', strtotime($item['birthdate']));?></td>
 		<td>
-				<?php
-					if(strtolower($this->session->userdata['department']) == "master")
-					{
-				?>
-					<a href="<?php echo site_url();?>/master/viewattendance/<?php echo $item['id'];?>">
-						Attendance
-					</a>	
-					|
-				<?php
-					}
-				?>
-				<a href="<?php echo site_url();?>/employee/edit/<?php echo $item['id'];?>">
-					Edit
-				</a> | 
-				<?php
-					if(isAdmin())
-					{
-				?>
-					<a href="<?php echo site_url();?>/attendance/by_employee/<?php echo $item['id'];?>">
-						Details
-					</a>
-
-				<?php
-					}
-				?>
-				
+			<a href="javascript:void(0);" class="delete-advance" data-id="<?php echo $item['id'];?>">
+				Delete
+			</a> 
 		</td>
-		<td>test</td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>
@@ -103,14 +68,20 @@
                     "bAutoWidth": true,
                     "bDestroy": true,
                 });
+
+                jQuery(".delete-advance").on('click', function(e)
+                {
+                	var advanceId = e.target.getAttribute('data-id');
+                	deleteAdvance(advanceId);
+                });
             });
             
-function deleteEmployee(id) {
-	var status = confirm("Do You want to Delete Employee ?");
+function deleteAdvance(id) {
+	var status = confirm("Do You want to Delete Advance Entry ?");
 	if(status) {
 	$.ajax({
          type: "POST",
-         url: "<?php echo site_url();?>/employee/deleteEmployee/", 
+         url: "<?php echo site_url();?>/employee/deleteEmployeeAdvance/", 
          data:{'id':id},
          dataType: 'JSON',
          success: function(data)
@@ -125,3 +96,6 @@ function deleteEmployee(id) {
 }
 </script>
 
+<?php
+}
+?>

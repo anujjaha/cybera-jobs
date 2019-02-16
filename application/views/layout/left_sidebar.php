@@ -1,3 +1,4 @@
+
 <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
@@ -83,6 +84,19 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
+                        <?php
+                            if(isAdmin())
+                            {
+                        ?>
+                        <li class="active">
+                            <a href="<?php echo base_url();?>/employee/advance">
+                                <i class="fa fa-dashboard"></i> <span>Advance</span>
+                            </a>
+                        </li>
+
+                        <?php
+                        }
+                        ?>
 
                         <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>jobs/edit">

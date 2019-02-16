@@ -555,6 +555,55 @@ $modified_by = $this->session->userdata['user_id'];
 
 		</td>	
 	</tr>
+	<tr>
+		<td colspan="2" align="center">
+			<table border="2" class="table">
+				<tr>
+					
+					<td>
+						<label>
+							<input  
+						 type="radio"  <?php if($job_data->is_hold == 1) echo 'checked="checked"';?>  id="is_hold" checked="checked" name="is_hold" value="1">
+							Payment Pending
+						</label>
+						<label>
+							<input  <?php if($job_data->is_hold == 0) echo 'checked="checked"';?>  type="radio" name="is_hold" value="0">
+							Payment Received
+						</label>
+						<br>
+						<input type="text" name="payment_details" id="payment_details"  class="form-control"  value="<?=$job_data->payment_details?>">
+					</td>
+					<td>
+						<label>
+						<input   <?php if($job_data->is_pickup == 1) echo 'checked="checked"';?> type="radio" checked="checked" name="is_pickup" value="1">
+						Cybera Pickup
+						</label>
+
+						<label>
+							<input   <?php if($job_data->is_pickup == 0) echo 'checked="checked"';?> type="radio" name="is_pickup" value="0">
+							Pickup Done
+						</label>
+
+						<br>
+						<input type="text" name="pickup_details" id="pickup_details"  class="form-control" value="<?=$job_data->pickup_details?>">
+					</td>
+
+					<td>
+						<label>
+							<input type="radio" <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
+							Cybera Delivery
+						</label>
+						<label>
+							<input <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
+							Delivery Done
+						</label>
+						<br>
+						<input type="text" name="delivery_details" id="delivery_details"  class="form-control"  value="<?=$job_data->delivery_details?>">
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
 	<tr>		
 		<td> Remind Me : </td>		
 		<td>		

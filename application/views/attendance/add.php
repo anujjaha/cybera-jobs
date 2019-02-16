@@ -49,17 +49,57 @@
 		</tr>
 		<tr>
 			<td align="right"> <label>Half Day : </label></td>
-			<td> <input type="number" min="0" name="half_day" value="0" required="required" class="form-control"> </td>
+			<td> 
+				<div class="form-group">
+					<div class="col-md-6">
+						<input type="number" min="0" name="half_day" value="0" required="required" class="form-control"> 
+					</div>
+
+					<div class="col-md-2">
+						Marks:
+					</div>
+					<div class="col-md-4">
+						<input type="number" min="0" max="10" name="half_leave_mark" value="0" required="required" class="form-control">
+					</div> 
+				</div>
+			</td>
 			
 			<td>&nbsp;</td>
 			
 			<td align="right"> <label>Full Day  : </label></td>
-			<td> <input type="number" min="0" name="full_day"  value="0" required="required" class="form-control"> </td>
+			<td>
+				<div class="form-group">
+				 	<div class="col-md-6">
+				 		<input type="number" min="0" name="full_day"  value="0" required="required" class="form-control"> 
+				 	</div>
+
+				 	<div class="col-md-2">
+				 		Marks:
+				 	</div>
+				 	<div class="col-md-4">
+				 		<input type="number" min="0" max="10" name="full_leave_mark" value="0" required="required" class="form-control">
+				 	</div> 
+			 	</div>
+			</td>
 		</tr>
 		<tr>
 			<td align="right"> <label>Office Late : </label></td>
-			<td> <input type="number" min="0" name="office_late"  value="0" required="required" class="form-control"> </td>
-			
+			<td> 
+
+				<div class="form-group">
+				 	<div class="col-md-6">
+						<input type="number" min="0" name="office_late"  value="0" required="required" class="form-control">
+				 	</div>
+
+				 	<div class="col-md-2">
+				 		Marks:
+				 	</div>
+				 	<div class="col-md-4">
+				 		<input type="number" min="0" max="10" name="full_leave_mark" value="0" required="required" class="form-control">
+				 	</div> 
+			 	</div>
+
+			</td>
 			<td>&nbsp;</td>
 			
 			<td align="right"> <label>Office Half Day : </label></td>
@@ -85,6 +125,20 @@
 				<textarea name="notes" class="form-control" id="notes"></textarea>
 			</td>
 		</tr>
+
+		<tr>
+			<td align="right"> <label>Effeciency Marks  : </label></td>
+			<td> <input type="number" name="effieciency_mark" min="0" max="10" value="0" required="required" class="form-control"> </td>
+			
+			<td>&nbsp;</td>
+			
+			<td align="right"> <label>Withdrawal Marks : </label></td>
+			<td> 
+				<input type="number" name="withdraw_mark" min="0" max="10" value="0" required="required" class="form-control">	
+			</td>
+		</tr>
+
+
 		<tr>
 			<td colspan="5" align="center"> 
 				<input type="submit" name="save" class="btn btn-primary" onclick="return confirmSubmit();" value="Save">
