@@ -186,6 +186,7 @@ class Customer extends CI_Controller {
 						'mobile' 		=> $result->mobile,
 						'email' 		=> $result->emailid,
 						'under_revision' => $result->under_revision,
+						'customer_reviews' => $result->customer_reviews,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -195,6 +196,7 @@ class Customer extends CI_Controller {
 						'mobile' 	=> $result->officecontact,
 						'email' 	=> $result->emailid,
 						'under_revision' => $result->under_revision,
+						'customer_reviews' => $result->customer_reviews,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -232,6 +234,7 @@ class Customer extends CI_Controller {
 			$data['under_revision'] = $this->input->post('under_revision');
 			$data['extra_amount'] = $this->input->post('extra_amount');
 			$data['description'] = $this->input->post('description');
+			$data['customer_reviews'] = $this->input->post('customer_reviews');
 			$data['is_block'] = $this->input->post('is_block');
 
 

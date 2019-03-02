@@ -737,6 +737,17 @@ function getEmployeeSelectBoxForAttendance($month = null, $year = null)
 	return $dropdown;
 }
 
+function getAllEmployees()
+{
+	$sql = 'SELECT id,name FROM employees
+			order by name';
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);	
+
+	return $query->result();
+}
+
 
 function  getEmployeeSelectBox()
 {

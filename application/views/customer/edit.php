@@ -113,6 +113,12 @@ $this->load->helper('form');
 
 			<textarea class="form-control" name="description"><?php echo  isset($dealer_info->description) ? $dealer_info->description : '' ?></textarea>
 		</div>
+
+		<div class="form-group">
+			<label>Customer Reviews</label>
+
+			<textarea class="form-control" name="customer_reviews"><?php echo  isset($dealer_info->customer_reviews) ? $dealer_info->customer_reviews : '' ?></textarea>
+		</div>
 		
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->

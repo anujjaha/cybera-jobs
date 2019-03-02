@@ -1,6 +1,7 @@
 <center>
 	<h2>Job History</h2>
 </center>	
+
 <hr>
 <table align="center" border="2" width="90%">
 	<tr>

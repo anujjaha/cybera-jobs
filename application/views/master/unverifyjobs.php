@@ -41,9 +41,9 @@ function direct_verify_job(id) {
 		<th>Due</th>
 		<th>Receipt</th>
 		<th>Bill Number</th>
+		<th>Verify</th>
 		<th>Date / Time</th>
 		<th>View</th>
-		<th>Verify</th>
 		<th>Edit</th>
 		</tr>
 		</thead>
@@ -61,21 +61,39 @@ function direct_verify_job(id) {
 		<td><?php echo $job['mobile'];?></td>
 		<td><?php echo $job['total'];?></td>
 		<td><?php echo $job['advance'];?></td>
-		<td><?php echo $job['due']?$job['due']:"<span style='color:green;font-weight:bold;'>0</span>";?></td>
+		<td><?php echo $job['due']?$job['due']:"<span style='color:green;font-weight:bold;'>0</span>";?>
+			<?php	
+				echo '-';
+				echo "<br>";
+				echo "-------";
+				echo "<br>";
+				
+				$userBalance =  get_acc_balance($job['customer_id']);
+				if($userBalance > 0 )
+				{
+					echo "<span style='color:green;font-weight:bold;'>".$userBalance."</span>";	
+				}
+				else
+				{
+					echo "<span style='color:red;font-weight:bold;'>".$userBalance."</span>";	
+				}
+			?>
+		</td>
 		<td><?php 
 		echo str_replace(","," ", $job['t_reciept']);
 		 echo $job['receipt'];?></td>
 		<td><?php echo $job['bill_number'];?></td>
-		<td><?php echo date('d-m-Y',strtotime($job['created']))
-						." - ".
-						date('h:i A',strtotime($job['created']));?>
-		</td>
-		<td><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a></td>
 		<td>
 			<span id="verify_<?php echo $job['job_id'];?>">
 				<a href="javascript:void(0);" onclick="direct_verify_job(<?php echo $job['job_id'];?>)">Verify</a>
 			</span>
 		</td>
+		<td><?php echo date('d-m-Y',strtotime($job['created']))
+						." - ".
+						date('h:i A',strtotime($job['created']));?>
+		</td>
+		<td><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a></td>
+		
 		<td>
 			<a target="_blank" href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a>
 		</td>

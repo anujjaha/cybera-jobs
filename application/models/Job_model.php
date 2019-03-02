@@ -98,10 +98,11 @@ class Job_model extends CI_Model {
 	
 	public function get_job_data($job_id=null) {
 		if($job_id) {
-			$this->db->select('*,job.created as "created",(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
+			$this->db->select('*,job.created as "created", job.id as id , employees.name as emp_name,(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
 				as jstatus')
 					->from($this->table)
-					->where('id ='.$job_id);
+					->join('employees', 'employees.id = job.emp_id', 'left')
+					->where('job.id ='.$job_id);
 			$query = $this->db->get();
 			return $query->row();
 		}

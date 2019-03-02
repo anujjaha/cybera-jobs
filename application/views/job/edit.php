@@ -174,20 +174,29 @@ function customer_selected(type,userid) {
 			jQuery("#mobile_"+type).val('');
         	jQuery("#mobile_"+type).val(data.mobile);
         	jQuery("#showEmailId").html("Email Id : " + data.email);
+        	jQuery("#customerReviews").html("");
         	if(data.under_revision == 1)
         	{
         		alert("Please Collect Payment in Advance for the Job.");
 
         		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 34px;'> <br>"+ data.message +"</span>");
+
+        		jQuery("#customerReviews").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
+
+
         		jQuery("#save_button").hide();
         		 $('input[type=submit]', this).attr('disabled', 'disabled');
         		 jQuery("#jobname").val('');
         		 jQuery("#jobname").attr('disabled', 'disabled');
+
         	}
         	else
         	{
+        		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
+
         		jQuery("#save_button").show();	
         		jQuery("#jobname").removeAttr('disabled', 'disabled');
+
         		$('input[type=submit]', this).removeAttr('disabled', 'disabled');
         	}
 
@@ -622,6 +631,7 @@ $this->load->helper('general'); ?>
 
         
         <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
+        <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
         <div class="row">
             <div class="col-md-3">
                 <span onClick="set_customer('new_customer');">
@@ -884,6 +894,28 @@ $this->load->helper('general'); ?>
 <table align="center">		
 	<tr>
 		<td colspan="2">
+			Job Creator : 
+			<select name="emp_id" id="emp_id">
+				<option selected="selected" value="0">
+					Please Select Employee
+				</option>
+				<?php
+					foreach(getAllEmployees() as $employee)
+					{
+				
+				?>
+					<option value="<?php echo $employee->id;?>">
+						<?php echo $employee->name;?>
+					</option>
+				<?php
+					}
+				?>
+				
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
 			Reference Customer : 
 			<select name="reference_customer_id" id="reference_customer_id">
 				<option value="0">
@@ -925,7 +957,7 @@ $this->load->helper('general'); ?>
 					
 					<td>
 						<label>
-							<input type="checkbox" name="is_hold" value="0">
+							<input type="checkbox" name="is_hold" value="1">
 							Payment Pending
 						</label>
 
@@ -942,7 +974,7 @@ $this->load->helper('general'); ?>
 					</td>
 					<td>
 						<label>
-							<input type="checkbox" name="is_pickup" value="0">
+							<input type="checkbox" name="is_pickup" value="1">
 							Cybera Pickup
 						</label>
 						<!-- <label>
@@ -961,7 +993,7 @@ $this->load->helper('general'); ?>
 
 					<td>
 						<label>
-							<input type="checkbox" name="cyb_delivery" value="0">
+							<input type="checkbox" name="cyb_delivery" value="1">
 							Cybera Delivery
 						</label>
 						<!-- <label>
@@ -1348,5 +1380,6 @@ for($i=1;$i<6;$i++) { ?>
 	setTimeout(function()
 	{
 		jQuery("#reference_customer_id").select2();
+		jQuery("#emp_id").select2();
 	}, 100);
 </script>

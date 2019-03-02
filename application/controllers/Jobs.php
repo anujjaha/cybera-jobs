@@ -226,6 +226,7 @@ public function edit($job_id=null)
                 $jobdata = array();
                 $jobdata['customer_id'] = $customer_id;
                 $jobdata['user_id'] = $this->session->userdata['user_id'];
+                $jobdata['emp_id'] 	= $this->input->post('emp_id');
 
                 $jobdata['jobname'] = $this->input->post('jobname');
 
@@ -234,11 +235,15 @@ public function edit($job_id=null)
                 $jobdata['payment_details'] = $this->input->post('payment_details');
                 $jobdata['pickup_details'] 	= $this->input->post('pickup_details');
 
+               
+
                 // Delivery Options
                 $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;
-                $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') ? $this->input->post('cyb_delivery') : 1;
+                $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') && $this->input->post('cyb_delivery') == 1 ? 0 : 1;
                 $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
 
+
+               
                 $jobdata['subtotal'] = $this->input->post('subtotal');
                 $jobdata['tax'] = $this->input->post('tax');
                 $jobdata['total'] = $this->input->post('total');
