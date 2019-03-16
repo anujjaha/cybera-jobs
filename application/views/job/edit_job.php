@@ -302,7 +302,7 @@ $modified_by = $this->session->userdata['user_id'];
 
 <div class="col-md-12 text-center">
 <p id="balance"  align="right"><h2 class="red" id="show_balance" ></h2></p>
-<p align="right"><h4 class="green" id="showEmailId" ></h4></p>
+<p align="right"><h4 class="green" id="showEmailId" >Email Id : <?php echo $customer_details->emailid; ?></h4></p>
 </div>
 
 <table width="100%" border="2">

@@ -167,7 +167,13 @@ class User extends CI_Controller {
                                        'username'=>$result->nickname,'mobile'=>$result->mobile,
                                        'profile_pic'=>$result->profile_pic
                                        );
+
+
                 $this->session->set_userdata($set_data);
+                
+                $dateData['start_date'] = date('m/d/Y', strtotime('-2 months'));
+				$dateData['end_date'] 	= date('m/d/Y');
+				$this->session->set_userdata($dateData);
                 
             if(sendDueEmailToday() == 0 )
             {

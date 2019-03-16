@@ -361,7 +361,7 @@ public function edit($job_id=null)
 
 				$customerInfo = getCustomerById($customer_id);
 
-				if(isset($customerInfo) && SEND_DEALER_MAIL )
+				if(isset($customerInfo) && $customerInfo->is_job_mail == 1 && SEND_DEALER_MAIL )
 				{		
 					$this->load->model('job_model');
 					$job_data 		= $this->job_model->get_job_data($job_id);

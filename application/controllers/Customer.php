@@ -236,6 +236,8 @@ class Customer extends CI_Controller {
 			$data['description'] = $this->input->post('description');
 			$data['customer_reviews'] = $this->input->post('customer_reviews');
 			$data['is_block'] = $this->input->post('is_block');
+			$data['is_mail'] = $this->input->post('is_mail');
+			$data['is_job_mail'] = $this->input->post('is_job_mail');
 
 
 			$customer_id = $this->input->post('customer_id');

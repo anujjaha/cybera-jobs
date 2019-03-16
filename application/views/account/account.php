@@ -1,6 +1,7 @@
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
 
 <script>
+
 function show_add_amount() {
 	jQuery("#add_amount").toggle("slide");
 }
@@ -29,6 +30,28 @@ function print_statstics_now() {
           });
 
 }
+
+function resetFilter()
+{
+	var startDate = jQuery("#startdate").val();
+	var endDate = jQuery("#enddate").val();
+	
+
+	$.ajax({
+    type: "POST",
+    url: "<?php echo site_url();?>/ajax/reset_account_dates/",
+    data : {
+     	startDate: startDate,
+    	endDate: endDate 	
+    }, 
+     success: 
+        function(data){
+        	
+			location.reload();
+        }
+      });
+}
+
 function delete_transaction_entry(id){
 	
     $.ajax({
@@ -158,6 +181,12 @@ function fill_discount_account() {
 		<button class="btn btn-success btn-sm text-center" onclick="show_add_amount()">Add Amount</button>
 		<button class="btn btn-success btn-sm text-center" onclick="createBills()">Create Bills</button>
 		</span>
+
+		<td>
+			Start Date : <input type="text" value="<?php echo $start_date;?>" name="startdate" id="startdate" class="date-picker">
+			End Date : <input type="text"  value="<?php echo $end_date;?>"  name="enddate" id="enddate" class="date-picker">
+			<button class="btn btn-success btn-sm text-center" onclick="resetFilter()">Filter</button>
+		</td>
 	</div>
 	<div class="box-body table-responsive" id="add_amount" style="display:none;">
 		<table border="1" width="100%">
@@ -213,6 +242,9 @@ function fill_discount_account() {
 		$due=0;
 		$credited=0;
 		$balance=0;
+		$totalDebit = 0;
+		$totalBalance = 0;
+		$totalCredit = 0;
 		$j_counts = array();
 		/*echo "<pre>";
 		print_r($results);
@@ -254,6 +286,8 @@ function fill_discount_account() {
 			<?php 
 				$show = "-";
 					if($result['t_type'] == DEBIT ) {
+							$totalDebit = $totalDebit + $result['amount'];
+							$totalBalance = $totalBalance + $result['amount'];
 							$show = $result['amount'];
 					}
 				echo $show;?>
@@ -262,6 +296,8 @@ function fill_discount_account() {
 			<?php 
 				$show = "-";
 					if($result['t_type'] != DEBIT ) {
+						$totalCredit = $totalCredit + $result['amount'];
+						$totalBalance = $totalBalance - $result['amount'];
 							$show = $result['amount'];
 					}
 				echo $show;
@@ -328,7 +364,25 @@ function fill_discount_account() {
 		</td>
 		</tr>
 		<?php $sr++; } ?>
-		
+	</tbody>
+	<tfoot>
+		<tr>
+			<td></th>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td> <span class="green"> <?php echo $totalDebit;?></span></td>
+			<td><span class="green"><?php echo $totalCredit;?></span></td>
+			<td><span class="green"><?php echo $totalBalance;?></span></td>
+			<td></td>
+			<td></td>
+			<td>-</td>
+			<td></td>
+			<td></td>
+			<td></td>
+			</tr>
+		</tr>
 	</tfoot>
 	</table>
 <hr>
@@ -437,7 +491,7 @@ function fill_discount_account() {
 <script src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>" type="text/javascript"></script>
 
 <script type="text/javascript">
-            $(function() {
+			$(function() {
                
                 $('#example1').dataTable({
                     "bPaginate": true,
@@ -446,7 +500,7 @@ function fill_discount_account() {
                     "bSort": true,
                     "bInfo": true,
                     "bAutoWidth": true,
-                    "iDisplayLength": 50
+                    "iDisplayLength": 50000
                 });
             });
         </script>
@@ -601,3 +655,5 @@ function setBillToSelectedJobs()
 
   </div>
 </div>
+
+			

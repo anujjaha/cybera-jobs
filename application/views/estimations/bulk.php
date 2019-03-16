@@ -25,7 +25,7 @@
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-3">
-						<h4>Customers Part A (<?php echo count(getAllEmailBulkCustomersOnlyP1());?>)</h4>
+						<h4>Retail Customers  A (<?php echo count(getAllEmailBulkCustomersOnlyP1());?>)</h4>
 						<?php 
 							$chtml = '';
 							$all_customer = getAllEmailBulkCustomersOnlyP1(); 
@@ -46,7 +46,7 @@
 					</div>
 
 					<div class="col-md-3">
-						<h4>Customers Part B (<?php echo count(getAllEmailBulkCustomersOnlyP2());?>)</h4>
+						<h4>Retail Customers B (<?php echo count(getAllEmailBulkCustomersOnlyP2());?>)</h4>
 						<?php 
 							$chtml = '';
 							$all_customer = getAllEmailBulkCustomersOnlyP2(); 
@@ -105,6 +105,25 @@
 							<?php echo $vhtml;?>	
 						</select>
 						
+					</div>
+
+					<div class="col-md-6">
+						<h4>Employess</h4>
+						<?php 
+						$vhtml = '';
+						$all_customer = getAllEmployees(); 
+
+						foreach($all_customer as $customer) 
+						{
+							$c_name = $customer->name;
+							
+							$vhtml .= "<option data-name=". $c_name ." value='cyberaprintart@gmail.com'>".$c_name."</option>";
+						}
+						?>
+						<select class="form-control employee-list" name="estimation_customer[]" id="estimation_voucher_customer">
+							<option selected="selected">Select Employee</option>
+							<?php echo $vhtml;?>	
+						</select>
 					</div>
 				</div>
 			</div>
@@ -294,4 +313,10 @@ var options_voucher = $('select.estimation-voucher-list option');
         o.value = arr[i].v;
         $(o).text(arr[i].t);
     });
+
+jQuery('.employee-list').on('change', function(e)
+{
+	var empTitle = e.target.options[e.target.selectedIndex].text;
+	jQuery("#name").val('Task For : ' + empTitle);
+})
 </script>

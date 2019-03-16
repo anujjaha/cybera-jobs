@@ -815,21 +815,21 @@ class Ajax extends CI_Controller {
 									if(!empty($cutting['c_corner'])) {
 										$cornerBlock .= '<tr>
 											<td  style="width: 100px; font-size: 16px;" align="right"> Corner Cut : </td>
-											<td  style="font-size:16px;"> '.$cutting['c_corner'] .' </td>
+											<td  style="font-size:24px;"><strong> '.$cutting['c_corner'] .' </strong></td>
 										</tr>';	
 									}
 									
 									if(!empty($cutting['c_cornerdie'])) {
 										$cornerBlock .= '<tr>
 										<td  style="font-size:16px;" align="right"> Corner Die : </td>
-										<td style="font-size:16px;"> '.$cutting['c_cornerdie'] .' </td>
+										<td style="font-size:24px;"><strong> '.$cutting['c_cornerdie'] .'</strong> </td>
 									</tr>';	
 									}
 									
 									if(!empty($cutting['c_rcorner'])) {
 										$cornerBlock .= '<tr>
 										<td  style="font-size:16px;" align="right"> Round Side : </td>
-										<td style="font-size:16px;"> '.$cutting['c_rcorner'] .' </td>
+										<td style="font-size:24px;"> <strong>'.$cutting['c_rcorner'] .' </strong></td>
 									</tr>';	
 									}
 					$cornerBlock .=	'</table>';
@@ -1315,6 +1315,29 @@ class Ajax extends CI_Controller {
 			//send_sms(NULL, 0,$sms_mobile,$sms_message);
 			echo $messageO;
 		}	
+	}
+
+	public function reset_account_dates()
+	{
+		if($this->input->post())
+		{
+			$startDate 	= $this->input->post('startDate');
+			$endDate 	= $this->input->post('endDate');
+
+			$dateData['start_date'] = $startDate;
+			$dateData['end_date'] 	= $endDate;
+			$this->session->set_userdata($dateData);
+			
+			echo json_encode(array(
+				'status' => true
+			));
+			die;			
+		}
+
+		echo json_encode(array(
+			'status' => false
+		));
+		die;			
 	}
 }
 

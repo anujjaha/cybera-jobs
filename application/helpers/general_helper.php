@@ -227,7 +227,10 @@ if ( ! function_exists('test_method'))
 
 	function getAllEmailBulkCustomersOnlyP1($param=null,$value=null) 
 	{
-		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 0 order by companyname LIMIT 0,450" ;
+		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE 
+			emailid != ''
+			AND is_mail = 1
+			AND ctype = 0 order by companyname LIMIT 0,450" ;
 		if(!empty($param)) {
 			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 0  order by companyname";
 		}
@@ -239,7 +242,10 @@ if ( ! function_exists('test_method'))
 
 	function getAllEmailBulkCustomersOnlyP2($param=null,$value=null) 
 	{
-		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 0 order by companyname LIMIT 450, 500" ;
+		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE 
+			emailid != '' 
+			AND is_mail = 1
+			AND ctype = 0 order by companyname LIMIT 450, 500" ;
 		if(!empty($param)) {
 			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 0  order by companyname";
 		}
@@ -250,7 +256,9 @@ if ( ! function_exists('test_method'))
 	}
 	
 	function getAllEmailBulkDealersOnly($param=null,$value=null) {
-		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 1 order by companyname";
+		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' 
+		AND is_mail = 1
+		AND ctype = 1 order by companyname";
 		if(!empty($param)) {
 			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 1  order by companyname";
 		}
@@ -261,7 +269,10 @@ if ( ! function_exists('test_method'))
 	}
 	
 	function getAllEmailBulkVourcherCustomerOnly($param=null,$value=null) {
-		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' AND ctype = 2 order by companyname";
+		$sql = "SELECT DISTINCT('id'), customer.* FROM customer WHERE emailid != '' 
+
+		AND is_mail = 1
+		AND ctype = 2 order by companyname";
 		if(!empty($param)) {
 			$sql = "SELECT DISTINCT('id'), customer.* FROM customer where $param = '".$value."' AND WHERE emailid != '' AND ctype = 2  order by companyname";
 		}
@@ -482,14 +493,15 @@ function sendCorePHPMail($to, $from, $subject="Cybera Email System", $content=nu
 }
 
 function send_mail($to, $from,$subject="Cybera Email System",$content=null) {
+	$fromMail = getFromEmailId();
 	$mail = new PHPMailer();
 	$mail->Host     	= "smtp.gmail.com"; // SMTP server
 	$mail->SMTPAuth    	= TRUE; // enable SMTP authentication
 	$mail->SMTPSecure  	= "tls"; //Secure conection
 	$mail->Port        	= 587; // set the SMTP port
-	$mail->Username    	= 'cyberaprintart@gmail.com'; // SMTP account username
-	$mail->Password     = 'cyb_1215@printart'; // SMTP account password
-	$mail->SetFrom('cybera.printart@gmail.com', 'Cybera Print Art');
+	$mail->Username    	= $fromMail['emailId']; // SMTP account username
+	$mail->Password     = $fromMail['password']; // SMTP account password
+	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
 	$mail->AddAddress($sendTo);	
 	$mail->isHTML( TRUE );
 	$mail->Subject  = $subject;
@@ -498,20 +510,22 @@ function send_mail($to, $from,$subject="Cybera Email System",$content=null) {
 	  echo 'Message was not sent.';
 	 // echo 'Mailer error: ' . $mail->ErrorInfo;
 	} else {
+
 	  return true;
 	}
 }
 
 function send_email_attachment($to, $subject="Cybera Email System", $content=null, $attachment = null)
 {
+	$fromMail = getFromEmailId();
 	$mail = new PHPMailer();
 	$mail->Host     	= "smtp.gmail.com"; // SMTP server
 	$mail->SMTPAuth    	= TRUE; // enable SMTP authentication
 	$mail->SMTPSecure  	= "tls"; //Secure conection
 	$mail->Port        	= 587; // set the SMTP port
-	$mail->Username    	= 'cyberaprintart@gmail.com'; // SMTP account username
-	$mail->Password     = 'cyb_1215@printart'; // SMTP account password
-	$mail->SetFrom('cybera.printart@gmail.com', 'Cybera Print Art');
+	$mail->Username    	= $fromMail['emailId']; // SMTP account username
+	$mail->Password     = $fromMail['password']; // SMTP account password
+	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
 	$mail->AddAddress($to);	
 	$mail->isHTML( TRUE );
 	$mail->Subject  = $subject;
@@ -531,15 +545,47 @@ function send_email_attachment($to, $subject="Cybera Email System", $content=nul
 	return true;
 }
 
+function getFromEmailId()
+{
+	$mailIds = [
+		[
+			'emailId' 	=> 'cyberaprint7@gmail.com',
+			'password' 	=> 'cyb-1215@printart',
+		],
+		[
+			'emailId' 	=> 'cyberaprint63@gmail.com',
+			'password' 	=> 'cyb-1215@printart',
+		],
+		[
+			'emailId' 	=> 'cyberaprintart2@gmail.com',
+			'password' 	=> 'cyb-1215@printart',
+		],
+		[
+			'emailId' 	=> 'cyberaprintart97@gmail.com ',
+			'password' 	=> 'cyb-1215@printart',
+		],
+		[
+			'emailId' 	=> 'cyberaprintart@gmail.com',
+			'password' 	=> 'cyb_1215@printart',
+		],
+	];
+
+	$key =  rand(0, 4);
+	return $mailIds[$key];
+}
+
 function sendEstimationEmail($to, $from,$subject="Cybera Email System",$content=null) {
+	$fromMail = getFromEmailId();
 	$mail = new PHPMailer();
 	$mail->Host     	= "smtp.gmail.com"; // SMTP server
 	$mail->SMTPAuth    	= TRUE; // enable SMTP authentication
 	$mail->SMTPSecure  	= "tls"; //Secure conection
 	$mail->Port        	= 587; // set the SMTP port
-	$mail->Username    	= 'cyberaprintart@gmail.com'; // SMTP account username
-	$mail->Password     = 'cyb_1215@printart'; // SMTP account password
-	$mail->SetFrom('cybera.printart@gmail.com', 'Cybera Print Art');
+	$mail->Username    	= $fromMail['emailId']; // SMTP account username
+	$mail->Password     = $fromMail['password']; // SMTP account password
+	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
+	$mail->AddReplyTo('cyberaprintart@gmail.com', 'Cybera Print Art');
+
 	
 	foreach($to as $sendTo) 
 	{
@@ -550,7 +596,7 @@ function sendEstimationEmail($to, $from,$subject="Cybera Email System",$content=
 		
 	}
 	
-	$mail->AddCC("cyberaprintart@gmail.com");
+	//$mail->AddCC("cyberaprintart@gmail.com");
 	$mail->isHTML( TRUE );
 	$mail->Subject  = $subject;
 	$mail->Body     = $content;
@@ -563,14 +609,18 @@ function sendEstimationEmail($to, $from,$subject="Cybera Email System",$content=
 }	
 
 function sendBulkEmail($to, $from,$subject="Cybera Email System",$content=null) {
+	$fromMail = getFromEmailId();
 	$mail = new PHPMailer();
 	$mail->Host     	= "smtp.gmail.com"; // SMTP server
 	$mail->SMTPAuth    	= TRUE; // enable SMTP authentication
 	$mail->SMTPSecure  	= "tls"; //Secure conection
 	$mail->Port        	= 587; // set the SMTP port
-	$mail->Username    	= 'cyberaprintart@gmail.com'; // SMTP account username
-	$mail->Password     = 'cyb_1215@printart'; // SMTP account password
-	$mail->SetFrom('cybera.printart@gmail.com', 'Cybera Print Art');
+	$mail->Username    	= $fromMail['emailId']; // SMTP account username
+	$mail->Password     = $fromMail['password']; // SMTP account password
+	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
+	$mail->AddReplyTo('cyberaprintart@gmail.com', 'Cybera Print Art');
+
+	//pr($fromMail);
 	
 	foreach($to as $sendTo) 
 	{
@@ -588,6 +638,7 @@ function sendBulkEmail($to, $from,$subject="Cybera Email System",$content=null) 
 	  echo 'Message was not sent.';
 	 // echo 'Mailer error: ' . $mail->ErrorInfo;
 	} else {
+	
 	  return true;
 	}
 }	

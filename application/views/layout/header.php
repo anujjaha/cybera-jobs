@@ -699,6 +699,9 @@ jQuery(document).ready(function() {
 			jQuery("#n_charCount").html('<span class="green">' +n_contentLength+ '</span>');	
 		}
 	});
+
+
+	jQuery(".date-picker").datepicker();
 });
 </script>
 

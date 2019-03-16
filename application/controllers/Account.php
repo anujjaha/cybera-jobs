@@ -302,6 +302,9 @@ class Account extends CI_Controller {
 		
 		$data['customer'] = $this->customer_model->get_customer_details('id',$user_id);
 		$data['results'] = $this->account_model->get_account_details($user_id);
+		$data['start_date'] = $this->session->userdata['start_date'];
+		$data['end_date'] = $this->session->userdata['end_date'];
+
 		$this->template->load('account', 'account', $data);
 	}
          

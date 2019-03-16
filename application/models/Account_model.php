@@ -66,6 +66,9 @@ class Account_model extends CI_Model {
     }
 
 	public function get_account_details($user_id) {
+		$startDate = date('Y-m-d', strtotime($this->session->userdata['start_date'])). " 00:00:00";
+		$endDate = date('Y-m-d', strtotime($this->session->userdata['end_date'])) . " 23:59:59";
+
 		$sql = "SELECT *,
 				(select due from job where job.id=ut.job_id) as 'due',
 				(select receipt from job where job.id=ut.job_id) as 'j_receipt',
@@ -73,6 +76,9 @@ class Account_model extends CI_Model {
 				(select jobname from job where job.id=ut.job_id) as 'jobname',
 				(select nickname from user_meta um where um.user_id=ut.creditedby) as 'receivedby'
 				FROM user_transactions ut where ut.customer_id = $user_id
+				AND
+				(ut.created between '". $startDate ."' AND '". $endDate ."')
+
 				ORDER by ut.id ";
 				
 		//echo $sql;die;

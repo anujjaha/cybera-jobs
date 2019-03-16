@@ -270,7 +270,7 @@ foreach($cutting_info as $cutting) {
 				}
 				
 				if(!empty($cutting['c_rcorner'])) {
-					$pcontent .= '<tr><td align="right"><strong>Round Cutting Side : </strong></td><td>'.$cutting['c_rcorner'].'</td></tr>';
+					$pcontent .= '<tr><td align="right"><strong>Round Cutting Side : </strong></td><td style="font-size 24px;"><strong>'.$cutting['c_rcorner'].'</strong></td></tr>';
 				}
 				
 				if(!empty($cutting['c_laser'])) {

@@ -130,7 +130,14 @@ class Dealer extends CI_Controller {
 				$this->dealer_model->update_dealer($dealer_id,$data);
 			} else {
 				$data['ctype'] = 1;
-				$dealer_id = $this->dealer_model->insert_dealer($data);
+
+				$dealer_id 	= $this->dealer_model->insert_dealer($data);
+				$mobile 	= $this->input->post('mobile');
+				$user_id  	= $this->session->userdata['user_id'];
+
+				$sms_text = "Dear ".$this->input->post('name').", Thank you for being part of Cybera Family as Authorised Dealer.Let's grow together";
+				send_sms($user_id, $dealer_id, $mobile,$sms_text);
+				
 			}
 			
 			$transporterData = array(

@@ -55,6 +55,17 @@ $this->load->helper('form');
 			<label>Extra Charge</label>
 			<input type="text" class="form-control" name="extra_amount" value="<?php echo $dealer_info->extra_amount;?>" placeholder="Extra Amount">
 		</div>
+
+		<div class="form-group">
+			<label>Mail Active</label>
+			<select name="is_mail"  id="is_mail" class="form-control">
+				<option <?php $dealer_info->is_mail == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php $dealer_info->is_mail == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+			</select>
+		</div>
+
+		
+
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
 </div>
@@ -119,6 +130,14 @@ $this->load->helper('form');
 
 			<textarea class="form-control" name="customer_reviews"><?php echo  isset($dealer_info->customer_reviews) ? $dealer_info->customer_reviews : '' ?></textarea>
 		</div>
+
+		<div class="form-group">
+			<label>Job Mail Active</label>
+			<select name="is_job_mail"  id="is_job_mail" class="form-control">
+				<option <?php $dealer_info->is_job_mail == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php $dealer_info->is_job_mail == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+			</select>
+		</div>
 		
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
@@ -167,4 +186,6 @@ $this->load->helper('form');
 	
 	jQuery("#is_block").val(<?php echo $dealer_info->is_block;?>);
 	jQuery("#under_revision").val(<?php echo $dealer_info->under_revision;?>);
+	jQuery("#is_mail").val(<?php echo $dealer_info->is_mail;?>);
+	jQuery("#is_job_mail").val(<?php echo $dealer_info->is_job_mail;?>);
 </script>
