@@ -117,6 +117,12 @@
                         </li>
 
                         <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>expense">
+                                <i class="fa fa-dashboard"></i> <span>Expense List</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>dealer/edit">
                                 <i class="fa fa-dashboard"></i> <span>Add New Dealer</span>
                             </a>

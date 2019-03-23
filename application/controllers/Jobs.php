@@ -234,6 +234,7 @@ public function edit($job_id=null)
                 $jobdata['delivery_details']= $this->input->post('delivery_details');
                 $jobdata['payment_details'] = $this->input->post('payment_details');
                 $jobdata['pickup_details'] 	= $this->input->post('pickup_details');
+                $jobdata['transporter_id'] 	= $this->input->post('transporter_id');
 
                
 

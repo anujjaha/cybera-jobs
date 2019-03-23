@@ -712,4 +712,23 @@ class Job_model extends CI_Model {
 
 		return $jobIds;
 	}
+
+	public function getUserTransporters($userId)
+	{
+		$sql = "SELECT * FROM transporter_details
+				 WHERE customer_id = $userId
+				 order by id DESC";
+
+		$query = $this->db->query($sql);
+		return $query->result_array();		
+	}
+
+	public function getTransporterById($transporterId)
+	{
+		$this->db->select('name')
+				->from('transporter_details')
+				->where('id ='.$transporterId);
+		$query = $this->db->get();
+		return $query->row();
+	}
 }

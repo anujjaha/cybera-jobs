@@ -121,6 +121,10 @@ if(strtolower($this->session->userdata['department']) == "master")
 				echo '<br>';
 			}
 
+			if(isset($job['emailid']))
+			{
+				echo '<span style="color: green;">'.$job['emailid'].'</span>';
+			}
 
 			if(isset($job['revision']) && $job['revision'] == 1)
 			{

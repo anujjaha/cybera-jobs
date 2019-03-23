@@ -1287,3 +1287,30 @@ function getJobBillNumber($jobId)
 	return '';
 }
 
+function getExpenseCategory($id)
+{
+	$category = array(
+		1 => 'Tea & Coffe',
+		2 => 'Petrol',
+		3 => 'Courier',
+		4 => 'Girish Bhai ( Marketing )',
+		5 => 'General'
+	);
+
+	return $category[$id];
+
+}
+
+function getJobTransporter($transporterId)
+{
+	$sql = "SELECT name  FROM transporter_details WHERE id = ".$transporterId;
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);
+	$result = $query->row();
+
+	if(isset($result))
+	{
+		echo $result->name;
+	}
+}

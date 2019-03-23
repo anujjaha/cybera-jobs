@@ -412,6 +412,11 @@ echo $pcontent;
 			<table align="left" width="100%" border="0">
 			<tr>
 				<td> 
+					<p style="text-align: right;">
+					<span style="font-size:24px;">
+						<strong><?php echo getJobTransporter($job_data->transporter_id);?> </strong>
+					</span>
+					</p>
 					<span style="font-size:15px;  line-height: 95%;">
 						<strong>To, </strong>
 					</span>

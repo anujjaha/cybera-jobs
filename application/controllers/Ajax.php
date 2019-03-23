@@ -1339,5 +1339,45 @@ class Ajax extends CI_Controller {
 		));
 		die;			
 	}
+
+	public function get_customer_transporter()
+	{	
+		$this->load->model('job_model');
+		$userId 	= $this->input->post('userId');
+		$transporter = $this->job_model->getUserTransporters($userId);
+		$data 	= array();
+
+		if(isset($transporter) && count($transporter))
+		{
+			foreach($transporter as $t)
+			{
+				if(strlen($t['name']) > 0)
+				{
+
+					$data[] = [
+						'id' 	=> $t['id'],
+						'name' 	=> $t['name']
+					];
+				}
+			}
+		}
+
+		if(isset($data) && count($data))
+		{
+			echo json_encode(array(
+				'status' => true,
+				'transporters' => $data
+			));
+			die;			
+			
+		}
+		
+
+		echo json_encode(array(
+			'status' => false
+		));
+		die;
+		
+	}	
 }
 

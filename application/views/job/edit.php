@@ -204,9 +204,45 @@ function customer_selected(type,userid) {
         	/*console.log(data);
         	console.log(data.email);*/
         	show_due(userid);
+        	fetch_transporter(userid);
         }
   });
 }
+
+function fetch_transporter(userid)
+{
+	var selectList = document.getElementById('transporter_id'),
+		option;
+
+	selectList.innerHTML = '';
+	
+	$.ajax({
+		 type: "POST",
+		 url: "<?php echo site_url();?>/ajax/get_customer_transporter/", 
+		 data: {
+		 	userId: userid
+		 },
+		 dataType: 'JSON',
+		 success: 
+			function(data)
+			{
+				if(data.status == true)
+				{
+					for(var i = 0; i < data.transporters.length; i++)
+					{
+						option 			= document.createElement("option");
+						option.value 	= data.transporters[i].id;
+						option.text 	= data.transporters[i].name;
+						selectList.appendChild(option);
+					}
+				}
+				jQuery("#transporter_id").select2();
+				console.log(data);
+			}
+	  });
+}
+
+
 function auto_suggest_price(id){
     jQuery("#fancy_box_demo_card_only_id").val(id);
     jQuery("#fancybox_id").val(id);
@@ -893,7 +929,7 @@ $this->load->helper('general'); ?>
 
 <table align="center">		
 	<tr>
-		<td colspan="2">
+		<td>
 			Job Creator : 
 			<select name="emp_id" id="emp_id">
 				<option selected="selected" value="0">
@@ -911,6 +947,15 @@ $this->load->helper('general'); ?>
 					}
 				?>
 				
+			</select>
+		</td>
+
+		<td>
+			Transporter : 
+			<select name="transporter_id" id="transporter_id">
+				<option selected="selected" value="0">
+					Please Select Transporter
+				</option>
 			</select>
 		</td>
 	</tr>
