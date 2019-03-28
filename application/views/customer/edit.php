@@ -149,12 +149,50 @@ $this->load->helper('form');
 			<h3 class="box-title">Trasnporter Details</h3>
 		</div><!-- /.box-header -->
 		<div class="box-body">
-			<div class="form-group">
-			<?php //pr($transporter_info->name);?>
-				<label>Transpoter Name :</label>
-				<input type="text" class="form-control" name="transporter_name" value="<?php if(isset($transporter_info->name)){echo $transporter_info->name;}?>" placeholder="Transporter Name">
-			</div>
-			<div class="form-group">
+			<?php
+				$transporters = getAllTransporters($dealer_info->id);
+				$j = 0;
+
+				if(isset($transporters) && count($transporters))
+				{
+					foreach($transporters as $transporter)	
+					{
+					?>
+						<div class="form-group">
+							<label>Transpoter Name :</label>
+							<input type="text" class="form-control" name="transporter_name[]" value="<?php echo $transporter['name'];?>" placeholder="Transporter Name">
+						</div>
+					<?php
+						$j++;
+					}
+
+					for($i = $j; $i < 5; $i++)
+					{
+					?>
+						<div class="form-group">
+							<label>Transpoter Name :</label>
+							<input type="text" class="form-control" name="transporter_name[]" value="" placeholder="Transporter Name">
+						</div>
+					<?php
+					}
+				}
+				else
+				{
+					for($i = 0; $i < 5; $i++)
+					{
+					?>
+						<div class="form-group">
+							<label>Transpoter Name :</label>
+							<input type="text" class="form-control" name="transporter_name[]" value="" placeholder="Transporter Name">
+						</div>
+					<?php
+					}
+				}
+				//pr($transporters);
+
+			 //pr($transporter_info->name);
+			?>
+			<!--<div class="form-group">
 				<label>Transporter Contact Person:</label>
 				<input type="text" class="form-control" name="transporter_contact_person" value="<?php if(isset($transporter_info->contact_person)){echo $transporter_info->contact_person;}?>" placeholder="Transporter Contact Person Name">
 			</div>
@@ -167,7 +205,7 @@ $this->load->helper('form');
 			<div class="form-group">
 				<label>Transporter Location:</label>
 				<input type="text" class="form-control" name="transporter_location" value="<?php if(isset($transporter_info->location)){echo $transporter_info->location;}?>" placeholder="Transporter Location">
-			</div>
+			</div>-->
 			
 		</div>
 	</div>

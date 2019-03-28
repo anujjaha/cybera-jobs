@@ -933,7 +933,7 @@ $this->load->helper('general'); ?>
 			Job Creator : 
 			<select name="emp_id" id="emp_id">
 				<option selected="selected" value="0">
-					Please Select Employee
+					Please Select Operator
 				</option>
 				<?php
 					foreach(getAllEmployees() as $employee)
@@ -957,6 +957,8 @@ $this->load->helper('general'); ?>
 					Please Select Transporter
 				</option>
 			</select>
+			<input type="text" name="manual_transporter" class="pull-right" style="width: 100px;">
+			<br><br>
 		</td>
 	</tr>
 	<tr>

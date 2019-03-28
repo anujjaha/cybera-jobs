@@ -308,4 +308,38 @@ class Customer_model extends CI_Model {
 		
 		return true;
 	}
+
+	public function manageTransporterData($customerId = null, $data = array())
+	{
+		$sql = "SELECT * FROM transporter_details WHERE customer_id = ".$customerId;
+		$ci=& get_instance();
+		$ci->load->database(); 	
+		$query = $ci->db->query($sql);
+		$transporterData = $query->result_array();
+
+		foreach($data as $key => $transporterName)
+		{
+			if(isset($transporterData[$key]))
+			{	
+				$id 	=  $transporterData[$key]['id'];
+				$upData = [
+					'name' => $transporterName
+				];
+
+				$this->db->where('id = '.$id);
+				$this->db->update('transporter_details', $upData);
+			}
+			else
+			{
+				$tdata = [
+					'customer_id' 	=> $customerId,
+					'name'			=> $transporterName
+				];
+				
+				$status = $this->db->insert('transporter_details', $tdata);
+			}
+		}
+
+		return true;
+	}
 }

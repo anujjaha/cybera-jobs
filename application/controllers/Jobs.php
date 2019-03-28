@@ -230,13 +230,29 @@ public function edit($job_id=null)
 
                 $jobdata['jobname'] = $this->input->post('jobname');
 
+                $transporterId = false;
+
+
+                $manualTransporter = $this->input->post('manual_transporter');
+
+                if(strlen($manualTransporter) > 1)
+                {
+                	$transporterId = $this->job_model->addNewTransporter($customer_id, $manualTransporter);
+                }
+                
                 // Delivery Details
                 $jobdata['delivery_details']= $this->input->post('delivery_details');
                 $jobdata['payment_details'] = $this->input->post('payment_details');
                 $jobdata['pickup_details'] 	= $this->input->post('pickup_details');
-                $jobdata['transporter_id'] 	= $this->input->post('transporter_id');
 
-               
+                if(isset($transporterId))
+                {
+                	$jobdata['transporter_id'] = $transporterId;
+                }
+                if($transporterId == false && $this->input->post('transporter_id'))
+                {
+                	$jobdata['transporter_id'] = $this->input->post('transporter_id');
+                }
 
                 // Delivery Options
                 $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;

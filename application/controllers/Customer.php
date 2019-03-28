@@ -239,7 +239,6 @@ class Customer extends CI_Controller {
 			$data['is_mail'] = $this->input->post('is_mail');
 			$data['is_job_mail'] = $this->input->post('is_job_mail');
 
-
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');
 			if($customer_id) {
@@ -259,7 +258,9 @@ class Customer extends CI_Controller {
 				
 			}
 			
-			$transporterData = array(
+
+
+			/*$transporterData = array(
 				'customer_id' 		=> $customer_id,
 				'name'		  		=> $this->input->post('transporter_name'),
 				'contact_person'	=> $this->input->post('transporter_contact_person'),
@@ -269,12 +270,16 @@ class Customer extends CI_Controller {
 			 
 			if(isset($transporter_id) && $transporter_id != '') 
 			{
-				$this->customer_model->updateTransporterDetails($transporter_id, $transporterData);
+				$this->customer_model->updateTransporterDetails($transporter_id, $this->input->post('transporter_name'));
 			}
 			else
 			{
 				$this->customer_model->addTransporterDetails($transporterData);
-			}
+			}*/
+
+			$transporterData = $this->input->post('transporter_name');
+			$this->customer_model->manageTransporterData($customer_id, $transporterData);
+
 			
 			$this->load->helper('url');
 			redirect("/",'refresh');

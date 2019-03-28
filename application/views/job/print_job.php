@@ -1,3 +1,4 @@
+
 <style>
     @media print
         {
@@ -313,6 +314,8 @@ $pcontent .= '</tr></table>';
 echo $pcontent;
 }
 ?>
+
+
 </div>
 <!--Print Cutting Ticket End-->
 
@@ -327,7 +330,16 @@ echo $pcontent;
 			<table align="left" width="100%" border="0" style="margin-left: 10px; margin-top: 20px; line-height: 95%;">
 			<tr>
 				<td> 
-					<span style="font-size:20px; line-height: 95%;">
+					<p style="text-align: right; margin-right: 30px;">
+					<span style="font-size:24px;">
+						<strong>
+						<?php
+							echo getJobTransporter($job_data->transporter_id);
+						?> 
+						</strong>
+					</span>
+					</p>
+					<span style="font-size:15px;  line-height: 95%;">
 						<strong>To, </strong>
 					</span>
 				</td>
@@ -414,7 +426,11 @@ echo $pcontent;
 				<td> 
 					<p style="text-align: right;">
 					<span style="font-size:24px;">
-						<strong><?php echo getJobTransporter($job_data->transporter_id);?> </strong>
+						<strong>
+						<?php
+							echo getJobTransporter($job_data->transporter_id);
+						?> 
+						</strong>
 					</span>
 					</p>
 					<span style="font-size:15px;  line-height: 95%;">
@@ -563,5 +579,4 @@ function print_cutting_pdf(id)
 //pr($cutting_info);
 	//	pr($job_data);
 ?>
-		this is test
 </div>

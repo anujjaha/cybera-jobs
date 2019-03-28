@@ -731,4 +731,20 @@ class Job_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->row();
 	}
+
+	public function addNewTransporter($customerId = null, $manualTransporter)
+	{
+		if($customerId)
+		{
+			$data = [
+				'customer_id' 	=> $customerId,
+				'name' 			=> $manualTransporter
+			];
+
+			$this->db->insert('transporter_details', $data);		
+			return $this->db->insert_id();
+		}
+
+		return true;
+	}
 }

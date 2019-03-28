@@ -1301,16 +1301,36 @@ function getExpenseCategory($id)
 
 }
 
-function getJobTransporter($transporterId)
+function getJobTransporter($transporterId = null)
 {
-	$sql = "SELECT name  FROM transporter_details WHERE id = ".$transporterId;
-	$ci=& get_instance();
-	$ci->load->database(); 	
-	$query = $ci->db->query($sql);
-	$result = $query->row();
-
-	if(isset($result))
+	if(isset($transporterId))
 	{
-		echo $result->name;
+		$sql = "SELECT name  FROM transporter_details WHERE id = ".$transporterId;
+		$ci=& get_instance();
+		$ci->load->database(); 	
+		$query = $ci->db->query($sql);
+		$result = $query->row();
+
+		if(isset($result))
+		{
+			echo $result->name;
+		}
 	}
+}
+
+function getAllTransporters($customerId = null)
+{
+	if($customerId)
+	{
+		$sql = "SELECT * FROM transporter_details WHERE customer_id = ".$customerId;
+		$ci=& get_instance();
+		$ci->load->database(); 	
+		$query = $ci->db->query($sql);
+		$result = $query->result_array();
+
+		return $result;
+	}
+	
+
+	return [];
 }

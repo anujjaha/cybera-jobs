@@ -1345,7 +1345,10 @@ class Ajax extends CI_Controller {
 		$this->load->model('job_model');
 		$userId 	= $this->input->post('userId');
 		$transporter = $this->job_model->getUserTransporters($userId);
-		$data 	= array();
+		$data[] 	= [
+			'id' 	=> 0,
+			'name' 	=>  'Please Select Transprter'
+		];
 
 		if(isset($transporter) && count($transporter))
 		{
