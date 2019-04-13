@@ -121,11 +121,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 				echo '<br>';
 			}
 
-			if(isset($job['emailid']))
-			{
-				echo '<span style="color: green;">'.$job['emailid'].'</span>';
-			}
-
+			
 			if(isset($job['revision']) && $job['revision'] == 1)
 			{
 				?>
@@ -151,7 +147,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 		<td><?php echo $job['jobname'];?></td>
 		<td><?php echo $job['mobile'];?>
 			<hr>
-			<?php echo $job['jsmsnumber'];?>
+			<?php echo $job['jsmsnumber'];
+			if(isset($job['emailid']))
+			{
+				echo '<span style="color: green;">'.$job['emailid'].'</span>';
+			}
+		?>
+
 		</td>
 		<td><?php echo $job['total'];?>
 			

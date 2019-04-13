@@ -168,7 +168,7 @@ if($customer_details->ctype == 1 )
 									</tr>';
 									
 									$content .=  '<tr>
-										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'<br>Employee :'.$job_data->emp_name.'</td>
+										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'<br>Operator :'.$job_data->emp_name.'</td>
 										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
 										<td style="font-size:9px;" align="right">'. $due .'</td>
 									</tr>
