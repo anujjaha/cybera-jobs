@@ -259,6 +259,13 @@ public function edit($job_id=null)
                 $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') && $this->input->post('cyb_delivery') == 1 ? 0 : 1;
                 $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
 
+                $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
+				$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
+
+				//Print CYBERA IN Cutting SLIP
+				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
+
+				$jobdata['is_customer_waiting'] 		= $this->input->post('is_customer_waiting') ? $this->input->post('is_customer_waiting') : 0;
 
                
                 $jobdata['subtotal'] = $this->input->post('subtotal');
@@ -608,6 +615,41 @@ public function edit($job_id=null)
                 $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;
                 $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') ? $this->input->post('cyb_delivery') : 1;
                 $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
+
+                $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
+				$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
+
+				if($jobdata['is_manual'] == 0)
+				{
+					$jobdata['manual_complete'] = '';
+				}
+				
+
+				//Print CYBERA IN Cutting SLIP
+				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
+
+				$jobdata['is_customer_waiting'] 		= $this->input->post('is_customer_waiting') ? $this->input->post('is_customer_waiting') : 0;
+
+				//pr($jobdata);
+
+				$transporterId = false;
+
+
+				$manualTransporter = $this->input->post('manual_transporter');
+
+				if(strlen($manualTransporter) > 1)
+				{
+					$transporterId = $this->job_model->addNewTransporter($customer_id, $manualTransporter);
+				}
+				
+				if(isset($transporterId))
+				{
+					$jobdata['transporter_id'] = $transporterId;
+				}
+				if($transporterId == false && $this->input->post('transporter_id'))
+				{
+					$jobdata['transporter_id'] = $this->input->post('transporter_id');
+				}
 
                 //pr($jobdata);
 

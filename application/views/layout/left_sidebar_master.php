@@ -46,6 +46,12 @@
                             </a>
                         </li>
                         
+                        <li class="active">
+                            <a href="<?php echo base_url();?>/etransaction">
+                                <i class="fa fa-dashboard"></i> <span>Employee Walet</span>
+                            </a>
+                        </li>
+                        
                         <li>
                             <a href="<?php echo base_url();?>master/all">
                                 <i class="fa fa-envelope"></i> <span>All Jobs</span>

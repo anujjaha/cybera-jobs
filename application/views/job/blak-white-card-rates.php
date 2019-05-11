@@ -136,13 +136,13 @@
 		</td>
 
 		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="1000" data-card="Transparent_Cards" data-type="SS">
+			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Transparent_Cards" data-type="SS">
 				1300
 			</span>
 		</td>
 		
 		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="1000" data-card="Semi_Transparent_Cards" data-type="SS">
+			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Semi_Transparent_Cards" data-type="SS">
 				1300
 			</span>
 		</td>

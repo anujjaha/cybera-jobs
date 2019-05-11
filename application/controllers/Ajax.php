@@ -723,6 +723,7 @@ class Ajax extends CI_Controller {
 			$customerDetails 	= $this->job_model->get_customer_details($jobData->customer_id);
 			$cutting_info 		= $this->job_model->get_cutting_details($jobId);
 			$created_info 		= get_user_by_param('id', $jobData->user_id);
+			$isWaiting 			= $jobData->is_customer_waiting == 1 ? "CUSTOMER WAITING" : '';
 			
 			$pcontent = "";
 			$sr=0;
@@ -965,7 +966,8 @@ class Ajax extends CI_Controller {
 				}
 			}
 			
-			
+			$pcontent .= '<table align="center" align="center" style="border:1px solid; width: 450px;" width="500px"><tr><td align="center" style="font-size: 45px;">' . $isWaiting . '</td></tr></table>';
+
 			$pdfLink = create_pdf($pcontent, 'A5');
 			
 			echo json_encode(array( 
@@ -1099,10 +1101,13 @@ class Ajax extends CI_Controller {
 	{
 		if($this->input->post())
 		{
-			$jobId = $this->input->post('jobId');
+			$jobId 			= $this->input->post('jobId');
+			$customDelivery = $this->input->post('customDelivery');
+
 			$this->load->model('job_model');
 			$jobData = array(
-				'is_delivered' => 1
+				'is_delivered' => 1,
+				'custom_delivery' => $customDelivery
 			);
 			$this->job_model->update_job($jobId, $jobData);
 			

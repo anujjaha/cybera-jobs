@@ -180,6 +180,7 @@ class Job_model extends CI_Model {
 		$department = $this->session->userdata['department'];
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
 				customer.under_revision as revision,
+				customer.customer_star_rate as rating,
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
 				

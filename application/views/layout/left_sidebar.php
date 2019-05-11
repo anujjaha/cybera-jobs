@@ -98,6 +98,22 @@
                         }
                         ?>
 
+
+                        <?php
+                            if(isAdmin())
+                            {
+                        ?>
+                        <li class="active">
+                            <a href="<?php echo base_url();?>/etransaction">
+                                <i class="fa fa-dashboard"></i> <span>Employee Walet</span>
+                            </a>
+                        </li>
+
+                        <?php
+                        }
+                        ?>
+
+
                         <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>jobs/edit">
                                 <i class="fa fa-dashboard"></i> <span>New Job</span>
@@ -195,6 +211,15 @@
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>customer">
                                 <i class="fa fa-calendar"></i> <span>Customers</span>
+                                <!--<small class="badge pull-right bg-red">
+                                <span id="show_customers"></span>
+                                </small>-->
+                            </a>
+                        </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>customer/block_list">
+                                <i class="fa fa-calendar"></i> <span>Block Customers</span>
                                 <!--<small class="badge pull-right bg-red">
                                 <span id="show_customers"></span>
                                 </small>-->

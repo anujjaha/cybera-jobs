@@ -39,6 +39,7 @@ class Prints extends CI_Controller {
             $flag = false;
 
             $jdata['is_hold'] = $this->input->post('is_hold');
+            $jdata['is_manual'] = $this->input->post('is_manual');
             $jdata['cyb_delivery'] = $this->input->post('cyb_delivery');
 
             if($this->input->post('bill_number')) 
@@ -64,7 +65,9 @@ class Prints extends CI_Controller {
 			$jdata['payment_details'] = strlen($this->input->post('payment_details')) > 0 ? $this->input->post('payment_details') : '' ;
 			
 			$jdata['delivery_details'] = strlen($this->input->post('delivery_details')) > 0 ? $this->input->post('delivery_details') : '';
-			
+
+			$jdata['manual_complete'] = strlen($this->input->post('manual_complete')) > 0 ? $this->input->post('manual_complete') : '';
+
 			if($this->input->post('voucher_number')) 
             {
 				$jdata['voucher_number'] = $this->input->post('voucher_number');

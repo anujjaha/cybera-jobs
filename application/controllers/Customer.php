@@ -34,6 +34,17 @@ class Customer extends CI_Controller {
 		$this->template->load('customer', 'index', $data);
 	}
 
+	public function block_list()
+	{
+		$today = date("Y-m-d");
+		$condition = array('condition'=>array('jdate'=>$today))	;
+		$result = $this->customer_model->get_block_customer_details();
+		$data['title']="Block Customer Management";
+		$data['heading']="Block Customer Management";
+		$data['customers']= $result;
+		$this->template->load('customer', 'index', $data);
+	}
+
 	public function special_rates()
 	{
 		$result = $this->customer_model->getAllSpecialRates();
@@ -184,6 +195,7 @@ class Customer extends CI_Controller {
 
 					echo json_encode(array(
 						'mobile' 		=> $result->mobile,
+						'rating' 		=> $result->customer_star_rate,
 						'email' 		=> $result->emailid,
 						'under_revision' => $result->under_revision,
 						'customer_reviews' => $result->customer_reviews,
@@ -194,6 +206,7 @@ class Customer extends CI_Controller {
 				if($result->officecontact) {
 					echo json_encode(array(
 						'mobile' 	=> $result->officecontact,
+						'rating' 		=> $result->customer_star_rate,
 						'email' 	=> $result->emailid,
 						'under_revision' => $result->under_revision,
 						'customer_reviews' => $result->customer_reviews,
@@ -238,6 +251,7 @@ class Customer extends CI_Controller {
 			$data['is_block'] = $this->input->post('is_block');
 			$data['is_mail'] = $this->input->post('is_mail');
 			$data['is_job_mail'] = $this->input->post('is_job_mail');
+			$data['customer_star_rate'] = $this->input->post('customer_star_rate');
 
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');

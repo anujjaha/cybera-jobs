@@ -183,6 +183,7 @@ function customer_selected(type,userid) {
 
         		jQuery("#customerReviews").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
 
+        		jQuery("#customerStarRating").append("Rating : " + data.rating);
 
         		jQuery("#save_button").hide();
         		 $('input[type=submit]', this).attr('disabled', 'disabled');
@@ -193,6 +194,8 @@ function customer_selected(type,userid) {
         	else
         	{
         		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
+
+        		jQuery("#customerStarRating").append("Rating : " + data.rating);
 
         		jQuery("#save_button").show();	
         		jQuery("#jobname").removeAttr('disabled', 'disabled');
@@ -668,6 +671,7 @@ $this->load->helper('general'); ?>
         
         <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
         <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
+        <p align="right"><h4 class="green" id="customerStarRating" ></h4></p>
         <div class="row">
             <div class="col-md-3">
                 <span onClick="set_customer('new_customer');">
@@ -985,14 +989,24 @@ $this->load->helper('general'); ?>
 	<tr>
 		<td colspan="2">
 			<br>
-			<div class="col-md-6">
+			<div class="col-md-3">
 			Percentage : <input type="number" name="percentage" value="0" min="0" 
 			max="100" step="1">
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-3">
 			Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
 			max="10000" step="1">
+			</div>
+
+			<div class="col-md-3">
+			<label>Print CYBERA : <input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
+			</label>
+			</div>
+
+			<div class="col-md-3">
+			<label>Customer Waiting : <input value="1"  type="checkbox" name="is_customer_waiting" id="is_customer_waiting">
+			</label>
 			</div>
 
 		</td>	
@@ -1049,6 +1063,19 @@ $this->load->helper('general'); ?>
 						</label> -->
 						<br>
 						<input type="text" name="delivery_details" id="delivery_details"  class="form-control" value="">
+					</td>
+
+					<td>
+						<label>
+							<input type="checkbox" name="is_manual" value="1">
+							Complete ON
+						</label>
+						<!-- <label>
+							<input type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
+							Delivery Done
+						</label> -->
+						<br>
+						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value="">
 					</td>
 				</tr>
 			</table>

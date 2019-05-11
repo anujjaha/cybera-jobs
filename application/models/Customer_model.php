@@ -50,6 +50,26 @@ class Customer_model extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query->result();
 	}
+
+	public function get_block_customer_details($param=null,$value=null) {
+		if(!empty($param)) {
+			$sql = "SELECT * FROM $this->table WHERE $param = $value";
+			$query = $this->db->query($sql);
+			return $query->row();
+		}
+		$sql = "SELECT *, 
+				(SELECT SUM(amount) from user_transactions ut WHERE ut.customer_id = $this->table.id and t_type ='debit')  as 'total_debit' ,
+				(select sum(amount) from user_transactions ut where ut.customer_id=customer.id  and t_type ='credit') as 'total_credit'
+				FROM $this->table 
+				where ctype = 0
+				AND 
+				is_block = 1
+				OR
+				under_revision = 1
+				order by companyname";
+		$query = $this->db->query($sql);
+		return $query->result();
+	}
 	public function get_customer_details_quick($like=null,$offset=0,$limit=10,$sort_by="companyname",$sort_value="ASC") {
 		if($like) {
 			$sql = "SELECT *, 

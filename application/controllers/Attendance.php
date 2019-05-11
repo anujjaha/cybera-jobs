@@ -25,7 +25,7 @@ class Attendance extends CI_Controller {
 	 * @see http://codeigniter.com/user_guide/general/urls.html
 	 */
 	public function index()
-	{
+	{	
 		if(isAdmin())
 		{
 			redirect('attendance/admin', "refresh");

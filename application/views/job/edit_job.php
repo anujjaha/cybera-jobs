@@ -514,9 +514,9 @@ $modified_by = $this->session->userdata['user_id'];
 
 <table align="center">		
 	<tr>
-		<td colspan="2">
+		<td style="width: 150px;">
 			Reference Customer : 
-			<select name="reference_customer_id" id="reference_customer_id">
+			<select  style="width: 250px;" name="reference_customer_id" id="reference_customer_id">
 				<option value="0">
 					Please Select Reference Customer
 				</option>
@@ -539,20 +539,39 @@ $modified_by = $this->session->userdata['user_id'];
 				
 			</select>
 		</td>
+		<td>
+			Transporter : 
+			<select name="transporter_id" id="transporter_id">
+				<option selected="selected" value="0">
+					Please Select Transporter
+				</option>
+			</select>
+			<input type="text" name="manual_transporter" class="pull-right" style="width: 200px;">
+			<br><br>
+		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
 			<br>
-			<div class="col-md-6">
+			<div class="col-md-3">
 			Percentage : <input type="number" name="percentage" value="<?php echo isset($reference_data) ? $reference_data->percentage :  0;?>" min="0" 
 			max="100" step="1">
 			</div>
 
-			<div class="col-md-6">
+			<div class="col-md-3">
 			Fix Amount : <input type="number" name="fix_amount" value="<?php echo isset($reference_data) ? $reference_data->fix_amount :  0;?>"  min="0" 
 			max="10000" step="1">
 			</div>
 
+			<div class="col-md-3">
+			<label>Print CYBERA : <input <?php echo $job_data->is_print_cybera == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_print_cybera" id="is_print_cybera">
+			</label>
+			</div>
+
+			<div class="col-md-3">
+			<label>Customer Waiting : <input <?php echo $job_data->is_customer_waiting == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_customer_waiting" id="is_customer_waiting">
+			</label>
+			</div>
 		</td>	
 	</tr>
 	<tr>
@@ -599,6 +618,20 @@ $modified_by = $this->session->userdata['user_id'];
 						</label>
 						<br>
 						<input type="text" name="delivery_details" id="delivery_details"  class="form-control"  value="<?=$job_data->delivery_details?>">
+					</td>
+
+					<td>
+						<label>
+							<input <?php if($job_data->is_manual == 1) echo 'checked="checked"';?> type="radio" name="is_manual" value="1">
+							Complete ON
+						</label>
+
+						<label>
+							<input <?php if($job_data->is_manual == 0) echo 'checked="checked"';?> type="radio" name="is_manual" value="0">
+							Default
+						</label>
+						<br>
+						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value="<?=$job_data->manual_complete?>">
 					</td>
 				</tr>
 			</table>
@@ -731,5 +764,40 @@ function showRemindContainer()
 	setTimeout(function()
 	{
 		jQuery("#reference_customer_id").select2();
+		fetch_transporter(<?php echo $job_data->customer_id;?>);
 	}, 100);
+
+	function fetch_transporter(userid)
+	{
+		var selectList = document.getElementById('transporter_id'),
+			option;
+
+		selectList.innerHTML = '';
+		
+		$.ajax({
+			 type: "POST",
+			 url: "<?php echo site_url();?>/ajax/get_customer_transporter/", 
+			 data: {
+			 	userId: userid
+			 },
+			 dataType: 'JSON',
+			 success: 
+				function(data)
+				{
+					if(data.status == true)
+					{
+						for(var i = 0; i < data.transporters.length; i++)
+						{
+							option 			= document.createElement("option");
+							option.value 	= data.transporters[i].id;
+							option.text 	= data.transporters[i].name;
+							selectList.appendChild(option);
+						}
+					}
+					jQuery("#transporter_id").val(<?php echo $job_data->transporter_id;?>);
+
+					jQuery("#transporter_id").select2();
+				}
+		  });
+	}
 </script>

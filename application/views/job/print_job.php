@@ -217,6 +217,7 @@ echo $content;
 <!--Print Cutting Ticket-->
 <?php
 if($cutting_info) { 
+$isWaiting = $job_data->is_customer_waiting == 1 ? "<h4>Customer Waiting..</h4>" : '';
 $pcontent = "";
 $pcontent .= '<table align="center" width="90%" align="center" style="border:1px solid;">
 			<tr>
@@ -310,7 +311,8 @@ foreach($cutting_info as $cutting) {
 				}
 				$sr++;
 }
-$pcontent .= '</tr></table>';
+$pcontent .= '</tr>';
+$pcontent .= '<tr><td>' . $isWaiting . '</td></tr></table>';
 echo $pcontent;
 }
 ?>
@@ -384,6 +386,11 @@ echo $pcontent;
 		</table>
 		 </td>
 	</tr>
+	<?php
+		if($job_data->is_print_cybera == 1)
+		{
+			//die('test');
+	?>
 	<tr>
 		<td>
 			<table align="center" width="100%">
@@ -404,6 +411,9 @@ echo $pcontent;
 		</table>
 		</td>
 	</tr>
+	<?php
+		}
+	?>
 </table>
 
 </td>
@@ -485,13 +495,23 @@ echo $pcontent;
 				<td width="8%">&nbsp;</td>
 				<td>
 					<table width='100%' align='right' border='0' class="small-own-address">
-					<tr style="height:5px;"><td>&nbsp;</td><td style="font-size:12px;  line-height: 14px;"><strong>From, CYBERA PRINT ART</strong> </td></tr>
-					<tr style="height:5px;"><td>&nbsp;</td><td style="font-size:12px;  line-height: 14px;">
-					G/3, Samudra Annexe,Nr. Girish Cold Drink Cross Road,
-					<br>
-					Off C.G. Road, Navrangpura Ahmedabad - 009
-					<br>
-					Call : 079-26565720 / 26465720 | 9898309897</td></tr>
+					<?php
+						if($job_data->is_print_cybera == 1)
+						{
+					?>
+						<tr style="height:5px;">
+							<td>&nbsp;</td><td style="font-size:12px;  line-height: 14px;"><strong>From, CYBERA PRINT ART</strong> </td>
+						</tr>
+						<tr style="height:5px;"><td>&nbsp;</td><td style="font-size:12px;  line-height: 14px;">
+						G/3, Samudra Annexe,Nr. Girish Cold Drink Cross Road,
+						<br>
+						Off C.G. Road, Navrangpura Ahmedabad - 009
+						<br>
+						Call : 079-26565720 / 26465720 | 9898309897</td>
+					</tr>
+					<?php
+						}
+					?>
 				</table>
 				</td>
 			</tr>

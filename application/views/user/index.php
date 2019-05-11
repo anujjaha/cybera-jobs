@@ -99,9 +99,39 @@ if(strtolower($this->session->userdata['department']) == "master")
 				{
 					echo '<br>';
 				}
+
+				if(isset($job['is_manual']) && $job['is_manual'] == 1)
+				{
+					echo '<br><span style="color: black; font-weight: bold;"> Complete ON </span>';	
+				}
 			?>	
 		</td>
 		<td><?php echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
+
+			if($job['rating'] == 5)
+			{
+				echo '<br><span style="color: green; font-weight: bold;"> Rating : ' .   $job['rating'] . '</span>';	
+			}
+
+			if($job['rating'] == 4)
+			{
+				echo '<br><span style="color: green;"> Rating : ' .   $job['rating'] . '</span>';	
+			}
+
+			if($job['rating'] == 3)
+			{
+				echo '<br><span style="color: black;"> Rating : ' .   $job['rating'] . '</span>';	
+			}
+
+			if($job['rating'] == 2)
+			{
+				echo '<br><span style="color: red;"> Rating : ' .   $job['rating'] . '</span>';	
+			}
+
+			if($job['rating'] == 1)
+			{
+				echo '<br><span style="color: red; font-weight: bold;"> Rating : ' .   $job['rating'] . '</span>';	
+			}
 
 			if(isset($job['is_hold']) && $job['is_hold'] == 1)
 			{
@@ -141,7 +171,14 @@ if(strtolower($this->session->userdata['department']) == "master")
 				{
 					echo '<br>';
 				}
-			 ?>
+
+				if(isset($job['is_manual']) && $job['is_manual'] == 1)
+				{
+					echo '<br><span style="color: black; font-weight: bold;"> '. $job['manual_complete'] .' </span>';	
+				}
+			?>
+
+
 
 		</td>
 		<td><?php echo $job['jobname'];?></td>
@@ -250,6 +287,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 				else
 				{
 					 echo " ( Delivered )";
+					 echo "<br>" . $job['custom_delivery'];
 				}
 				?>
 			
@@ -363,6 +401,7 @@ function update_job_status(id, defaultstatus) {
 	var is_delivered = $( "input:radio[name=is_delivered]:checked" ).val();
 	var is_pickup = $( "input:radio[name=is_pickup]:checked" ).val();
 	var is_hold = $( "input:radio[name=is_hold]:checked" ).val();
+	var is_manual = $( "input:radio[name=is_manual]:checked" ).val();
 	var cyb_delivery = $( "input:radio[name=cyb_delivery]:checked" ).val();
 	var bill_number = $( "#bill_number").val();
 	var pickup_details = $( "#pickup_details").val();
@@ -370,6 +409,7 @@ function update_job_status(id, defaultstatus) {
 
 	var payment_details = $("#payment_details").val();
 	var delivery_details = $("#delivery_details").val();
+	var manual_complete = $("#manual_complete").val();
 
 	var receipt = $( "#receipt").val();
 	
@@ -386,7 +426,9 @@ function update_job_status(id, defaultstatus) {
          "is_pickup": is_pickup,
          "pickup_details": pickup_details,
          "payment_details": payment_details,
-         "delivery_details": delivery_details
+         "delivery_details": delivery_details,
+         "manual_complete": manual_complete,
+		 "is_manual": is_manual
      };	
 
     console.log(params);
@@ -451,13 +493,16 @@ $(document).keyup(function(e)
 
 function setDelievered(jobId)
 {
+	var customDelivery = prompt("Who pick the Job or Transporter Name?", "Customer");
+
 	jQuery.ajax(
 	{
 		url: "<?php echo site_url();?>/ajax/delieveredJobSuccess",
 		method: 'POST',
 		dataType: 'JSON',
 		data: {
-			jobId: jobId
+			jobId: jobId,
+			customDelivery: customDelivery
 		},
 		success: function(data)
 		{

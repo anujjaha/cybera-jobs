@@ -10,12 +10,12 @@ $this->load->helper('form');
 	<div class="box-body">
 		<!-- text input -->
 		<div class="form-group">
-			<label>Dealer Name</label>
-			<input type="text" class="form-control" name="name" value="<?php if(!empty($dealer_info->name)){echo $dealer_info->name;}?>" placeholder="Customer Name">
-		</div>
-		<div class="form-group">
 			<label>Company Name</label>
 			<input type="text" class="form-control" name="companyname"  value="<?php if(!empty($dealer_info->companyname)){echo $dealer_info->companyname;}?>" placeholder="Company Name">
+		</div>
+		<div class="form-group">
+			<label>Customer Name</label>
+			<input type="text" class="form-control" name="name" value="<?php if(!empty($dealer_info->name)){echo $dealer_info->name;}?>" placeholder="Customer Name">
 		</div>
 		<div class="form-group">
 			<label>Outside Customer</label>
@@ -46,7 +46,7 @@ $this->load->helper('form');
 			?>
 			<label>Customer Type</label>
 			<select class="form-control" name="ctype">
-				<option <?php echo $customerSel; ?> value="0">  Customer </option>
+				<option <?php echo $customerSel; ?> value="0">  Retailer </option>
 				<option  <?php echo $dealerSel; ?> value="1">  Dealer </option>
 			</select>
 		</div>
@@ -64,7 +64,27 @@ $this->load->helper('form');
 			</select>
 		</div>
 
-		
+		<div class="form-group">
+			<label>Star Rating</label>
+			<select name="customer_star_rate"  id="customer_star_rate" class="form-control">
+				<option <?php $dealer_info->customer_star_rate == 0 ? 'selected="selected"' : ''; ?> value="0">
+				0</option>
+				<option <?php $dealer_info->customer_star_rate == 1 ? 'selected="selected"' : ''; ?> value="1">
+				1</option>
+
+				<option <?php $dealer_info->customer_star_rate == 2 ? 'selected="selected"' : ''; ?> value="1">
+				2</option>
+
+				<option <?php $dealer_info->customer_star_rate == 3 ? 'selected="selected"' : ''; ?> value="1">
+				3</option>
+
+				<option <?php $dealer_info->customer_star_rate == 4 ? 'selected="selected"' : ''; ?> value="1">
+				4</option>
+
+				<option <?php $dealer_info->customer_star_rate == 5 ? 'selected="selected"' : ''; ?> value="5">
+				5</option>
+			</select>
+		</div>
 
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
@@ -102,7 +122,7 @@ $this->load->helper('form');
 		
 
 		<div class="form-group">
-			<label>Under Revision</label>
+			<label>Under Obvervation</label>
 			<select name="under_revision"  id="under_revision" class="form-control">
 				<option <?php $dealer_info->under_revision == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
 				<option <?php $dealer_info->under_revision == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
@@ -111,7 +131,7 @@ $this->load->helper('form');
 		</div>
 
 		<div class="form-group">
-			<label>Mark As Block</label>
+			<label>Block Customer</label>
 			<select name="is_block" id="is_block" class="form-control">
 				<option value="0">No </option>
 				<option  value="1">Yes </option>
@@ -138,6 +158,8 @@ $this->load->helper('form');
 				<option <?php $dealer_info->is_job_mail == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
 			</select>
 		</div>
+
+		
 		
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->

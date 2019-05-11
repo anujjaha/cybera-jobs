@@ -11,12 +11,12 @@ $this->load->helper('form');
 	<div class="box-body">
 		<!-- text input -->
 		<div class="form-group">
-			<label>Dealer Name</label>
-			<input type="text" class="form-control" name="name" value="<?php if(!empty($dealer_info->name)){echo $dealer_info->name;}?>" placeholder="Dealer Name">
-		</div>
-		<div class="form-group">
 			<label>Company Name</label>
 			<input type="text" class="form-control" name="companyname"  value="<?php if(!empty($dealer_info->companyname)){echo $dealer_info->companyname;}?>" placeholder="Company Name">
+		</div>
+		<div class="form-group">
+			<label>Customer Name</label>
+			<input type="text" class="form-control" name="name" value="<?php if(!empty($dealer_info->name)){echo $dealer_info->name;}?>" placeholder="Dealer Name">
 		</div>
 		<div class="form-group">
 			<label>Outside Customer</label>
