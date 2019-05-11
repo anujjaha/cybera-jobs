@@ -13,7 +13,9 @@
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/datepicker/datepicker3.css')?>"/>
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/daterangepicker/daterangepicker-bs3.css')?>"/>
 		<link rel="stylesheet" href="<?php echo base_url('assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css')?>"/>
-		<link rel="stylesheet" href="<?php echo base_url('assets/css/AdminLTE.css')?>"/>
+        <link rel="stylesheet" href="<?php echo base_url('assets/css/AdminLTE.css')?>"/>
+        
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css"/>
  <!-- jQuery 2.0.2 -->
         <script src="<?php echo base_url('assets/js/jquery.min.js')?>"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,6 +90,8 @@
 
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url('assets/js/AdminLTE/demo.js')?>" type="text/javascript"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" type="text/javascript"></script>
 
     </body>
 </html>

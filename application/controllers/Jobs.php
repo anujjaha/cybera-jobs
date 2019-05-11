@@ -265,6 +265,30 @@ public function edit($job_id=null)
 				//Print CYBERA IN Cutting SLIP
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
+
+				// Post Job Customer Block
+				$isRevision 	= $this->input->post('is_revision_customer_next_job');
+				$isBlock 		= $this->input->post('is_block_customer_next_job');
+				$firePostJob   	= false;
+				$postJobData 	= [];
+
+				if($isRevision == 1)
+				{
+					$postJobData['under_revision '] = 1;
+					$firePostJob = true;
+				}
+
+				if($isBlock == 1 )
+				{
+					$postJobData['is_block'] = 1;
+					$firePostJob = true;
+				}	
+
+				if($firePostJob == true)
+				{
+					$this->customer_model->update_customer($customer_id, $postJobData);
+				}
+
 				$jobdata['is_customer_waiting'] 		= $this->input->post('is_customer_waiting') ? $this->input->post('is_customer_waiting') : 0;
 
                
@@ -629,6 +653,31 @@ public function edit($job_id=null)
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
 				$jobdata['is_customer_waiting'] 		= $this->input->post('is_customer_waiting') ? $this->input->post('is_customer_waiting') : 0;
+
+				
+
+				// Post Job Customer Block
+				$isRevision 	= $this->input->post('is_revision_customer_next_job');
+				$isBlock 		= $this->input->post('is_block_customer_next_job');
+				$firePostJob   	= false;
+				$postJobData 	= [];
+
+				if($isRevision == 1)
+				{
+					$postJobData['under_revision '] = 1;
+					$firePostJob = true;
+				}
+
+				if($isBlock == 1 )
+				{
+					$postJobData['is_block'] = 1;
+					$firePostJob = true;
+				}	
+
+				if($firePostJob == true)
+				{
+					$this->customer_model->update_customer($customer_id, $postJobData);
+				}
 
 				//pr($jobdata);
 

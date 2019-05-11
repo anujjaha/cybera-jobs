@@ -1387,5 +1387,61 @@ class Ajax extends CI_Controller {
 		die;
 		
 	}	
+
+	public function resetCustomerBlockStatus()
+	{
+		if($this->input->post()) 
+		{
+			$this->load->model('customer_model');
+
+			$customerId = $this->input->post('customerId');
+			$data['is_block'] = $this->input->post('block');
+			
+			$status = $this->customer_model->update_customer($customerId, $data);
+
+			if($status)
+			{
+				echo json_encode(array(
+					'status' => true,
+					'message' => $data['is_block'] == 1 ? 'User Blocked Successfully' : 'User Unblocked Successfully'
+				));
+				die();
+			}
+
+		}
+		echo json_encode(array(
+			'status' => false,
+			'message' => 'Something Went Wrong !'
+		));
+		die();
+	}
+
+	public function resetCustomerRevisionStatus()
+	{
+		if($this->input->post()) 
+		{
+			$this->load->model('customer_model');
+
+			$customerId = $this->input->post('customerId');
+			$data['under_revision'] = $this->input->post('revision');
+			
+			$status = $this->customer_model->update_customer($customerId, $data);
+
+			if($status)
+			{
+				echo json_encode(array(
+					'status' => true,
+					'message' => $data['is_block'] == 1 ? 'User Added Under Revision Successfully' : 'User Removed From Revision Successfully'
+				));
+				die();
+			}
+
+		}
+		echo json_encode(array(
+			'status' => false,
+			'message' => 'Something Went Wrong !'
+		));
+		die();
+	}
 }
 

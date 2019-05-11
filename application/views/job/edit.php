@@ -990,25 +990,41 @@ $this->load->helper('general'); ?>
 		<td colspan="2">
 			<br>
 			<div class="col-md-3">
-			Percentage : <input type="number" name="percentage" value="0" min="0" 
-			max="100" step="1">
+				Percentage : <input type="number" name="percentage" value="0" min="0" 
+				max="100" step="1">
 			</div>
 
 			<div class="col-md-3">
-			Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
-			max="10000" step="1">
+				Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
+				max="10000" step="1">
 			</div>
 
 			<div class="col-md-3">
-			<label>Print CYBERA : <input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
-			</label>
+				<label>Print CYBERA : <input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
+				</label>
 			</div>
 
 			<div class="col-md-3">
-			<label>Customer Waiting : <input value="1"  type="checkbox" name="is_customer_waiting" id="is_customer_waiting">
-			</label>
+				<label>Customer Waiting: <input value="1"  type="checkbox" name="is_customer_waiting" id="is_customer_waiting">
+				</label>
+			</div>
+			
+			<div class="col-md-12">
+				<hr>
 			</div>
 
+			<div class="col-md-6">
+				<label>Under Observation After This Job : <input value="1"  type="checkbox" name="is_revision_customer_next_job" id="is_revision_customer_next_job">
+				</label>
+			</div>
+
+			<div class="col-md-6">
+				<label>Block User After This Job : <input value="1"  type="checkbox" name="is_block_customer_next_job" id="is_block_customer_next_job">
+				</label>
+			</div>
+			<div class="col-md-12">
+				<hr>
+			</div>
 		</td>	
 	</tr>
 	<tr>

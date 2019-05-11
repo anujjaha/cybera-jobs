@@ -36,6 +36,7 @@ $('#example1').dataTable( {
 		<th>Switch To Dealer</th>
 		<th>Switch To Voucher</th>
 		<th>Created</th>
+		<th>Observation</th>
 		<th>Block</th>
 		<th>View</th>
 		<th>Edit</th>
@@ -69,16 +70,36 @@ $('#example1').dataTable( {
 		</td>
 		<td><?php echo date('h:i A', strtotime($customer->created));?></td>
 		<td>
+			<div id="revisionContainer-<?php echo $customer->id;?>">
 			<?php 
-				if($customer->is_block == 1)
+				if($customer->under_revision == 1)
 				{
 					echo "<span class='red'>Yes</span>";
+					echo "<br><a onclick='resetCustomerRevisionStatus(" . $customer->id .", 0)' href='javascript:void(0);' class='btn btn-xs btn-primary'>Normal</a>";
 				}
 				else
 				{
 					echo "<span class='green'>No</span>";
+					echo "<br><a onclick='resetCustomerRevisionStatus(" . $customer->id .", 1)' href='javascript:void(0);' class='btn btn-xs btn-danger'>Under Revision</a>";
 				}
 			?>
+			</div>
+		</td>
+		<td>
+			<div id="blockContainer-<?php echo $customer->id;?>">
+			<?php 
+				if($customer->is_block == 1)
+				{
+					echo "<span class='red'>Yes</span>";
+					echo "<br><a onclick='resetCustomerBlockStatus(" . $customer->id .", 0)' href='javascript:void(0);' class='btn btn-xs btn-primary'>UnBlock</a>";
+				}
+				else
+				{
+					echo "<span class='green'>No</span>";
+					echo "<br><a onclick='resetCustomerBlockStatus(" . $customer->id .", 1)' href='javascript:void(0);' class='btn btn-xs btn-danger'>Block</a>";
+				}
+			?>
+			</div>
 		</td>
 		<td>
 			<a class="fancybox" href="#view_customer_info" onclick="show_customer(<?php echo $customer->id;?>,0);">
@@ -145,6 +166,58 @@ function delete_customer(id){
 
 
 <script>
+function resetCustomerBlockStatus(id, block)
+{
+	$.ajax({
+         type: "POST",
+         data: {
+         	customerId: id,
+         	block: block
+         },
+         dataType: 'JSON',
+         url: "<?php echo site_url();?>/ajax/resetCustomerBlockStatus", 
+         success: 
+            function(data)
+            {
+            	if(data.status == true)
+            	{
+            		swal("Awesome!", data.message, "success");
+            		jQuery("#blockContainer-"+ id).html('Processing');
+            		return ;
+            	}
+
+            	swal("Oh Crap!", data.message, "error");
+            	jQuery("#blockContainer-"+ id).html('Processing');
+            }
+         });
+}
+
+function resetCustomerRevisionStatus(id, revision)
+{
+	$.ajax({
+         type: "POST",
+         data: {
+         	customerId: id,
+         	revision: revision
+         },
+         dataType: 'JSON',
+         url: "<?php echo site_url();?>/ajax/resetCustomerRevisionStatus", 
+         success: 
+            function(data)
+            {
+            	if(data.status == true)
+            	{
+            		swal("Awesome!", data.message, "success");
+            		jQuery("#revisionContainer-"+ id).html('Processing');
+            		return ;
+            	}
+
+            	swal("Oh Crap!", data.message, "error");
+            	jQuery("#revisionContainer-"+ id).html('Processing');
+            }
+         });
+}
+
 function show_customer(id,option) {
 	
 	$.ajax({
