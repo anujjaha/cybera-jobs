@@ -3559,3 +3559,13 @@ input:focus {
 .bold-font {
   font-weight:bold; 
 }
+
+.col-md-4.overview-container {
+    height: 240px;
+    border: 0.1px dashed lightgray;
+    padding: 6px 10px;
+}
+
+.upper-half {
+    height: 40%;
+}

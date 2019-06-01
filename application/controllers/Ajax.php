@@ -1443,5 +1443,32 @@ class Ajax extends CI_Controller {
 		));
 		die();
 	}
+
+	public function getEmployeeBasicDetails()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('employee_model');
+			$employeeId = $this->input->post('empId');
+			$employee = $this->employee_model->getEmployeeById($employeeId);
+			
+			if($employee)
+			{
+				echo json_encode(array(
+					'status'	=> true,
+					'result' 	=> $employee
+				));
+				
+				die;
+			}
+		}
+		
+		echo json_encode(array(
+			'status' => false,
+			'message' => 'Unable to find an Employee'
+		));
+		
+		die;
+	}
 }
 

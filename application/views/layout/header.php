@@ -111,6 +111,18 @@ function show_notifications(data) {
 								Employee
 							</a>
 						</li>
+
+						<li class="dropdown messages-menu">
+							<a href="<?php echo base_url().'employee/overview'?>">
+								Overview
+							</a>
+						</li>
+
+						<li class="dropdown messages-menu">
+							<a href="<?php echo base_url().'insurance/index'?>">
+								Insurance
+							</a>
+						</li>
 						<li class="dropdown messages-menu">
 							<a href="<?php echo base_url().'cdirectory/index'?>">l
 								Directory

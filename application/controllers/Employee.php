@@ -168,4 +168,19 @@ class Employee extends CI_Controller {
 		die;
 	}
 	
+	public function overview()	
+	{
+
+		$data['heading'] 	= $data['title']="Overview - Cybera Print Art";
+		$data['startDate']	= date('m/d/Y', strtotime('first day of january this year'));
+		$data['endDate'] 	= date('m/d/Y', strtotime('last day of december this year'));
+		
+		if($this->input->post())
+		{
+			$data['startDate'] 	= $this->input->post('start_date');
+			$data['endDate'] 	= $this->input->post('end_date');
+		}
+		
+		$this->template->load('employee', 'overview', $data);				
+	}
 }

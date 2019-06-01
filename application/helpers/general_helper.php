@@ -1334,3 +1334,34 @@ function getAllTransporters($customerId = null)
 
 	return [];
 }
+
+function getEmployeeDetails($startDate, $endDate)
+{
+	$year 		= $year ? $year : date('Y');
+	$startDate 	= date('Y-m-d', strtotime($startDate)). " 00:00:00";
+	$endDate 	= date('Y-m-d', strtotime($endDate)) . " 23:59:59";
+
+	$sql 	= 'SELECT employees.*,  employees.id as emp_id,
+			SUM(attendance.half_day) as total_half_day,
+			SUM(attendance.full_day) as total_full_day,
+			SUM(attendance.office_late) as total_office_late,
+			SUM(attendance.office_halfday) as total_office_halfday,
+			SUM(attendance.half_night) as total_half_night,
+			SUM(attendance.full_night) as total_full_night,
+			SUM(attendance.sunday) as total_sunday
+			 
+			FROM  attendance
+
+			LEFT JOIn employees  on attendance.emp_id = employees.id 
+
+			where attendance.created_at between "'. $startDate .'" AND "'. $endDate .'"
+			group by employees.id
+			order by employees.name';
+
+	//pr($sql);
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);	
+
+	return $query->result();
+}
