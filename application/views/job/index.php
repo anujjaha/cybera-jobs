@@ -69,7 +69,15 @@ function show_job_details(job_id){
 		<td><?php echo $job['receipt'];?></td>
 		<td><?php echo $job['bill_number'];?></td>
 		<td><?php echo $job['smscount'];?></td>
-		<td width="70px"><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a> | <a href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a></td>
+		<td width="70px"><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a> | <a href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a>
+			<?php
+				if(isset($job['approx_completion']))
+				{
+					echo "<hr>".$job['approx_completion'];
+				}
+			?>
+			<hr
+		</td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>

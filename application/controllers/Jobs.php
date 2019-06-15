@@ -273,6 +273,9 @@ public function edit($job_id=null)
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
 
+				$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
+
+
 				// Post Job Customer Block
 				$isRevision 	= $this->input->post('is_revision_customer_next_job');
 				$isBlock 		= $this->input->post('is_block_customer_next_job');
@@ -644,7 +647,8 @@ public function edit($job_id=null)
 
                 // Delivery Options
                 $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;
-                $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') ? $this->input->post('cyb_delivery') : 1;
+
+                $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery');
                 $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
 
                 $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
@@ -654,6 +658,8 @@ public function edit($job_id=null)
 				{
 					$jobdata['manual_complete'] = '';
 				}
+
+				$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
 				
 
 				//Print CYBERA IN Cutting SLIP
@@ -690,6 +696,7 @@ public function edit($job_id=null)
 
 				$transporterId = false;
 
+				$jobdata['emp_id'] 	= $this->input->post('emp_id');
 
 				$manualTransporter = $this->input->post('manual_transporter');
 

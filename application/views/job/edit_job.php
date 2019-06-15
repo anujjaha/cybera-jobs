@@ -488,15 +488,31 @@ $modified_by = $this->session->userdata['user_id'];
 <div class="row">
 
 	<div class="col-md-4">
+		Job Creator : 
+		<select name="emp_id" id="emp_id">
+			<option selected="selected" value="0">
+				Please Select Operator
+			</option>
+			<?php
+				foreach(getAllEmployees() as $employee)
+				{
+			
+			?>
+				<option value="<?php echo $employee->id;?>">
+					<?php echo $employee->name;?>
+				</option>
+			<?php
+				}
+			?>
+			
+		</select>
+	</div>
+	
+	<div class="col-md-4">
 		<input type="hidden" name="job_id" value="<?php echo $job_data->id;?>">
 		<input type="hidden" name="modified" value="<?php echo $modified_by;?>">
 		
 		<input type="hidden" name="hasDiscount" value="1">
-		
-		Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
-		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">
-	</div>
-	<div class="col-md-4">
             Bill Number : <input type="text" name="bill_number" value="<?php if(!empty($job_data->bill_number)) { echo $job_data->bill_number;}?>">
 	</div>
 	<div class="col-md-4">
@@ -512,9 +528,9 @@ $modified_by = $this->session->userdata['user_id'];
 
 		
 
-<table align="center">		
+<table align="center" style="border: 2px solid #000;" border="2">		
 	<tr>
-		<td style="width: 150px;">
+		<td>
 			Reference Customer : 
 			<select  style="width: 250px;" name="reference_customer_id" id="reference_customer_id">
 				<option value="0">
@@ -626,12 +642,13 @@ $modified_by = $this->session->userdata['user_id'];
 
 					<td>
 						<label>
-							<input type="radio" <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
-							Cybera Delivery
-						</label>
-						<label>
 							<input <?php if($job_data->cyb_delivery == 1) echo 'checked="checked"';?> type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
 							Delivery Done
+						</label>
+						<label>
+
+							<input type="radio" <?php if($job_data->cyb_delivery == 0) echo 'checked="checked"';?> name="cyb_delivery" value="0">
+							Cybera Delivery
 						</label>
 						<br>
 						<input type="text" name="delivery_details" id="delivery_details"  class="form-control"  value="<?=$job_data->delivery_details?>">
@@ -655,7 +672,7 @@ $modified_by = $this->session->userdata['user_id'];
 		</td>
 	</tr>
 	<tr>		
-		<td> Remind Me : </td>		
+		<td align="right"> Remind Me : </td>		
 		<td>		
 		<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
 			<option value="0">No</option>		
@@ -674,7 +691,19 @@ $modified_by = $this->session->userdata['user_id'];
 	</tr>		
 </table>		
 
+<hr>
+<div class="col-md-3">
+	Approx Complete Time : 
+</div>
+<div class="col-md-3">
+	<input type="text" name="approx_completion" id="approx_completion" value="<?php echo $job_data->approx_completion;?>" class="form-control">
+</div>
 
+
+<div class="pull-right">
+Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
+		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">
+</div>
 </form>
 
 
@@ -817,4 +846,12 @@ function showRemindContainer()
 				}
 		  });
 	}
+</script>
+
+<script type="text/javascript">
+	setTimeout(function()
+	{
+		jQuery("#reference_customer_id").select2();
+		jQuery("#emp_id").select2();
+	}, 100);
 </script>

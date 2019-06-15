@@ -293,7 +293,9 @@ if ( ! function_exists('test_method'))
 		}
 		
 		$msg = str_replace(" ","+",$sms_text);
-		$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$mobile&Text=$msg&GSM=CYBERA";
+		/*$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$mobile&Text=$msg&GSM=CYBERA";*/
+
+		$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
 		
 		$url = urlencode($url);
 		$ch = curl_init();
@@ -325,7 +327,11 @@ if ( ! function_exists('test_method'))
 function send_account_sms($mobile,$sms_text=null)
 {
 		$msg = str_replace(" ","+",$sms_text);
-		$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$mobile&Text=$msg&GSM=CYBERA";
+		
+		/*$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$mobile&Text=$msg&GSM=CYBERA";*/
+
+		$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
+
 		$url = urlencode($url);
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, urldecode($url));
@@ -620,6 +626,11 @@ function sendBulkEmail($to, $from,$subject="Cybera Email System",$content=null) 
 	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
 	$mail->AddReplyTo('cyberaprintart@gmail.com', 'Cybera Print Art');
 
+
+	if(isset($from) && $from == 'cyberaprintart@gmail.com')
+	{
+		$mail->addCC('shaishav77@gmail.com');
+	}
 	//pr($fromMail);
 	
 	foreach($to as $sendTo) 
@@ -1229,6 +1240,12 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				$content .= '</td>
 				
 			</tr>';
+
+			if(isset($job_data->approx_completion) && strlen($job_data->approx_completion) > 2)
+			{
+				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Approximate Completion Time : '. $job_data->approx_completion .'</center></span> </td></tr>';
+			}
+
 			if($j == 0) {
 				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2><br>
 				<strong>Note: No Need to reply, Mail send from automated system.</strong> </center></span> </td></tr>';

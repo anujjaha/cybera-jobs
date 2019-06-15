@@ -24,12 +24,12 @@
 		<?php
 			}
 		?>
-		<th>Department</th>
 		<th>Mobile</th>
 		<th>Email Id</th>
 		<th>Aadhar Card</th>
 		<th>Blood Group</th>
 		<th>Birth Date</th>
+		<th>Is Active</th>
 		<th>Action</th>
 		</tr>
 		</thead>
@@ -42,15 +42,32 @@
 		<td><?php echo $sr;?></td>
 		<td><?php echo $item['name'];?></td>
 		<td><?php echo $item['department'];?></td>
-		
+			<?php
+				if(isAdmin())
+				{
+			?>	
 			<td><?php echo $item['salary'];?></td>
 			<td><?php echo $item['max_limit'];?></td>
-		
+			<?php
+				}
+			?>	
 		<td><?php echo $item['mobile'];?></td>
 		<td><?php echo $item['emailid'];?></td>
 		<td><?php echo $item['aadharcard'];?></td>
 		<td><?php echo $item['bgroup'];?></td>
 		<td><?php echo date('d-m-Y', strtotime($item['birthdate']));?></td>
+		<td>
+			<?php 
+				if($item['is_active'] == 1)
+				{
+					echo '<span class="green">Yes</span>';
+				}
+				else
+				{
+					echo '<span class="red">No</span>';
+				}
+			?>
+		</td>
 		<td>
 				<?php
 					if(strtolower($this->session->userdata['department']) == "master")
@@ -65,11 +82,12 @@
 				?>
 				<a href="<?php echo site_url();?>/employee/edit/<?php echo $item['id'];?>">
 					Edit
-				</a> | 
+				</a>  
 				<?php
 					if(isAdmin())
 					{
 				?>
+					|
 					<a href="<?php echo site_url();?>/attendance/by_employee/<?php echo $item['id'];?>">
 						Details
 					</a>
@@ -79,7 +97,6 @@
 				?>
 				
 		</td>
-		<td>test</td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>

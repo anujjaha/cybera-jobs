@@ -472,13 +472,16 @@ class Ajax extends CI_Controller {
 			
 			$customer_name = $customer_details->companyname ? $customer_details->companyname : $customer_details->name; 
 			$data = $this->account_model->account_statstics($user_id,$jmonth,$all);
+			/*
+				<tr>
+					<td colspan="10" align="center">
+					<h2>'.$customer_name.' (Total Due - '.$c_balance.' ) </h2>
+					</td>
+				</tr>
+			*/
 			$print = '<table border="2" width="100%">
 					
-					<tr>
-						<td colspan="10" align="center">
-						<h2>'.$customer_name.' (Total Due - '.$c_balance.' ) </h2>
-						</td>
-					</tr>
+					
 					<tr>
 					<td style="border:1px solid">Date</td>
 					<td style="border:1px solid">Time</td>

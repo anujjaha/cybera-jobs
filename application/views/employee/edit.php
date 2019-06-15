@@ -88,6 +88,46 @@
 			<td align="right"> <label>Address : </label></td>
 			<td colspan="4"> <textarea name="address" class="form-control"><?php echo $employeeInfo->address;?></textarea>  </td>
 		</tr>
+
+		<tr>
+			<td align="right"> <label> Resignation Date.  : </label></td>
+			<td> <input type="text" name="resignation_date" value="<?php echo $employeeInfo->resignation_date;?>"  class="form-control datepicker"> </td>
+			
+			<td>&nbsp;</td>
+			
+			<td align="right"> <label>Resignation Details: </label></td>
+			<td colspan="4"> <textarea name="resignation_details" class="form-control"><?php echo $employeeInfo->resignation_details;?></textarea>  </td>
+		</tr>
+
+		<tr>
+			<td align="right"> <label> Last Date  : </label></td>
+			<td> <input type="text" name="last_date" value="<?php echo $employeeInfo->last_date;?>"  class="form-control datepicker"> </td>
+			
+			<td>&nbsp;</td>
+			
+			<td align="right"> <label>Resignation Notes: </label></td>
+			<td colspan="4"> <textarea name="resignation_notes" class="form-control"><?php echo $employeeInfo->resignation_notes;?></textarea>  </td>
+		</tr>
+
+		<tr>
+			<td align="right"> <label> Active: </label></td>
+			<td> 
+				<select name="is_active" class="form-control">
+					<option <?php echo $employeeInfo->is_active == 1 ? 'selected' : '';?>  value="1"> Yes </option>	
+					<option  <?php echo $employeeInfo->is_active == 0 ? 'selected' : '';?> value="0"> NO </option>	
+				</select>
+			</td>
+			
+			<td>&nbsp;</td>
+			
+			<td align="right"> <label> Status  : </label></td>
+			<td colspan="4"> 
+			<select name="status" class="form-control">
+				<option <?php echo $employeeInfo->status == 1 ? 'selected' : '';?>  value="1"> Yes </option>	
+				<option  <?php echo $employeeInfo->status == 0 ? 'selected' : '';?> value="0"> NO </option>	
+			</select>
+			</td>
+		</tr>
 		
 		<tr>
 			<td colspan="5" align="center"> 

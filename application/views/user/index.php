@@ -324,6 +324,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 		|
 			<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
 			Print</a>
+
+			<?php
+				if(isset($job['approx_completion']))
+				{
+					echo "<hr><strong>".$job['approx_completion']. '</strong>';
+				}
+			?>
 			</td>
 		</tr>
 		<?php $sr++; } ?>

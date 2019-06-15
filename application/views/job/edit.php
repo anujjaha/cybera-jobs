@@ -925,13 +925,14 @@ $this->load->helper('general'); ?>
 			<input type="hidden" name="dealer_id" value="<?php if(!empty($dealer_info->id)){echo $dealer_info->id;}?>">
 			<input type="hidden" name="customer_type" id="customer_type">
 			<input type="hidden" name="customer_id" id="customer_id">
-			Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
-			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">
+			
 		</td>
 	</tr>
 </table>
 
-<table align="center">		
+<div class="clearfix"></div>
+<hr>
+<table align="center" class="table" style="border: 1px solid;"  border="2">	 	
 	<tr>
 		<td>
 			Job Creator : 
@@ -1116,6 +1117,17 @@ $this->load->helper('general'); ?>
 	</tr>		
 </table>		
 
+<div class="col-md-3">
+	Approx Complete Time : 
+</div>
+<div class="col-md-3">
+	<input type="text" name="approx_completion" id="approx_completion" class="form-control">
+</div>
+<div class="col-md-6" class="pull-right">
+
+	Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
+			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">
+</div>
 <input type="hidden" name="is_outside" id="is_outside" value="0">
 </form>
 

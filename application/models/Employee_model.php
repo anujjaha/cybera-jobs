@@ -58,6 +58,17 @@ class Employee_model extends CI_Model
 		if($id)
 		{
 			$this->db->where('id',$id);
+
+			if(isset($data['resignation_date']) && $data['resignation_date'] != '')
+			{
+				$data['resignation_date'] = date('Y-m-d', strtotime($data['resignation_date']));
+			}
+			
+			if(isset($data['last_date']) && $data['last_date'] != '')
+			{
+				$data['last_date'] = date('Y-m-d', strtotime($data['last_date']));
+			}
+
 			$this->db->update($this->table,$data);
 			return true;
 		}
