@@ -140,6 +140,31 @@ class Attendance_model extends CI_Model
 		
 		return false;
 	}
+
+
+	public function getEmpAttendanceByIdBetween($employeeId = null, $startDate = null, $endDate = null)
+	{
+
+		if($employeeId)
+		{
+			$startDate 	= date('Y-m-d', strtotime($startDate)) . ' 00:00:00';
+			$endDate 	= date('Y-m-d', strtotime($endDate)) .  '23:59:59';
+
+			$query = $this->db->select('*, attendance.id as id')
+				->from($this->table)
+				->where('emp_id', $employeeId)
+				->order_by('attendance.id');
+
+			$query->where('created_at >=', $startDate)
+				->where('created_at <=', $endDate);
+			
+			$query = $this->db->get();
+			
+			return $query->result_array(); 
+		}
+		
+		return false;
+	}
 	
 	
 	

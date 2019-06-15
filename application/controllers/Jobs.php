@@ -222,6 +222,13 @@ public function edit($job_id=null)
                 {
                 	redirect("jobs/edit",'refresh');	
                 }
+
+                $createStatus = validateCreateJob($customer_id, $this->input->post('jobname'));
+
+                if($createStatus == false)
+                {	
+                	redirect("jobs/edit",'refresh');	
+                }
                 
                 $jobdata = array();
                 $jobdata['customer_id'] = $customer_id;

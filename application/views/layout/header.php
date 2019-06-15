@@ -133,11 +133,11 @@ function show_notifications(data) {
 								Schedule Job
 							</a>
 						</li>
-						<li class="dropdown messages-menu">
+						<!-- <li class="dropdown messages-menu">
 							<a href="#show_calculator" onclick="show_calculator();">
 								Calculator
 							</a>
-						</li>
+						</li> -->
 						<li class="dropdown messages-menu">
 							<a href="#hfancy_box_demo" class="fancybox">
 								Cybera Estimation

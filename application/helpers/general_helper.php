@@ -1365,3 +1365,34 @@ function getEmployeeDetails($startDate, $endDate)
 
 	return $query->result();
 }
+
+function validateCreateJob($customerId = null, $jobTitle = null)
+{
+	if($customerId && $jobTitle)
+	{
+		$ci=& get_instance();
+		$ci->load->database(); 	
+
+		$sql = 'select * from job 
+				where
+				jobname = "'.$jobTitle.'"
+				AND
+				customer_id = "' . $customerId . '"
+				AND
+				 created > date_sub(now(), interval 59 second) 
+			';
+		$query = $ci->db->query($sql);			
+		$result = $query->result_array();
+
+
+		if(isset($result) && count($result))
+		{
+			return false;
+		}
+
+		return true;
+	}
+	return false;
+}
+
+

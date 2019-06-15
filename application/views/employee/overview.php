@@ -51,14 +51,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					Start Date :
 				</div>
 				<div class="col-md-3">
-					 <input type="text" value="<?php echo isset($startDate) ? $startDate : date('m/d/Y', strtotime('first day of january this year')) ?>" name="start_date" class="form-control date-picker">
+					 <input type="text" value="<?php echo isset($startDate) ? $startDate : date('m/d/Y', strtotime('first day of january this year')) ?>" id="start_date" name="start_date" class="form-control date-picker">
 				</div>
 
 				<div class="col-md-2">
 					End Date :
 				</div>
 				<div class="col-md-3">
-					<input type="text" value="<?php echo isset($endDate) ? $endDate : date('m/d/Y', strtotime('last day of december this year')) ?>" name="end_date" class="form-control date-picker">
+					<input type="text" value="<?php echo isset($endDate) ? $endDate : date('m/d/Y', strtotime('last day of december this year')) ?>" id="end_date"  name="end_date" class="form-control date-picker">
 				</div>
 				<div class="col-md-2">
 					<input type="submit" name="Filter" class="btn btn-primary">
@@ -213,12 +213,41 @@ jQuery(document).ready(function()
 
         </div>
         <div id="menu1" class="tab-pane fade">
-          <h3>Menu 1</h3>
-          <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <h3>Attendance</h3>
+          <p>Emplyee Attendance <span id="startDateContainerAtt"></span> to <span id="endDateContainerAtt"></span></p>
+
+          <table class="example1 table table-bordered table-striped" id="attendanceTable">
+          	<tr>
+	          	<th>Month</th>
+	          	<th>Half Day</th>
+				<th>Full Day</th>
+				<th>Late</th>
+				<th>Office Half Day</th>
+				<th>Half Night</th>
+				<th>Full Night</th>
+				<th>Sunday</th>
+				<th>Notes</th>
+         	</tr>
+          </table>
+
         </div>
         <div id="menu2" class="tab-pane fade">
-          <h3>Menu 2</h3>
-          <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+          <h3>Transactions</h3>
+          <p>Emplyee Transactions <span id="startDateContainerTra"></span> to <span id="endDateContainerTra"></span></p>
+
+          <table class="example1 table table-bordered table-striped" id="transactionTable">
+          	<tr>
+	          	<th>Credit</th>
+	          	<th>Debit</th>
+				<th>Self</th>
+				<th>Balance</th>
+				<th>Salary</th>
+				<th>Bonus</th>
+				<th>Penalty</th>
+				<th>Description</th>
+				<th>Notes</th>
+         	</tr>
+          </table>
         </div>
         <div id="menu3" class="tab-pane fade">
           <h3>Menu 3</h3>
@@ -266,6 +295,86 @@ function popUpRenderBasic(empId)
 	});
 }
 
+function popUpRenderAttendance(empId)
+{
+	var startDate 	= document.getElementById('start_date').value,
+		endDate 	= document.getElementById('end_date').value,
+		html 		= '';
+
+	jQuery.ajax({
+		url: "<?php echo site_url();?>/ajax/getEmployeeAttendanceDetails",
+		method: 'POST',
+		dataType: 'JSON',
+		data: {
+			empId: empId,
+			startDate: startDate,
+			endDate: endDate
+		},
+		success: function(data)
+		{
+			if(data.status == true)
+			{
+				for(var i = 0; i < data.result.length; i++)
+				{
+					html = '';
+					html = '<tr><td>'+ data.result[i].month +'</td><td>'+ data.result[i].half_day +'</td><td>'+ data.result[i].full_day +'</td><td>'+ data.result[i].office_late +'</td><td>'+ data.result[i].office_halfday +'</td><td>'+ data.result[i].half_night +'</td><td>'+ data.result[i].full_night +'</td><td>'+ data.result[i].sunday +'</td><td>'+ data.result[i].notes +'</td></tr>';
+
+					jQuery('#attendanceTable').append(html);
+
+				}
+
+				return;
+			}
+
+			console.log(data);
+		},
+		error: function(data)
+		{
+			alert(data.message);
+		}
+	});
+}
+
+function popUpRenderTransactions(empId)
+{
+	var startDate 	= document.getElementById('start_date').value,
+		endDate 	= document.getElementById('end_date').value,
+		html 		= '';
+
+	jQuery.ajax({
+		url: "<?php echo site_url();?>/ajax/getEmployeeTransactionDetails",
+		method: 'POST',
+		dataType: 'JSON',
+		data: {
+			empId: empId,
+			startDate: startDate,
+			endDate: endDate
+		},
+		success: function(data)
+		{
+			if(data.status == true)
+			{
+				for(var i = 0; i < data.result.length; i++)
+				{
+					html = '';
+					html = '<tr><td>'+ data.result[i].amount_added +'</td><td>'+ data.result[i].amount_removed +'</td><td>'+ data.result[i].current_balance +'</td><td>'+ data.result[i].employee_redeem +'</td><td>'+ data.result[i].is_salary +'</td><td>'+ data.result[i].is_bonus +'</td><td>'+ data.result[i].is_penalty +'</td><td>'+ data.result[i].description +'</td><td>'+ data.result[i].notes +'</td></tr>';
+
+					jQuery('#transactionTable').append(html);
+
+				}
+
+				return;
+			}
+
+			console.log(data);
+		},
+		error: function(data)
+		{
+			alert(data.message);
+		}
+	});
+}
+
 // Get the modal
 var modal = document.getElementById("myModal");
 
@@ -288,6 +397,8 @@ if(elements)
 			var empId = e.target.getAttribute('data-id');
 
 			popUpRenderBasic(empId);
+			popUpRenderAttendance(empId);
+			popUpRenderTransactions(empId);
 
 			modal.style.display = "block";
 		}

@@ -1470,5 +1470,63 @@ class Ajax extends CI_Controller {
 		
 		die;
 	}
+
+	public function getEmployeeAttendanceDetails()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('attendance_model');
+			$employeeId = $this->input->post('empId');
+			$startDate 	= $this->input->post('startDate');
+			$endDate 	= $this->input->post('endDate');
+			$attendance = $this->attendance_model->getEmpAttendanceByIdBetween($employeeId, $startDate, $endDate);
+			
+			if($attendance)
+			{
+				echo json_encode(array(
+					'status'	=> true,
+					'result' 	=> $attendance
+				));
+				
+				die;
+			}
+		}
+		
+		echo json_encode(array(
+			'status' => false,
+			'message' => 'Unable to find an Employee Attendance'
+		));
+		
+		die;
+	}
+
+	public function getEmployeeTransactionDetails()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('employee_transaction_model');
+			$employeeId = $this->input->post('empId');
+			$startDate 	= $this->input->post('startDate');
+			$endDate 	= $this->input->post('endDate');
+			$records 	= $this->employee_transaction_model->getEmpTransactionsByIdBetween($employeeId, $startDate, $endDate);
+			
+			if($records)
+			{
+				echo json_encode(array(
+					'status'	=> true,
+					'result' 	=> $records
+				));
+				
+				die;
+			}
+		}
+		
+		echo json_encode(array(
+			'status' => false,
+			'message' => 'Unable to find an Employee Transactions'
+		));
+		
+		die;
+	}
 }
 
