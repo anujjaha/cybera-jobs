@@ -200,7 +200,7 @@ class Job_model extends CI_Model {
 				 OR job.jdate = '".$today."' OR is_delivered = 0
 				 order by job.id DESC
 				";
-		
+		//pr($sql);
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}

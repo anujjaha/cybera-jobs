@@ -258,18 +258,37 @@ if(strtolower($this->session->userdata['department']) == "master")
 		</td>
 		<td>
 			<?php 
-
+				$showBillNumbers = [];
+				$jbBill = '';
 				if(!in_array($job['bill_number'], $billNumber))
 				{
-					echo str_replace(","," ", $job['bill_number']);
+					$jbBill = str_replace(","," ", $job['bill_number']);
 					//$billNumber[] = $job['bill_number'];
 				}
-				/*if(!in_array($job['bill_number'], $billNumber))
+				
+				if(!in_array($job['bill_number'], $billNumber))
 				{
-					echo str_replace(","," ", $job['t_bill_number']);
-					//$billNumber[] = $job['bill_number'];
-				}*/
+					$tempBill =  str_replace(",","", $job['t_bill_number']);
+					$tempBill =  str_replace(",","", $tempBill);
 
+					if($jbBill == $tempBill)
+					{
+						echo $jbBill;
+					}
+					else
+					{
+						echo $jbBill . ' '.$tempBill;
+					}
+					//echo str_replace(","," ", $job['t_bill_number']);
+					//$billNumber[] = $job['bill_number'];
+				}
+				else
+				{
+					echo $jbBill;
+				}
+
+				$showBillNumbers = array_unique($showBillNumbers);
+				///echo implode(",", $showBillNumbers);
 			?>
 		</td>
 		<td><a class="fancybox" href="#view_job_status" onclick="show_job_status(<?php echo $job['job_id'];?>);">

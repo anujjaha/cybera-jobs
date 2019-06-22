@@ -239,7 +239,7 @@ function fetch_transporter(userid)
 						selectList.appendChild(option);
 					}
 				}
-				jQuery("#transporter_id").select2();
+				//jQuery("#transporter_id").select2();
 				console.log(data);
 			}
 	  });
@@ -1482,6 +1482,6 @@ for($i=1;$i<6;$i++) { ?>
 	setTimeout(function()
 	{
 		jQuery("#reference_customer_id").select2();
-		jQuery("#emp_id").select2();
+		//jQuery("#emp_id").select2();
 	}, 100);
 </script>

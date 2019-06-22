@@ -842,7 +842,7 @@ function showRemindContainer()
 					}
 					jQuery("#transporter_id").val(<?php echo $job_data->transporter_id;?>);
 
-					jQuery("#transporter_id").select2();
+					//jQuery("#transporter_id").select2();
 				}
 		  });
 	}
@@ -852,6 +852,6 @@ function showRemindContainer()
 	setTimeout(function()
 	{
 		jQuery("#reference_customer_id").select2();
-		jQuery("#emp_id").select2();
+		//jQuery("#emp_id").select2();
 	}, 100);
 </script>

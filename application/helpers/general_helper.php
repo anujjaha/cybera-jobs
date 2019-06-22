@@ -1372,6 +1372,8 @@ function getEmployeeDetails($startDate, $endDate)
 			LEFT JOIn employees  on attendance.emp_id = employees.id 
 
 			where attendance.created_at between "'. $startDate .'" AND "'. $endDate .'"
+			AND
+			is_active = 1
 			group by employees.id
 			order by employees.name';
 

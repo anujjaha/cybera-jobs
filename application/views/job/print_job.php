@@ -199,13 +199,16 @@ if($customer_details->ctype == 1 )
 							<td colspan="2" align="right">
 								Signature : __________________________
 							</td>
-						</tr>
-					</table>';
-				$content .= '</td>
-				
-			</tr>';
+						</tr>';
+				$content .='		<tr>
+							<td colspan="2" align="center">
+							<br>
+								Approximate Completion Time : '. $job_data->approx_completion .'
+							</td>
+						</tr>';
+				$content .=	'</table></td></tr>';
 			if($j == 0) {
-				$content .= ' <tr><td colspan="2"><br><hr><br></td></tr>';
+				$content .= ' <tr><td colspan="2"><br><hr>asfdas<br></td></tr>';
 			}
 			$content .= '</table>';
 		} 
