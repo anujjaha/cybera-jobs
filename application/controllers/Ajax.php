@@ -1531,5 +1531,122 @@ class Ajax extends CI_Controller {
 		
 		die;
 	}
+
+	public function printEmployeeAttendanceReport()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('employee_model');
+			$this->load->model('attendance_model');
+
+			$empId 		= $this->input->post('empId');
+			$startDate 	= $this->input->post('startDate');
+			$endDate 	= $this->input->post('endDate');
+
+			$employee 	= getSelectedEmployeeDetails($empId, $startDate, $endDate);
+
+			//pr($employee, false);
+
+			$attendance = $this->attendance_model->getEmpAttendanceByIdBetween($empId, $startDate, $endDate);
+
+			//pr($attendance);
+			
+			$print = '<table border="2" width="100%" style="border:2px solid; width: 450px;">';
+			 
+				$print .= '<tr><td style="border:1px solid">Name: '.$employee->name . '</td>';
+				$print .= '<td style="border:1px solid;text-align: right;">Department: '.$employee->department . '</td></tr>';
+
+				$print .= '<tr><td style="border:1px solid">Start Date: '.$startDate . '</td>';
+				$print .= '<td style="border:1px solid; text-align: right;">End Date: '.$endDate . '</td></tr>';
+				
+
+				$print .= '<tr><td colspan="2">';
+
+					$print .= '<table border="2" style="border:2px solid; width: 500px;">';
+					$print .= '<tr>';
+						$print .= '<td style="width: 150px; border:1px solid">Month</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Half Day</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Full Day</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Late</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Office Half Day</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Half Night</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Full Night</td>';
+						$print .= '<td style="width: 50px; border:1px solid">Sunday</td>';
+						$print .= '<td style="width: 250px; border:1px solid">Notes</td>';
+
+					$print .= '</tr>';
+
+				$totalHalf 		= 0;
+				$totalFull 		= 0;
+				$totalLate 		= 0;
+				$totalOHalf 	= 0;
+				$totalHNight	= 0;
+				$totalFNight 	= 0;
+				$totalSunday 	= 0;
+
+				foreach($attendance as $att)
+				{
+					$totalHalf 		= $totalHalf + $att['half_day'];
+					$totalFull 		= $totalFull + $att['full_day'];
+					$totalLate 		= $totalLate + $att['office_late'];
+					$totalOHalf 	= $totalOHalf + $att['office_halfday'];
+					$totalHNight	= $totalHNight + $att['half_night'];
+					$totalFNight 	= $totalFNight + $att['full_night'];
+					$totalSunday 	= $totalSunday + $att['sunday'];
+
+					$print .= '<tr>';
+						
+						$print .= '<td style="width: 150px; border:1px solid;">' . $att['month'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['half_day'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['full_day'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['office_late'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['office_halfday'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['half_night'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['full_night'] . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $att['sunday'] . '</td>';
+						$print .= '<td style="width: 250px; border:1px solid">' . $att['notes'] . '</td>';
+					$print .= '</tr>';
+				}
+
+					$print .= '<tr>';
+						
+						$print .= '<td style="width: 150px; border:1px solid;">-</td>';
+						$print .= '<td style="width: 50px; border:1px solid"; text-align:center;><center>' . $totalHalf . '</center></td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $totalFull . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $totalLate . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $totalOHalf . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $totalHNight . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $totalFNight . '</td>';
+						$print .= '<td style="width: 50px; border:1px solid; text-align:center;">' . $totalSunday . '</td>';
+						$print .= '<td style="width: 250px; border:1px solid; text-align:center;">  - </td>';
+					$print .= '</tr>';
+					
+					$print .= '</table>';
+
+				$print .= '</td></tr>';
+
+			$print .= '</table>';
+
+			
+			$pdf = create_pdf($print,'A4');
+			
+			if($employee)
+			{
+				echo json_encode(array(
+					'status'	=> true,
+					'result' 	=> $pdf
+				));
+				
+				die;
+			}
+		}
+		
+		echo json_encode(array(
+			'status' => false,
+			'message' => 'Unable to find an Employee'
+		));
+		
+		die;		
+	}
 }
 

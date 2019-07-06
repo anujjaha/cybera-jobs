@@ -24,6 +24,7 @@
 		<th>Half Night</th>
 		<th>Full Night</th>
 		<th>Sunday</th>
+		<th>W. Days</th>
 		<th>Notes</th>
 		<!--<th>Action</th>-->
 		</tr>
@@ -45,6 +46,7 @@
 		<td><?php echo $item['half_night'];?></td>
 		<td><?php echo $item['full_night'];?></td>
 		<td><?php echo $item['sunday'];?></td>
+		<td><?php echo $item['working_days'];?></td>
 		<td><?php echo $item['notes'];?></td>
 		<!--<td>
 				<a onclick="deleteEmployee(<?php echo $item['id'];?>);" href="javascript:void(0);">

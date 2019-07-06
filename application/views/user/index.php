@@ -102,7 +102,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 
 				if(isset($job['is_manual']) && $job['is_manual'] == 1)
 				{
-					echo '<br><span style="color: black; font-weight: bold;"> Complete ON </span>';	
+					echo '<br><span style="color: black; font-weight: bold;"> Complete At </span>';	
 				}
 			?>	
 		</td>

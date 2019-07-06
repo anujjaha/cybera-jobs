@@ -328,13 +328,13 @@ if(strlen($job_data->bill_number) < 2)
 				</td>
 				<td>
 					<label>
-						<input type="radio"  <?php if($job_data->is_manual == 0) echo 'checked="checked"';?> name="is_manual" value="0">
-						NO Manual
-					</label>
-					
-					<label>
 					<input type="radio" id="" <?php if($job_data->is_manual == 1) echo 'checked="checked"';?> name="is_manual" value="1">
-						Manual Complete
+						Complete At
+					</label>
+					<br>
+					<label>
+						<input type="radio"  <?php if($job_data->is_manual == 0) echo 'checked="checked"';?> name="is_manual" value="0">
+						Default
 					</label>
 					<br>
 					<input style="width: 160px;" type="text" name="manual_complete" id="manual_complete"  class="form-control"  value="<?=$job_data->manual_complete?>">

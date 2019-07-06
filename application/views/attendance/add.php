@@ -138,6 +138,14 @@
 			</td>
 		</tr>
 
+		<tr>
+			<td  colspan="3" align="right"> <label>Working Days  : </label></td>
+			<td> <input type="number" name="working_days" min="0" max="32" value="0" required="required" class="form-control"> </td>
+			
+			<td>&nbsp;</td>
+			
+		</tr>
+
 
 		<tr>
 			<td colspan="5" align="center"> 

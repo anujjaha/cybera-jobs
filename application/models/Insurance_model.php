@@ -53,8 +53,11 @@ class Insurance_model extends CI_Model
 			$data['user_id'] = $this->session->userdata['user_id'];
 			$data['employee_id'] = isset($data['emp_id']) && $data['emp_id'] != '0' ? $data['emp_id'] : null;
 			$data['created_at'] = date('Y-m-d H:i:s');
+			$data['renewal_date'] = date('Y-m-d', strtotime($data['renewal_date']));
 			
 			unset($data['emp_id'])	;
+
+			//pr($data);
 			$status = $this->db->insert($this->table, $data);
 			return $this->db->insert_id();
 		}

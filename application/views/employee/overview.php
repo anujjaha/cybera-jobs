@@ -66,7 +66,19 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			</form>
 		</div>
 		<?php
-			$employees = getEmployeeDetails($startDate, $endDate);
+			//Convert them to timestamps.
+			$date1Timestamp = strtotime($startDate);
+			$date2Timestamp = strtotime($endDate);
+ 			$difference 	= $date2Timestamp - $date1Timestamp;
+ 			$totalDays 		= round($difference / 86400 );
+
+ 			$employees 		= getEmployeeDetails($startDate, $endDate);
+			$total  		= 0;
+			
+			foreach($employees as $temp)
+			{
+
+			}
 			foreach($employees as $emp)
 			{
 		?>
@@ -100,15 +112,20 @@ body {font-family: Arial, Helvetica, sans-serif;}
 					<div class="lower-half">
 						<div>
 							Full Half Day: <?php echo $emp->total_full_day;?>
+							<strong>( <?php echo number_format((($emp->total_full_day * 100 ) / $totalDays ), 2);?> % )</strong>
 							<div class="pull-right">
-								Half Day: <?php echo $emp->total_half_day;?>
+								<strong>Half Day: <?php echo $emp->total_half_day;?>
+								( <?php echo number_format((($emp->total_half_day * 100 ) / $totalDays ), 2);?> % )</strong>
 							</div>
 						</div>
 						
 						<div>
-							Total Office Half Day: <?php echo $emp->total_office_halfday;?>
+							T.Office Half Day: <?php echo $emp->total_office_halfday;?>
+							<strong>( <?php echo number_format((($emp->total_office_halfday * 100 ) / $totalDays ), 2);?> % )</strong>
 							<div class="pull-right">
-								Total Office Late: <?php echo $emp->total_office_late;?>
+								T. Office Late: <?php echo $emp->total_office_late;?>
+							
+							<strong>( <?php echo number_format((($emp->total_office_late * 100 ) / $totalDays ), 2);?> % )</strong>
 							</div>
 						</div>
 
@@ -130,7 +147,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 			}
 		?>
 
-	
+<input type="text" name="active-employee-id" id="active-employee-id">	
 		
 </div>
 
@@ -143,10 +160,6 @@ jQuery(document).ready(function()
 	jQuery('.date-picker').datepicker();
 });
 </script>
-
-
-<!-- Trigger/Open The Modal -->
-<button id="myBtn">Open Modal</button>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -214,7 +227,9 @@ jQuery(document).ready(function()
         </div>
         <div id="menu1" class="tab-pane fade">
           <h3>Attendance</h3>
-          <p>Emplyee Attendance <span id="startDateContainerAtt"></span> to <span id="endDateContainerAtt"></span></p>
+          <p>Emplyee Attendance <span id="startDateContainerAtt"></span> to <span id="endDateContainerAtt"></span>
+          <span class="pull-right btn btn-primary print-report">Print</span>
+          </p>
 
           <table class="example1 table table-bordered table-striped" id="attendanceTable">
           	<tr>
@@ -250,8 +265,8 @@ jQuery(document).ready(function()
           </table>
         </div>
         <div id="menu3" class="tab-pane fade">
-          <h3>Menu 3</h3>
-          <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+          <h3>Misc</h3>
+          <p>N/A</p>
         </div>
       </div>
     </div>
@@ -261,6 +276,34 @@ jQuery(document).ready(function()
 </div>
 
 <script>
+
+jQuery('.print-report').on('click', function(e)
+{
+	jQuery.ajax({
+		url: "<?php echo site_url();?>/ajax/printEmployeeAttendanceReport",
+		method: 'POST',
+		dataType: 'JSON',
+		data: {
+			empId: document.getElementById('active-employee-id').value,
+			startDate: document.getElementById('start_date').value,
+			endDate: document.getElementById('end_date').value
+		},
+		success: function(data)
+		{
+			if(data.status == true)
+			{
+				window.open(data.result);
+			}
+			console.log(data);
+		},
+		error: function(data)
+		{
+			//alert(data.message);
+		}
+	});
+
+});
+
 function popUpRenderBasic(empId)
 {
 	jQuery.ajax({
@@ -325,6 +368,10 @@ function popUpRenderAttendance(empId)
 
 				return;
 			}
+			else
+			{
+				jQuery('#attendanceTable').append(data.message);				
+			}
 
 			console.log(data);
 		},
@@ -354,6 +401,7 @@ function popUpRenderTransactions(empId)
 		{
 			if(data.status == true)
 			{
+				
 				for(var i = 0; i < data.result.length; i++)
 				{
 					html = '';
@@ -364,6 +412,10 @@ function popUpRenderTransactions(empId)
 				}
 
 				return;
+			}
+			else
+			{
+				jQuery('#transactionTable').html(data.message);				
 			}
 
 			console.log(data);
@@ -399,6 +451,8 @@ if(elements)
 			popUpRenderBasic(empId);
 			popUpRenderAttendance(empId);
 			popUpRenderTransactions(empId);
+
+			document.getElementById('active-employee-id').value = empId;
 
 			modal.style.display = "block";
 		}

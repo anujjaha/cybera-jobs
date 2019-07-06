@@ -323,7 +323,9 @@
 		<td> 
 			Paper Code : 
 			<br>
-			<input type="text" id="paper_code-ex" name="paper_code-ex" class="form-control" onblur="setPaperCodeValueEx();"> 
+			<input type="number" id="paper_code-ex" name="paper_code-ex" class="form-control" onblur="setPaperCodeValueEx();"> 
+			<br>
+			<p id="paperCodeMsg"></p>
 		</td>
 		<td> 
 			Total Names : 
@@ -333,6 +335,10 @@
 		<td align="center">
 			<input type="hidden" name="paper_side-ex" id="paper_side-ex">
 			<input type="hidden" name="original_title-ex" id="original_title-ex">
+
+			<input type="hidden" name="current-type" id="current-type">
+			<input type="hidden" name="max-allow" id="max-allow">
+
 			<button class="btn btn-primary" onclick="saveVCardEx();">
 				Confirm
 			</button>
@@ -474,6 +480,14 @@ function getPaperCodeEx()
 
 function saveVCardEx()
 {
+
+	var status = doCustomValidation();
+
+	if(!status )
+	{
+		alert('Invalid Paper Code!');
+		return false;
+	}
 	var multiple = 1;
 	updateQtyEx();	
 	if(jQuery("#v_card_names-ex").val().length > 0 )
@@ -579,6 +593,51 @@ function updateQtyEx()
 	
 	setCardTypeEx(finalTitle);
 		
+	return true;
+}
+
+jQuery('.gsmVelvet').on('click', function()
+{
+	jQuery("#paper_code-ex").val('101');
+	jQuery("#paperCodeMsg").html('');
+	jQuery("#paper_code-ex").attr('max', '105');
+	jQuery("#paper_code-ex").attr('min', '100');
+
+	jQuery("#current-type").val('velvet');
+	jQuery("#max-allow").val('105');
+})
+
+jQuery('.ptc').on('click', function()
+{
+	jQuery("#paper_code-ex").val('');
+	jQuery("#paperCodeMsg").html('<strong>Code Between 0 to 70</strong>');
+	jQuery("#paper_code-ex").attr('max', '70');
+	jQuery("#paper_code-ex").attr('min', '0');
+
+	jQuery("#current-type").val('ptc');
+	jQuery("#max-allow").val('71');
+})
+
+function doCustomValidation()
+{
+
+	if(jQuery("#current-type").val() == 'ptc')
+	{
+		if(jQuery("#paper_code-ex").val() > 70)
+		{
+			return false;
+		}
+	}
+
+
+	if(jQuery("#current-type").val() == 'velvet')
+	{
+		if(jQuery("#paper_code-ex").val() != 101)
+		{
+			return false;
+		}
+	}
+
 	return true;
 }
 </script>
