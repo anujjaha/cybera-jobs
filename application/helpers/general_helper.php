@@ -572,7 +572,7 @@ function getFromEmailId()
 		],
 		[
 			'emailId' 	=> 'cyberaprintart@gmail.com',
-			'password' 	=> 'cyb_1215@printart',
+			'password' 	=> 'Print@1215',
 		],
 	];
 
