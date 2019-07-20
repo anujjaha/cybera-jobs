@@ -29,6 +29,7 @@ class Dealer extends CI_Controller {
 		$today = date("Y-m-d");
 		$condition = array('condition'=>array('jdate'=>$today))	;
 		$result = $this->dealer_model->get_dealer_details();
+		//pr($result);
 		$data['title']="Dealers Management";
 		$data['heading']="Dealers Management";
 		$data['customers']= $result;

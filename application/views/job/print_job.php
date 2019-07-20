@@ -80,7 +80,7 @@ if($customer_details->ctype == 1 )
 {
 	$customerTitle = "Dealer";
 }
-		 for($j=0; $j<2; $j++)
+		 for($j=0; $j<1; $j++)
 		 {
 			 $mobileNumber = (strlen($job_data->jsmsnumber) > 1 ) ? "-".$job_data->jsmsnumber : '';
 			 $mobileNumber = $customer_details->mobile.$mobileNumber;
@@ -200,15 +200,19 @@ if($customer_details->ctype == 1 )
 								Signature : __________________________
 							</td>
 						</tr>';
-				$content .='		<tr>
-							<td colspan="2" align="center">
-							<br>
-								Approximate Completion Time : '. $job_data->approx_completion .'
-							</td>
-						</tr>';
+				if(strlen($job_data->approx_completion) > 2)
+				{
+					$content .='		<tr>
+								<td colspan="2" align="center">
+								<br>
+									Approximate Completion Time : '. $job_data->approx_completion .'
+								</td>
+							</tr>';
+				}
+
 				$content .=	'</table></td></tr>';
 			if($j == 0) {
-				$content .= ' <tr><td colspan="2"><br><hr>asfdas<br></td></tr>';
+				$content .= ' <tr><td colspan="2"><br><hr><br></td></tr>';
 			}
 			$content .= '</table>';
 		} 

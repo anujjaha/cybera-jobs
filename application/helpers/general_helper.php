@@ -842,12 +842,29 @@ function getBusinessByDate($date = null)
 	}
 	$sql = 'SELECT SUM(amount) totalBusiness FROM  user_transactions WHERE 
 			t_type = "debit" AND date_format(created, "%d-%m-%y") = "'.$todayDate.'"';
-			
+		
 	$ci=& get_instance();
 	$ci->load->database(); 	
 	$query = $ci->db->query($sql);
 	
 	return $query->row()->totalBusiness;
+}
+
+function getSaleByDate($date = null)
+{
+	$todayDate = date('d-m-y');
+	
+	if($date)
+	{
+		$todayDate = date('d-m-y', strtotime($date));
+	}
+	$sql = 'SELECT SUM(total) totalSale FROM  job WHERE date_format(created, "%d-%m-%y") = "'.$todayDate.'"';
+		
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);
+	
+	return $query->row()->totalSale;
 }
 
 function getBusinessCollectionByDate($date = null)

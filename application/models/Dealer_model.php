@@ -14,6 +14,8 @@ class Dealer_model extends CI_Model {
 			return $query->row();
 		}
 		$sql = "SELECT *, 
+				(SELECT SUM(amount) from user_transactions ut WHERE ut.customer_id = $this->table.id and t_type ='debit')  as 'total_debit' ,
+				(select sum(amount) from user_transactions ut where ut.customer_id=customer.id  and t_type ='credit') as 'total_credit',
 				(SELECT SUM(total) from job WHERE job.customer_id = $this->table.id)  as 'total_amount' ,
 				(SELECT SUM(due) from job WHERE job.customer_id = $this->table.id)  as 'due' 
 				FROM $this->table WHERE ctype=1

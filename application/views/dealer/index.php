@@ -59,6 +59,8 @@ die;*/
 		<?php
 		$sr =1;	
 		foreach($customers as $customer) {
+
+			$balance = $customer->total_credit - $customer->total_debit;
 			$update_status = 0;
 			if($customer->status == 0) { $update_status = 1;}
 			 ?>
@@ -68,7 +70,13 @@ die;*/
 		<td><?php echo $customer->companyname;?></td>
 		<td><?php echo $customer->name;?></td>
 		<td><?php echo $customer->total_amount;?></td>
-		<td><?php echo $customer->due;?></td>
+		<td><?php 
+
+				echo $balance >= 0 ? '<span class="green">'.$balance.'</span>' : '<span class="red">'.$balance.'</span>';
+
+			?>
+			
+		</td>
 		<td><?php echo $customer->mobile;?></td>
 		<td><?php echo $customer->officecontact;?></td>
 		<td><?php echo $customer->emailid;?></td>
@@ -90,7 +98,16 @@ die;*/
 				View
 			</a></td>
 		<td><a href="<?php echo site_url();?>/dealer/edit/<?php echo $customer->id;?>">Edit</a></td>
-		<td><a href="javascript:void(0);" onclick="delete_customer(<?php echo $customer->id;?>);">Delete</a></td>
+		<td>
+			<?php
+				
+				
+				if($balance == 0)
+				{
+					echo '<a href="javascript:void(0);" onclick="delete_customer(<?php echo $customer->id;?>);">Delete</a>';
+				}
+			?>
+		</td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>
