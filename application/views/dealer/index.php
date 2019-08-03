@@ -51,6 +51,7 @@ die;*/
 		<th>Switch To Customer</th>
 		<th>Switch To Voucher</th>
 		<th>View</th>
+		<th>Created At</th>
 		<th>Edit</th>
 		<th>Delete</th>
 		</tr>
@@ -97,6 +98,10 @@ die;*/
 		<td><a class="fancybox" href="#view_customer_info" onclick="show_customer(<?php echo $customer->id;?>,0);">
 				View
 			</a></td>
+		<td>
+			<?php echo date('d-m-Y', strtotime($customer->created));?>
+
+		</td>
 		<td><a href="<?php echo site_url();?>/dealer/edit/<?php echo $customer->id;?>">Edit</a></td>
 		<td>
 			<?php

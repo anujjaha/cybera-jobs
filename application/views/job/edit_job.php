@@ -585,8 +585,18 @@ $modified_by = $this->session->userdata['user_id'];
 			</div>
 
 			<div class="col-md-3">
-			<label>Customer Waiting : <input <?php echo $job_data->is_customer_waiting == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_customer_waiting" id="is_customer_waiting">
+			<label><input value="0" <?php echo $job_data->is_customer_waiting == 0 ? 'checked="checked"' : '';?>  type="radio" name="is_customer_waiting" id="is_customer_waiting" checked="checked">
+			Normal
 			</label>
+			<br>
+			<label><input value="1" <?php echo $job_data->is_customer_waiting == 1 ? 'checked="checked"' : '';?>  type="radio" name="is_customer_waiting" id="is_customer_waiting">
+			Customer Waiting
+			</label>
+			<br>
+			<label> <input value="2" <?php echo $job_data->is_customer_waiting == 2 ? 'checked="checked"' : '';?>   type="radio" name="is_customer_waiting" id="is_customer_waiting">
+			Customer On the Way
+			</label>
+			
 			</div>
 
 			<div class="col-md-12">

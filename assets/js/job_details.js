@@ -10,11 +10,11 @@ function check_total(id) {
 	
 	if(id == 1 && jQuery("#is_outside").val() == 1)
 	{
-		jQuery("#category_2").val('Packaging and Forwading');
+		/*jQuery("#category_2").val('Packaging and Forwading');
 		jQuery("#details_2").val('Packaging and Forwading');
 		jQuery("#qty_2").val('1');
 		jQuery("#rate_2").val('50');
-		jQuery("#sub_2").val('50');
+		jQuery("#sub_2").val('50');*/
 	}
 }
 

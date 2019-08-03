@@ -180,6 +180,7 @@ class Job_model extends CI_Model {
 		$department = $this->session->userdata['department'];
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
 				customer.under_revision as revision,
+				employees.name  as emp_name,
 				customer.customer_star_rate as rating,
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
@@ -194,6 +195,9 @@ class Job_model extends CI_Model {
 				FROM job
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
+
+				 LEFT JOIN employees
+				 on employees.id = job.emp_id
 				 WHERE 
 				 job.status != 0 OR job.is_hold = 1 
 				 OR job.cyb_delivery = 0

@@ -1263,6 +1263,8 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Approximate Completion Time : '. $job_data->approx_completion .'</center></span> </td></tr>';
 			}
 
+			$content .= '<tr><td colspan="2"><span style="margin-top: -10px;"> <center>Kindly Note that we are not able to provide any credit in dealer/discounted rate.</center></span> </td></tr>';
+
 			if($j == 0) {
 				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2><br>
 				<strong>Note: No Need to reply, Mail send from automated system.</strong> </center></span> </td></tr>';

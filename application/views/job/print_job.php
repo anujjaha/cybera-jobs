@@ -224,7 +224,17 @@ echo $content;
 <!--Print Cutting Ticket-->
 <?php
 if($cutting_info) { 
-$isWaiting = $job_data->is_customer_waiting == 1 ? "<h4>Customer Waiting..</h4>" : '';
+
+if($job_data->is_customer_waiting == 1)
+{
+	$isWaiting = "<h4>Customer Waiting..</h4>";
+}
+
+if($job_data->is_customer_waiting == 2)
+{
+	$isWaiting = "<h4>Customer is on the Way..</h4>";
+}
+
 $pcontent = "";
 $pcontent .= '<table align="center" width="90%" align="center" style="border:1px solid;">
 			<tr>
@@ -381,11 +391,11 @@ echo $pcontent;
 					<?php
 					if(isset($transporter_info)) {
 					?>
-					<tr>
+					<!--<tr>
 						<td style="font-size:18px; line-height: 95%;">
 							Delivery By : <?php echo $transporter_info->name;?>
 						</td>
-					</tr>
+					</tr>-->
 					<?php } ?>
 					</table>
 				</td>
@@ -483,11 +493,11 @@ echo $pcontent;
 					<?php
 					if(isset($transporter_info)) {
 					?>
-					<tr>
+					<!--<tr>
 						<td style="font-size:14px;  line-height: 95%;">
 							Delivery By : <?php echo $transporter_info->name;?>
 						</td>
-					</tr>
+					</tr>-->
 					<?php } ?>
 					</table>
 				</td>

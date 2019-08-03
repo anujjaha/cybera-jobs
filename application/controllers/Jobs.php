@@ -299,7 +299,7 @@ public function edit($job_id=null)
 					$this->customer_model->update_customer($customer_id, $postJobData);
 				}
 
-				$jobdata['is_customer_waiting'] 		= $this->input->post('is_customer_waiting') ? $this->input->post('is_customer_waiting') : 0;
+				$jobdata['is_customer_waiting'] = $this->input->post('is_customer_waiting');
 
                
                 $jobdata['subtotal'] = $this->input->post('subtotal');
@@ -665,7 +665,7 @@ public function edit($job_id=null)
 				//Print CYBERA IN Cutting SLIP
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
-				$jobdata['is_customer_waiting'] 		= $this->input->post('is_customer_waiting') ? $this->input->post('is_customer_waiting') : 0;
+				$jobdata['is_customer_waiting'] = $this->input->post('is_customer_waiting');
 
 				
 

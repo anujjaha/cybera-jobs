@@ -1006,7 +1006,16 @@ $this->load->helper('general'); ?>
 			</div>
 
 			<div class="col-md-3">
-				<label>Customer Waiting: <input value="1"  type="checkbox" name="is_customer_waiting" id="is_customer_waiting">
+				<label><input value="0" type="radio" name="is_customer_waiting" id="is_customer_waiting" checked="checked">
+				Normal
+				</label>
+				<br>
+				<label><input value="1" type="radio" name="is_customer_waiting" id="is_customer_waiting">
+				Customer Waiting
+				</label>
+				<br>
+				<label> <input value="2"  type="radio" name="is_customer_waiting" id="is_customer_waiting">
+				Customer On the Way
 				</label>
 			</div>
 			
@@ -1121,7 +1130,7 @@ $this->load->helper('general'); ?>
 	Approx Complete Time : 
 </div>
 <div class="col-md-3">
-	<input type="text" name="approx_completion" id="approx_completion" class="form-control">
+	<input type="text" name="approx_completion" id="approx_completion" class="form-control" required="required">
 </div>
 <div class="col-md-6" class="pull-right">
 

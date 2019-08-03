@@ -183,7 +183,17 @@ if(strtolower($this->session->userdata['department']) == "master")
 
 
 		</td>
-		<td><?php echo $job['jobname'];?></td>
+		<td>
+
+			<?php 
+			echo $job['jobname'];
+			if(isset($job['emp_name']))
+			{
+				echo "<br><br>[ ".$job['emp_name']." ]";
+			}
+
+		?>
+		</td>
 		<td><?php echo $job['mobile'];?>
 			<hr>
 			<?php echo $job['jsmsnumber'];

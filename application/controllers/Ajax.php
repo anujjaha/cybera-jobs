@@ -726,7 +726,16 @@ class Ajax extends CI_Controller {
 			$customerDetails 	= $this->job_model->get_customer_details($jobData->customer_id);
 			$cutting_info 		= $this->job_model->get_cutting_details($jobId);
 			$created_info 		= get_user_by_param('id', $jobData->user_id);
-			$isWaiting 			= $jobData->is_customer_waiting == 1 ? "CUSTOMER WAITING" : '';
+
+			if($jobData->is_customer_waiting == 1)
+			{
+				$isWaiting = "CUSTOMER WAITING";
+			}
+
+			if($jobData->is_customer_waiting == 2)
+			{
+				$isWaiting = "CUSTOMER ON THE WAY";
+			}
 			
 			$pcontent = "";
 			$sr=0;
