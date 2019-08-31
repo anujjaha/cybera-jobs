@@ -334,19 +334,19 @@ function set_cutting_details_box(id)
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
         $.fancybox.close();
         
-        if(jQuery("#category_"+data_id).val() != "Visiting Card" && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 5)
+        /*if(jQuery("#category_"+data_id).val() != "Visiting Card" && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 5)
         {
 			var nextElement = parseInt(data_id) + 1;
 			
 			jQuery("#category_" + nextElement).val("Cutting");
 			jQuery("#details_" + nextElement).val("Cutting");
 			jQuery("#qty_" + nextElement).focus();
-		}
+		}*/
 		
-		if(jQuery("#category_"+data_id).val() == "Visiting Card")
+		/*if(jQuery("#category_"+data_id).val() == "Visiting Card")
 		{
 			jQuery("#sub_"+data_id).focus();
-		}
+		}*/
 }
 function remove_cutting_details(data_id) {
     jQuery("#cut_icon_"+data_id).css('display','none');
@@ -713,7 +713,7 @@ $this->load->helper('general'); ?>
                     <div class="col-md-6">
 							<div class="form-group">
 								<label>Contact Number <span style="color:red;font-size:14px;" id="mobile_error_message"></span></label>
-								<input type="text" class="form-control" onblur="check_existing_customer(this.value);" name="user_mobile" value="" placeholder="Mobile Number">
+								<input type="text" class="form-control" onblur="check_existing_customer(this.value);" name="user_mobile" id="user_mobile" value="" placeholder="Mobile Number">
 							</div>
                             <div class="form-group">
                                     <label>Email Id</label>
@@ -1126,13 +1126,20 @@ $this->load->helper('general'); ?>
 	</tr>		
 </table>		
 
-<div class="col-md-3">
+<div class="col-md-2">
 	Approx Complete Time : 
 </div>
-<div class="col-md-3">
+<div class="col-md-2">
 	<input type="text" name="approx_completion" id="approx_completion" class="form-control" required="required">
 </div>
-<div class="col-md-6" class="pull-right">
+
+<div class="col-md-2">
+	Total Jobs : 
+</div>
+<div class="col-md-1">
+	<input  value="1" type="number" min="1" max="6" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+</div>
+<div class="col-md-5" class="pull-right">
 
 	Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
 			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">

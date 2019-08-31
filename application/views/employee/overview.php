@@ -342,7 +342,15 @@ function popUpRenderAttendance(empId)
 {
 	var startDate 	= document.getElementById('start_date').value,
 		endDate 	= document.getElementById('end_date').value,
-		html 		= '';
+		html 		= '<tr><td>Month</td><td>Half Day</td><td>Full Day</td><td>Office Late</td><td>Office Half Day</td><td>Half Night</td><td>Full Night</td><td>Sunday</td><td>Notes</td></tr>';
+
+	var halfDay 		= 0,
+		fullDay 		= 0,
+		officeLate 		= 0,
+		officeHalfDay 	= 0,
+		halfNight 		= 0, 
+		fullNight 		= 0,
+		sunday 			= 0;
 
 	jQuery.ajax({
 		url: "<?php echo site_url();?>/ajax/getEmployeeAttendanceDetails",
@@ -359,18 +367,27 @@ function popUpRenderAttendance(empId)
 			{
 				for(var i = 0; i < data.result.length; i++)
 				{
-					html = '';
-					html = '<tr><td>'+ data.result[i].month +'</td><td>'+ data.result[i].half_day +'</td><td>'+ data.result[i].full_day +'</td><td>'+ data.result[i].office_late +'</td><td>'+ data.result[i].office_halfday +'</td><td>'+ data.result[i].half_night +'</td><td>'+ data.result[i].full_night +'</td><td>'+ data.result[i].sunday +'</td><td>'+ data.result[i].notes +'</td></tr>';
-
-					jQuery('#attendanceTable').append(html);
+					html += '<tr><td>'+ data.result[i].month +'</td><td>'+ data.result[i].half_day +'</td><td>'+ data.result[i].full_day +'</td><td>'+ data.result[i].office_late +'</td><td>'+ data.result[i].office_halfday +'</td><td>'+ data.result[i].half_night +'</td><td>'+ data.result[i].full_night +'</td><td>'+ data.result[i].sunday +'</td><td>'+ data.result[i].notes +'</td></tr>';
+					
+					halfDay 		= halfDay + parseInt(data.result[i].half_day);
+					fullDay 		= fullDay + parseInt(data.result[i].full_day);
+					officeLate 		= officeLate + parseInt(data.result[i].office_late);
+					officeHalfDay 	= officeHalfDay + parseInt(data.result[i].office_halfday);
+					halfNight 		= halfNight + parseInt(data.result[i].half_night);
+					fullNight 		= fullNight + parseInt(data.result[i].full_night);
+					sunday 			= sunday + parseInt(data.result[i].sunday);
 
 				}
+
+				html += '<tr><td>-</td><td class="text-bold">'+ halfDay +'</td><td class="text-bold">'+ fullDay +'</td><td class="text-bold">'+ officeLate +'</td><td class="text-bold">'+ officeHalfDay +'</td><td class="text-bold">'+ halfNight +'</td><td class="text-bold">'+ fullNight +'</td><td class="text-bold">'+ sunday +'</td><td>-</td></tr>';
+				
+				jQuery('#attendanceTable').html(html);
 
 				return;
 			}
 			else
 			{
-				jQuery('#attendanceTable').append(data.message);				
+				jQuery('#attendanceTable').html(data.message);				
 			}
 
 			console.log(data);

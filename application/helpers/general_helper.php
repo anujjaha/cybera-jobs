@@ -559,6 +559,10 @@ function getFromEmailId()
 			'password' 	=> 'cyb-1215@printart',
 		],
 		[
+			'emailId' 	=> 'estimate.cybera@gmail.com',
+			'password' 	=> 'cyb_1215@printart',
+		],
+		[
 			'emailId' 	=> 'cyberaprint63@gmail.com',
 			'password' 	=> 'cyb-1215@printart',
 		],
@@ -572,7 +576,7 @@ function getFromEmailId()
 		],
 		[
 			'emailId' 	=> 'cyberaprintart@gmail.com',
-			'password' 	=> 'Print@1215',
+			'password' 	=> 'cybera@1215_print',
 		],
 	];
 
@@ -1167,8 +1171,6 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 							<td align="center" style="font-size:12px;" colspan="2">
 								<strong>Estimate</strong>
 								<br>
-
-								This is System generated Email, Please do not reply.
 							</td>
 						</tr>
 						<tr>
@@ -1263,7 +1265,10 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Approximate Completion Time : '. $job_data->approx_completion .'</center></span> </td></tr>';
 			}
 
-			$content .= '<tr><td colspan="2"><span style="margin-top: -10px;"> <center>Kindly Note that we are not able to provide any credit in dealer/discounted rate.</center></span> </td></tr>';
+			if($customer_details->ctype == 1)
+			{
+				$content .= '<tr><td colspan="2"><span style="margin-top: -10px;"> <center><strong>Kindly Note that we are not able to provide credit facility in dealer/discounted rate.</strong></center></span> </td></tr>';
+			}
 
 			if($j == 0) {
 				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2><br>
@@ -1466,6 +1471,30 @@ function validateCreateJob($customerId = null, $jobTitle = null)
 		return true;
 	}
 	return false;
+}
+
+function getJobDefaultPin($customerId = null)
+{
+	if($customerId)
+	{
+		$customer = getCustomerById($customerId);
+
+		if($customer->ctype == 1)
+		{
+			$ci = & get_instance();
+			$sql = "SELECT count(id) as jobCount FROM `job` WHERE customer_id = ".$customerId;
+				
+			$query = $ci->db->query($sql);
+			$result = $query->row();
+
+			if($result->jobCount < 4)
+			{
+				return 1;
+			}
+		}
+	}
+
+	return 0;
 }
 
 

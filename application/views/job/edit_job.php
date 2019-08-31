@@ -702,15 +702,23 @@ $modified_by = $this->session->userdata['user_id'];
 </table>		
 
 <hr>
-<div class="col-md-3">
+<div class="col-md-2">
 	Approx Complete Time : 
 </div>
-<div class="col-md-3">
+<div class="col-md-2">
 	<input type="text" name="approx_completion" id="approx_completion" value="<?php echo $job_data->approx_completion;?>" class="form-control">
 </div>
 
 
-<div class="pull-right">
+
+<div class="col-md-2">
+	Total Jobs : 
+</div>
+<div class="col-md-1">
+	<input type="number" min="1" max="6" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+</div>
+
+<div class="col-md-5" class="pull-right">
 Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
 		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">
 </div>

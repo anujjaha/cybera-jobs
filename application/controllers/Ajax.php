@@ -744,7 +744,8 @@ class Ajax extends CI_Controller {
 				
 				
 			$cuttingBlock = $cornerBlock = $laserBlock = $laminationBlock = $bindingBlock = '';
-			$pcontent .= '<table align="center" align="center" style="border:1px solid; width: 450px;" width="500px">
+
+			$pcontent .= '<center><h3>Total Jobs : '.$jobData->sub_jobs.'</h3></center><table align="center" align="center" style="border:1px solid; width: 450px;" width="500px">
 						<tr>
 							<td style="font-size: 15px; width: 85%;" align="left" width="85%">Customer Name : '.$customerDetails->companyname.'</td>
 							<td style="font-size: 15px;" align="right" width="15%"> <strong>'.$jobData->id.'</strong>
@@ -1653,6 +1654,36 @@ class Ajax extends CI_Controller {
 		echo json_encode(array(
 			'status' => false,
 			'message' => 'Unable to find an Employee'
+		));
+		
+		die;		
+	}
+
+
+	public function pinJob()
+	{
+		if($this->input->post()) {
+
+			$jobId = $this->input->post('jobId');
+			$isPin = $this->input->post('isPin');
+
+			$this->load->model('job_model');
+
+			$status = $this->job_model->pinJob($jobId, $isPin);
+
+			if($status)
+			{
+				echo json_encode(array(
+					'status' => true
+				));
+				
+				die;	
+			}
+		}		
+
+		echo json_encode(array(
+			'status' 	=> false,
+			'message' 	=> 'Unable to Set PIN Job'
 		));
 		
 		die;		

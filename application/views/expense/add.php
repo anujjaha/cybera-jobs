@@ -28,6 +28,14 @@
 					<option value="5">
 						General
 					</option>
+
+					<option value="6">
+						Lamination
+					</option>
+
+					<option value="7">
+						Foil
+					</option>
 				</select>
 			</td>
 		</tr>

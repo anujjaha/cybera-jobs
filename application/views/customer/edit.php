@@ -37,6 +37,10 @@ $this->load->helper('form');
 			<label>Email Id</label>
 			<input type="text" class="form-control" name="emailid" value="<?php if(!empty($dealer_info->emailid)){echo $dealer_info->emailid;}?>" placeholder="Email Id">
 		</div>
+		<div class="form-group">
+			<label>Other Email Id</label>
+			<input type="text" class="form-control" name="emailid2" value="<?php if(!empty($dealer_info->emailid2)){echo $dealer_info->emailid2;}?>" placeholder="Email Id">
+		</div>
 
 		<div class="form-group">
 			<?php

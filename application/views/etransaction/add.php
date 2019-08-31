@@ -30,8 +30,8 @@
 			<td align="right"> <label>Salary :</label></td>
 			<td>
 				<select name="is_salary" class="form-control">
-					<option value="1">Yes</option>
 					<option value="0">No</option>
+					<option value="1">Yes</option>
 				</select>
 			</td>
 		</tr>
@@ -52,8 +52,8 @@
 			<td align="right"> <label>Bonus :</label></td>
 			<td>
 				<select name="is_bonus" class="form-control">
-					<option value="0">No</option>
 					<option value="1">Yes</option>
+					<option value="0">No</option>
 				</select>
 			</td>
 

@@ -180,7 +180,7 @@ class Job_model extends CI_Model {
 		$department = $this->session->userdata['department'];
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
 				customer.under_revision as revision,
-				employees.name  as emp_name,
+				(select name from employees where employees.id = job.emp_id )  as emp_name,
 				customer.customer_star_rate as rating,
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
@@ -196,13 +196,13 @@ class Job_model extends CI_Model {
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
 
-				 LEFT JOIN employees
-				 on employees.id = job.emp_id
+				 
 				 WHERE 
 				 job.status != 0 OR job.is_hold = 1 
 				 OR job.cyb_delivery = 0
+				 or job.is_pin = 1
 				 OR job.jdate = '".$today."' OR is_delivered = 0
-				 order by job.id DESC
+				 order by job.id, is_pin DESC
 				";
 		//pr($sql);
 		$query = $this->db->query($sql);
@@ -751,5 +751,18 @@ class Job_model extends CI_Model {
 		}
 
 		return true;
+	}
+
+	public function pinJob($jobId = null, $isPin = 1)
+	{
+		if($jobId)
+		{
+			$data['is_pin'] = $isPin;
+
+			$this->db->where('id',$jobId);
+			return $this->db->update($this->table, $data);		
+		}
+
+		return false;
 	}
 }

@@ -98,6 +98,14 @@ class Employee extends CI_Controller {
 		}
 		$this->template->load('employee', 'edit', $data);
 	}
+
+	public function print_emp($id = null)
+	{
+		$data['heading'] = $data['title']="Print Employee - Cybera Print Art";
+		$data['employeeInfo']  = $this->employee_model->getEmployeeById($id);
+		
+		$this->template->load('employee', 'print_employee', $data);
+	}
 	
 	public function deleteEmployee($id)
 	{
@@ -170,7 +178,6 @@ class Employee extends CI_Controller {
 	
 	public function overview()	
 	{
-
 		$data['heading'] 	= $data['title']="Overview - Cybera Print Art";
 		$data['startDate']	= date('m/d/Y', strtotime('first day of january this year'));
 		$data['endDate'] 	= date('m/d/Y', strtotime('last day of december this year'));

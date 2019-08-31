@@ -63,6 +63,8 @@ function set_customer(type) {
 		jQuery("#cybera_dealer").css("display",'none');
 		jQuery("#cybera_voucher").css("display",'none');
 		jQuery("#customer_type").val('new');
+
+		jQuery("#user_mobile").attr('required', 'required');
 	}
 	if(type == 'regular_customer') {
 		jQuery("#new_customer").css("display",'none');
@@ -70,6 +72,8 @@ function set_customer(type) {
 		jQuery("#cybera_dealer").css("display",'none');
 		jQuery("#cybera_voucher").css("display",'none');
 		jQuery("#customer_type").val('customer');
+
+		jQuery("#user_mobile").removeAttr('required', 'required');
 	}
 	if(type == 'cybera_dealer') {
 		jQuery("#new_customer").css("display",'none');
@@ -77,6 +81,7 @@ function set_customer(type) {
 		jQuery("#cybera_voucher").css("display",'none');
 		jQuery("#cybera_dealer").css("display",'block');
 		jQuery("#customer_type").val('dealer');
+		jQuery("#user_mobile").removeAttr('required', 'required');
 	}
 	if(type == 'voucher_customer') {
 		jQuery("#new_customer").css("display",'none');
@@ -85,6 +90,7 @@ function set_customer(type) {
 		jQuery("#cybera_dealer").css("display",'none');
 		jQuery("#cybera_voucher").css("display",'block');
 		jQuery("#customer_type").val('voucher');
+		jQuery("#user_mobile").removeAttr('required', 'required');
 	}
 }
 

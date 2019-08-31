@@ -60,6 +60,7 @@ class User extends CI_Controller {
        	$this->load->model('job_model');
 		$data = array();
 		$data['jobs'] = $this->job_model->get_dashboard_details();
+		//pr($data['jobs']);
 		$data['scheduleIds'] = $this->task_model->getAllSchedules();
 		$data['title']="Job - Cybera Print Art";
 		$data['heading']="Jobs";

@@ -12,7 +12,7 @@ class Insurance_model extends CI_Model
     {
     	$sql = 'SELECT data_insurances.*, employees.name as employee_name from data_insurances
     			LEFT JOIN employees ON employees.id = data_insurances.employee_id
-    			order by id desc';
+    			order by renewal_date ';
     	$query = $this->db->query($sql);
     	return $query->result_array();
 		

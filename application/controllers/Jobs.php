@@ -236,6 +236,7 @@ public function edit($job_id=null)
                 $jobdata['emp_id'] 	= $this->input->post('emp_id');
 
                 $jobdata['jobname'] = $this->input->post('jobname');
+                $jobdata['sub_jobs'] = $this->input->post('sub_jobs');
 
                 $transporterId = false;
 
@@ -268,6 +269,8 @@ public function edit($job_id=null)
 
                 $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
 				$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
+
+				$jobdata['is_pin'] = getJobDefaultPin($customer_id);
 
 				//Print CYBERA IN Cutting SLIP
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
@@ -430,8 +433,20 @@ public function edit($job_id=null)
 					{
 						$content = sendDealerJobTicket($customer_details, $job_data, $job_details);
 
-						$to  	 = array($customer_details->emailid);
-						$subject = "Estimate - " . $job_data->jobname;
+						if(isset($customer_details->emailid2) && strlen($customer_details->emailid2) > 4)
+						{
+							$to = [
+								$customer_details->emailid,
+								$customer_details->emailid2	
+							];
+						}
+						else
+						{
+							$to  	 = array($customer_details->emailid);
+						}
+
+						$customerName 	= isset($customer_details->companyname) ? $customer_details->companyname : $customer_details->name;
+						$subject = "Estimate - " . $customerName . ' - ' . $job_data->jobname;
 
 						$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
 					}
@@ -658,6 +673,8 @@ public function edit($job_id=null)
 				{
 					$jobdata['manual_complete'] = '';
 				}
+
+				$jobdata['sub_jobs'] = $this->input->post('sub_jobs');
 
 				$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
 				

@@ -66,6 +66,13 @@
 		</tr>
 
 		<tr>
+			<td align="right"> <label>Insurance By : </label></td>
+			<td>
+				<input type="text" name="insurance_by" value="<?php echo $record->insurance_by;?>" class="form-control">
+			</td>
+		</tr>
+
+		<tr>
 			<td align="right"> <label>Interval ( Renewal ) : </label></td>
 			<td>
 				<input type="number" min="0" step="1" name="interval" value="<?php echo $record->interval;?>" required="required" class="form-control">

@@ -340,6 +340,7 @@ echo $pcontent;
 
 <!--Print Courier Service-->
 <div id="printCourierTickret" style="height:8.3in; width:5.8in; font-size:8px; font-family:Arial, Helvetica, sans-serif;">
+<center><h3>Total Jobs: <?php echo $job_data->sub_jobs;?></h3></center>
 <table align="center" border="2" width="85%" style="border: 2px solid #000000; border-radius: 10px;">
 <tr>
 <td>
@@ -442,6 +443,7 @@ echo $pcontent;
 
 <!--Small Print Courier Service-->
 <div id="smallprintCourierTickret" style="height:3.5in; width:3.5in;  font-family:Arial, Helvetica, sans-serif;">
+<center><h3>Total Jobs: <?php echo $job_data->sub_jobs;?></h3></center>
 <table align="center" border="2" width="65%" style="border: 2px solid #000000; border-radius: 10px;">
 <tr>
 <td>

@@ -30,6 +30,7 @@
 		<th>Blood Group</th>
 		<th>Birth Date</th>
 		<th>Is Active</th>
+		<th>Address</th>
 		<th>Action</th>
 		</tr>
 		</thead>
@@ -69,6 +70,11 @@
 			?>
 		</td>
 		<td>
+			<?php
+				echo $item['address'];
+			?>
+		</td>
+		<td>
 				<?php
 					if(strtolower($this->session->userdata['department']) == "master")
 					{
@@ -83,6 +89,10 @@
 				<a href="<?php echo site_url();?>/employee/edit/<?php echo $item['id'];?>">
 					Edit
 				</a>  
+				<!-- || 
+				<a href="<?php echo site_url();?>/employee/print_emp/<?php echo $item['id'];?>">
+					Print
+				</a>  -->
 				<?php
 					if(isAdmin())
 					{
