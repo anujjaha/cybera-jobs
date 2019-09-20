@@ -29,13 +29,17 @@ function calc_subtotal() {
 	jQuery("#subtotal").val(subtotal);
 }
 function calc_tax() {
+
+	var taxPer = document.getElementById('gst_tax') ? parseInt(document.getElementById('gst_tax').value) : 0;
 	var tax_amount=0;
 	var tax_f,tax_l=0;
+
 	if (document.getElementById('cb_checkbox').checked) {
 		
-		tax_f = 0; //Math.round( (jQuery("#subtotal").val() * 9 ) / 100);
+		tax_f = Math.round( (jQuery("#subtotal").val() * taxPer ) / 100);
 		tax_l = 0; //Math.round( (jQuery("#subtotal").val() * 18 ) / 100);
 		tax_amount = parseFloat(tax_f) + parseFloat(tax_l);
+		console.log(tax_amount);
 		jQuery("#tax").val(tax_amount);
 	} else {
 		tax_amount = 0;

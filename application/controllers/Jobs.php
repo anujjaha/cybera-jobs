@@ -306,6 +306,8 @@ public function edit($job_id=null)
 
                
                 $jobdata['subtotal'] = $this->input->post('subtotal');
+                $gstTax = $this->input->post('gst_tax');
+
                 $jobdata['tax'] = $this->input->post('tax');
                 $jobdata['total'] = $this->input->post('total');
                 $jobdata['advance'] = $this->input->post('advance');
@@ -318,6 +320,7 @@ public function edit($job_id=null)
                 $jobdata['jsmsnumber']=$jsmsnumber;
                 $jobdata['jmonth'] = date('M-Y');
                 $jobdata['jdate'] = date('Y-m-d');
+                
                 $job_id = $this->job_model->insert_job($jobdata);
 				$j_status =$this->add_job_transaction($job_id,JOB_PENDING);
         $job_details = array();
@@ -339,6 +342,8 @@ public function edit($job_id=null)
 				// && strpos($details, '_Transparent') ==  false
 				$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
 			}
+
+			
 			
             $job_details[] = array(
                 'job_id'=>$job_id,
@@ -396,8 +401,26 @@ public function edit($job_id=null)
 					);
 					
 					$discountTransactionStatus = $this->job_model->insert_transaction($dealerDiscountData);
-					
+
+
+					if(isset($gstTax) && $gstTax > 0 )
+					{
+						$myJob = $this->job_model->getJobById($job_id);
+
+						$newSubTotal = $myJob->subtotal - $myJob->discount;
+						$newTax 	 = ( $newSubTotal * $gstTax ) / 100;
+						$total 		 = $newSubTotal + $newTax;
+
+						$newJobData  = array(
+							'tax' 		=> $newTax,
+							'total' 	=> $total,
+							'due' 		=> $total
+						);
+
+						$this->job_model->update_job($job_id, $newJobData);
+					}
 				}
+
            
                 if($cutting_details) {
 					$this->job_model->insert_cuttingdetails($cutting_details);
@@ -747,6 +770,7 @@ public function edit($job_id=null)
 				$jobdata['discount'] = $this->input->post('discount');
 				$jobdata['jsmsnumber'] = $this->input->post('jsmsnumber');
 				$jobdata['jmonth'] = date('M-Y');
+				$gstTax = $this->input->post('gst_tax');
 				
 				//$jobdata['jdate'] = date('Y-m-d');
 				$this->job_model->update_job($job_id,$jobdata);
@@ -859,6 +883,23 @@ public function edit($job_id=null)
 					);
 					
 					$discountTransactionStatus = $this->job_model->insert_transaction($dealerDiscountData);
+				}
+
+				if(isset($gstTax))
+				{
+					$myJob = $this->job_model->getJobById($job_id);
+
+					$newSubTotal = $myJob->subtotal - $myJob->discount;
+					$newTax 	 = ( $newSubTotal * $gstTax ) / 100;
+					$total 		 = $newSubTotal + $newTax;
+
+					$newJobData  = array(
+						'tax' 		=> $newTax,
+						'total' 	=> $total,
+						'due' 		=> $total
+					);
+
+					$this->job_model->update_job($job_id, $newJobData);
 				}
 				
 			}

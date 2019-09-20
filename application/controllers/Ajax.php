@@ -817,37 +817,40 @@ class Ajax extends CI_Controller {
 								</tr>
 							</table>';
 				
-				if(!empty($cutting['c_corner']) || !empty($cutting['c_cornerdie']) || !empty($cutting['c_rcorner']))
+				if(strtolower($cutting['c_corner']) !== 'no' && strlen($cutting['c_corner']) > 2)
 				{
-					$cornerBlock .= '<table width="500px" align="center" border="1">
-									<tr>
-										<td colspan="2"  style="font-size:16px;">
-											<strong>Corner Cutting Details</strong>
-										</td>
-									</tr>';
-									
-									if(!empty($cutting['c_corner'])) {
-										$cornerBlock .= '<tr>
-											<td  style="width: 100px; font-size: 16px;" align="right"> Corner Cut : </td>
-											<td  style="font-size:24px;"><strong> '.$cutting['c_corner'] .' </strong></td>
+					if(!empty($cutting['c_corner']) || !empty($cutting['c_cornerdie']) || !empty($cutting['c_rcorner']))
+					{
+						$cornerBlock .= '<table width="500px" align="center" border="1">
+										<tr>
+											<td colspan="2"  style="font-size:16px;">
+												<strong>Corner Cutting Details</strong>
+											</td>
+										</tr>';
+										
+										if(!empty($cutting['c_corner'])) {
+											$cornerBlock .= '<tr>
+												<td  style="width: 100px; font-size: 16px;" align="right"> Corner Cut : </td>
+												<td  style="font-size:24px;"><strong> '.$cutting['c_corner'] .' </strong></td>
+											</tr>';	
+										}
+										
+										if(!empty($cutting['c_cornerdie'])) {
+											$cornerBlock .= '<tr>
+											<td  style="font-size:16px;" align="right"> Corner Die : </td>
+											<td style="font-size:24px;"><strong> '.$cutting['c_cornerdie'] .'</strong> </td>
 										</tr>';	
-									}
-									
-									if(!empty($cutting['c_cornerdie'])) {
-										$cornerBlock .= '<tr>
-										<td  style="font-size:16px;" align="right"> Corner Die : </td>
-										<td style="font-size:24px;"><strong> '.$cutting['c_cornerdie'] .'</strong> </td>
-									</tr>';	
-									}
-									
-									if(!empty($cutting['c_rcorner'])) {
-										$cornerBlock .= '<tr>
-										<td  style="font-size:16px;" align="right"> Round Side : </td>
-										<td style="font-size:24px;"> <strong>'.$cutting['c_rcorner'] .' </strong></td>
-									</tr>';	
-									}
-					$cornerBlock .=	'</table>';
-				} 
+										}
+										
+										if(!empty($cutting['c_rcorner'])) {
+											$cornerBlock .= '<tr>
+											<td  style="font-size:16px;" align="right"> Round Side : </td>
+											<td style="font-size:24px;"> <strong>'.$cutting['c_rcorner'] .' </strong></td>
+										</tr>';	
+										}
+						$cornerBlock .=	'</table>';
+					} 
+				}
 				
 				if(!empty($cutting['c_laser']))
 				{

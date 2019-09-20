@@ -1218,17 +1218,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 										<td style="font-size:9px;" colspan="2" align="right">Sub Total :</td>
 										<td style="font-size:9px;" align="right">'.$job_data->subtotal .'</td>
 									</tr>';
-									if(!empty($job_data->tax)) {
-									$content .= '<tr>
-										<td style="font-size:9px;" colspan="4" align="right">Tax :</td>
-										<td style="font-size:9px;" align="right">'.$job_data->tax.'</td>
-									</tr>';
-									 } 
-									$content .= '<tr>
-										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
-										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
-									</tr>';
-									
+
 									$due = $job_data->due;
 									
 									if(isset($job_data->discount) && $job_data->discount > 0 )
@@ -1240,6 +1230,40 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
 										</tr>';
 									}
+
+									if(!empty($job_data->tax)) 
+									{
+										$content .= '<tr>
+											<td style="font-size:9px;" colspan="4" align="right">Taxable Amount :</td>
+											<td style="font-size:9px;" align="right">'. ($job_data->subtotal - $job_data->discount ) .'</td>
+										</tr>';
+									}
+
+
+									if(!empty($job_data->tax)) {
+
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="4" align="right">Tax :</td>
+										<td style="font-size:9px;" align="right">'.$job_data->tax.'</td>
+									</tr>';
+
+									 } 
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
+										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
+									</tr>';
+									
+									$due = $job_data->due;
+									
+									/*if(isset($job_data->discount) && $job_data->discount > 0 )
+									{
+										$due = $job_data->due - $job_data->discount;
+										
+										$content .= '<tr>
+											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
+											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
+										</tr>';
+									}*/
 									
 									$content .= '<tr>
 										<td style="font-size:9px;" colspan="4" align="right">Advance :</td>
@@ -1250,7 +1274,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 									$content .=  '<tr>
 										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'</td>
 										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
-										<td style="font-size:9px;" align="right">'. $due .'</td>
+										<td style="font-size:9px;" align="right">'. $job_data->due .'</td>
 									</tr>
 								</table>
 							</td>

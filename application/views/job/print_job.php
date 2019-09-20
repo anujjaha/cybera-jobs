@@ -102,11 +102,15 @@ if($customer_details->ctype == 1 )
 						<tr>
 						<td  style="font-size:12px;" >Est Id : <strong>'.$job_data->id.'</strong> </td>
 							
-							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong></td>
+							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong>
+							<br>
+								Total due : '. get_acc_balance($customer_details->id)  .'
+							</td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center" style="font-size:12px;">
 								Title : <strong>'.$job_data->jobname.'</strong>
+
 							</td>
 						</tr>
 						<tr>
@@ -139,16 +143,6 @@ if($customer_details->ctype == 1 )
 										<td style="font-size:9px;" colspan="2" align="right">Sub Total :</td>
 										<td style="font-size:9px;" align="right">'.$job_data->subtotal .'</td>
 									</tr>';
-									if(!empty($job_data->tax)) {
-									$content .= '<tr>
-										<td style="font-size:9px;" colspan="4" align="right">Tax :</td>
-										<td style="font-size:9px;" align="right">'.$job_data->tax.'</td>
-									</tr>';
-									 } 
-									$content .= '<tr>
-										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
-										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
-									</tr>';
 									
 									$due = $job_data->due;
 									
@@ -161,6 +155,29 @@ if($customer_details->ctype == 1 )
 											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
 										</tr>';
 									}
+
+									if(!empty($job_data->tax)) 
+									{
+										$content .= '<tr>
+											<td style="font-size:9px;" colspan="4" align="right">Taxable Amount :</td>
+											<td style="font-size:9px;" align="right">'. ($job_data->subtotal - $job_data->discount ) .'</td>
+										</tr>';
+									}
+
+									if(!empty($job_data->tax)) 
+									{
+										$content .= '<tr>
+											<td style="font-size:9px;" colspan="4" align="right">Tax :</td>
+											<td style="font-size:9px;" align="right">'.$job_data->tax.'</td>
+										</tr>';
+									 } 
+
+									$content .= '<tr>
+										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
+										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
+									</tr>';
+									
+									
 									
 									$content .= '<tr>
 										<td style="font-size:9px;" colspan="4" align="right">Advance :</td>
@@ -170,7 +187,7 @@ if($customer_details->ctype == 1 )
 									$content .=  '<tr>
 										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'<br>Operator :'.$job_data->emp_name.'</td>
 										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
-										<td style="font-size:9px;" align="right">'. $due .'</td>
+										<td style="font-size:9px;" align="right">'. $job_data->due .'</td>
 									</tr>
 								</table>
 							</td>
@@ -233,6 +250,11 @@ if($job_data->is_customer_waiting == 1)
 if($job_data->is_customer_waiting == 2)
 {
 	$isWaiting = "<h4>Customer is on the Way..</h4>";
+}
+
+if($job_data->is_customer_waiting == 3)
+{
+	$isWaiting = "<h4>Call Customer once Job Finished.</h4>";
 }
 
 $pcontent = "";
@@ -340,7 +362,7 @@ echo $pcontent;
 
 <!--Print Courier Service-->
 <div id="printCourierTickret" style="height:8.3in; width:5.8in; font-size:8px; font-family:Arial, Helvetica, sans-serif;">
-<center><h3>Total Jobs: <?php echo $job_data->sub_jobs;?></h3></center>
+<center><h5>Total Jobs: <strong><?php echo $job_data->sub_jobs;?></strong></h5></center>
 <table align="center" border="2" width="85%" style="border: 2px solid #000000; border-radius: 10px;">
 <tr>
 <td>
@@ -443,7 +465,7 @@ echo $pcontent;
 
 <!--Small Print Courier Service-->
 <div id="smallprintCourierTickret" style="height:3.5in; width:3.5in;  font-family:Arial, Helvetica, sans-serif;">
-<center><h3>Total Jobs: <?php echo $job_data->sub_jobs;?></h3></center>
+<center><h5>Total Jobs: <?php echo $job_data->sub_jobs;?></h5></center>
 <table align="center" border="2" width="65%" style="border: 2px solid #000000; border-radius: 10px;">
 <tr>
 <td>

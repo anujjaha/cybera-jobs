@@ -24,6 +24,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 		<thead>
 		<tr>
 		<th>Sr</th>
+		<th>PIN</th>
 		<th>Date</th>
 		<th>J Num</th>
 		<th>Name</th>
@@ -47,6 +48,8 @@ if(strtolower($this->session->userdata['department']) == "master")
 			?>
 		<tr>
 		<td><?php echo $sr;?>
+		</td>
+		<td>
 			<?php
 
 				if($job['is_pin'] == 1)

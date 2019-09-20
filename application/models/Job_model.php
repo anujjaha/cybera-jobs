@@ -200,9 +200,9 @@ class Job_model extends CI_Model {
 				 WHERE 
 				 job.status != 0 OR job.is_hold = 1 
 				 OR job.cyb_delivery = 0
-				 or job.is_pin = 1
-				 OR job.jdate = '".$today."' OR is_delivered = 0
-				 order by job.id, is_pin DESC
+		
+				 OR job.jdate = '".$today."' OR is_delivered = 0 or is_pin = 1
+				 order by job.id DESC
 				";
 		//pr($sql);
 		$query = $this->db->query($sql);

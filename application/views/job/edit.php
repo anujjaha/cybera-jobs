@@ -314,6 +314,9 @@ function set_cutting_details_box(id)
         size = $('input:radio[name=size]:checked').val();//jQuery("#lamination").val();
         printing =  $('input:radio[name=printing]:checked').val();// jQuery("#printing").val();
         packing =  $('input:radio[name=packing]:checked').val(); //printing jQuery("#packing").val();
+        cCorner =  $('input:radio[name=c_corner]:checked').val(); //printing jQuery("#c_corner").val();
+
+
         jQuery("#c_machine_"+data_id).val(machine);
         jQuery("#c_qty_"+data_id).val(jQuery("#qty_"+data_id).val());
         jQuery("#c_material_"+data_id).val(jQuery("#details_"+data_id).val());
@@ -328,7 +331,9 @@ function set_cutting_details_box(id)
         jQuery("#c_bindinginfo_"+data_id).val(binding_info);
         jQuery("#c_binding_"+data_id).val(binding);
         jQuery("#c_checking_"+data_id).val(checking);
-        jQuery("#c_corner_"+data_id).val($("#c_corner").val());
+        
+        jQuery("#c_corner_"+data_id).val(cCorner);
+
         jQuery("#c_laser_"+data_id).val($("#c_laser").val());
         jQuery("#c_rcorner_"+data_id).val($("#c_rcorner").val());
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
@@ -879,7 +884,7 @@ $this->load->helper('general'); ?>
 	</tr>
 	<?php } ?>
 	<tr>
-        <td rowspan="3" colspan="5">
+        <td rowspan="4" colspan="5">
         	<table>
         			<tr>
         			<td>
@@ -896,14 +901,32 @@ $this->load->helper('general'); ?>
                 Sub Total :
         </td>
         <td><input type="text" id="subtotal"
-                       name="subtotal" required="required" onblur="calc_subtotal()" style="width: 80px;"></td>
+                       name="subtotal" required="required" onblur="calc_subtotal()" style="width: 80px;">
+        </td>
+    </tr>
+    <tr>
+        <td>
+        	Apply Tax : 
+        </td>
+        <td>
+                <select class="form-control" id="gst_tax" name="gst_tax">
+                	<option value="0">N/A</option>
+                	<option value="5">5 %</option>
+                	<option value="12">12 %</option>
+                	<option value="18">18 %</option>
+                </select>
+                       <div style="display: none;">
+                       	
+           		<input type="checkbox" name="cb_checkbox" checked="checked" id="cb_checkbox">
+                       </div>
+        </td>
 	</tr>
-	<tr style="display: none;">
+	<tr>
             <td align="right">
-                    Tax :
+                    <strong>GST (Tax) :</strong>
+                
             </td>
             <td>
-            <input type="checkbox" name="cb_checkbox" id="cb_checkbox">
             <input type="text" id="tax" name="tax" onblur="calc_tax()" style="width: 80px;">
             </td>
 	</tr>
@@ -1016,6 +1039,10 @@ $this->load->helper('general'); ?>
 				<br>
 				<label> <input value="2"  type="radio" name="is_customer_waiting" id="is_customer_waiting">
 				Customer On the Way
+				</label>
+
+				<label> <input value="3"  type="radio" name="is_customer_waiting" id="is_customer_waiting">
+					Call Customer once Job Finished
 				</label>
 			</div>
 			
@@ -1133,11 +1160,17 @@ $this->load->helper('general'); ?>
 	<input type="text" name="approx_completion" id="approx_completion" class="form-control" required="required">
 </div>
 
-<div class="col-md-2">
-	Total Jobs : 
-</div>
-<div class="col-md-1">
-	<input  value="1" type="number" min="1" max="6" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+<div class="col-md-3">
+	<table>
+		<tr>
+			<td>
+				Total Jobs : 
+			</td>
+			<td>
+				<input  value="1" type="number" min="1" max="6" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+			</td>
+		</tr>
+	</table>
 </div>
 <div class="col-md-5" class="pull-right">
 
@@ -1196,19 +1229,42 @@ $this->load->helper('general'); ?>
             <tr id="popup_cornercutting">
                 <td align="right">Corner Cutting :</td>
                 <td>
-                    <input type="text" name="c_corner" id="c_corner">
+                	<label>
+                	    <input type="radio" checked="checked" class="corner_cutting_no"  name="c_corner" id="c_corner" value="No">No
+                	</label>
+                	<label>
+                	<input type="radio" class="corner_cutting_yes"  name="c_corner" id="c_corner" value="Yes">
+                	    Yes
+                	</label>
+                	<!-- <input type="text" name="c_corner" id="c_corner"> -->
                 </td>
             </tr>
-            <tr>
+            <tr class="corner-cut-details">
                 <td align="right">Corner Cutting Die No. :</td>
                 <td>
-                    <input type="text" name="c_cornerdie" id="c_cornerdie">
+	                <select class="form-control" name="c_cornerdie" id="c_cornerdie">
+	                	<option value="3">3</option>
+	                	<option value="1">1</option>
+	                	<option value="2">2</option>
+	                	<option value="3">3</option>
+	                	<option value="4">4</option>
+	                	<option value="5">5</option>
+	                	<option value="6">6</option>
+	                	<option value="7">7</option>
+	                </select>
+                    <!-- <input type="text" name="c_cornerdie" id="c_cornerdie"> -->
                 </td>
             </tr>
-            <tr>
+            <tr  class="corner-cut-details">
                 <td align="right">Round Cutting Side:</td>
                 <td>
-                    <input type="text" name="c_rcorner" id="c_rcorner">
+                	<select class="form-control" name="c_rcorner" id="c_rcorner">
+                		<option value="4">4</option>
+                		<option value="1">1</option>
+                		<option value="2">2</option>
+                		<option value="3">3</option>
+                	</select>
+                    <!-- <input type="text" name="c_rcorner" id="c_rcorner"> -->
                 </td>
             </tr>
             <tr id="popup_lasercutting">
@@ -1500,4 +1556,19 @@ for($i=1;$i<6;$i++) { ?>
 		jQuery("#reference_customer_id").select2();
 		//jQuery("#emp_id").select2();
 	}, 100);
+
+	jQuery(".corner-cut-details").hide();
+
+	$('.corner_cutting_yes').on('ifChanged', function(event){
+	    if(this.checked) // if changed state is "CHECKED"
+	    {
+	    	jQuery(".corner-cut-details").show();
+	        console.log('YEs');
+	    }
+	    else
+	    {
+	    	jQuery(".corner-cut-details").hide();
+	      console.log('NO');
+	    }
+	});
 </script>

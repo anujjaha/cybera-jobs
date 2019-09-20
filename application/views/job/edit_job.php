@@ -68,9 +68,46 @@ function set_cutting_details(id,cutting_id,job_id){
          url: "<?php echo site_url();?>/ajax/ajax_update_cutting_details/"+cutting_id+"/"+job_id+"/"+id, 
          success: 
             function(data){
-                  jQuery("#fancy_box_cutting").html(data);
+                jQuery("#fancy_box_cutting").html(data);
+                resetCuttingCallBack();
             }
           });
+}
+
+function resetCuttingCallBack()
+{
+	if($('.corner_cutting_no').prop('checked') == true)
+	{
+	    jQuery(".corner-cut-details").hide();
+	}
+	else
+	{
+	    jQuery(".corner-cut-details").show();
+	}
+	
+	$('.corner_cutting_yes').on('change', function(event)
+	{
+	    if(event.target.checked == true)
+	    {
+	        jQuery(".corner-cut-details").show();
+	    }
+	    else
+	    {
+	        jQuery(".corner-cut-details").hide();   
+	    }
+	});
+
+	$('.corner_cutting_no').on('change', function(event)
+	{
+	    if(event.target.checked == true)
+	    {
+	        jQuery(".corner-cut-details").hide();   
+	    }
+	    else
+	    {
+	        jQuery(".corner-cut-details").show();
+	    }
+	});
 }
 
 function set_fbox_data(data) {
@@ -111,6 +148,8 @@ function set_cutting_details_box(id){
         size = $('input:radio[name=size]:checked').val();//jQuery("#lamination").val();
         printing =  $('input:radio[name=printing]:checked').val();// jQuery("#printing").val();
         packing =  $('input:radio[name=packing]:checked').val(); //printing jQuery("#packing").val();
+        cCorner =  $('input:radio[name=c_corner]:checked').val(); //printing jQuery("#c_corner").val();
+
         jQuery("#c_machine_"+data_id).val(machine);
         jQuery("#c_qty_"+data_id).val(jQuery("#qty_"+data_id).val());
         jQuery("#c_material_"+data_id).val(jQuery("#details_"+data_id).val());
@@ -125,6 +164,9 @@ function set_cutting_details_box(id){
         jQuery("#c_bindinginfo_"+data_id).val(binding_info);
         jQuery("#c_binding_"+data_id).val(binding);
         jQuery("#c_checking_"+data_id).val(checking);
+
+        jQuery("#c_corner_"+data_id).val(cCorner);
+        jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
         $.fancybox.close();
 }
 function remove_cutting_details(data_id) {
@@ -427,7 +469,7 @@ $modified_by = $this->session->userdata['user_id'];
 	</tr>
 	<?php $j++;} ?>
 	<tr>
-		<td rowspan="4" colspan="5">
+		<td rowspan="6" colspan="5">
         	<table>
         			<tr>
 	        			<td>
@@ -445,14 +487,40 @@ $modified_by = $this->session->userdata['user_id'];
 		</td>
 		<td><input type="text" id="subtotal" name="subtotal"  onblur="calc_subtotal()" required="required"></td>
 	</tr>
-	<tr style="display: none;">
+	<tr>
+        <td>
+        	Apply Tax : 
+        </td>
+        <td>
+                <select class="form-control" id="gst_tax" name="gst_tax">
+                	<option value="0">N/A</option>
+                	<option value="5">5 %</option>
+                	<option value="12">12 %</option>
+                	<option value="18">18 %</option>
+                </select>
+                       <div style="display: none;">
+                       	
+           		<input type="checkbox" name="cb_checkbox" checked="checked" id="cb_checkbox">
+                       </div>
+        </td>
+	</tr>
+	<tr>
+            <td align="right">
+                    <strong>GST (Tax) :</strong>
+                
+            </td>
+            <td>
+            <input type="text" id="tax"  value="<?php if(!empty($job_data->tax)) { echo $job_data->tax; }?>" name="tax" onblur="calc_tax()" style="width: 80px;">
+            </td>
+	</tr>
+	<!-- <tr style="display: none;">
 		<td align="right">
 			Tax :
 		</td>
 		<td>
 		<input type="checkbox" name="cb_checkbox" id="cb_checkbox" <?php if(!empty($job_data->tax)) { echo 'checked="checked"'; }?>>
-		<input type="text" id="tax" name="tax" value="<?php if(!empty($job_data->tax)) { echo $job_data->tax; }?>" onblur="calc_tax()"></td>
-	</tr>
+		<input type="text" id="tax" name="tax" onblur="calc_tax()"></td>
+	</tr> -->
 	<tr>
 		<td align="right">
 			Total :
@@ -597,6 +665,10 @@ $modified_by = $this->session->userdata['user_id'];
 			Customer On the Way
 			</label>
 			
+			<label> <input value="3" <?php echo $job_data->is_customer_waiting == 3 ? 'checked="checked"' : '';?> type="radio" name="is_customer_waiting" id="is_customer_waiting">
+				Call Customer once Job Finished
+			</label>
+
 			</div>
 
 			<div class="col-md-12">
@@ -711,11 +783,17 @@ $modified_by = $this->session->userdata['user_id'];
 
 
 
-<div class="col-md-2">
-	Total Jobs : 
-</div>
-<div class="col-md-1">
-	<input type="number" min="1" max="6" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+<div class="col-md-3">
+	<table>
+		<tr>
+			<td>
+				Total Jobs : 
+			</td>
+			<td>
+				<input type="number" min="1" max="6" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+			</td>
+		</tr>
+	</table>
 </div>
 
 <div class="col-md-5" class="pull-right">

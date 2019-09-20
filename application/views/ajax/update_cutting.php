@@ -18,7 +18,9 @@ function update_box() {
 			binding = $(this).val() + ","+binding;  
 		  }
 		});
-        c_corner = jQuery("#c_corner").val();
+        c_corner = $('input:radio[name=c_corner]:checked').val();
+
+        //cCorner =  $('input:radio[name=c_corner]:checked').val(); //printing jQuery("#c_corner").val();
         
         c_cornerdie = jQuery("#c_cornerdie").val();
 		c_rcorner   = jQuery("#c_rcorner").val();
@@ -110,19 +112,45 @@ function update_box() {
             </tr>
             <tr>
 				<td align="right">Corner Cutting :</td>
-				<td><input type="text" name="c_corner" id="c_corner" value="<?php echo $cutting_details->c_corner;?>"></td>
-            </tr>
-            
-            <tr>
-                <td align="right">Corner Cutting Die No. :</td>
-                <td>
-                    <input type="text" name="c_cornerdie" id="c_cornerdie"  value="<?php echo $cutting_details->c_cornerdie;?>">
+				<td>
+                    <label>
+                        <input type="radio"  <?php if($cutting_details->c_corner == "No") { echo "checked='checked'";}?> class="corner_cutting_no"  name="c_corner" id="c_corner" value="No">No
+                    </label>
+                    <label>
+                    <input  <?php if($cutting_details->c_corner == "Yes") { echo "checked='checked'";}?> type="radio" class="corner_cutting_yes"  name="c_corner" id="c_corner" value="Yes">
+                        Yes
+                    </label><!-- 
+                    <input type="text" name="c_corner" id="c_corner" value="<?php echo $cutting_details->c_corner;?>"> -->
                 </td>
             </tr>
-            <tr>
+            
+            <tr  class="corner-cut-details">
+                <td align="right">Corner Cutting Die No. :</td>
+                <td>
+                    <select class="form-control" name="c_cornerdie" id="c_cornerdie">
+                        <option value="<?php echo $cutting_details->c_cornerdie;?>"><?php echo $cutting_details->c_cornerdie;?></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                    </select>
+                </td>
+            </tr>
+            <tr  class="corner-cut-details">
                 <td align="right">Round Cutting Side:</td>
                 <td>
-                    <input type="text" name="c_rcorner" id="c_rcorner"  value="<?php echo $cutting_details->c_rcorner;?>">
+                    <select class="form-control" name="c_rcorner" id="c_rcorner">
+                        <option value="<?php echo $cutting_details->c_rcorner;?>"><?php echo $cutting_details->c_rcorner;?></option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+
+                    <!-- <input type="text" name="c_rcorner" id="c_rcorner"  value="<?php echo $cutting_details->c_rcorner;?>"> -->
                 </td>
             </tr>
             
