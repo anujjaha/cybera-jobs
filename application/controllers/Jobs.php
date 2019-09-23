@@ -409,7 +409,7 @@ public function edit($job_id=null)
 
 						$newSubTotal = $myJob->subtotal - $myJob->discount;
 						$newTax 	 = ( $newSubTotal * $gstTax ) / 100;
-						$total 		 = $newSubTotal + $newTax;
+						$total 		 = $newSubTotal + $myJob->discount + $newTax;
 
 						$newJobData  = array(
 							'tax' 		=> $newTax,
@@ -891,7 +891,7 @@ public function edit($job_id=null)
 
 					$newSubTotal = $myJob->subtotal - $myJob->discount;
 					$newTax 	 = ( $newSubTotal * $gstTax ) / 100;
-					$total 		 = $newSubTotal + $newTax;
+					$total 		 = $newSubTotal + $myJob->discount + $newTax;
 
 					$newJobData  = array(
 						'tax' 		=> $newTax,
