@@ -144,15 +144,15 @@ if($customer_details->ctype == 1 )
 										<td style="font-size:9px;" align="right">'.$job_data->subtotal .'</td>
 									</tr>';
 									
-									$due = $job_data->due;
+									
 									
 									if(isset($job_data->discount) && $job_data->discount > 0 )
 									{
-										$due = $job_data->due - $job_data->discount;
+										
 										
 										$content .= '<tr>
 											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
-											<td style="font-size:9px;" align="right">'.$job_data->due.'</td>
+											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
 										</tr>';
 									}
 
@@ -183,11 +183,11 @@ if($customer_details->ctype == 1 )
 										<td style="font-size:9px;" colspan="4" align="right">Advance :</td>
 										<td style="font-size:9px;" align="right">'.$job_data->advance.'</td>
 									</tr>';
-									
+									$due = $job_data->due - $job_data->discount;
 									$content .=  '<tr>
 										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'<br>Operator :'.$job_data->emp_name.'</td>
 										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
-										<td style="font-size:9px;" align="right">'. $job_data->due .'</td>
+										<td style="font-size:9px;" align="right">'. $due .'</td>
 									</tr>
 								</table>
 							</td>
