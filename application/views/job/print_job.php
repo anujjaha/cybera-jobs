@@ -152,7 +152,7 @@ if($customer_details->ctype == 1 )
 										
 										$content .= '<tr>
 											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
-											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
+											<td style="font-size:9px;" align="right">'.$job_data->due.'</td>
 										</tr>';
 									}
 
