@@ -1227,7 +1227,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 										
 										$content .= '<tr>
 											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
-											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
+											<td style="font-size:9px;" align="right">'.$due.'</td>
 										</tr>';
 									}
 
@@ -1253,7 +1253,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
 									</tr>';
 									
-									$due = $job_data->due;
+									
 									
 									/*if(isset($job_data->discount) && $job_data->discount > 0 )
 									{
