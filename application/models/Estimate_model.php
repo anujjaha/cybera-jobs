@@ -91,18 +91,18 @@ class Estimate_model extends CI_Model {
 	
 	public function get_job_data($job_id=null) {
 		if($job_id) {
-			$this->db->select('*,job.created as "created", job.id as id , employees.name as emp_name,(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
+			$this->db->select('*,estimate_job.created as "created", estimate_job.id as id , employees.name as emp_name,(select j_status from job_transaction where job_transaction.j_id=estimate_job.id ORDER BY id DESC LIMIT 0,1) 
 				as jstatus')
 					->from($this->table)
-					->join('employees', 'employees.id = job.emp_id', 'left')
-					->where('job.id ='.$job_id);
+					->join('employees', 'employees.id = estimate_job.emp_id', 'left')
+					->where('estimate_job.id ='.$job_id);
 			$query = $this->db->get();
 			return $query->row();
 		}
-		$sql = "SELECT *,job.id as job_id,job.created as created FROM ". $this->table ."
+		$sql = "SELECT *,estimate_job.id as estimate_job,estimate_job.created as created FROM ". $this->table ."
 				 LEFT JOIN customer
-				 ON job.customer_id = customer.id
-				 order by job.id DESC
+				 ON estimate_job.customer_id = customer.id
+				 order by estimate_job.id DESC
 				";
 		$query = $this->db->query($sql);
 		return $query->result_array();
@@ -112,10 +112,10 @@ class Estimate_model extends CI_Model {
 	{
 		if($jobId)
 		 {
-			$this->db->select('*, job.id as id, job.created as "created",customer.*')
+			$this->db->select('*, estimate_job.id as id, estimate_job.created as "created",customer.*')
 					->from($this->table)
-					->join('customer','job.customer_id=customer.id','left')
-					->where('job.id ='.$jobId);
+					->join('customer','estimate_job.customer_id=customer.id','left')
+					->where('estimate_job.id ='.$jobId);
 			$query = $this->db->get();
 			return $query->row();
 		}

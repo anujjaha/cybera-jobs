@@ -372,5 +372,11 @@ class Customer extends CI_Controller {
 		$this->template->load('customer', 'prospect', $data);
 	}
 
+	public function print_small($id = null)
+	{
+		$customer['customer'] = $this->customer_model->get_customer_details('id', $id);
+
+		$this->template->load('customer', 'print_small', $customer);
+	}
 
 }

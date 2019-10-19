@@ -124,7 +124,12 @@
 			<a href="javascript:void(0);"
 			data-customer="<?php echo $customerName;?>"
 			data-mobile="<?php echo $customer->mobile;?>"
-			 data-balance="<?php echo $balance;?>" class="remind-amount" data-id="<?php echo $customer->id;?>">Remind</a></td>
+			 data-balance="<?php echo $balance;?>" class="remind-amount" data-id="<?php echo $customer->id;?>">Remind</a>
+			 ||
+			 <a target="_blank" href="<?php echo site_url();?>/customer/print_small/<?php echo $customer->id;?>">
+			 	<i class="fa fa-2x fa-print" aria-hidden="true"></i>
+			 </a>
+			</td>
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>

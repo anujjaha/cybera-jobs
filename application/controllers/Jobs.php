@@ -1043,7 +1043,25 @@ public function edit($job_id=null)
 			$data['cutting_info'] = $this->job_model->get_cutting_details($job_id);
 			$data['transporter_info'] = $this->customer_model->getTransporterDetailsByCustomerId($job_data->customer_id);
 			
-      $this->template->load('job', 'print_job', $data);
+      	$this->template->load('job', 'print_job', $data);
+		}
+	}
+
+	public function estimate_job_print($job_id=null) {
+		if($job_id) {
+			$this->load->model('estimate_model');
+			$job_data = $this->estimate_model->get_job_data($job_id);
+			$job_details = $this->estimate_model->get_job_details($job_id);
+			$customer_details = $this->estimate_model->get_customer_details($job_data->customer_id);
+			$data['customer_details']=$customer_details;
+			$data['job_details']=$job_details;
+			$data['job_data']=$job_data;
+			$data['title']='Print Job';
+			$data['heading']='Cybera Print View';
+			$data['cutting_info'] = $this->estimate_model->get_cutting_details($job_id);
+			$data['transporter_info'] = $this->customer_model->getTransporterDetailsByCustomerId($job_data->customer_id);
+			
+      $this->template->load('job', 'estimate_print_job', $data);
 		}
 	}
 
@@ -1153,6 +1171,17 @@ public function edit($job_id=null)
 		$this->template->load('estimationsms', 'index', $data);
 	}
 	
+	public function print_dealers()
+	{
+		$data['data'] = get_all_dealers();
+
+		$html = $this->load->view('job/print_dealers', $data, true);
+		//pr($html);
+		$pdfFile = create_pdf($html, 'A4');
+		pr($pdfFile);
+		//pr($customers);
+		die('11');
+	}
 	public function test()
 	{
 		$data =  create_customer_dropdown('customer',true);
@@ -1166,4 +1195,391 @@ public function edit($job_id=null)
 		$data['heading'] = $data['title']="Courier Job Details - Cybera Print Art";
 		$this->template->load('job', 'couriers', $data);
 	}
+
+
+	public function estimate($job_id=null)
+	{
+        $data['title']="Estimate  JOB - Cybera Print Art";
+        $data['heading']="Estimation";
+        if($this->input->post()) 
+        {	
+        	//pr($this->input->post());
+
+    	    $this->load->model('customer_model');
+            if($this->input->post('customer_type') == 'new') 
+            {
+				if( ( strlen($this->input->post('name')) < 1)  && ( strlen ($this->input->post('companyname')) < 1) )
+				{
+					redirect("jobs/edit", 'refresh');
+				}
+				
+                    $data=array();
+
+                    $data['name'] = $this->input->post('name');
+                    $data['mobile'] = $this->input->post('user_mobile');
+                    $data['companyname'] = $this->input->post('companyname');
+                    $data['emailid'] = $this->input->post('emailid');
+                    $data['add1'] = $this->input->post('add1');
+					$data['add2'] = $this->input->post('add2');
+					$data['city'] = $this->input->post('city');
+					$data['state'] = $this->input->post('state');
+					$data['pin'] = $this->input->post('pin');
+                                            
+                    if($this->input->post('customerType')  == "NewDealer")
+                    {
+						
+						$customer_id = $this->dealer_model->insert_dealer($data);
+					}else
+					{
+						if($this->input->post('customerType')  == "NewVoucher")
+						{
+							$data['ctype'] = 2;
+						}
+						$customer_id = $this->customer_model->insert_customer($data);
+					}
+            } 
+            else
+            {
+					if(strlen($this->input->post('customer_id')) < 1)
+					{
+						redirect("jobs/edit", 'refresh');
+					}
+				
+                    $customer_id = $this->input->post('customer_id');
+                    $customerType = getCustomerType($customer_id);
+                    
+                    if($customerType == 0 )
+                    {
+						$jsmsnumber = $this->input->post('regular_extra_contact_number');
+					}
+					
+                    if($customerType == 1 )
+                    {
+						$jsmsnumber = $this->input->post('dealer_extra_contact_number');
+					}
+					
+                    if($customerType == 2 )
+                    {
+						$jsmsnumber = $this->input->post('voucher_extra_contact_number');
+					}
+			}
+
+			$this->load->model('estimate_model');
+            if($customer_id == NULL || $customer_id == '' || strlen($customer_id) == 0 )
+            {
+            	redirect("jobs/estimate",'refresh');
+            }
+
+            if($this->input->post('jobname') == '' || strlen($this->input->post('jobname')) < 1)
+            {
+            	redirect("jobs/estimate",'refresh');	
+            }
+
+            $createStatus = validateCreateJob($customer_id, $this->input->post('jobname'));
+
+            if($createStatus == false)
+            {	
+            	redirect("jobs/estimate",'refresh');	
+            }
+            
+            $jobdata = array();
+            $jobdata['customer_id'] = $customer_id;
+            $jobdata['user_id'] = $this->session->userdata['user_id'];
+            $jobdata['emp_id'] 	= $this->input->post('emp_id');
+
+            $jobdata['jobname'] = $this->input->post('jobname');
+            $jobdata['sub_jobs'] = $this->input->post('sub_jobs');
+
+            $transporterId = false;
+
+
+            $manualTransporter = $this->input->post('manual_transporter');
+
+            if(strlen($manualTransporter) > 1)
+            {
+            	$transporterId = $this->job_model->addNewTransporter($customer_id, $manualTransporter);
+            }
+            
+            // Delivery Details
+            $jobdata['delivery_details']= $this->input->post('delivery_details');
+            $jobdata['payment_details'] = $this->input->post('payment_details');
+            $jobdata['pickup_details'] 	= $this->input->post('pickup_details');
+
+            if(isset($transporterId))
+            {
+            	$jobdata['transporter_id'] = $transporterId;
+            }
+            if($transporterId == false && $this->input->post('transporter_id'))
+            {
+            	$jobdata['transporter_id'] = $this->input->post('transporter_id');
+            }
+
+            // Delivery Options
+            $jobdata['is_pickup'] 		= $this->input->post('is_pickup') ? $this->input->post('is_pickup') : 0;
+            $jobdata['cyb_delivery'] 	= $this->input->post('cyb_delivery') && $this->input->post('cyb_delivery') == 1 ? 0 : 1;
+            $jobdata['is_hold'] 		= $this->input->post('is_hold') ? $this->input->post('is_hold') : 0;
+
+            $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
+			$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
+
+			$jobdata['is_pin'] = getJobDefaultPin($customer_id);
+
+			//Print CYBERA IN Cutting SLIP
+			$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
+
+
+			$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
+
+
+			// Post Job Customer Block
+			$isRevision 	= $this->input->post('is_revision_customer_next_job');
+			$isBlock 		= $this->input->post('is_block_customer_next_job');
+			$firePostJob   	= false;
+			$postJobData 	= [];
+
+			if($isRevision == 1)
+			{
+				$postJobData['under_revision '] = 1;
+				$firePostJob = true;
+			}
+
+			if($isBlock == 1 )
+			{
+				$postJobData['is_block'] = 1;
+				$firePostJob = true;
+			}	
+
+			if($firePostJob == true)
+			{
+				$this->customer_model->update_customer($customer_id, $postJobData);
+			}
+
+			$jobdata['is_customer_waiting'] = $this->input->post('is_customer_waiting');
+
+           
+            $jobdata['subtotal'] = $this->input->post('subtotal');
+            $gstTax = $this->input->post('gst_tax');
+
+            $jobdata['tax'] = $this->input->post('tax');
+            $jobdata['total'] = $this->input->post('total');
+            $jobdata['advance'] = $this->input->post('advance');
+            $jobdata['due'] = $this->input->post('due');
+            $jobdata['notes'] = $this->input->post('notes');
+            $jobdata['extra_notes'] = $this->input->post('extra_notes');
+            $jobdata['receipt'] = $this->input->post('receipt');
+            $jobdata['voucher_number'] = $this->input->post('voucher_number');
+            $jobdata['bill_number'] = $this->input->post('bill_number');
+            $jobdata['jsmsnumber']=$jsmsnumber;
+            $jobdata['jmonth'] = date('M-Y');
+            $jobdata['jdate'] = date('Y-m-d');
+            
+            $job_id 	= $this->estimate_model->insert_job($jobdata);
+			$j_status 	= true; //$this->add_job_transaction($job_id,JOB_PENDING);
+	        
+	        $job_details 		= array();
+	        $cutting_details 	= array();
+	        
+	        $dealerDiscount = 0;
+	        
+	        for($i=1;$i<6;$i++) 
+	        {
+		        $check = $this->input->post('details_'.$i);
+		        $check_cutting = $this->input->post('c_machine_'.$i);
+		        $check_rount_cutting = $this->input->post('c_rcorner_'.$i);
+		        if(!empty($check)) 
+		        {
+		        	$details = $this->input->post('details_'.$i);
+
+		        	if(DEALER_DISCOUNT && $customerType == 1 && $this->input->post('category_'.$i) == 'Visiting Card')
+					{
+						// && strpos($details, '_Transparent') ==  false
+						$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
+					}
+
+					$job_details[] = array(
+		                'job_id'=>$job_id,
+		                'jtype'=>$this->input->post('category_'.$i),
+		                'jdetails'=>$this->input->post('details_'.$i),
+		                'jqty'=>$this->input->post('qty_'.$i),
+		                'jrate'=>$this->input->post('rate_'.$i),
+		                'jamount'=>$this->input->post('sub_'.$i),
+		                'created'=>date('Y-m-d H:i:s')
+		                );
+		            }
+		        	if(!empty($check_cutting) || !empty($check_rount_cutting) ) {
+		            $cutting_details[] = array('j_id'=>$job_id,
+		                                       'c_machine'=>$this->input->post('c_machine_'.$i),
+		                                       'c_material'=>$this->input->post('c_material_'.$i),
+		                                       'c_qty'=>$this->input->post('c_qty_'.$i),
+		                                       'c_size'=>$this->input->post('c_size_'.$i),
+		                                       'c_sizeinfo'=>$this->input->post('c_sizeinfo_'.$i),
+		                                       'c_print'=>$this->input->post('c_print_'.$i),
+		                                       'c_details'=>$this->input->post('c_details_'.$i),
+		                                       'c_lamination'=>$this->input->post('c_lamination_'.$i),
+		                                       'c_laminationinfo'=>$this->input->post('c_laminationinfo_'.$i),
+		                                       'c_binding'=>$this->input->post('c_binding_'.$i),
+		                                       'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
+		                                       'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
+		                                       'c_checking'=>$this->input->post('c_checking_'.$i),
+		                                       'c_packing'=>$this->input->post('c_packing_'.$i),
+		                                       'c_corner'=>$this->input->post('c_corner_'.$i),
+		                                       'c_laser'=>$this->input->post('c_laser_'.$i),
+		                                       'c_rcorner'=>$this->input->post('c_rcorner_'.$i),
+		                                       'c_cornerdie'=>$this->input->post('c_cornerdie_'.$i),
+		                                    );
+		        }
+	        }
+            $this->estimate_model->insert_jobdetails($job_details);
+            
+            
+            if(DEALER_DISCOUNT && $dealerDiscount > 0 )
+            {
+				/*$discountData = array(
+					'discount' => $dealerDiscount
+				);
+				
+				$discountStatus = $this->job_model->update_job($job_id, $discountData);
+				
+				
+				$dealerDiscountData = array(
+					'job_id' 		=> $job_id,
+					'customer_id' 	=> $customer_id,
+					'amount'		=> $dealerDiscount,
+					'notes'			=> 'Visiting Card Special Discount',
+					'creditedby'	=> $this->session->userdata['user_id'],
+					't_type'		=> CREDIT,
+					'cmonth'		=> date('M-Y')
+				);
+				
+				$discountTransactionStatus = $this->job_model->insert_transaction($dealerDiscountData);
+
+
+				if(isset($gstTax) && $gstTax > 0 )
+				{
+					$myJob = $this->job_model->getJobById($job_id);
+
+					$newSubTotal = $myJob->subtotal - $myJob->discount;
+					$newTax 	 = ( $newSubTotal * $gstTax ) / 100;
+					$total 		 = $newSubTotal + $myJob->discount + $newTax;
+
+					$newJobData  = array(
+						'tax' 		=> $newTax,
+						'total' 	=> $total,
+						'due' 		=> $total
+					);
+
+					$this->job_model->update_job($job_id, $newJobData);
+				}*/
+			}
+
+       	    if($cutting_details) {	
+				$this->estimate_model->insert_cuttingdetails($cutting_details);
+			}
+			
+			if($this->input->post('remindMe') == 1 )
+			{
+				/*$jobInfo 		= $this->estimate_model->getJobById($job_id);
+				$customerName 	= isset($jobInfo->companyname) ? $jobInfo->companyname : $jobInfo->name;
+				
+				$sdata['title'] = $this->input->post('jobname');
+				$sdata['description'] = '<span style="color: red; font-size: 18px;">PLEASE DELIVER JOB ! </span> <br> <span style="font-size: 18px;"> Customer Name : <strong>' . $customerName . ' </strong> - Est Id<strong> - '. $job_id . '</strong></span>' ;
+				$sdata['reminder_time'] = $this->input->post('reminder_time');
+				$sdata['user_for'] = $this->session->userdata['user_id'];
+				$sdata['is_sms'] = 1;
+				$sdata['job_id'] = $job_id;
+				$sdata['status'] = 0;
+				$sdata['user_creator'] = $this->session->userdata['user_id'];
+				$this->load->model('task_model');
+				$this->task_model->save_scheduler($sdata);*/
+			}
+
+			$customerInfo = getCustomerById($customer_id);
+
+			if(isset($customerInfo) && $customerInfo->is_job_mail == 1 && SEND_DEALER_MAIL )
+			{		
+				$this->load->model('estimate_model');
+				$job_data 			= $this->estimate_model->get_job_data($job_id);
+				$job_details 		= $this->estimate_model->get_job_details($job_id);
+				$customer_details 	= $this->estimate_model->get_customer_details($job_data->customer_id);
+
+				if(isset($customer_details->emailid) && $customer_details->emailid != '')
+				{
+					$content = sendDealerDraftTicket($customer_details, $job_data, $job_details);
+
+					if(isset($customer_details->emailid2) && strlen($customer_details->emailid2) > 4)
+					{
+						$to = [
+							$customer_details->emailid,
+							$customer_details->emailid2	
+						];
+					}
+					else
+					{
+						$to  	 = array($customer_details->emailid);
+					}
+
+					$customerName 	= isset($customer_details->companyname) ? $customer_details->companyname : $customer_details->name;
+					$subject = "Estimate - " . $customerName . ' - ' . $job_data->jobname;
+
+					$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+				}
+			}
+
+
+			if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
+			{
+				/*$subTotal 	 	= $this->input->post('subtotal');
+				$percentage  	= $this->input->post('percentage');
+				$fixAmount 	 	= $this->input->post('fix_amount');
+				$refCustomerId  = $this->input->post('reference_customer_id');
+				$fixBonusAmount = $fixAmount;
+				$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
+				$finalBonusAmount = 0 ;
+
+				if($fixBonusAmount == 0)
+				{
+					$finalBonusAmount = $percentageAmount;
+				}
+
+				if($percentageAmount == 0)
+				{
+					$finalBonusAmount = $fixBonusAmount;
+				}
+
+				if($fixBonusAmount > 0 && $percentageAmount > 0)
+				{
+					$finalBonusAmount = $fixBonusAmount > $percentageAmount ? $percentageAmount : $fixBonusAmount;
+				}
+
+				if($finalBonusAmount > 0 )
+				{
+					$bonusData = array(
+						'customer_id' 			=> $refCustomerId,
+						'reference_customer_id' => $job_data->customer_id,
+						'job_id'				=> $job_id,
+						'percentage'			=> $percentage,
+						'fix_amount'			=> $fixAmount,
+						'bonus_amount'			=> $finalBonusAmount,
+						'is_edited'				=> 0
+					);
+
+
+					$this->job_model->addNewBonus($bonusData);
+
+					$creditBonusData = array(
+						'customer_id' => $refCustomerId,
+						'job_id'	  => $job_id,
+						'credit'	  => $finalBonusAmount,
+						'notes'		  => 'Credited with Ref ' . $job_id,
+					);
+					$this->job_model->creditBonus($refCustomerId, $creditBonusData);	*/
+			}
+
+            redirect("jobs/estimate_job_print/".$job_id,'refresh');
+        }
+        $data['paper_gsm']= $this->get_paper_gsm();
+        $data['paper_size']= $this->get_paper_size();
+        $this->template->load('job', 'estimate-job', $data);
+	}
+	
 }
