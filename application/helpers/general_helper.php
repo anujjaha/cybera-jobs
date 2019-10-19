@@ -1061,11 +1061,17 @@ function addBillToJobClearDueAmount($jobId = null, $billNumber = null)
 		$ci = & get_instance();
 		$ci->load->model('job_model');
 		$jobInfo = $ci->job_model->getJobById($jobId);
-		
+		$amount  = $jobInfo->due - $jobInfo->discount;
+
+		if(isset($jobInfo->is_gst) && $jobInfo->is_gst == 1)
+		{
+			//$amount = $jobInfo->total;
+		}
+
 		$jobTransactionInfo = array(
 			'customer_id' 	=> $jobInfo->customer_id,
 			'job_id' 		=> $jobId,
-			'amount' 		=> $jobInfo->due - $jobInfo->discount,
+			'amount' 		=> $amount,
 			'bill_number' 	=> isset($billNumber) ? $billNumber : '',
 			'other' 		=> 'Bill-Created',
 			'pay_ref' 		=> 'Bill-Created',
@@ -1181,7 +1187,10 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 						<tr>
 						<td  style="font-size:12px;" >Est Id : <strong>'.$job_data->id.'</strong> </td>
 							
-							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong></td>
+							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong>
+							<br>
+								Total due : '. get_acc_balance($customer_details->id)  .'
+							</td>
 						</tr>
 						<tr>
 							<td colspan="2" align="center" style="font-size:12px;">
@@ -1213,8 +1222,10 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 											break;
 										}
 									} 
+
+									$receiptId = (isset($job_data->receipt) && $job_data->receipt != 0) ? $job_data->receipt : '-';
 									$content .= '<tr>
-										<td style="font-size:9px;" colspan="2">Receipt Number:'.$job_data->receipt.'</td>
+										<td style="font-size:9px;" colspan="2">Receipt Number:'. $receiptId .'</td>
 										<td style="font-size:9px;" colspan="2" align="right">Sub Total :</td>
 										<td style="font-size:9px;" align="right">'.$job_data->subtotal .'</td>
 									</tr>';
@@ -1294,8 +1305,14 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				$content .= '<tr><td colspan="2"><span style="margin-top: -10px;"> <center><strong>Kindly Note that we are not able to provide credit facility in dealer/discounted rate.</strong></center></span> </td></tr>';
 			}
 
+			$gstExt = '<h2>GST Extra</h2><br>';
+			if(isset($job_data->is_gst) && $job_data->is_gst == 1)
+			{
+				$gstExt = '';
+			}
+			
 			if($j == 0) {
-				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> <h2>GST Extra</h2><br>
+				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> '. $gstExt .'
 				<strong>Note: No Need to reply, Mail send from automated system.</strong> </center></span> </td></tr>';
 			}
 			$content .= '</table>';

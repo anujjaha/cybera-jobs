@@ -74,6 +74,7 @@ class Account_model extends CI_Model {
 				(select receipt from job where job.id=ut.job_id) as 'j_receipt',
 				(select bill_number from job where job.id=ut.job_id) as 'j_bill_number',
 				(select jobname from job where job.id=ut.job_id) as 'jobname',
+				(select is_gst from job where job.id=ut.job_id) as 'is_gst',
 				(select nickname from user_meta um where um.user_id=ut.creditedby) as 'receivedby'
 				FROM user_transactions ut where ut.customer_id = $user_id
 				AND

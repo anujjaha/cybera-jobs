@@ -22,10 +22,12 @@ class Job_model extends CI_Model {
 
 		$this->db->insert($this->table,$data);
 		$job_id = $this->db->insert_id();
+
 		$transaction_data['job_id']=$job_id;
 		$transaction_data['customer_id']=$data['customer_id'];
 		$transaction_data['cmonth']=$data['jmonth'];
 		$transaction_data['amount']=$data['total'];
+
 		$transaction_id = $this->insert_transaction($transaction_data);
 		
 		if($data['advance'] > 0 ) {
@@ -764,5 +766,19 @@ class Job_model extends CI_Model {
 		}
 
 		return false;
+	}
+
+	public function updateUserTransaction($jobId, $data)
+	{
+		$this->db->select('*')
+				->from($this->table_transaction)
+				->where('job_id ='.$jobId)
+				->order_by('id')
+				->limit(1);
+		$query = $this->db->get();
+		$userTransaction =  $query->row();
+
+		$this->db->where('id', $userTransaction->id);
+		return $this->db->update($this->table_transaction, $data);
 	}
 }
