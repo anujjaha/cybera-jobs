@@ -56,6 +56,7 @@ function printDiv(divName) {
 	</div>
 </div>
 
+
 <?php
 	if(strlen($job_data->extra_notes) > 0)
 	{
@@ -95,16 +96,19 @@ if($customer_details->ctype == 1 )
 							</td>
 						</tr>
 						<tr>
-							<td style="font-size:12px;">'.$customerTitle.' : <strong>'.$show_name.'</strong>
-							</td>
-							<td align="right" style="font-size:12px;">Mobile : <strong>'.$mobileNumber.'</strong> </td>
+							<td style="font-size:12px;">'.$customerTitle.' : <strong>'.$show_name.'</strong>';
+							
+				if($job_data->is_5_gst == 1)
+				{
+					$content  .='      (<span style="font-weight: bold;">5%</span>)';
+				}
+
+				$content .= '</td><td align="right" style="font-size:12px;">Mobile : <strong>'.$mobileNumber.'</strong> </td>
 						</tr>
 						<tr>
 						<td  style="font-size:12px;" >Est Id : <strong>'.$job_data->id.'</strong> </td>
 							
-							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong>
-							<br>
-								Total due : '. get_acc_balance($customer_details->id)  .'
+							<td style="font-size:14px; font-weight: bold;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong>
 							</td>
 						</tr>
 						<tr>
@@ -193,6 +197,11 @@ if($customer_details->ctype == 1 )
 							</td>
 						</tr>
 						<tr>
+							<td colspan="2" style="text-align: right; font-size: 16px; font-weight: bold;">
+								Total due : '. get_acc_balance($customer_details->id)  .'
+							</td>
+						</tr>
+						<tr>
 							<td colspan="2">
 								<span style="font-size:9px;">
 								<strong>Note :</strong>'.$job_data->notes.'
@@ -227,6 +236,14 @@ if($customer_details->ctype == 1 )
 							</tr>';
 				}
 
+				$genInvoice = $job_data->is_job_invoice == 1 ?  'Generate INVOICE<br>' : '';
+				$content .='		<tr>
+							<td colspan="2" align="center" style="font-size: 16px;">
+							<br>
+								<strong>'. $genInvoice .'</strong>
+								'. $job_data->invoice_details .'
+							</td>
+						</tr>';
 				$content .=	'</table></td></tr>';
 			if($j == 0) {
 				$content .= ' <tr><td colspan="2"><br><hr><br></td></tr>';

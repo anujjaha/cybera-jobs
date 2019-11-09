@@ -420,7 +420,7 @@ function saveVCardBw()
 	jQuery("#sub_" +id).val(getCardPriceBw());
 	var cardTitle = jQuery("#original_title-bw").val();
 	
-	if(getCardQtyBw() >= 1000 && (cardTitle == "Premium_Texture_Card_FB" || cardTitle == "Premium_Texture_Card_SS" || cardTitle == "Economy_Texture_Card_SS" || cardTitle == "Economy_Texture_Card_FB"))
+	/*if(getCardQtyBw() >= 1000 && (cardTitle == "Premium_Texture_Card_FB" || cardTitle == "Premium_Texture_Card_SS" || cardTitle == "Economy_Texture_Card_SS" || cardTitle == "Economy_Texture_Card_FB"))
 	{
 		var nextId = parseInt(id ) + 1;
 		
@@ -428,7 +428,7 @@ function saveVCardBw()
 		jQuery("#qty_" +nextId).val(1);
 		jQuery("#rate_" +nextId).val(0);
 		jQuery("#sub_" +nextId).val(0);
-	}
+	}*/
 	
 	jQuery.fancybox.close();
 	

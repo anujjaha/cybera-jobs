@@ -52,7 +52,7 @@ function printDiv(divName) {
 <!--<button class="btn btn-primary" onclick="print_cutting()">Cutting Slip</button>-->
 <div class="row">
 	<div class="col-md-12">
-		<h1>Print Job Details</h1>
+		<h1>Print Estimate ( Draft ) Details</h1>
 	</div>
 </div>
 

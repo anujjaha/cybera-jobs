@@ -175,6 +175,17 @@ function customer_selected(type,userid) {
         	jQuery("#mobile_"+type).val(data.mobile);
         	jQuery("#showEmailId").html("Email Id : " + data.email);
         	jQuery("#customerReviews").html("");
+
+        	if(data.is_5_tax == 1)
+        	{
+        		jQuery('#is_5_gst').iCheck('check'); 
+        	}
+
+        	if(data.is_invoice == 1)
+        	{
+        		jQuery('#is_job_invoice').iCheck('check'); 
+        	}
+
         	if(data.under_revision == 1)
         	{
         		alert("Please Collect Payment in Advance for the Job.");
@@ -184,6 +195,8 @@ function customer_selected(type,userid) {
         		jQuery("#customerReviews").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
 
         		jQuery("#customerStarRating").append("Rating : " + data.rating);
+
+
 
         		jQuery("#save_button").hide();
         		 $('input[type=submit]', this).attr('disabled', 'disabled');
@@ -337,21 +350,31 @@ function set_cutting_details_box(id)
         jQuery("#c_laser_"+data_id).val($("#c_laser").val());
         jQuery("#c_rcorner_"+data_id).val($("#c_rcorner").val());
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
+        
+
+        var cBox = $('input[name=c_box_box]:checked').val();
+        var cDubby = $('input[name=c_box_dubby]:checked').val();
+
+
+        jQuery("#c_box_box_"+data_id).val(cBox ? cBox : 'No');
+        jQuery("#c_box_dubby_"+data_id).val(cDubby ? cDubby : "No");
+
+
         $.fancybox.close();
         
-        /*if(jQuery("#category_"+data_id).val() != "Visiting Card" && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 5)
+        if(jQuery("#category_"+data_id).val() != "Visiting Card" && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 5)
         {
 			var nextElement = parseInt(data_id) + 1;
 			
 			jQuery("#category_" + nextElement).val("Cutting");
 			jQuery("#details_" + nextElement).val("Cutting");
 			jQuery("#qty_" + nextElement).focus();
-		}*/
+		}
 		
-		/*if(jQuery("#category_"+data_id).val() == "Visiting Card")
+		if(jQuery("#category_"+data_id).val() == "Visiting Card")
 		{
 			jQuery("#sub_"+data_id).focus();
-		}*/
+		}
 }
 function remove_cutting_details(data_id) {
     jQuery("#cut_icon_"+data_id).css('display','none');
@@ -1130,6 +1153,24 @@ $this->load->helper('general'); ?>
 						<br>
 						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value="">
 					</td>
+					<td>
+						<label>
+							<input type="checkbox" name="is_5_gst" id="is_5_gst"  value="1">
+							FIX 5% GST
+						</label>
+						<br>
+						Used to Generate 5% BILL
+					</td>
+
+					<td>
+						<label>
+							<input type="checkbox" name="is_job_invoice" id="is_job_invoice"  value="1">
+							Invoice
+						</label>
+						<br>
+						<input type="text" name="invoice_details" id="invoice_details"  class="form-control" value="">
+					</td>
+
 				</tr>
 			</table>
 		</td>
@@ -1211,6 +1252,7 @@ $this->load->helper('general'); ?>
                     <label><input type="radio" name="size" id="size" value="A3">A3</label>
                     <label><input type="radio" checked="checked" name="size" id="size" value="12X18">12X18</label>
                     <label><input type="radio" name="size" id="size" value="13X19">13X19</label>
+                    <label><input type="radio" name="size" id="size" value="12X25">12X25</label>
                     <input type="text" name="size_info" id="size_info" value="1/">
                 </td>
             </tr>
@@ -1226,6 +1268,25 @@ $this->load->helper('general'); ?>
                     </label>
                 </td>
             </tr>
+
+            <tr id="box_dubby">
+                <td align="right">Box ( Dubby or Box ):</td>
+                <td>
+                	<label>
+                		Dubby : 
+                	    <input type="checkbox" class="box_dubby"  name="c_box_dubby" id="c_box_dubby" value="Yes">Yes
+                	</label>
+                		&nbsp;&nbsp;&nbsp;&nbsp;
+                		&nbsp;&nbsp;&nbsp;&nbsp;
+                	<label>
+                		Box : 
+                	    <input type="checkbox" class="box_box"  name="c_box_box" id="c_box_box" value="Yes">Yes
+                	</label>
+                	
+                	<!-- <input type="text" name="c_corner" id="c_corner"> -->
+                </td>
+            </tr>
+
             <tr id="popup_cornercutting">
                 <td align="right">Corner Cutting :</td>
                 <td>
@@ -1482,6 +1543,10 @@ for($i=1;$i<6;$i++) { ?>
     <input type="text" name="c_laser_<?php echo $i;?>" id="c_laser_<?php echo $i;?>">
     <input type="text" name="c_rcorner_<?php echo $i;?>" id="c_rcorner_<?php echo $i;?>">
     <input type="text" name="c_cornerdie_<?php echo $i;?>" id="c_cornerdie_<?php echo $i;?>">
+
+    <input type="text" name="c_box_dubby_<?php echo $i;?>" id="c_box_dubby_<?php echo $i;?>">
+    <input type="text" name="c_box_box_<?php echo $i;?>" id="c_box_box_<?php echo $i;?>">
+
 </div>
 <?php } ?>
 

@@ -162,6 +162,21 @@ $this->load->helper('form');
 				<option <?php $dealer_info->is_job_mail == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
 			</select>
 		</div>
+		<div class="form-group">
+			<label>Tax 5% </label>
+			<select name="is_5_tax"  id="is_5_tax" class="form-control">
+				<option <?php $dealer_info->is_5_tax == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php $dealer_info->is_5_tax == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>Is Invoice</label>
+			<select name="is_invoice"  id="is_invoice" class="form-control">
+				<option <?php $dealer_info->is_invoice == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php $dealer_info->is_invoice == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+			</select>
+		</div>
 
 		
 		
@@ -252,4 +267,6 @@ $this->load->helper('form');
 	jQuery("#under_revision").val(<?php echo $dealer_info->under_revision;?>);
 	jQuery("#is_mail").val(<?php echo $dealer_info->is_mail;?>);
 	jQuery("#is_job_mail").val(<?php echo $dealer_info->is_job_mail;?>);
+	jQuery("#is_5_tax").val(<?php echo $dealer_info->is_5_tax;?>);
+	jQuery("#is_invoice").val(<?php echo $dealer_info->is_invoice;?>);
 </script>

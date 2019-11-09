@@ -199,6 +199,8 @@ class Customer extends CI_Controller {
 						'email' 		=> $result->emailid,
 						'under_revision' => $result->under_revision,
 						'customer_reviews' => $result->customer_reviews,
+						'is_5_tax' 		=> $result->is_5_tax,
+						'is_invoice' 		=> $result->is_invoice,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -208,6 +210,8 @@ class Customer extends CI_Controller {
 						'mobile' 	=> $result->officecontact,
 						'rating' 		=> $result->customer_star_rate,
 						'email' 	=> $result->emailid,
+						'is_invoice' 		=> $result->is_invoice,
+						'is_5_tax' 		=> $result->is_5_tax,
 						'under_revision' => $result->under_revision,
 						'customer_reviews' => $result->customer_reviews,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
@@ -252,6 +256,8 @@ class Customer extends CI_Controller {
 			$data['is_mail'] = $this->input->post('is_mail');
 			$data['is_job_mail'] = $this->input->post('is_job_mail');
 			$data['customer_star_rate'] = $this->input->post('customer_star_rate');
+			$data['is_5_tax'] = $this->input->post('is_5_tax');
+			$data['is_invoice'] = $this->input->post('is_invoice');
 
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');

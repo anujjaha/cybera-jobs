@@ -1200,9 +1200,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 						<tr>
 						<td  style="font-size:12px;" >Est Id : <strong>'.$job_data->id.'</strong> </td>
 							
-							<td style="font-size:12px;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong>
-							<br>
-								Total due : '. get_acc_balance($customer_details->id)  .'
+							<td style="font-size:14px; font-weight: bold;"  align="right">Est date : <strong>'.date('d-m-Y',strtotime($job_data->jdate)).' </strong>
 							</td>
 						</tr>
 						<tr>
@@ -1303,7 +1301,16 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 								</table>
 							</td>
 						</tr>
-					</table>';
+					</table>
+
+					<tr>
+						<td colspan="2" style="text-align: right; font-size: 16px; font-weight: bold;">
+							Total due : '. get_acc_balance($customer_details->id)  .'
+						</td>
+					</tr>
+					';
+
+
 				$content .= '</td>
 				
 			</tr>';

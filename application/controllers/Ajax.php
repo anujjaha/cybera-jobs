@@ -939,6 +939,16 @@ class Ajax extends CI_Controller {
 					$pcontent .= '<tr><td colspan="2">' .$cuttingBlock.'</td></tr>';
 					//$pcontent .= '<tr><td colspan="2"><br></td></tr>';
 				}
+
+				if(isset($cutting['c_box_box']) && $cutting['c_box_box'] == 'Yes')
+				{
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">BOX : </td><td style="font-size:16px;"><strong> YES </strong></td></tr>';
+				}
+
+				if(isset($cutting['c_box_dubby']) && $cutting['c_box_dubby'] == 'Yes')
+				{
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Dubby : </td><td style="font-size:16px;"><strong> YES </strong></td></tr>';
+				}
 				
 				if(strlen($cornerBlock) > 1 )
 				{

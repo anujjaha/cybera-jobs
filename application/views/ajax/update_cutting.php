@@ -41,6 +41,10 @@ function update_box() {
         c_blade_per_sheet = $("#c_blade_per_sheet").val();
 
 
+        var cBox = $('input[name=c_box_box]:checked').val() ? $('input[name=c_box_box]:checked').val() : 'No';
+        var cDubby = $('input[name=c_box_dubby]:checked').val() ? $('input[name=c_box_dubby]:checked').val() : 'No';
+
+
         $.ajax({
 		type: "POST",
 		url: "<?php echo site_url();?>/ajax/save_edit_cutting_details/", 
@@ -50,7 +54,8 @@ function update_box() {
 				'c_size':size,'c_sizeinfo':size_info,'c_print':printing,
 				'c_details':details,'c_lamination':lamination,'c_laminationinfo':lamination_info,
 				'c_binding':binding,'c_bindinginfo':binding_info,'c_packing':packing,
-				'c_checking':checking,'cutting_id':cutting_id,'j_id':j_id,"c_corner":c_corner,"c_laser":c_laser, "c_cornerdie":c_cornerdie, "c_rcorner": c_rcorner
+				'c_checking':checking,'cutting_id':cutting_id,'j_id':j_id,"c_corner":c_corner,"c_laser":c_laser, "c_cornerdie":c_cornerdie, "c_rcorner": c_rcorner,
+                "c_box_box": cBox, "c_box_dubby": cDubby
 		
 			},
 		success: 
@@ -123,7 +128,25 @@ function update_box() {
                     <input type="text" name="c_corner" id="c_corner" value="<?php echo $cutting_details->c_corner;?>"> -->
                 </td>
             </tr>
-            
+                
+            <tr id="box_dubby">
+                <td align="right">Box ( Dubby or Box ):</td>
+                <td>
+                    <label>
+                        Dubby : 
+                        <input <?php echo $cutting_details->c_box_dubby == 'Yes' ? 'checked="checked"' : '' ;?>  type="checkbox" class="box_dubby"  name="c_box_dubby" id="c_box_dubby" value="Yes">Yes
+                    </label>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    <label>
+                        Box : 
+                        <input <?php echo $cutting_details->c_box_box == 'Yes' ? 'checked="checked"' : '' ;?> type="checkbox" class="box_box"  name="c_box_box" id="c_box_box" value="Yes">Yes
+                    </label>
+                    
+                    <!-- <input type="text" name="c_corner" id="c_corner"> -->
+                </td>
+            </tr>
+
             <tr  class="corner-cut-details">
                 <td align="right">Corner Cutting Die No. :</td>
                 <td>

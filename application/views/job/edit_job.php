@@ -167,6 +167,13 @@ function set_cutting_details_box(id){
 
         jQuery("#c_corner_"+data_id).val(cCorner);
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
+
+        var cBox = $('input[name=c_box_box]:checked').val();
+        var cDubby = $('input[name=c_box_dubby]:checked').val();
+        
+        jQuery("#c_box_box_"+data_id).val(cBox ? cBox : 'No');
+        jQuery("#c_box_dubby_"+data_id).val(cDubby ? cDubby : "No");
+
         $.fancybox.close();
 }
 function remove_cutting_details(data_id) {
@@ -556,6 +563,9 @@ $modified_by = $this->session->userdata['user_id'];
 <div class="row">
 
 	<div class="col-md-4">
+		<?php
+			//pr($job_data->user_id);
+		?>
 		Job Creator : 
 		<select name="emp_id" id="emp_id">
 			<option selected="selected" value="0">
@@ -566,7 +576,13 @@ $modified_by = $this->session->userdata['user_id'];
 				{
 			
 			?>
-				<option value="<?php echo $employee->id;?>">
+				<option 
+
+				<?php
+					echo $employee->id == $job_data->emp_id ? 'selected="selected"'  :'';
+
+				?>
+				value="<?php echo $employee->id;?>">
 					<?php echo $employee->name;?>
 				</option>
 			<?php
@@ -748,6 +764,23 @@ $modified_by = $this->session->userdata['user_id'];
 						</label>
 						<br>
 						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value="<?=$job_data->manual_complete?>">
+					</td>
+
+					<td>
+						<label>
+							<input <?php if($job_data->is_5_gst == 1) echo 'checked="checked"';?> type="checkbox" name="is_5_gst" id="is_5_gst"  value="1">
+							FIX 5% GST
+						</label>
+						<br>
+						Used to Generate 5% BILL
+					</td>
+					<td>
+						<label>
+							<input <?php if($job_data->is_job_invoice == 1) echo 'checked="checked"';?> type="checkbox" name="is_job_invoice" id="is_job_invoice"  value="1">
+							Invoice
+						</label>
+						<br>
+						<input type="text" name="invoice_details" id="invoice_details"  class="form-control" value="<?=$job_data->invoice_details?>">
 					</td>
 				</tr>
 			</table>

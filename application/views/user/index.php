@@ -73,6 +73,17 @@ if(strtolower($this->session->userdata['department']) == "master")
 
 				<?php
 				}
+
+				if(isset($job['is_5_gst']) && $job['is_5_gst'] == 1)
+				{
+					echo '<span style="color: green; font-size: 22px; font-weight:bold;"><br>5%</span>';
+				}
+
+				if(isset($job['is_job_invoice']) && $job['is_job_invoice'] == 1)
+				{
+					echo '<span style="color: green; font-size: 22px; font-weight:bold;"><br>INVOICE</span>';
+					echo "<br>" . $job['invoice_details'];
+				}
 			?>
 
 		</td>
@@ -231,6 +242,8 @@ if(strtolower($this->session->userdata['department']) == "master")
 			{
 				echo '<span style="color: green;">'.$job['emailid'].'</span>';
 			}
+
+			
 		?>
 
 		</td>
@@ -242,6 +255,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 					echo '<hr><span class="green"> DISC : ' .$job['discount']. '</span>';
 				}
 				
+					
 			?>
 		</td>
 		<td><?php
@@ -295,6 +309,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 		 </td>
 		<td>
 			<?php echo  str_replace(","," ",$job['receipt'].$job['t_reciept']);?>
+			<?php echo  $job['other_payment'];?>
 		</td>
 		<td>
 			<?php 
@@ -383,6 +398,9 @@ if(strtolower($this->session->userdata['department']) == "master")
 		|
 			<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
 			Print</a>
+
+		|
+			<strong><a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $job['customer_id'];?>">Customer</a></strong>
 
 			<?php
 				if(isset($job['approx_completion']))

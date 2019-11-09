@@ -201,7 +201,7 @@ function fill_discount_account() {
 					Receipt Number : <input type="text"  name="receipt" id="receipt">
 				</td>
 				<td>
-					Other : <input type="text"  name="other" id="other">
+					Other(Agadiya/GooglePay/Online) : <input type="text"  name="other" id="other">
 				</td>
 				<td>
 					Amount : <input type="text"  name="amount" id="amount" required="required" value="0">
@@ -344,7 +344,7 @@ function fill_discount_account() {
 			 ?>
 		</td>
 		<td>
-			<?php //echo $result['other'];?>
+			<?php echo $result['other'];?>
 		</td>
 		<td>
 			<?php echo $result['receivedby'];?>-<?php echo $result['amountby'];?>

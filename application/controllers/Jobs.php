@@ -100,6 +100,8 @@ class Jobs extends CI_Controller {
                                        'c_laser' 		=> $jobCuttingDetail->c_laser,
                                        'c_rcorner' 		=> $jobCuttingDetail->c_rcorner,
                                        'c_cornerdie'	=> $jobCuttingDetail->c_cornerdie,
+                                       'c_box_dubby' 	=> $jobCuttingDetail->c_box_dubby,
+                                       'c_box_box' 		=> $jobCuttingDetail->c_box_box
                                     );
 					}
 				}
@@ -270,6 +272,13 @@ public function edit($job_id=null)
             $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
 			$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
 
+
+			$jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
+
+			$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
+
+			$jobdata['invoice_details'] = $this->input->post('invoice_details');
+
 			$jobdata['is_pin'] = getJobDefaultPin($customer_id);
 
 			//Print CYBERA IN Cutting SLIP
@@ -374,6 +383,10 @@ public function edit($job_id=null)
                                        'c_laser'=>$this->input->post('c_laser_'.$i),
                                        'c_rcorner'=>$this->input->post('c_rcorner_'.$i),
                                        'c_cornerdie'=>$this->input->post('c_cornerdie_'.$i),
+                                       
+                                       'c_box_dubby'=>$this->input->post('c_box_dubby_'.$i),
+                                       'c_box_box'=>$this->input->post('c_box_box_'.$i)
+
                                     );
         }
         }
@@ -624,6 +637,8 @@ public function edit($job_id=null)
                                        'c_laser'=>$this->input->post('c_laser_'.$i),
                                        'c_rcorner'=>$this->input->post('c_rcorner_'.$i),
                                        'c_cornerdie'=>$this->input->post('c_cornerdie_'.$i),
+                                       'c_box_dubby'=>$this->input->post('c_box_dubby_'.$i),
+                                       'c_box_box'=>$this->input->post('c_box_box_'.$i)
                                     );
         }
         }
@@ -695,6 +710,12 @@ public function edit($job_id=null)
 
                 $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
 				$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
+
+				$jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
+
+				$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
+
+				$jobdata['invoice_details'] = $this->input->post('invoice_details');
 
 				if($jobdata['is_manual'] == 0)
 				{
@@ -1322,6 +1343,12 @@ public function edit($job_id=null)
             $jobdata['is_manual'] 		= $this->input->post('is_manual') ? $this->input->post('is_manual') : 0;
 			$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
 
+			$jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
+
+			$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
+
+			$jobdata['invoice_details'] = $this->input->post('invoice_details');
+
 			$jobdata['is_pin'] = getJobDefaultPin($customer_id);
 
 			//Print CYBERA IN Cutting SLIP
@@ -1426,6 +1453,9 @@ public function edit($job_id=null)
 		                                       'c_laser'=>$this->input->post('c_laser_'.$i),
 		                                       'c_rcorner'=>$this->input->post('c_rcorner_'.$i),
 		                                       'c_cornerdie'=>$this->input->post('c_cornerdie_'.$i),
+
+		                                       'c_box_dubby'=>$this->input->post('c_box_dubby_'.$i),
+                                       			'c_box_box'=>$this->input->post('c_box_box_'.$i)
 		                                    );
 		        }
 	        }
