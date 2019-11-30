@@ -194,7 +194,16 @@ function customer_selected(type,userid) {
 
         		jQuery("#customerReviews").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
 
-        		jQuery("#customerStarRating").append("Rating : " + data.rating);
+        		jQuery("#customerStarRating").html("Rating : " + data.rating);
+        		
+        		if(data.fixNote.length > 0)
+        		{
+        			jQuery("#fixNote").html("Message : " + data.fixNote);
+        		}
+        		else
+        		{
+        			jQuery("#fixNote").html("");	
+        		}
 
 
 
@@ -208,7 +217,17 @@ function customer_selected(type,userid) {
         	{
         		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
 
-        		jQuery("#customerStarRating").append("Rating : " + data.rating);
+        		jQuery("#customerStarRating").html("Rating : " + data.rating);
+
+        		if(data.fixNote.length > 0)
+        		{
+        			jQuery("#fixNote").html("Message : " + data.fixNote);
+        		}
+        		else
+        		{
+        			jQuery("#fixNote").html("");	
+        		}
+
 
         		jQuery("#save_button").show();	
         		jQuery("#jobname").removeAttr('disabled', 'disabled');
@@ -700,6 +719,7 @@ $this->load->helper('general'); ?>
         <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
         <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
         <p align="right"><h4 class="green" id="customerStarRating" ></h4></p>
+        <p align="right"><h4 class="green" id="fixNote" ></h4></p>
         <div class="row">
             <div class="col-md-3">
                 <span onClick="set_customer('new_customer');">

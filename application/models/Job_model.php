@@ -213,31 +213,109 @@ class Job_model extends CI_Model {
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
-	
-	public function get_dashboard_pending_details() {
-		$today = date('Y-m-d');
+
+	public function get_dashboard_pending_details1()
+	{
 		$department = $this->session->userdata['department'];
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
+				customer.under_revision as revision,
+				(select name from employees where employees.id = job.emp_id )  as emp_name,
+				customer.customer_star_rate as rating,
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
 				
 				(select  group_concat(bill_number separator ',') as 'ref_bill_number'
 				from user_transactions where user_transactions.job_id = job.id) as 't_bill_number',
+				
 				(select  group_concat(receipt separator ',') as 'ref_receipt'
 				from user_transactions where user_transactions.job_id = job.id) as 't_reciept',
+
+				(select other from user_transactions where user_transactions.job_id = job.id order by id desc LIMIT 1) as 'other_payment',
 				
 				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
 				as jstatus
 				FROM job
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
+
+				 
 				 WHERE 
-				 job.status != 0 OR job.jdate = '".$today."' OR is_delivered = 0
+				 jstatus = 'Pending'
+				 and
+				 job.status != 0 OR job.is_hold = 1 
+				 OR job.cyb_delivery = 0
+		
+				 OR is_delivered = 0 or is_pin = 1
 				 order by job.id DESC
 				";
-		
+		//pr($sql);
 		$query = $this->db->query($sql);
-		return $query->result_array();
+		return $query->result_array();	
+	}
+	
+	public function get_dashboard_pending_details() {
+		//$today = date('Y-m-d');
+		$department = $this->session->userdata['department'];
+		$sql = "SELECT *,job.id as job_id,job.created as 'created',
+				customer.under_revision as revision,
+				(select name from employees where employees.id = job.emp_id )  as emp_name,
+				customer.customer_star_rate as rating,
+				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
+				as j_view,
+				
+				(select  group_concat(bill_number separator ',') as 'ref_bill_number'
+				from user_transactions where user_transactions.job_id = job.id) as 't_bill_number',
+				
+				(select  group_concat(receipt separator ',') as 'ref_receipt'
+				from user_transactions where user_transactions.job_id = job.id) as 't_reciept',
+
+				(select other from user_transactions where user_transactions.job_id = job.id order by id desc LIMIT 1) as 'other_payment',
+				
+				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
+				as jstatus
+				FROM job
+				 LEFT JOIN customer
+				 ON job.customer_id = customer.id
+
+				 
+				 WHERE 
+				 job.status != 0 OR job.is_hold = 1 
+				 OR job.cyb_delivery = 0
+		
+				  OR is_delivered = 0 or is_pin = 1
+				 order by job.id DESC
+				";
+		//pr($sql);
+		$query = $this->db->query($sql);
+		$result = $query->result_array();	
+		$jobData = array();
+
+		foreach($result as $jR)
+		{
+			if($jR['jstatus'] == "Pending")
+			{
+				$jobData[] = $jR;
+			}
+		}
+
+		return $jobData;
+	}
+
+	public function getPendingJobIds()
+	{
+		$sql = 'SELECT j_id FROM `job_transaction`  where
+				j_status = "Pending"
+				order by id desc LIMIT 0, 1';
+		$query = $this->db->query($sql);
+		$jobIds = array();	
+		$result = $query->result_array();	
+
+
+		foreach($result as $jR)
+		{
+			$jobIds[] = $jR['j_id'];
+		}
+		return $jobIds;
 	}
 	
 	

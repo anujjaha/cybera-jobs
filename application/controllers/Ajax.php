@@ -1701,5 +1701,29 @@ class Ajax extends CI_Controller {
 		
 		die;		
 	}
+
+	public function ajax_pending_jobs()
+	{
+		$all = $this->input->post('all');
+		$data['jobs'] = 'test';
+		$this->load->model('job_model');
+		$data = array();
+		if(isset($all) && $all == 1)
+		{
+			$data['jobs'] = $this->job_model->get_dashboard_details();
+			$data['title'] = "Dashboard List : " . date('m-d-y H:i:s');
+		}
+		else
+		{
+			$data['jobs'] = $this->job_model->get_dashboard_pending_details();
+			$data['title'] = "Pending List : " . date('m-d-y H:i:s');
+		}
+		$html = $this->load->view('user/print-list', $data, true);
+		$pdfFile = create_pdf($html, 'A4');
+
+		echo $pdfFile;
+	}
 }
+
+
 

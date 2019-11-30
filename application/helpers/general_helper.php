@@ -694,7 +694,7 @@ function sendBulkEmail($to, $from,$subject="Cybera Email System",$content=null) 
 		$query = $ci->db->query($sql);
 		$result = $query->row();
 		$balance = $result->total_credit - $result->total_debit;
-		return round($balance);
+		return  $balance > 0 ? '+'.round($balance) : round($balance);
 	}
 
 function check_receipt_num($rnum) {
@@ -1249,7 +1249,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 										
 										$content .= '<tr>
 											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
-											<td style="font-size:9px;" align="right">'.$due.'</td>
+											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
 										</tr>';
 									}
 

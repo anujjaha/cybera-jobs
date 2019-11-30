@@ -1241,10 +1241,10 @@ public function edit($job_id=null)
                     $data['companyname'] = $this->input->post('companyname');
                     $data['emailid'] = $this->input->post('emailid');
                     $data['add1'] = $this->input->post('add1');
-					$data['add2'] = $this->input->post('add2');
-					$data['city'] = $this->input->post('city');
-					$data['state'] = $this->input->post('state');
-					$data['pin'] = $this->input->post('pin');
+          					$data['add2'] = $this->input->post('add2');
+          					$data['city'] = $this->input->post('city');
+          					$data['state'] = $this->input->post('state');
+          					$data['pin'] = $this->input->post('pin');
                                             
                     if($this->input->post('customerType')  == "NewDealer")
                     {

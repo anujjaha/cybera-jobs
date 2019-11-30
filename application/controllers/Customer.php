@@ -201,6 +201,7 @@ class Customer extends CI_Controller {
 						'customer_reviews' => $result->customer_reviews,
 						'is_5_tax' 		=> $result->is_5_tax,
 						'is_invoice' 		=> $result->is_invoice,
+						'fixNote' 		=> isset($result->fix_note) ? $result->fix_note : '',
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -214,6 +215,7 @@ class Customer extends CI_Controller {
 						'is_5_tax' 		=> $result->is_5_tax,
 						'under_revision' => $result->under_revision,
 						'customer_reviews' => $result->customer_reviews,
+						'fixNote' 		=> isset($result->fix_note) ? $result->fix_note : '',
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -258,6 +260,7 @@ class Customer extends CI_Controller {
 			$data['customer_star_rate'] = $this->input->post('customer_star_rate');
 			$data['is_5_tax'] = $this->input->post('is_5_tax');
 			$data['is_invoice'] = $this->input->post('is_invoice');
+			$data['fix_note'] = $this->input->post('fix_note');
 
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');

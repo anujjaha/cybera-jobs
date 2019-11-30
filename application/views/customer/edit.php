@@ -90,6 +90,11 @@ $this->load->helper('form');
 			</select>
 		</div>
 
+		<div class="form-group">
+			<label>Fix Note</label>
+			<input type="text" class="form-control" name="fix_note" value="<?php echo $dealer_info->fix_note;?>" placeholder="Fix Note">
+		</div>
+
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
 </div>

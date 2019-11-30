@@ -42,20 +42,20 @@ class User extends CI_Controller {
 
 		public function dashboard() {
 		
-		if(sendDueEmailToday() == 0 )
-		{
-			$message = getAccountInfo();
-			$pdfFile = create_pdf($message);
-			$fileName = explode("/", $pdfFile);
-			$pdfFileName = array_pop($fileName);
+			if(sendDueEmailToday() == 0 )
+			{
+				$message = getAccountInfo();
+				$pdfFile = create_pdf($message);
+				$fileName = explode("/", $pdfFile);
+				$pdfFileName = array_pop($fileName);
 
-			$attachment ="account_pdf_report/".$pdfFileName;
-			$content = "Hello Shaishav, \n\n <br><br>
-						Application First Login - ".date('d-m-Y H:i A')."
-						Please find attached PDF For Due Amount List with Company Names." ;
-			$subject = 'List of Companies Due Amount - '.date('d-m-Y H:i A');
-			$status = send_email_attachment('cyberaprintart@gmail.com', $subject, $content, $attachment);
-		}
+				$attachment ="account_pdf_report/".$pdfFileName;
+				$content = "Hello Shaishav, \n\n <br><br>
+							Application First Login - ".date('d-m-Y H:i A')."
+							Please find attached PDF For Due Amount List with Company Names." ;
+				$subject = 'List of Companies Due Amount - '.date('d-m-Y H:i A');
+				$status = send_email_attachment('cyberaprintart@gmail.com', $subject, $content, $attachment);
+			}
 		
        	$this->load->model('job_model');
 		$data = array();
@@ -66,6 +66,19 @@ class User extends CI_Controller {
 		$data['heading']="Jobs";
 		$this->template->load('user', 'index', $data);
 	}
+
+	public function pending() 
+	{
+		$this->load->model('job_model');
+		$data = array();
+		$data['jobs'] = $this->job_model->get_dashboard_pending_details();
+		//pr($data['jobs']);
+		$data['scheduleIds'] = $this->task_model->getAllSchedules();
+		$data['title']="Pending Job List - Cybera Print Art";
+		$data['heading']="Jobs";
+		$this->template->load('user', 'pending-list', $data);
+	}
+
 	public function admin()
 	{
 		$today = date("Y-m-d");

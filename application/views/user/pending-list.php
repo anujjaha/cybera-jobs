@@ -8,8 +8,6 @@ if(strtolower($this->session->userdata['department']) == "master")
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.fancybox.js?v=2.1.5"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
-
-
 <div class="row" style="margin-bottom: 10px;">
 
 <div class="col-md-6 pull-right">
@@ -693,7 +691,6 @@ function print_pending_list() {
          type: "POST",
          url: "<?php echo site_url();?>/ajax/ajax_pending_jobs/",
          data : {
-         	'all': 1
          }, 
          success: 
             function(data){
@@ -703,5 +700,6 @@ function print_pending_list() {
 
 }
 </script>
+
 
 
