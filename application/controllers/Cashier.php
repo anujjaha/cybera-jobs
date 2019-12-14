@@ -45,9 +45,10 @@ class Cashier extends CI_Controller {
 			$totalSale 			= getSaleByDate();	
 			$totalXeros 		= $data['xerox_business'];
 			$todayCollection 	= getBusinessCollectionByDate();
+			$todayCash 			= getBusinessCashCollectionByDate();
 			$totalBusiness 		= $totalSale + $totalXeros;
 			
-			$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .".";
+			$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Cash ". $todayCash ." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .".";
 			send_account_sms('9898618697', $msgText);
 			$this->cashier_model->createCashier($data);
 			
@@ -58,6 +59,23 @@ class Cashier extends CI_Controller {
 		
 		$this->template->load('cashier', 'add', $data);
 	}
+
+	public function quickmsg()
+	{
+		die("stop");
+		/*$today 				= "13-12-2019";
+		$todayBusiness 		= getBusinessByDate($today);	
+		$totalSale 			= getSaleByDate($today);	
+		$totalXeros 		= 1605;
+		$todayCollection 	= getBusinessCollectionByDate($today);
+		$todayCash 			= getBusinessCashCollectionByDate($today);
+		$totalBusiness 		= $totalSale + $totalXeros;
+		
+		$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Cash ". $todayCash ." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .".";
+		send_account_sms('9898618697', $msgText);
+		send_account_sms('8000060541', $msgText);*/
+	}
+
 	
 	public function edit($id = null)
 	{

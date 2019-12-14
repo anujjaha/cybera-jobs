@@ -189,7 +189,15 @@ class Customer extends CI_Controller {
 	
 	public function get_customer_ajax($param=null,$value=null) {
 		if($param) {
-			$result = $this->customer_model->get_customer_details($param,$value);
+			$result 	= $this->customer_model->get_customer_details($param,$value);
+			$address 	= $this->customer_model->getCustomerLocations($value);
+			$locations 	= [];
+			if(isset($address))
+			{
+				$locations = json_encode($address);
+			}
+			//pr($address);
+
 			if($result) {
 				if($result->mobile) {
 
@@ -202,6 +210,7 @@ class Customer extends CI_Controller {
 						'is_5_tax' 		=> $result->is_5_tax,
 						'is_invoice' 		=> $result->is_invoice,
 						'fixNote' 		=> isset($result->fix_note) ? $result->fix_note : '',
+						'locations'		=> $locations,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -216,6 +225,7 @@ class Customer extends CI_Controller {
 						'under_revision' => $result->under_revision,
 						'customer_reviews' => $result->customer_reviews,
 						'fixNote' 		=> isset($result->fix_note) ? $result->fix_note : '',
+						'locations'		=> $locations,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;

@@ -902,6 +902,54 @@ function getBusinessCollectionByDate($date = null)
 	return $query->row()->totalCollection;
 }
 
+function getBusinessCashCollectionByDate($date = null)
+{
+	$todayDate = date('d-m-y');
+	
+	if($date)
+	{
+		$todayDate = date('d-m-y', strtotime($date));
+	}
+	$sql = 'SELECT SUM(amount) totalCollection FROM  user_transactions WHERE 
+			t_type = "credit" 
+			AND
+			receipt != ""
+
+			AND date_format(created, "%d-%m-%y") = "'.$todayDate.'"';
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);
+	
+	return $query->row()->totalCollection;
+}
+
+function getAccountInfoRaw()
+{
+	$sql = "select DISTINCT(job.customer_id), customer.id, customer.name, customer.companyname, customer.mobile 
+			from job 
+			LEFT JOIN customer  on customer.id = job.customer_id
+			WHERE ctype != 2";
+			
+		$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);
+	return $query->result();
+
+}
+
+function getCustomerRawBalance($customerId)
+{
+	$ci=& get_instance();
+	$ci->load->database(); 	
+
+	$customerSql = "select 
+	(SELECT SUM(amount) from user_transactions ut WHERE ut.customer_id = customer.id and t_type ='debit')  as 'total_debit' ,
+	(select sum(amount) from user_transactions ut where ut.customer_id=customer.id  and t_type ='credit') as 'total_credit'
+				from customer where id = ". $customerId;
+				
+	return $ci->db->query($customerSql)->row();
+}
+
 function getAccountInfo()
 {
 	$sql = "select DISTINCT(job.customer_id), customer.id, customer.name, customer.companyname, customer.mobile 

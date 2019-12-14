@@ -25,7 +25,15 @@ function customer_selected(type,userid) {
          url: "<?php echo site_url();?>/customer/get_customer_ajax/id/"+userid, 
          success: 
               function(data){
-				 
+				if(data.locations)
+	        	{
+	        		resetLocations(data.locations);
+	        	}
+	        	else
+	        	{
+	        		document.getElementById('location_id').innerHTML = '';
+	        	}
+
 				jQuery("#mobile_"+type).val('');
 				jQuery("#mobile_"+type).val(data);
 				jQuery("#showEmailId").html("Email Id : " + data.email);
@@ -807,16 +815,35 @@ $modified_by = $this->session->userdata['user_id'];
 </table>		
 
 <hr>
-<div class="col-md-2">
-	Approx Complete Time : 
-</div>
-<div class="col-md-2">
-	<input type="text" name="approx_completion" id="approx_completion" value="<?php echo $job_data->approx_completion;?>" class="form-control">
-</div>
-
-
 
 <div class="col-md-3">
+	Address : 
+	<select id="location_id" name="location_id" class="form-control">
+		<option <?php echo $job_data->location_id == null || $job_data->location_id == 0 ? 'selected="selected"' : '';?> value="">Select Address</option>	
+		<?php
+			if(isset($locations))
+			{
+				foreach($locations as $location)
+				{
+					?>
+
+					<option value="<?php echo $location->id;?>">
+						<?php
+							echo $location->add1. ' '. $location->add2 . ' '. $location->city;
+						?>
+					</option>
+					<?php
+				}
+			}
+		?>
+	</select>
+</div>
+
+<div class="col-md-2">
+	Approx Complete Time : 
+	<input type="text" name="approx_completion" id="approx_completion" value="<?php echo $job_data->approx_completion;?>" class="form-control">
+</div>
+<div class="col-md-2">
 	<table>
 		<tr>
 			<td>
@@ -829,7 +856,23 @@ $modified_by = $this->session->userdata['user_id'];
 	</table>
 </div>
 
-<div class="col-md-5" class="pull-right">
+<div class="col-md-3">
+	Payment Type:
+	<select id="pay_type" name="pay_type" class="form-control" required="">
+		<option selected="selected" value="<?php echo $job_data->pay_type;?>">
+			<?php echo $job_data->pay_type;?>
+		</option>
+		<option value="">Select Mode</option>
+		<option value="Cash">Cash</option>
+		<option value="Card">Card</option>
+		<option value="Aangadiya">Aangadiya</option>
+		<option value="NEFT">NEFT</option>
+		<option value="Google Pay">Google Pay</option>
+		<option value="Advance">Advance</option>
+	</select>
+</div>
+
+<div class="col-md-2" class="pull-right">
 Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
 		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">
 </div>
@@ -942,6 +985,36 @@ function showRemindContainer()
 		fetch_transporter(<?php echo $job_data->customer_id;?>);
 	}, 100);
 
+	function resetLocations(locations)
+{
+	var selectEl  = document.getElementById('location_id'),
+		locations = JSON.parse(locations),
+		defaultValue,
+		option;
+
+	selectEl.innerHTML = '';
+
+	for(var i = 0; i < locations.length; i++)
+	{
+		option 		= document.createElement("option");
+		option.text = locations[i].add1 + ' ' + locations[i].add2 + ' ' + locations[i].city;
+		option.value = locations[i].id;
+
+		if(locations[i].is_default == 1)
+		{
+			defaultValue = locations[i].id;
+		}
+
+		selectEl.add(option);
+	}
+
+	if(defaultValue)
+	{
+		selectEl.value = defaultValue;
+	}
+	console.log(locations);
+}
+
 	function fetch_transporter(userid)
 	{
 		var selectList = document.getElementById('transporter_id'),
@@ -983,4 +1056,14 @@ function showRemindContainer()
 		jQuery("#reference_customer_id").select2();
 		//jQuery("#emp_id").select2();
 	}, 100);
+
+	<?php
+		if($job_data->location_id != null && $job_data->location_id != 0)
+		{
+	?>
+	document.getElementById('location_id').value = "<?php echo $job_data->location_id;?>";
+
+	<?php
+		}
+	?>
 </script>

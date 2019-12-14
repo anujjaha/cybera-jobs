@@ -5,7 +5,9 @@ class Customer_model extends CI_Model {
                 parent::__construct();
                 date_default_timezone_set('Asia/Kolkata');
     }
+
     public $table 				= "customer";
+    public $tableLocation 		= "customer_addresses";
     public $table_prospects 	= "prospects";
     public $table_categories 	= "ccategories";
 	public $table_transporters 	= "transporter_details";
@@ -33,6 +35,21 @@ class Customer_model extends CI_Model {
 				order by companyname";
 		$query = $this->db->query($sql);
 		return $query->result();
+	}
+
+	public function getCustomerLocations($customerId = null)
+	{
+		if($customerId)
+		{
+			$sql = "SELECT *
+					FROM customer_addresses
+					WHERE customer_id = ". $customerId ."
+					order by id";
+			$query = $this->db->query($sql);
+			return $query->result();
+		}
+
+		return false;
 	}
 	
 	public function get_customer_details($param=null,$value=null) {

@@ -263,7 +263,10 @@ if(strtolower($this->session->userdata['department']) == "master")
 					echo '<hr><span class="green"> DISC : ' .$job['discount']. '</span>';
 				}
 				
-					
+				if(isset($job['pay_type']))		
+				{
+					echo '<hr><span class="green"> Mode : ' .$job['pay_type']. '</span>';	
+				}
 			?>
 		</td>
 		<td><?php

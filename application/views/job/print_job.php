@@ -1,4 +1,6 @@
-
+<?php
+$location = (object)$location;
+?>
 <style>
     @media print
         {
@@ -415,17 +417,17 @@ echo $pcontent;
 					<table width="100%" border="0" class="customer-address">
 					<tr>
 						<td style="font-size:18px; line-height: 95%;">
-							<?php echo $customer_details->add1."<br>".$customer_details->add2;?>
+							<?php echo $location->add1."<br>".$location->add2;?>
 						</td>
 					</tr>
 					<tr>
 						<td style="font-size:18px; line-height: 95%;">
-							<?php echo $customer_details->city." ".$customer_details->state." ".$customer_details->pin;?>
+							<?php echo $location->city." ".$location->state." ".$location->pin;?>
 						</td>
 					</tr>
 					<tr>
 						<td style="font-size:18px; line-height: 95%;">
-							Mobile - <?php echo $customer_details->mobile;?>
+							Mobile - <?php echo $location->mobile;?>
 						</td>
 					</tr>
 					<?php
@@ -518,17 +520,17 @@ echo $pcontent;
 					<table width="100%" border="0" class="small-customer-address" style="font-size:14px;  line-height: 95%;">
 					<tr>
 						<td style="font-size:14px;  line-height: 95%;">
-							<?php echo $customer_details->add1." ".$customer_details->add2;?>
+							<?php echo $location->add1." ".$location->add2;?>
 						</td>
 					</tr>
 					<tr>
 						<td style="font-size:14px;  line-height: 95%;">
-							<?php echo $customer_details->city." ".$customer_details->state." ".$customer_details->pin;?>
+							<?php echo $location->city." ".$location->state." ".$location->pin;?>
 						</td>
 					</tr>
 					<tr>
 						<td style="font-size:14px;  line-height: 95%;">
-							Mobile - <?php echo $customer_details->mobile;?>
+							Mobile - <?php echo $location->mobile;?>
 						</td>
 					</tr>
 					<?php

@@ -8,7 +8,8 @@ class Jobs extends CI_Controller {
 		$this->load->model('dealer_model');
 		$this->load->model('customer_model');
 		$this->load->model('user_model');
-		$this->load->model('job_model');
+    $this->load->model('job_model');
+		$this->load->model('address_model');
 		
 	}
 	
@@ -273,7 +274,11 @@ public function edit($job_id=null)
 			$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
 
 
-			$jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
+
+      $jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
+      
+      $jobdata['location_id'] = $this->input->post('location_id');
+      $jobdata['pay_type'] = $this->input->post('pay_type');
 
 			$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
 
@@ -663,14 +668,16 @@ public function edit($job_id=null)
 			$this->load->model('job_model');
 
 			$job_data = $this->job_model->get_job_data($job_id);
+
 			$job_details = $this->job_model->get_job_details($job_id);
 			$customer_details = $this->job_model->get_customer_details($job_data->customer_id);
 			$customer_mobile = $customer_details->mobile;
 			$data['cutting_details'] = $this->job_model->get_cutting_details($job_id);
 			$data['customer_details']=$customer_details;
 			$data['job_details']=$job_details;
-			$data['job_data']=$job_data;
-			$data['reference_data']=$this->job_model->getReferenceDetails($job_id);
+      $data['job_data']=$job_data;
+			$data['locations']=$this->customer_model->getCustomerLocations($job_data->customer_id);
+      $data['reference_data']=$this->job_model->getReferenceDetails($job_id);
 
 
 			if($this->input->post()) 
@@ -713,7 +720,10 @@ public function edit($job_id=null)
 
 				$jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
 
-				$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
+        $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
+        $jobdata['pay_type'] = $this->input->post('pay_type');
+
+        $jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
 
 				$jobdata['invoice_details'] = $this->input->post('invoice_details');
 
@@ -1059,7 +1069,17 @@ public function edit($job_id=null)
 			$data['customer_details']=$customer_details;
 			$data['job_details']=$job_details;
 			$data['job_data']=$job_data;
-			$data['title']='Print Job';
+      $data['title']='Print Job';
+      if(isset($job_data->location_id) && $job_data->location_id != 0)
+      {
+        $location = (array)$this->address_model->get_single($job_data->location_id);
+      }
+      else
+      {
+        $location = (array)$this->address_model->getDefaultAddress($job_data->customer_id);
+      }
+
+      $data['location']=$location;
 			$data['heading']='Cybera Print View';
 			$data['cutting_info'] = $this->job_model->get_cutting_details($job_id);
 			$data['transporter_info'] = $this->customer_model->getTransporterDetailsByCustomerId($job_data->customer_id);
@@ -1344,6 +1364,10 @@ public function edit($job_id=null)
 			$jobdata['manual_complete'] = $this->input->post('manual_complete') ? $this->input->post('manual_complete') : '';
 
 			$jobdata['is_5_gst'] = $this->input->post('is_5_gst') ? $this->input->post('is_5_gst') :0;
+
+      $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
+
+      $jobdata['pay_type'] = $this->input->post('pay_type');
 
 			$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
 

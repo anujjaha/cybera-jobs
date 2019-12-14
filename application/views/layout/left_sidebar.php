@@ -144,6 +144,12 @@
                         </li>
 
                         <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>user/due_list">
+                                <i class="fa fa-dashboard"></i> <span>Balance Sheet</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>dealer/edit">
                                 <i class="fa fa-dashboard"></i> <span>Add New Dealer</span>
                             </a>

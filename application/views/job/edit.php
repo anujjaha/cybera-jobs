@@ -176,6 +176,15 @@ function customer_selected(type,userid) {
         	jQuery("#showEmailId").html("Email Id : " + data.email);
         	jQuery("#customerReviews").html("");
 
+        	if(data.locations)
+        	{
+        		resetLocations(data.locations);
+        	}
+        	else
+        	{
+        		document.getElementById('location_id').innerHTML = '';
+        	}
+
         	if(data.is_5_tax == 1)
         	{
         		jQuery('#is_5_gst').iCheck('check'); 
@@ -242,6 +251,36 @@ function customer_selected(type,userid) {
         	fetch_transporter(userid);
         }
   });
+}
+
+function resetLocations(locations)
+{
+	var selectEl  = document.getElementById('location_id'),
+		locations = JSON.parse(locations),
+		defaultValue,
+		option;
+
+	selectEl.innerHTML = '';
+
+	for(var i = 0; i < locations.length; i++)
+	{
+		option 		= document.createElement("option");
+		option.text = locations[i].add1 + ' ' + locations[i].add2 + ' ' + locations[i].city;
+		option.value = locations[i].id;
+
+		if(locations[i].is_default == 1)
+		{
+			defaultValue = locations[i].id;
+		}
+
+		selectEl.add(option);
+	}
+
+	if(defaultValue)
+	{
+		selectEl.value = defaultValue;
+	}
+	console.log(locations);
 }
 
 function fetch_transporter(userid)
@@ -1214,14 +1253,19 @@ $this->load->helper('general'); ?>
 	</tr>		
 </table>		
 
+<div class="col-md-3">
+	Address : 
+	<select id="location_id" name="location_id" class="form-control">
+		<option value="">Select Address</option>
+	</select>
+</div>
+
 <div class="col-md-2">
 	Approx Complete Time : 
-</div>
-<div class="col-md-2">
 	<input type="text" name="approx_completion" id="approx_completion" class="form-control" required="required">
 </div>
 
-<div class="col-md-3">
+<div class="col-md-2">
 	<table>
 		<tr>
 			<td>
@@ -1233,7 +1277,20 @@ $this->load->helper('general'); ?>
 		</tr>
 	</table>
 </div>
-<div class="col-md-5" class="pull-right">
+
+<div class="col-md-3">
+	Payment Type:
+	<select id="pay_type" name="pay_type" class="form-control" required="">
+		<option value="">Select Mode</option>
+		<option value="Cash">Cash</option>
+		<option value="Card">Card</option>
+		<option value="Aangadiya">Aangadiya</option>
+		<option value="NEFT">NEFT</option>
+		<option value="Google Pay">Google Pay</option>
+		<option value="Advance">Advance</option>
+	</select>
+</div>
+<div class="col-md-2" class="pull-right">
 
 	Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
 			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">

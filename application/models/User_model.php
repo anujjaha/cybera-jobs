@@ -421,6 +421,7 @@ class User_model extends CI_Model {
 	}
 	
 	public function crash_system() {
+		die("Block");
 		$sql = 'SELECT id as job_id,total,customer_id,user_id,jmonth,created FROM job WHERE jdate >= "2016-06-20" and jdate <= "2016-06-24" ';
 		$query = $this->db->query($sql);
 		$result = $query->result_array();
@@ -462,5 +463,39 @@ class User_model extends CI_Model {
 		echo "<pre>";
 		print_r($track);
 				die;
+	}
+
+	public function customer_address() {
+		die("Used at 14th DEC 2019");
+		$query 			= $this->db->query('select * from customer');
+		$result 		= $query->result_array();
+		$customerData 	= array();
+		$sr 			= 0;
+		
+		foreach($result as $data) 
+		{
+			$customerData[] = array(
+				'customer_id' 	=> $data['id'],
+				'location_name' => isset($data['companyname']) && strlen($data['companyname']) > 2 ? $data['companyname'] : $data['name'],
+				'mobile' 		=> $data['mobile'],
+				'phone' 		=> $data['officecontact'],
+				'email' 		=> $data['emailid'],
+				'add1' 			=> $data['add1'],
+				'add2' 			=> $data['add2'],
+				'city' 			=> $data['city'],
+				'state' 		=> $data['state'],
+				'pin' 			=> $data['pin'],
+				'is_default'	=> 1,
+				'created_by'	=> 1,
+				'created_at'	=> date('Y-m-d H:i:s')
+			);
+			
+			$sr++;	
+		}
+
+		$this->db->insert_batch('customer_addresses', $customerData);
+		
+		echo "Total Records updated : ".$sr;
+		die;
 	}
 }

@@ -230,5 +230,19 @@ class User extends CI_Controller {
 		$this->user_model->crash_system();
 		die("test");
 	}
-         
+
+	public function customer_address()
+	{
+		$this->load->model('user_model');
+		$this->user_model->customer_address();
+		die("Test");
+	}
+
+	public function due_list()
+	{
+		$data['results'] 	= getAccountInfoRaw();		
+		$data['title'] 		= $data['heading'] = "Due List";
+		
+		$this->template->load('user', 'due-list', $data);
+    }
 }
