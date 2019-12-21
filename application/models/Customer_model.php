@@ -192,6 +192,24 @@ class Customer_model extends CI_Model {
 		$update_data['username'] = 'customer'.$customer_id;
 		$update_data['password'] = 'customer'.$customer_id;
 		$status = $this->update_customer($customer_id,$update_data);
+
+		$locationData = array(
+			'customer_id'	=> $customer_id,
+			'location_name'	=> $data['name'] ? $data['name'] : $data['companyname'],
+			'mobile'		=> $data['mobile'] ? $data['mobile'] : '',
+			'email'			=> $data['email'] ? $data['email'] : '',
+			'add1'			=> $data['add1'] ? $data['add1'] : '',
+			'add2'			=> $data['add2'] ? $data['add2'] : '',
+			'city'			=> $data['city'] ? $data['city'] : '',
+			'state'			=> $data['state'] ? $data['state'] : '',
+			'pin'			=> $data['pin'] ? $data['pin'] : '',
+			'is_default'	=> 1,
+			'created_by'	=> $this->session->userdata['user_id'],
+			'created_at'	=> date('Y-m-d H:i:s')
+		);
+		$locationStatus = $this->db->insert($this->tableLocation, $locationData);
+
+
 		if($status) { return $customer_id;}
 		return false;
 	}

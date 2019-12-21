@@ -1,6 +1,13 @@
 <?php
 $this->load->helper('form');
  echo form_open('customer/edit');?>
+ <div class="row">
+ 	<div class="col-md-12">
+ 		<a class="btn btn-info" href="<?php echo site_url();?>/customer/addresses/<?php echo $dealer_info->id;?>">Manage Addresses ( <?php echo count($locations);?> )</a>
+ 	</div>
+ </div>
+ <div class="clearfix"></div>
+ <hr>
 <div class="col-md-6">
 <!-- general form elements disabled -->
 	<div class="box box-warning">

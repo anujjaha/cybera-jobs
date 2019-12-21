@@ -5,7 +5,9 @@ class Dealer_model extends CI_Model {
 		parent::__construct();
 		date_default_timezone_set('Asia/Kolkata');
     }
-    public $table = "customer";
+
+    public $table 				= "customer";
+    public $tableLocation 		= "customer_addresses";
 	
 	public function get_dealer_details($param=null,$value=null) {
 		if(!empty($param)) {
@@ -79,6 +81,23 @@ class Dealer_model extends CI_Model {
 		$update_data['dealercode'] = 'D-'.$dealer_id;
 		$update_data['created'] = date('Y-m-d H:i:s');
 		$status = $this->update_dealer($dealer_id,$update_data);
+
+		$locationData = array(
+			'customer_id'	=> $dealer_id,
+			'location_name'	=> $data['name'] ? $data['name'] : $data['companyname'],
+			'mobile'		=> $data['mobile'] ? $data['mobile'] : '',
+			'email'			=> $data['email'] ? $data['email'] : '',
+			'add1'			=> $data['add1'] ? $data['add1'] : '',
+			'add2'			=> $data['add2'] ? $data['add2'] : '',
+			'city'			=> $data['city'] ? $data['city'] : '',
+			'state'			=> $data['state'] ? $data['state'] : '',
+			'pin'			=> $data['pin'] ? $data['pin'] : '',
+			'is_default'	=> 1,
+			'created_by'	=> $this->session->userdata['user_id'],
+			'created_at'	=> date('Y-m-d H:i:s')
+		);
+		$locationStatus = $this->db->insert($this->tableLocation, $locationData);
+
 		if($status) { return $dealer_id;}
 	}
 	

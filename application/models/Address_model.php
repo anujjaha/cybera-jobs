@@ -52,4 +52,57 @@ class Address_model extends CI_Model {
 		$query = $this->db->get();
 		return $query->row(); 
 	}
+
+	public function getAddressByCustomerId($customerId = null)
+	{
+		if($customerId)
+		{
+			$this->db->select('*')
+				->from($this->table)
+				->where('customer_id', $customerId)
+				->where('is_deleted', 0);
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+
+		return array();
+	}
+
+	public function setDefault($customerId, $addressId)
+	{
+		$this->db->where('customer_id', $customerId);
+		$this->db->update($this->table, array('is_default' => 0));		
+
+		$this->db->where('customer_id', $customerId)
+			->where('id', $addressId);
+		
+		return $this->db->update($this->table, array('is_default' => 1));		
+	}
+
+	public function deleteAddress($customerId, $addressId)
+	{
+		$this->db->select('*')
+			->from($this->table)
+			->where('id', $addressId);
+		$query = $this->db->get();
+		$result = $query->row(); 
+
+		$this->db->where('id', $addressId);
+		$this->db->update($this->table, array('is_deleted' => 1));
+
+		if(isset($result) && $result->is_default == 1)
+		{
+			$this->db->select('*')
+			->from($this->table)
+			->where('customer_id', $customerId)
+			->where('id', '!=', $addressId);
+			$query = $this->db->get();
+			$result = $query->row(); 
+
+			$this->db->where('id', $result->id);
+			return $this->db->update($this->table, array('is_default' => 1));			
+		}
+
+		return true;
+	}
 }

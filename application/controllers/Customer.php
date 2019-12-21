@@ -238,8 +238,11 @@ class Customer extends CI_Controller {
 	public function edit($customer_id=null) {
 
 		$this->load->model('customer_model');
+		$this->load->model('address_model');
+
 		$data['title']="Add Customer";
 		$data['heading']="Add Customer";
+		$data['locations'] = $this->address_model->getAddressByCustomerId($customer_id);
 		if($customer_id) {
 			$data['title']="Edit Customer";
 			$data['heading']="Edit Customer";
@@ -317,6 +320,7 @@ class Customer extends CI_Controller {
 			$this->load->helper('url');
 			redirect("/",'refresh');
 		}
+
 		$this->template->load('customer', 'edit', $data);
 	}
 	
@@ -397,5 +401,21 @@ class Customer extends CI_Controller {
 
 		$this->template->load('customer', 'print_small', $customer);
 	}
+
+	public function addresses($customerId)
+	{
+		$this->load->model('customer_model');
+		$this->load->model('address_model');
+
+		$data['customer'] 	= $this->customer_model->get_customer_details('id', $customerId);		
+		$customer 			= $data['customer'];
+		$data['title'] 		= isset($customer->name) ? $customer->name : $customer->companyname;
+		$data['title'] 		= $data['title'] . ' Manage Locations';
+		$data['heading'] 	= "Manage Customer Locations";
+		$data['locations'] 	= $this->address_model->getAddressByCustomerId($customerId);	
+
+		$this->template->load('customer', 'locations', $data);
+	}
+
 
 }

@@ -1723,7 +1723,95 @@ class Ajax extends CI_Controller {
 
 		echo $pdfFile;
 	}
+
+	public function saveCustomerLocation()
+	{
+		if($this->input->post()) 
+		{
+			$data = $this->input->post();
+			$this->load->model('address_model');
+
+			$locationData = array(
+				'customer_id'	=> $data['customerId'],
+				'location_name'	=> $data['name'] ? $data['name'] : $data['companyname'],
+				'mobile'		=> $data['mobile'] ? $data['mobile'] : '',
+				'email'			=> $data['email'] ? $data['email'] : '',
+				'add1'			=> $data['add1'] ? $data['add1'] : '',
+				'add2'			=> $data['add2'] ? $data['add2'] : '',
+				'city'			=> $data['city'] ? $data['city'] : '',
+				'state'			=> $data['state'] ? $data['state'] : '',
+				'pin'			=> $data['pin'] ? $data['pin'] : '',
+			);
+
+			$status = $this->address_model->insert_data($locationData);
+
+			if($status)
+			{
+				echo json_encode(array(
+					'status' => true
+				));
+				exit;
+			}
+			
+			echo json_encode(array(
+					'status' => false
+				));
+			exit;
+		}		
+	}
+
+
+	public function setDefaultAddress()
+	{
+		if($this->input->post()) 
+		{
+			$data = $this->input->post();
+			$this->load->model('address_model');
+
+			if(isset($data['customerId']) && isset($data['addressId']))
+			{
+				$status = $this->address_model->setDefault($data['customerId'], $data['addressId']);
+
+				if($status)
+				{
+					echo json_encode(array(
+						'status' => true
+					));
+					exit;
+				}
+			}
+			
+			echo json_encode(array(
+					'status' => false
+				));
+			exit;
+		}			
+	}
+
+	public function deleteAddress()
+	{
+		if($this->input->post()) 
+		{
+			$data = $this->input->post();
+			$this->load->model('address_model');
+
+			if(isset($data['customerId']) && isset($data['addressId']))
+			{
+				$status = $this->address_model->deleteAddress($data['customerId'], $data['addressId']);
+
+				if($status)
+				{
+					echo json_encode(array(
+						'status' => true
+					));
+					exit;
+				}
+			}
+			
+			echo json_encode(array(
+					'status' => false
+				));
+			exit;
+		}				
+	}
 }
-
-
-
