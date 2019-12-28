@@ -43,6 +43,7 @@ function direct_verify_job(id) {
 		<th>Bill Number</th>
 		<th>Verify</th>
 		<th>Date / Time</th>
+		<th>Status</th>
 		<th>View</th>
 		<th>Edit</th>
 		</tr>
@@ -91,6 +92,32 @@ function direct_verify_job(id) {
 		<td><?php echo date('d-m-Y',strtotime($job['created']))
 						." - ".
 						date('h:i A',strtotime($job['created']));?>
+		</td>
+
+				<td>
+			<?php
+				if($job['jstatus'] == JOB_COMPLETE) {
+					echo "<span class='blue'>".$job['jstatus']."</span>";
+				} else {
+					echo "<span class='red'>".$job['jstatus']."</span>";
+				}
+				
+				echo "</a><br>";
+				
+				if($job['is_delivered'] == 0 )
+				{
+					$custmerName = $job['companyname'] ? $job['companyname'] : $job['name'];
+					$custmerName = $custmerName . ' | ' . $job['mobile'];
+					echo  '<span id="jobd-'.$job['job_id'].'"><a 
+					data-value="'.$custmerName.'"
+					href="javascript:void(0);" data-id="' .$job['job_id']. '" class="set-delivery red">Un-Delievered</a></span>';
+				}
+				else
+				{
+					 echo " ( Delivered )";
+					 echo "<br>" . $job['custom_delivery'];
+				}
+				?>
 		</td>
 		<td><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a></td>
 		

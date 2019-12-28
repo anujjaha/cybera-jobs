@@ -156,7 +156,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 		</td>
 		<td><?php 
 			echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
-			
+			echo '<br><span class="green">'. $job['fix_note'] .'</span>';
 			echo $job['ctype'] == 1 ? '<span class="red">[D]</span>' : '<span class="green">[R]</span>';
 
 			if($job['rating'] == 5)

@@ -26,6 +26,7 @@
 	}
 	?>
 </table>
+<div style="display: none;">
 <div class="row">
 <hr>
 <div class="col-md-12">
@@ -85,3 +86,4 @@
 		</center>
 </div>
 <hr>
+</div>
