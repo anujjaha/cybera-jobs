@@ -1287,6 +1287,7 @@ $this->load->helper('general'); ?>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
 		<option value="Google Pay">Google Pay</option>
+		<option value="Cheque">Cheque</option>
 		<option value="Advance">Advance</option>
 	</select>
 </div>

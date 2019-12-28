@@ -369,7 +369,11 @@ if(strtolower($this->session->userdata['department']) == "master")
 				
 				if($job['is_delivered'] == 0 )
 				{
-					echo  '<span id="jobd-'.$job['job_id'].'"><a href="javascript:void(0);" onclick="setDelievered(' .$job['job_id']. ')" class="red">Un-Delievered</a></span>';
+					$custmerName = $job['companyname'] ? $job['companyname'] : $job['name'];
+					$custmerName = $custmerName . ' | ' . $job['mobile'];
+					echo  '<span id="jobd-'.$job['job_id'].'"><a 
+					data-value="'.$custmerName.'"
+					href="javascript:void(0);" data-id="' .$job['job_id']. '" class="set-delivery red">Un-Delievered</a></span>';
 				}
 				else
 				{
@@ -426,6 +430,11 @@ if(strtolower($this->session->userdata['department']) == "master")
 	</table>
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
+
+
+
+
+
 	</div>
 
 <script src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>" type="text/javascript"></script>
@@ -445,13 +454,29 @@ if(strtolower($this->session->userdata['department']) == "master")
                 });
             });
     
-    $(document).ready(function() {
-      $('.fancybox').fancybox({
+    $(document).ready(function() 
+    {
+    	 $('.fancybox').fancybox({
         'width':900,
         'height':600,
         'autoSize' : false,
-    });
-});
+    	});
+
+    	$('.delivery_type').on('ifClicked', function(event)
+    	{
+    		setVisibilityDeliveryDetails(event.target.value);
+    	});
+
+    	$('#delivery-by-address').on('click', function()
+    	{
+    		saveJobDelievered();
+    	});
+
+    	$(".set-delivery").on('click', function(event)
+    	{
+    		setDelievered(event.target.getAttribute('data-id'), event.target.getAttribute('data-value'));
+    	})
+	});
             
 function update_status(id,value) {
 	var oTable = $('#example1').dataTable();
@@ -587,10 +612,38 @@ $(document).keyup(function(e)
     }
 });
 
-
-function setDelievered(jobId)
+function setVisibilityDeliveryDetails(val)
 {
-	var customDelivery = prompt("Who pick the Job or Transporter Name?", "Customer");
+	if(val.toString() == '1')
+	{
+		jQuery("#delivery-cybera").show();
+		jQuery("#delivery-customer").hide();
+		jQuery("#deliveryBy").val(1);
+	}
+
+	if(val.toString() == '0')
+	{
+		jQuery("#delivery-cybera").hide();
+		jQuery("#delivery-customer").show();	
+		jQuery("#deliveryBy").val(0);
+	}
+}
+
+function saveJobDelievered()
+{
+	var jobId 			= jQuery("#deliveryJobId").val(),
+		customDelivery 	= jQuery("#deliveryBy").val() == 0 ? jQuery("#customer_name").val(): jQuery("#cybera_delivery").val();
+
+		if(jQuery("#deliveryBy").val().toString() == "1")
+		{
+			customDelivery = customDelivery + ' - ' + jQuery("#cybera_delivery_info").val();
+		}
+		
+	if(customDelivery.trim() == '' || customDelivery.trim().length < 1)
+	{
+		alert("Please Provide Delivery Details!");
+		return false;
+	}
 
 	jQuery.ajax(
 	{
@@ -606,13 +659,22 @@ function setDelievered(jobId)
 			if(data.status == true)
 			{
 				jQuery("#jobd-"+jobId).html("( Delivered )");
+				jQuery("#deliveryModalBox").modal('hide');
 			}
 		},
 		error: function(data)
 		{
 			alert("Something Went Wrong !");
+			jQuery("#deliveryModalBox").modal('hide');
 		}
 	});
+}
+
+function setDelievered(jobId, name)
+{
+	jQuery("#deliveryJobId").val(jobId);
+	jQuery("#deliveryModalBox").modal('show');
+	//jQuery("#customer_name").val(name);
 }
 </script>
 <div id="view_job_status" style="width:900px;display: none;margin-top:-75px;">
@@ -707,4 +769,58 @@ function print_pending_list() {
 }
 </script>
 
+<!-- Modal -->
+<div class="modal fade" id="deliveryModalBox" role="dialog">
+    <div class="modal-dialog">
+    	<div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Choose Delivery Option</h4>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+        		<div class="form-group col-md-12">
+        			<label>Choose Delivery : </label>
+        			<label>
+        				<input type="radio" class="form-control delivery_type" name="delivery_type" value="1">
+        				Cybera
+        			</label>
+        			<label>
+        				<input checked="checked" type="radio" class="form-control delivery_type" name="delivery_type" value="0">
+        				Customer
+        			</label>
+        		</div>
 
+        		<div class="form-group col-md-12" id="delivery-customer">
+        			<label>Customer Name : </label>
+        			<input type="text" class="form-control" value="" name="customer_name" id="customer_name">
+        		</div>
+
+        		<div class="form-group col-md-12" id="delivery-cybera" style="display: none;">
+        			<label>Delivery BY : </label>
+        			<select class="form-control" name="cybera_delivery" id="cybera_delivery" >
+        				<option> Yatin Bhai</option>
+        				<option> Bhupesh Bhai</option>
+        			</select>
+        			<hr>
+        			<label>Delivery Location : </label>
+        			<input type="text" class="form-control" value="" name="cybera_delivery_info" id="cybera_delivery_info">
+        		</div>
+        	</div>
+        </div>
+        <div class="modal-footer">
+        	<input type="hidden" id="deliveryJobId" name="deliveryJobId" value="">
+        	<input type="hidden" id="deliveryBy" name="deliveryBy" value="">
+        	<button type="button" class="btn btn-info" id="delivery-by-address">Save</button>
+         	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<script type="text/javascript">
+	function setCybDelivery(option)
+	{
+		console.log(option);
+	}
+</script>  

@@ -74,7 +74,11 @@
 		foreach($customers as $customer) { ?>
 		<tr>
 		<td><?php echo $sr;?></td>
-		<td><?php echo $customer->companyname;?></td>
+		<td>
+			<?php echo $customer->companyname;?>
+			<hr>
+			<span class="green"><?php echo $customer->fix_note;?></span>
+		</td>
 		<td><?php echo $customer->name;?></td>
 		<td><?php echo round($customer->total_debit,2);?></td>
 		<td><?php echo $customer->total_credit;?></td>
