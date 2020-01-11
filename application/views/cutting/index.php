@@ -1,3 +1,6 @@
+<?php
+	//pr($jobs);
+?>
 
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.fancybox.js?v=2.1.5"></script>
@@ -56,8 +59,12 @@ function startaudio() {
 		<tr>
 		<th>Sr</th>
 		<th>
-			Details
-			<br>
+			Job Id
+		</th>
+		<th>
+			Customer
+		</th>
+		<th>
 			Job Name
 		</th>
 		<th>Details</th>
@@ -75,26 +82,56 @@ function startaudio() {
 		$sr =1;	
 		foreach($jobs as $job) {
 
+			//pr($job);
 			$cmaterial = '';
-			$cmaterial .= "<table width='100%' border='2'><tr>
-								<td>Details</td>
-								<td>Qty</td>
-								<td>Size</td>
-								<td>Print</td>
-								<td>Lamination</td>
-								<td>Binding</td>
-								<td>Packing</td>
-							</tr>
+			$cmaterial .= "<table width='100%' border='2' style='margin-bottom: 15px; margin-top: 10px;'>
 							<tr>
-									<td>".$job['c_details']."</td>
-									<td>".$job['c_qty']."</td>
-									<td>".$job['c_size']."</td>
-									<td>".$job['c_print']."</td>
-									<td>".$job['c_lamination']."</td>
-									<td>".$job['c_binding']."</td>
-									<td>".$job['c_packing']."</td>
-									
-									</tr>";
+								<td width='20%' style='font-size: 20px; font-weight: bold;''>Details:</td>
+								<td width='70%'  style='font-size: 20px; font-weight: bold;'>".$job['c_details']."</td>
+							</tr>
+
+							<tr>
+								<td style='font-size: 20px; font-weight: bold;''>Qty:</td>
+								<td style='font-size: 20px; font-weight: bold;'>".$job['c_qty']."</td>
+							</tr>
+
+							<tr>
+								<td style='font-size: 20px; font-weight: bold;'>Size:</td>
+								<td style='font-size: 20px; font-weight: bold;'>".$job['c_size']."
+
+								<span style='margin-left: 50px;'>Total Sheets: ".$job['c_sheet_qty']."</span>
+								</td>
+							</tr>
+
+							<tr>
+								<td style='font-size: 20px; font-weight: bold;'>Print:</td>
+								<td style='font-size: 20px; font-weight: bold;'>".$job['c_print']."</td>
+							</tr>";
+
+
+					if(strlen($job['c_lamination']) > 1)
+					{
+						$cmaterial .= "<tr>
+								<td style='font-size: 20px; font-weight: bold;'>Lamination</td>
+								<td style='font-size: 20px; font-weight: bold;'>".$job['c_lamination']."</td>
+							</tr>";
+					}
+
+					if(strlen($job['c_binding']) > 1)
+					{
+						$cmaterial .= "<tr>
+								<td style='font-size: 20px; font-weight: bold;'>Binding</td>
+								<td style='font-size: 20px; font-weight: bold;'>".$job['c_binding']."</td>
+							</tr>";
+					}
+
+					if(strlen($job['c_packing']) > 1)
+					{
+						$cmaterial .= "<tr>
+								<td style='font-size: 20px; font-weight: bold;'>Packing</td>
+								<td style='font-size: 20px; font-weight: bold;'>".$job['c_packing']."</td>
+							</tr>";
+					}
 			
 			$cmaterial .= "</table>";
 			
@@ -116,11 +153,14 @@ function startaudio() {
 			</td>
 		<td>
 			<?php echo $job['j_id'];?>
-			<hr>
-			<?php echo $job['companyname'] ? $job['companyname']:$job['name'] ;?>
-			<hr>
-			<?php echo $job['jobname'];?>
 			</td>
+		<td>
+			<?php echo $job['companyname'] ? $job['companyname']:$job['name'] ;?>
+		</td>
+		<td>
+			<?php echo $job['jobname'];?>
+		</td>
+		
 		<td width="80%">
 			<?php echo $cmaterial;?>
 
@@ -158,7 +198,7 @@ function startaudio() {
                     "bLengthChange": true,
                     "iDisplayLength": 50,
                     "bFilter": true,
-                    "bSort": true,
+                    "bSort": false,
                     "bInfo": true,
                     "bAutoWidth": true,
                     "bDestroy": true,
@@ -207,7 +247,7 @@ function update_datatable_grid() {
 						"bLengthChange": true,
 						"iDisplayLength": 50,
 						"bFilter": true,
-						"bSort": true,
+						"bSort": false,
 						"bInfo": true,
 						"bAutoWidth": true,
 						"bDestroy": true,
@@ -233,7 +273,7 @@ function loadlink() {
 					setTimeout(function()
 					{
 						location.reload();
-					}, 3000);
+					}, 10000);
 				}
 				return true;
           }

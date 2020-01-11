@@ -302,6 +302,51 @@ class Job_model extends CI_Model {
 		return $jobData;
 	}
 
+	public function get_dashboard_undeliver_details() {
+		//$today = date('Y-m-d');
+		$department = $this->session->userdata['department'];
+		$sql = "SELECT *,job.id as job_id,job.created as 'created',
+				customer.under_revision as revision,
+				(select name from employees where employees.id = job.emp_id )  as emp_name,
+				customer.customer_star_rate as rating,
+				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
+				as j_view,
+				
+				(select  group_concat(bill_number separator ',') as 'ref_bill_number'
+				from user_transactions where user_transactions.job_id = job.id) as 't_bill_number',
+				
+				(select  group_concat(receipt separator ',') as 'ref_receipt'
+				from user_transactions where user_transactions.job_id = job.id) as 't_reciept',
+
+				(select other from user_transactions where user_transactions.job_id = job.id order by id desc LIMIT 1) as 'other_payment',
+				
+				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
+				as jstatus
+				FROM job
+				 LEFT JOIN customer
+				 ON job.customer_id = customer.id
+
+				 
+				 WHERE 
+				 is_delivered = 0
+				 order by job.id DESC
+				";
+		//pr($sql);
+		$query = $this->db->query($sql);
+		$result = $query->result_array();	
+		$jobData = array();
+
+		foreach($result as $jR)
+		{
+			if(1==1)//$jR['jstatus'] == "Un-delivered")
+			{
+				$jobData[] = $jR;
+			}
+		}
+
+		return $jobData;
+	}
+
 	public function getPendingJobIds()
 	{
 		$sql = 'SELECT j_id FROM `job_transaction`  where
@@ -541,10 +586,11 @@ class Job_model extends CI_Model {
 			$jobIds[] = $job['id'];
 		}
 		
-		$sql_cd = "SELECT * from cutting_details 
+		$sql_cd = "SELECT *, job.created as created from cutting_details 
 					LEFT JOIN job on job.id = cutting_details.j_id
 					LEFT JOIN customer on customer.id = job.customer_id
 					WHERE j_id IN (".  implode(',', $jobIds) .")
+					order by job.id desc
 					";
 		$cd_result = $this->db->query($sql_cd);
 		return $cd_result->result_array();

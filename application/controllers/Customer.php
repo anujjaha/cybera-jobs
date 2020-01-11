@@ -211,6 +211,9 @@ class Customer extends CI_Controller {
 						'is_invoice' 		=> $result->is_invoice,
 						'fixNote' 		=> isset($result->fix_note) ? $result->fix_note : '',
 						'locations'		=> $locations,
+						'total_jobs'	=> $result->total_jobs,
+						'total_debit'	=> number_format($result->total_debit),
+						'total_credit'	=> number_format($result->total_credit),
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;

@@ -79,6 +79,18 @@ class User extends CI_Controller {
 		$this->template->load('user', 'pending-list', $data);
 	}
 
+	public function undelivered() 
+	{
+		$this->load->model('job_model');
+		$data = array();
+		$data['jobs'] = $this->job_model->get_dashboard_undeliver_details();
+		//pr($data['jobs']);
+		$data['scheduleIds'] = $this->task_model->getAllSchedules();
+		$data['title']="Undelivered Job List - Cybera Print Art";
+		$data['heading']="Jobs";
+		$this->template->load('user', 'pending-list', $data);
+	}
+
 	public function admin()
 	{
 		$today = date("Y-m-d");
@@ -176,6 +188,7 @@ class User extends CI_Controller {
                 $username = $this->input->post('username');
                 $password = $this->input->post('password');
                 $result = $this->user_model->login_user($username,$password);
+
                 if($result) {
                     $set_data = array('login'=>true,'user_id'=>$result->id,'department'=>$result->department,
                                        'username'=>$result->nickname,'mobile'=>$result->mobile,

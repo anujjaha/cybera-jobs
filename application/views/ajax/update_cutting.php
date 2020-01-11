@@ -27,6 +27,9 @@ function update_box() {
         c_laser = jQuery("#c_laser").val();
         lamination_info = jQuery("#lamination_info").val();
         size_info = jQuery("#size_info").val();
+        sheet_qty = jQuery("#sheet_qty").val();
+
+
         binding_info = jQuery("#binding_info").val();
         details = jQuery("#details").val();
         lamination = $('input:radio[name=c_lamination]:checked').val();//jQuery("#lamination").val();
@@ -52,6 +55,7 @@ function update_box() {
 				'c_blade_per_sheet': c_blade_per_sheet,
 				'c_qty':c_qty,'c_material':c_material,'c_machine':machine,
 				'c_size':size,'c_sizeinfo':size_info,'c_print':printing,
+                'c_sheet_qty': sheet_qty,
 				'c_details':details,'c_lamination':lamination,'c_laminationinfo':lamination_info,
 				'c_binding':binding,'c_bindinginfo':binding_info,'c_packing':packing,
 				'c_checking':checking,'cutting_id':cutting_id,'j_id':j_id,"c_corner":c_corner,"c_laser":c_laser, "c_cornerdie":c_cornerdie, "c_rcorner": c_rcorner,
@@ -101,7 +105,18 @@ function update_box() {
 					<label><input type="radio" <?php if($cutting_details->c_size == "A3") { echo "checked='checked'";}?> name="c_size" id="size" value="A3">A3</label>
                     <label><input type="radio" <?php if($cutting_details->c_size == "12X18") { echo "checked='checked'";}?> name="c_size" id="size" value="12X18">12X18</label>
                     <label><input type="radio" <?php if($cutting_details->c_size == "13X19") { echo "checked='checked'";}?> name="c_size" id="size" value="13X19">13X19</label>
-                    <input type="text" name="c_sizeinfo" id="size_info" value="<?php echo $cutting_details->c_sizeinfo;?>">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Sheet Qty:</td>
+                <td>
+                    <input type="text" name="sheet_qty" id="sheet_qty" value="<?php echo $cutting_details->c_sheet_qty;?>">
+                </td>
+            </tr>
+            <tr>
+                <td align="right">Size/Tukda:</td>
+                <td>
+                    <input type="text" name="size_info" id="size_info" value="<?php echo $cutting_details->c_sizeinfo;?>">
                 </td>
             </tr>
             <tr>

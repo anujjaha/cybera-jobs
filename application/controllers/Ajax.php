@@ -201,7 +201,7 @@ class Ajax extends CI_Controller {
 		$data['jdetails'] = $jdetails;
 		$data['j_id'] = $job_id;
 		$data['sr'] = $sr;
-		$this->load->view('ajax/update_cutting',$data);
+		$this->load->view('ajax/update_cutsave_edit_cutting_detailsting',$data);
 	}
 	
 	public function save_edit_cutting_details() {
@@ -793,8 +793,8 @@ class Ajax extends CI_Controller {
 								</tr>
 								
 								<tr>
-									<td width="20%"  style="font-size:16px;" align="right"> Quantity : </td>
-									<td width="80%" style="font-size:16px;"> '.$cutting['c_qty'].' </td>
+									<td width="50%"  style="font-size:16px;" > Quantity : '.$cutting['c_qty'].' </td>
+									<td width="20%"  style="font-size:16px;" align="right"> Total Sheets: '.$cutting['c_sheet_qty'].' </td>
 								</tr>
 								<tr>
 									<td colspan="2">

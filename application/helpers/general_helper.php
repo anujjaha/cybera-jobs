@@ -816,12 +816,19 @@ function getEmployeeSelectBoxForAttendance($month = null, $year = null)
 	return $dropdown;
 }
 
-function getAllEmployees()
+function getAllEmployees($active = false)
 {
 	$sql = 'SELECT id,name FROM employees
 			order by name';
 	$ci=& get_instance();
 	$ci->load->database(); 	
+
+	if($active == true)
+	{
+		$sql = 'SELECT id,name FROM employees
+			where is_active = 1
+			order by name';
+	}
 	$query = $ci->db->query($sql);	
 
 	return $query->result();

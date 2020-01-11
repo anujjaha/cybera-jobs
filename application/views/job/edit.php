@@ -176,6 +176,10 @@ function customer_selected(type,userid) {
         	jQuery("#showEmailId").html("Email Id : " + data.email);
         	jQuery("#customerReviews").html("");
 
+        	
+        	jQuery("#showStatstics").html("Jobs : " + data.total_jobs);
+        	jQuery("#showStatstics").append(" || CR : " + data.total_credit);
+        	jQuery("#showStatstics").append(" || DBT : " + data.total_debit) ;
         	if(data.locations)
         	{
         		resetLocations(data.locations);
@@ -376,7 +380,10 @@ function set_cutting_details_box(id)
 		});
         
         lamination_info = jQuery("#lamination_info").val();
+        
         size_info = jQuery("#size_info").val();
+        sheet_qty = jQuery("#sheet_qty").val();
+
         blade_per_sheet = jQuery("#blade_per_sheet").val();
         binding_info = jQuery("#binding_info").val();
         details = jQuery("#details").val();
@@ -398,6 +405,9 @@ function set_cutting_details_box(id)
         jQuery("#c_packing_"+data_id).val(packing);
         jQuery("#c_laminationinfo_"+data_id).val(lamination_info);
         jQuery("#c_sizeinfo_"+data_id).val(size_info);
+
+        jQuery("#c_sheetinfo_"+data_id).val(sheet_qty);
+
         jQuery("#c_blade_per_sheet_"+data_id).val(blade_per_sheet);
         jQuery("#c_bindinginfo_"+data_id).val(binding_info);
         jQuery("#c_binding_"+data_id).val(binding);
@@ -407,6 +417,7 @@ function set_cutting_details_box(id)
 
         jQuery("#c_laser_"+data_id).val($("#c_laser").val());
         jQuery("#c_rcorner_"+data_id).val($("#c_rcorner").val());
+        
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
         
 
@@ -756,6 +767,7 @@ $this->load->helper('general'); ?>
 
         
         <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
+        <p align="right"><h4 class="green" id="showStatstics" ></h4></p>
         <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
         <p align="right"><h4 class="green" id="customerStarRating" ></h4></p>
         <p align="right"><h4 class="green" id="fixNote" ></h4></p>
@@ -1046,7 +1058,7 @@ $this->load->helper('general'); ?>
 					Please Select Operator
 				</option>
 				<?php
-					foreach(getAllEmployees() as $employee)
+					foreach(getAllEmployees(true) as $employee)
 					{
 				
 				?>
@@ -1331,8 +1343,20 @@ $this->load->helper('general'); ?>
                     <label><input type="radio" checked="checked" name="size" id="size" value="12X18">12X18</label>
                     <label><input type="radio" name="size" id="size" value="13X19">13X19</label>
                     <label><input type="radio" name="size" id="size" value="12X25">12X25</label>
-                    <input type="text" name="size_info" id="size_info" value="1/">
+                    
                 </td>
+            </tr>
+            <tr>
+            	<td align="right">Sheet Qty:</td>
+            	<td>
+                	<input type="text" name="sheet_qty" id="sheet_qty" value="1">
+            	</td>
+            </tr>
+            <tr>
+            	<td align="right">Size/Tukda:</td>
+            	<td>
+                	<input type="text" name="size_info" id="size_info" value="1/">
+            	</td>
             </tr>
             <tr id="popup_printing">
                 <td align="right">Printing:</td>
@@ -1611,6 +1635,7 @@ for($i=1;$i<6;$i++) { ?>
     <input type="text" name="c_print_<?php echo $i;?>" id="c_print_<?php echo $i;?>">
     <input type="text" name="c_laminationinfo_<?php echo $i;?>" id="c_laminationinfo_<?php echo $i;?>">
     <input type="text" name="c_sizeinfo_<?php echo $i;?>" id="c_sizeinfo_<?php echo $i;?>">
+    <input type="text" name="c_sheetinfo_<?php echo $i;?>" id="c_sheetinfo_<?php echo $i;?>">
     <input type="text" name="c_bindinginfo_<?php echo $i;?>" id="c_bindinginfo_<?php echo $i;?>">
     
     

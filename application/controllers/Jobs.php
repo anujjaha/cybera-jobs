@@ -88,6 +88,7 @@ class Jobs extends CI_Controller {
                                        'c_qty' 			=> $jobCuttingDetail->c_qty,
                                        'c_size' 		=> $jobCuttingDetail->c_size,
                                        'c_sizeinfo' 	=> $jobCuttingDetail->c_sizeinfo,
+                                       'c_sheet_qty'=>$jobCuttingDetail->c_sheet_qty,
                                        'c_print' 		=> $jobCuttingDetail->c_print,
                                        'c_details'		=> $jobCuttingDetail->c_details,
                                        'c_lamination'	=> $jobCuttingDetail->c_lamination,
@@ -375,6 +376,8 @@ public function edit($job_id=null)
                                        'c_qty'=>$this->input->post('c_qty_'.$i),
                                        'c_size'=>$this->input->post('c_size_'.$i),
                                        'c_sizeinfo'=>$this->input->post('c_sizeinfo_'.$i),
+                                       'c_sheet_qty'=>$this->input->post('c_sheetinfo_'.$i),
+
                                        'c_print'=>$this->input->post('c_print_'.$i),
                                        'c_details'=>$this->input->post('c_details_'.$i),
                                        'c_lamination'=>$this->input->post('c_lamination_'.$i),
@@ -395,6 +398,8 @@ public function edit($job_id=null)
                                     );
         }
         }
+
+              
                 $this->job_model->insert_jobdetails($job_details);
                 
                 
@@ -629,6 +634,7 @@ public function edit($job_id=null)
                                        'c_qty'=>$this->input->post('c_qty_'.$i),
                                        'c_size'=>$this->input->post('c_size_'.$i),
                                        'c_sizeinfo'=>$this->input->post('c_sizeinfo_'.$i),
+                                       'c_sheet_qty'=>$this->input->post('c_sheetinfo_'.$i),
                                        'c_print'=>$this->input->post('c_print_'.$i),
                                        'c_details'=>$this->input->post('c_details_'.$i),
                                        'c_lamination'=>$this->input->post('c_lamination_'.$i),
@@ -1464,6 +1470,7 @@ public function edit($job_id=null)
 		                                       'c_qty'=>$this->input->post('c_qty_'.$i),
 		                                       'c_size'=>$this->input->post('c_size_'.$i),
 		                                       'c_sizeinfo'=>$this->input->post('c_sizeinfo_'.$i),
+                                           'c_sheet_qty'=>$this->input->post('c_sheetinfo_'.$i),
 		                                       'c_print'=>$this->input->post('c_print_'.$i),
 		                                       'c_details'=>$this->input->post('c_details_'.$i),
 		                                       'c_lamination'=>$this->input->post('c_lamination_'.$i),

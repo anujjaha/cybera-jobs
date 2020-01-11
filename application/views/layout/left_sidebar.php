@@ -89,6 +89,12 @@
                                 <i class="fa fa-dashboard"></i> <span>Pending List</span>
                             </a>
                         </li>
+
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>/user/undelivered">
+                                <i class="fa fa-dashboard"></i> <span>Undelivered List</span>
+                            </a>
+                        </li>
                         <?php
                             if(isAdmin())
                             {
