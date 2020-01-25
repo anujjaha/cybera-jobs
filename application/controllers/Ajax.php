@@ -201,7 +201,7 @@ class Ajax extends CI_Controller {
 		$data['jdetails'] = $jdetails;
 		$data['j_id'] = $job_id;
 		$data['sr'] = $sr;
-		$this->load->view('ajax/update_cutsave_edit_cutting_detailsting',$data);
+		$this->load->view('ajax/update_cutting',$data);
 	}
 	
 	public function save_edit_cutting_details() {
