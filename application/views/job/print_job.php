@@ -381,14 +381,21 @@ echo $pcontent;
 
 <!--Print Courier Service-->
 <div id="printCourierTickret" style="height:8.3in; width:5.8in; font-size:8px; font-family:Arial, Helvetica, sans-serif;">
-<center><h5>Total Jobs: <strong><?php echo $job_data->sub_jobs;?></strong></h5></center>
 <table align="center" border="2" width="85%" style="border: 2px solid #000000; border-radius: 10px;">
 <tr>
 <td>
 <table align="center" border="0" width="100%">
 	<tr>
 		<td>
-			<table align="left" width="100%" border="0" style="margin-left: 10px; margin-top: 20px; line-height: 95%;">
+			<center>Total Jobs: <strong><?php echo $job_data->sub_jobs;?></strong></center>
+		</td>
+		<td>
+			<center><p><?php echo get_acc_balance($customer_details->id);?> </p></center>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<table align="left" width="100%" border="0" style="margin-left: 10px; margin-top: 0px; line-height: 15%;">
 			<tr>
 				<td> 
 					<p style="text-align: right; margin-right: 30px;">
@@ -484,12 +491,19 @@ echo $pcontent;
 
 <!--Small Print Courier Service-->
 <div id="smallprintCourierTickret" style="height:3.5in; width:3.5in;  font-family:Arial, Helvetica, sans-serif;">
-<center><h5>Total Jobs: <?php echo $job_data->sub_jobs;?></h5></center>
 <table align="center" border="2" width="65%" style="border: 2px solid #000000; border-radius: 10px;">
 <tr>
 <td>
 <table align="center" border="0" width="95%">
 	<tr>
+		<td>
+			<center><h5>Total Jobs: <?php echo $job_data->sub_jobs;?></h5></center>
+		</td>
+		<td>
+			<center><p><?php echo get_acc_balance($customer_details->id);?> </p></center>
+		</td>
+	</tr>
+	<tr style="margin-top: -15px;">
 		<td>
 			<table align="left" width="100%" border="0">
 			<tr>
@@ -503,7 +517,7 @@ echo $pcontent;
 						</strong>
 					</span>
 					</p>
-					<span style="font-size:15px;  line-height: 95%;">
+					<span style="font-size:15px;  line-height: 45%;">
 						<strong>To, </strong>
 					</span>
 				</td>

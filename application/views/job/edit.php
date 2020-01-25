@@ -176,6 +176,10 @@ function customer_selected(type,userid) {
         	jQuery("#showEmailId").html("Email Id : " + data.email);
         	jQuery("#customerReviews").html("");
 
+        	if(data.is_print_cybera == 0)
+        	{
+        		jQuery("#is_print_cybera").iCheck('uncheck')
+        	}
         	
         	jQuery("#showStatstics").html("Jobs : " + data.total_jobs);
         	jQuery("#showStatstics").append(" || CR : " + data.total_credit);
@@ -1298,6 +1302,7 @@ $this->load->helper('general'); ?>
 		<option value="Card">Card</option>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
+		<option value="No Payment">NO Payment</option>
 		<option value="Google Pay">Google Pay</option>
 		<option value="Cheque">Cheque</option>
 		<option value="Advance">Advance</option>

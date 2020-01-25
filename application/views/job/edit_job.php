@@ -867,6 +867,7 @@ $modified_by = $this->session->userdata['user_id'];
 		<option value="Card">Card</option>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
+		<option value="No Payment">NO Payment</option>
 		<option value="Google Pay">Google Pay</option>
 		<option value="Cheque">Cheque</option>
 		<option value="Advance">Advance</option>

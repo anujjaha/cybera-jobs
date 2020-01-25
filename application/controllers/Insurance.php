@@ -59,21 +59,22 @@ class Insurance extends CI_Controller {
 	public function edit($id = null)
 	{
 		$data['heading'] = $data['title']="Edit Expense - Cybera Print Art";
-		$data['record']  = $this->insurance_model->getExpenseById($id);
+		$data['record']  = $this->insurance_model->getById($id);
 
 		if($this->input->post())
 		{
 			$data = $this->input->post();
-			
-			$expenseId = $this->input->post('expense_id');
+			$insuranceId = $this->input->post('insurance_id');
+			$data['employee_id'] = $data['emp_id'] != 0 ? $data['emp_id'] : null;
 			unset($data['save']);
-			unset($data['expense_id']);
-			$this->insurance_model->updateExpense($expenseId, $data);
+			unset($data['emp_id']);
+			unset($data['insurance_id']);
+			$this->insurance_model->update($insuranceId, $data);
 				
-			redirect('expense', "refresh");
+			redirect('insurance', "refresh");
 		}
 
-		$this->template->load('expense', 'edit', $data);
+		$this->template->load('insurance', 'edit', $data);
 	}
 	
 	public function deleteEmployee($id)
@@ -93,3 +94,5 @@ class Insurance extends CI_Controller {
 		die;
 	}
 }
+
+

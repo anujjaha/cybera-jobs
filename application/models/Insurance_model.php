@@ -69,9 +69,7 @@ class Insurance_model extends CI_Model
 	{
 		if(is_array($data) && count($data))
 		{
-			$data['user_id'] 	= $this->session->userdata['user_id'];
 			$data['created_at'] 	= date('Y-m-d H:i:s');
-			
 			$this->db->where('id',$id);
 			return $this->db->update($this->table, $data);
 		}

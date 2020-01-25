@@ -43,7 +43,9 @@
 		<td>Every <strong><?php echo  $item['interval'];?></strong> Months </td>
 		<td><?php echo  $item['description'];?></td>
 		<td>
-				<a href="<?php echo site_url();?>/insurance/view/<?php echo $item['id'];?>">View</a>
+			<a href="<?php echo site_url();?>/insurance/view/<?php echo $item['id'];?>">View</a>
+			||
+			<a href="<?php echo site_url();?>/insurance/edit/<?php echo $item['id'];?>">Edit</a>
 		</td>
 		</tr>
 		<?php $sr++; } ?>

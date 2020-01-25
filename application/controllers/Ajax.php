@@ -823,32 +823,26 @@ class Ajax extends CI_Controller {
 					{
 						$cornerBlock .= '<table width="500px" align="center" border="1">
 										<tr>
-											<td colspan="2"  style="font-size:16px;">
+											<td colspan="6"  style="font-size:16px;">
 												<strong>Corner Cutting Details</strong>
 											</td>
-										</tr>';
+										</tr><tr>';
 										
 										if(!empty($cutting['c_corner'])) {
-											$cornerBlock .= '<tr>
-												<td  style="width: 100px; font-size: 16px;" align="right"> Corner Cut : </td>
-												<td  style="font-size:24px;"><strong> '.$cutting['c_corner'] .' </strong></td>
-											</tr>';	
+											$cornerBlock .= '<td  style="width: 100px; font-size: 16px;" align="right"> Corner Cut : </td>
+												<td  style="font-size:24px;"><strong> '.$cutting['c_corner'] .' </strong></td>';	
 										}
 										
 										if(!empty($cutting['c_cornerdie'])) {
-											$cornerBlock .= '<tr>
-											<td  style="font-size:16px;" align="right"> Corner Die : </td>
-											<td style="font-size:24px;"><strong> '.$cutting['c_cornerdie'] .'</strong> </td>
-										</tr>';	
+											$cornerBlock .= '<td  style="font-size:16px;" align="right"> Corner Die : </td>
+											<td style="font-size:24px;"><strong> '.$cutting['c_cornerdie'] .'</strong> </td>';	
 										}
 										
 										if(!empty($cutting['c_rcorner'])) {
-											$cornerBlock .= '<tr>
-											<td  style="font-size:16px;" align="right"> Round Side : </td>
-											<td style="font-size:24px;"> <strong>'.$cutting['c_rcorner'] .' </strong></td>
-										</tr>';	
+											$cornerBlock .= '<td  style="font-size:16px;" align="right"> Round Side : </td>
+											<td style="font-size:24px;"> <strong>'.$cutting['c_rcorner'] .' </strong></td>';	
 										}
-						$cornerBlock .=	'</table>';
+						$cornerBlock .=	'</tr></table>';
 					} 
 				}
 				
@@ -856,7 +850,7 @@ class Ajax extends CI_Controller {
 				{
 					$laserBlock .= '<table width="500px"  align="center" border="1">
 									<tr>
-										<td colspan="2"  style="font-size:16px;">
+										<td colspan="4"  style="font-size:16px;">
 											<strong>Laser Cutting</strong>
 										</td>
 									</tr>';
@@ -878,25 +872,21 @@ class Ajax extends CI_Controller {
 										<td colspan="2"  style="font-size:16px;">
 											<strong>Lamination Details</strong>
 										</td>
-									</tr>';
+									</tr><tr>';
 									
 									if(!empty($cutting['c_lamination']))
 									{
-										$laminationBlock .= '<tr>
-											<td style="width:100px; font-size: 16px;" align="right"> Lamination : </td>
-											<td style="font-size:16px;"> '.$cutting['c_lamination'] .' </td>
-										</tr>';
+										$laminationBlock .= '<td style="width:100px; font-size: 16px;" align="right"> Lamination : </td>
+											<td style="font-size:16px;"> '.$cutting['c_lamination'] .' </td>';
 									}
 									
 									if(!empty($cutting['c_laminationinfo']))
 									{
-										$laminationBlock .= '<tr>
-										<td style="width:100px; font-size: 16px;" align="right"> Lamination Extra Details : </td>
-										<td style="font-size:16px;"> '.$cutting['c_laminationinfo'].' </td>
-									</tr>';
+										$laminationBlock .= '<td style="width:100px; font-size: 16px;" align="right"> Extra Info: </td>
+										<td style="font-size:16px;"> '.$cutting['c_laminationinfo'].' </td>';
 									}
 									
-					$laminationBlock .= '</table>';
+					$laminationBlock .= '</tr></table>';
 				}
 					
 				if(!empty($cutting['c_binding']) || !empty($cutting['c_bindinginfo']))
@@ -974,7 +964,7 @@ class Ajax extends CI_Controller {
 				}
 				
 				if(!empty($cutting['c_details'])) {
-					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Description : </td><td style="font-size:16px;"><strong> '.$cutting['c_details'].'</strong></td></tr>';
+					$pcontent .= '<tr><td colspan="2" style="font-size:16px;"><strong> '.$cutting['c_details'].'</strong></td></tr>';
 				}
 				
 				if(!empty($cutting['c_packing'])) {
