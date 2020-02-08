@@ -85,9 +85,20 @@ function direct_verify_job(id) {
 		 echo $job['receipt'];?></td>
 		<td><?php echo $job['bill_number'];?></td>
 		<td>
+			<?php
+			if($job['is_delivered'] == 0 )
+			{
+				echo "N/A";
+			}
+			else
+			{
+		?>
 			<span id="verify_<?php echo $job['job_id'];?>">
 				<a href="javascript:void(0);" onclick="direct_verify_job(<?php echo $job['job_id'];?>)">Verify</a>
 			</span>
+		<?php
+			}
+		?>
 		</td>
 		<td><?php echo date('d-m-Y',strtotime($job['created']))
 						." - ".

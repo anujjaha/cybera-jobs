@@ -1782,4 +1782,17 @@ function getJobDefaultPin($customerId = null)
 	return 0;
 }
 
+function isOutSide($jobId = null)
+{
+	$ci =  & get_instance();		
+	$ci->load->model('out_model');
+	$job = $ci->out_model->checkOutside($jobId);
+
+	if(isset($job->id))
+	{
+		return $job;
+	}
+
+	return false;
+}
 

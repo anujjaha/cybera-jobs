@@ -294,6 +294,8 @@ public function edit($job_id=null)
 			$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
 
 
+
+
 			// Post Job Customer Block
 			$isRevision 	= $this->input->post('is_revision_customer_next_job');
 			$isBlock 		= $this->input->post('is_block_customer_next_job');
@@ -358,7 +360,11 @@ public function edit($job_id=null)
 				$dealerDiscount = $dealerDiscount + ( $this->input->post('sub_'.$i) * DEALER_DISCOUNT_PERCENTAGE );
 			}
 
-			$job_details[] = array(
+      $this->load->model('out_model');
+
+      $this->out_model->attachOutSide($this->input->post('job_token'), $job_id, $customer_id);
+      
+      $job_details[] = array(
                 'job_id'=>$job_id,
                 'jtype'=>$this->input->post('category_'.$i),
                 'jdetails'=>$this->input->post('details_'.$i),

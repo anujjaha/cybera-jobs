@@ -49,7 +49,19 @@ function printDiv(divName) {
  <?php } ?>
 <button class="btn btn-primary" onclick="print_courier()">Courier Slip</button>
 <button class="btn btn-primary" onclick="print_courier_small()">Small Courier Slip</button>
+<?php
+	$outside = isOutSide($job_data->id);
+
+	if(isset($outside) && isset($outside->id))
+	{
+?>
+	<button  onclick="printOutJob(<?php echo $job_data->id;?>);" class="btn btn-primary">Out Job</button>
+<?php
+	}
+?>
+
 <button class="btn btn-primary" onclick="edit_job()">Edit Job</button>
+
 <a href="<?php echo site_url();?>jobs/job_print_with/<?php echo $job_data->id;?>#editCuttingSlipLive">Quick Edit Cutting Slip</a>
 <!--<button class="btn btn-primary" onclick="print_cutting()">Cutting Slip</button>-->
 <div class="row">
@@ -663,6 +675,27 @@ function print_cutting_pdf(id)
 		},
 		complete: function(data) {
 			jQuery("#printCuttingPdfBtn").removeAttr('disabled');
+		}
+	});
+
+}
+
+function printOutJob(id)
+{
+	jQuery.ajax({
+		url: "<?php echo site_url();?>/ajax/generateOutJob/"+id,
+		method: "GET",
+		dataType: 'JSON',
+		success: function(data)
+		{
+			if(data.status == true)
+			{
+				window.open(data.link);
+			}
+			else
+			{
+				alert("Unable to Create PDF");
+			}
 		}
 	});
 

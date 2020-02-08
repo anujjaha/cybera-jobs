@@ -736,6 +736,8 @@ class Ajax extends CI_Controller {
 			{
 				$isWaiting = "CUSTOMER ON THE WAY";
 			}
+
+
 			
 			$pcontent = "";
 			$sr=0;
@@ -1803,5 +1805,91 @@ class Ajax extends CI_Controller {
 				));
 			exit;
 		}				
+	}
+
+	public function createOutStationJob()
+	{
+		if($this->input->post()) 
+		{
+			$data 	= $this->input->post();
+			$input 	= $data['inputs'];
+			$inputData = [];
+			$detailData = [];
+
+			foreach($input as $jobInput)
+			{
+				if($jobInput['name'] == 'token')
+				{
+					$inputData['job_token'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'location')
+				{
+					$inputData['location_name'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'person')
+				{
+					$inputData['person'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'charges')
+				{
+					$inputData['total'] = $jobInput['value'];
+				}
+
+				if(strpos($jobInput['name'], 'out') !== false)
+				{
+					$key = substr($jobInput['name'], 4, -1);
+
+					$detailData[$key][] = $jobInput['value'];
+				}
+			}
+
+			if(is_array($inputData) && count($inputData))
+			{
+				$this->load->model('out_model');
+
+				$outJobId = $this->out_model->create($inputData);
+				
+				if($outJobId)
+				{
+					$masterData = [];
+
+					for($i = 0; $i < count($detailData['size']); $i++)
+					{
+						$masterData[] = [
+							'out_id' 	=> $outJobId,
+							'out_size'	=> $detailData['size'][$i],
+							'out_type'	=> $detailData['lamination_type'][$i],
+							'out_side'	=> $detailData['lamination_side'][$i],
+							'out_qty'	=> $detailData['qty'][$i],
+							'out_notes'	=> $detailData['notes'][$i],
+							'created_at'=> date('Y-m-d H:i:s')
+						];
+					}
+
+					$status = $this->out_model->insertDetails($masterData);
+				}
+
+				if($outJobId)
+				{
+					echo json_encode(array(
+						'status' => true
+					));
+					exit;
+				}
+			}
+
+			echo json_encode(array(
+					'status' => false
+				));
+			exit;
+		}				
+	}
+
+	public function generateOutJob($jobId = null)
+	{
+		pr($jobId)	;
 	}
 }

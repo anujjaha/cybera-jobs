@@ -1,3 +1,6 @@
+<?php
+$token = rand(1111111, 9999999);
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css"/>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
@@ -36,6 +39,11 @@ function showSaveButton()
 $(document).ready(function() 
 {
 	///jQuery( "#tabs" ).tabs();
+
+	jQuery("#out-side-btn").on('click', function()
+	{
+		jQuery("#jobOutModalPopup").modal('show');
+	});
 
 	jQuery("#save_button").on('click', function(event)
 	{
@@ -1046,6 +1054,7 @@ $this->load->helper('general'); ?>
 			<input type="hidden" name="dealer_id" value="<?php if(!empty($dealer_info->id)){echo $dealer_info->id;}?>">
 			<input type="hidden" name="customer_type" id="customer_type">
 			<input type="hidden" name="customer_id" id="customer_id">
+			<input type="hidden" name="job_token" id="job_token" value="<?php echo $token;?>">
 			
 		</td>
 	</tr>
@@ -1251,12 +1260,17 @@ $this->load->helper('general'); ?>
 		</td>
 	</tr>
 	<tr>		
-		<td colspan="2" align="center"> Remind Me :
+		<td align="center"> Remind Me :
 		<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
 			<option value="0">No</option>		
 			<option value="1">Yes</option>		
 		</select>		
 		</td>		
+		<td align="center">
+			<a href="javascript:void(0);" class="btn btn-primary" id="out-side-btn">
+				Out Side
+			</a>
+		</td>
 	</tr>		
 			
 	<tr id="remindContainer" style="display: none;">		
@@ -1722,6 +1736,10 @@ for($i=1;$i<6;$i++) { ?>
 
   </div>
 </div>
+
+<?php
+require_once('out-station.php');
+?>
 
 <script type="text/javascript">
 	setTimeout(function()
