@@ -663,6 +663,9 @@ public function edit($job_id=null)
                 if($cutting_details) {
 					$this->job_model->insert_cuttingdetails($cutting_details);
 				}
+
+          $this->load->model('out_model');
+          $this->out_model->attachOutSide($this->input->post('job_token'), $job_id, $customer_id);
                 redirect("jobs/job_print/".$job_id,'refresh');
         }
         $data['paper_gsm']= $this->get_paper_gsm();
@@ -673,7 +676,7 @@ public function edit($job_id=null)
 	
 	public function edit_job($job_id=null) 
 	{
-		if($job_id) 
+    if($job_id) 
 		{
 			$data['title']='Edit Job';
 			$data['heading']='Cybera Job Edit';
@@ -689,6 +692,14 @@ public function edit($job_id=null)
 			$data['job_details']=$job_details;
       $data['job_data']=$job_data;
 			$data['locations']=$this->customer_model->getCustomerLocations($job_data->customer_id);
+      $data['reference_data']=$this->job_model->getReferenceDetails($job_id);
+      
+      $this->load->model('out_model');
+      
+      $data['jobOutInfo']     = $this->out_model->checkOutside($job_id);
+      $data['jobOutDetails']  = $this->out_model->getJobAdditionalDetails($data['jobOutInfo']->{id});
+
+      //pr($data);
       $data['reference_data']=$this->job_model->getReferenceDetails($job_id);
 
 
@@ -977,8 +988,10 @@ public function edit($job_id=null)
 				$this->task_model->save_scheduler($sdata);
 			}
 			
-			
-			
+			// Outside Customer
+	    $this->load->model('out_model');
+      
+      $this->out_model->attachOutSide($this->input->post('job_token'), $job_id, $customer_id);		
 			/*if(isset($customer_details->emailid) && $customer_details->emailid != '')
 					{
 						$content = sendDealerJobTicket($customer_details, $job_data, $job_details);

@@ -1,3 +1,6 @@
+<?php
+$token = rand(1111111, 9999999);
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css"/>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
@@ -7,15 +10,22 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/tab.css" media="screen" />
 <script>
-    $(document).ready(function() {
-      $('.fancybox').fancybox({
-		'width':1000,
-        'height':600,
-        'autoSize' : false,
-        'afterClose':function () {
-			fancy_box_closed();
-		},
-    });
+    $(document).ready(function() 
+    {
+    	jQuery("#out-side-btn").on('click', function()
+		{
+			jQuery("#jobOutModalPopup").modal('show');
+		});
+
+      	$('.fancybox').fancybox(
+      	{
+			'width':1000,
+	        'height':600,
+	        'autoSize' : false,
+	        'afterClose':function () {
+				fancy_box_closed();
+			},
+	    });
 });
 
 function customer_selected(type,userid) {
@@ -395,6 +405,7 @@ $modified_by = $this->session->userdata['user_id'];
 							<input type="hidden" name="original_customer_id" value="<?php echo $job_data->customer_id;?>">
 							Contact Number : <input type="text" value="<?php echo $customer_details->mobile;?>" name="user_mobile" id="mobile_customer">
 							<input type="text" name="jsmsnumber" id="jsmsnumber" value="<?php echo $job_data->jsmsnumber;?>">
+							<input type="hidden" name="job_token" id="job_token" value="<?php echo $token;?>"
 						</td>
 					</tr>
 				</table>
@@ -795,13 +806,18 @@ $modified_by = $this->session->userdata['user_id'];
 		</td>
 	</tr>
 	<tr>		
-		<td align="right"> Remind Me : </td>		
-		<td>		
-		<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
-			<option value="0">No</option>		
-			<option value="1">Yes</option>		
-		</select>		
+		<td align="center"> Remind Me : 
+			<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
+				<option value="0">No</option>		
+				<option value="1">Yes</option>		
+			</select>		
 		</td>		
+
+		<td align="center">
+			<a href="javascript:void(0);" class="btn btn-primary" id="out-side-btn">
+				Out Side
+			</a>
+		</td>
 	</tr>		
 			
 	<tr id="remindContainer" style="display: none;">		
@@ -1069,3 +1085,7 @@ function showRemindContainer()
 		}
 	?>
 </script>
+
+<?php
+	require_once('edit-out-station.php');
+?>

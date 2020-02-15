@@ -11,13 +11,24 @@ class Out_model extends CI_Model {
 
     public function create($data=array())
     {
+        if(is_array($data) && count($data))
+        {
+            $data['created_by'] = $this->session->userdata['user_id'];
+            $data['created_at'] = date('Y-m-d H:i:s');
+            
+            $status = $this->db->insert($this->table, $data);
+            return $this->db->insert_id();
+        }
+        
+        return false;
+    }
+
+    public function update($outId = null, $data=array())
+    {
     	if(is_array($data) && count($data))
     	{
-    		$data['created_by'] = $this->session->userdata['user_id'];
-    		$data['created_at'] = date('Y-m-d H:i:s');
-    		
-    		$status = $this->db->insert($this->table, $data);
-    		return $this->db->insert_id();
+            return $this->db->where('id', $outId)
+            ->update($this->table, $data);
     	}
     	
     	return false;
@@ -58,5 +69,45 @@ class Out_model extends CI_Model {
         }
 
         return false;
+    }
+
+    public function isExists($outId)
+    {
+        if($outId)
+        {
+            $this->db->select('*')
+                    ->from($this->table)
+                    ->where('id', $outId);
+                    
+            $query = $this->db->get();
+            return $query->row();
+        }
+
+        return false;
+    }
+
+    public function getJobAdditionalDetails($outId = null)
+    {
+        if($outId)
+        {
+            $this->db->select('*')
+                    ->from($this->tableDetails)
+                    ->where('out_id', $outId);
+            
+            $query = $this->db->get();
+            return $query->result_array();      
+        }
+
+        return false;
+    }
+
+    public function flushDetails($outId = null)
+    {
+        if($outId)
+        {
+            return $this->db->where('out_id', $outId)
+            ->delete($this->tableDetails);
+        }
+        return true;
     }
 }

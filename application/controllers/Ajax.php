@@ -1888,8 +1888,132 @@ class Ajax extends CI_Controller {
 		}				
 	}
 
+	public function updateOutStationJob()
+	{
+		if($this->input->post()) 
+		{
+			$this->load->model('out_model');
+
+			$data 	= $this->input->post();
+			$outId 	= $this->input->post('outId');
+			$outJob = false;
+
+			if($outId)
+			{
+				$outJob = $this->out_model->isExists($outId);
+			}
+
+			$input 	= $data['inputs'];
+
+			$inputData = [];
+			$detailData = [];
+
+			foreach($input as $jobInput)
+			{
+				if($jobInput['name'] == 'token')
+				{
+					$inputData['job_token'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'location')
+				{
+					$inputData['location_name'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'person')
+				{
+					$inputData['person'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'charges')
+				{
+					$inputData['total'] = $jobInput['value'];
+				}
+
+				if(strpos($jobInput['name'], 'out') !== false)
+				{
+					$key = substr($jobInput['name'], 4, -1);
+
+					$detailData[$key][] = $jobInput['value'];
+				}
+			}
+
+			if(is_array($inputData) && count($inputData))
+			{
+				if($outJob)
+				{
+					$status = $this->out_model->update($outJob->id, $inputData);
+
+					if($status)
+					{
+						$this->out_model->flushDetails($outJob->id);
+					}
+
+					$outJobId 	= $outJob->id;
+				}	
+				else
+				{
+					$outJobId = $this->out_model->create($inputData);
+				}
+				
+				if($outJobId)
+				{
+					$masterData = [];
+
+					for($i = 0; $i < count($detailData['size']); $i++)
+					{
+						$masterData[] = [
+							'out_id' 	=> $outJobId,
+							'out_size'	=> $detailData['size'][$i],
+							'out_type'	=> $detailData['lamination_type'][$i],
+							'out_side'	=> $detailData['lamination_side'][$i],
+							'out_qty'	=> $detailData['qty'][$i],
+							'out_notes'	=> $detailData['notes'][$i],
+							'created_at'=> date('Y-m-d H:i:s')
+						];
+					}
+
+					$status = $this->out_model->insertDetails($masterData);
+				}
+
+				if($outJobId)
+				{
+					echo json_encode(array(
+						'status' => true
+					));
+					exit;
+				}
+			}
+
+			echo json_encode(array(
+					'status' => false
+				));
+			exit;
+		}				
+	}
+
 	public function generateOutJob($jobId = null)
 	{
-		pr($jobId)	;
+		if($jobId)
+		{
+			$this->load->model('out_model');
+			
+			$data['jobInfo'] 	= $this->out_model->checkOutside($jobId);
+			$data['jobDetails'] = $this->out_model->getJobAdditionalDetails($data['jobInfo']->{id});
+
+			$html 		= $this->load->view('common/out_job.php', $data, true);
+			$pdfFile 	= create_pdf($html);
+
+			echo json_encode(array(
+				'status' => true,
+				'link'	 => $pdfFile
+			));
+			die;
+		}
+
+		echo json_encode(array(
+			'status' => false,
+		));
+		die;
 	}
 }
