@@ -1370,6 +1370,11 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 				
 			</tr>';
 
+			if(isset($job_data->pay_type) && strlen($job_data->pay_type) > 0 && $job_data->pay_type != 'No Payment')
+			{
+				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Pay Type: <strong>'. $job_data->pay_type.'</strong></center></span> </td></tr>';
+			}
+
 			if(isset($job_data->approx_completion) && strlen($job_data->approx_completion) > 2)
 			{
 				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Approximate Completion Time : '. $job_data->approx_completion .'</center></span> </td></tr>';

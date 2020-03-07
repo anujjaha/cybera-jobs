@@ -20,7 +20,12 @@ class Job_model extends CI_Model {
 			$data['tax'] = 0;
 		}
 
-		$this->db->insert($this->table,$data);
+		if(!isset($data['user_id']))
+		{
+			$data['user_id'] = 1;	
+		}
+
+		$this->db->insert($this->table, $data);
 		$job_id = $this->db->insert_id();
 
 		$transaction_data['job_id']=$job_id;
@@ -99,15 +104,18 @@ class Job_model extends CI_Model {
 	}
 	
 	public function get_job_data($job_id=null) {
+
 		if($job_id) {
-			$this->db->select('*,job.created as "created", job.id as id , employees.name as emp_name,(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
+			$this->db->select('customer.*, job.*,job.created as "created", job.id as id , employees.name as emp_name,(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
 				as jstatus')
 					->from($this->table)
 					->join('employees', 'employees.id = job.emp_id', 'left')
+					->join('customer', 'customer.id = job.customer_id', 'left')
 					->where('job.id ='.$job_id);
 			$query = $this->db->get();
 			return $query->row();
 		}
+
 		$sql = "SELECT *,job.id as job_id,job.created as created FROM job
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id

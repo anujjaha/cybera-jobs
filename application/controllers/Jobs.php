@@ -280,6 +280,8 @@ public function edit($job_id=null)
       
       $jobdata['location_id'] = $this->input->post('location_id');
       $jobdata['pay_type'] = $this->input->post('pay_type');
+      $jobdata['party_pay'] = $this->input->post('party_pay');
+      $jobdata['is_continue'] = $this->input->post('is_continue');
 
 			$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
 
@@ -745,6 +747,9 @@ public function edit($job_id=null)
 
         $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
         $jobdata['pay_type'] = $this->input->post('pay_type');
+        $jobdata['party_pay'] = $this->input->post('party_pay');
+        
+        $jobdata['is_continue'] = $this->input->post('is_continue');
 
         $jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
 
@@ -1089,19 +1094,33 @@ public function edit($job_id=null)
 		if($job_id) {
 			$this->load->model('job_model');
 			$job_data = $this->job_model->get_job_data($job_id);
-			$job_details = $this->job_model->get_job_details($job_id);
+      $job_details = $this->job_model->get_job_details($job_id);
 			$customer_details = $this->job_model->get_customer_details($job_data->customer_id);
 			$data['customer_details']=$customer_details;
 			$data['job_details']=$job_details;
 			$data['job_data']=$job_data;
       $data['title']='Print Job';
+
+      //pr($job_data);
+
       if(isset($job_data->location_id) && $job_data->location_id != 0)
       {
         $location = (array)$this->address_model->get_single($job_data->location_id);
       }
       else
       {
-        $location = (array)$this->address_model->getDefaultAddress($job_data->customer_id);
+        $location = array(
+          'customer_id'   => $job_data->{'customer_id'},
+          'location_name' => $job_data->{'name'},
+          'mobile'        => $job_data->{'mobile'},
+          'phone'         => $job_data->{'officecontact'},
+          'email'         => $job_data->{'emailid'},
+          'add1'          => $job_data->{'add1'},
+          'add2'          => $job_data->{'add2'},
+          'city'          => $job_data->{'city'},
+          'state'         => $job_data->{'state'},
+          'pin'           => $job_data->{'pin'},
+        );
       }
 
       $data['location']=$location;
@@ -1393,6 +1412,8 @@ public function edit($job_id=null)
       $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
 
       $jobdata['pay_type'] = $this->input->post('pay_type');
+      $jobdata['party_pay'] = $this->input->post('party_pay');
+      $jobdata['is_continue'] = $this->input->post('is_continue');
 
 			$jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
 

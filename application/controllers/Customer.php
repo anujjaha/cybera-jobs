@@ -215,6 +215,7 @@ class Customer extends CI_Controller {
 						'total_debit'	=> number_format($result->total_debit),
 						'total_credit'	=> number_format($result->total_credit),
 						'is_print_cybera'	=> $result->is_print_cybera,
+						'is_party_pay'	=> $result->is_party_pay,
 						'message'		=> isset($result->description) ? $result->description : 'Collect Payment in Advance'
 					));
 					return true;
@@ -279,6 +280,7 @@ class Customer extends CI_Controller {
 			$data['is_invoice'] = $this->input->post('is_invoice');
 			$data['fix_note'] = $this->input->post('fix_note');
 			$data['is_print_cybera'] = $this->input->post('is_print_cybera');
+			$data['is_party_pay'] = $this->input->post('is_party_pay');
 
 			$customer_id = $this->input->post('customer_id');
 			$transporter_id = $this->input->post('transporter_id');

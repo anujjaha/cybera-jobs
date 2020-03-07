@@ -70,12 +70,12 @@ class Account_model extends CI_Model {
 		$endDate = date('Y-m-d', strtotime($this->session->userdata['end_date'])) . " 23:59:59";
 
 		$sql = "SELECT *,
-				(select due from job where job.id=ut.job_id) as 'due',
-				(select receipt from job where job.id=ut.job_id) as 'j_receipt',
+				(select due from job where job.id=ut.job_id limit 1) as 'due',
+				(select receipt from job where job.id=ut.job_id limit 1) as 'j_receipt',
 				(select bill_number from job where job.id=ut.job_id) as 'j_bill_number',
 				(select jobname from job where job.id=ut.job_id) as 'jobname',
 				(select is_gst from job where job.id=ut.job_id) as 'is_gst',
-				(select nickname from user_meta um where um.user_id=ut.creditedby) as 'receivedby'
+				(select nickname from user_meta um where um.user_id=ut.creditedby limit 1) as 'receivedby'
 				FROM user_transactions ut where ut.customer_id = $user_id
 				AND
 				(ut.created between '". $startDate ."' AND '". $endDate ."')

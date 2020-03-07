@@ -726,7 +726,12 @@ class Ajax extends CI_Controller {
 			$customerDetails 	= $this->job_model->get_customer_details($jobData->customer_id);
 			$cutting_info 		= $this->job_model->get_cutting_details($jobId);
 			$created_info 		= get_user_by_param('id', $jobData->user_id);
+			$isContinue 		= '';
 
+			if($jobData->is_continue == 1)
+			{
+				$isContinue = 'Continue Parcel';
+			}
 			if($jobData->is_customer_waiting == 1)
 			{
 				$isWaiting = "CUSTOMER WAITING";
@@ -984,7 +989,7 @@ class Ajax extends CI_Controller {
 				}
 			}
 			
-			$pcontent .= '<table align="center" align="center" style="border:1px solid; width: 450px;" width="500px"><tr><td align="center" style="font-size: 45px;">' . $isWaiting . '</td></tr></table>';
+			$pcontent .= '<table align="center" align="center" style="border:1px solid; width: 450px;" width="500px"><tr><td align="center" style="font-size: 45px;">' . $isWaiting . ' <br>'. $isContinue .'</td></tr></table>';
 
 			$pdfLink = create_pdf($pcontent, 'A5');
 			
@@ -2002,7 +2007,7 @@ class Ajax extends CI_Controller {
 			$data['jobDetails'] = $this->out_model->getJobAdditionalDetails($data['jobInfo']->{id});
 
 			$html 		= $this->load->view('common/out_job.php', $data, true);
-			$pdfFile 	= create_pdf($html);
+			$pdfFile 	= create_pdf($html, 'A5');
 
 			echo json_encode(array(
 				'status' => true,

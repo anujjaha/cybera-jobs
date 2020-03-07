@@ -192,6 +192,22 @@ function customer_selected(type,userid) {
         	jQuery("#showStatstics").html("Jobs : " + data.total_jobs);
         	jQuery("#showStatstics").append(" || CR : " + data.total_credit);
         	jQuery("#showStatstics").append(" || DBT : " + data.total_debit) ;
+
+
+        	jQuery("#isInvoice").html(data.is_invoice.toString() == "1" ? 'Yes' : 'No' );
+        	jQuery("#isCyberaPay").html(data.is_party_pay.toString() == "1" ? 'No' : 'Yes' );
+        	jQuery("#isCybera").html(data.is_print_cybera.toString() == "1" ? 'Yes' : 'No' );
+        	jQuery("#isNote").html(data.message);
+
+        	if(data.is_party_pay.toString() == "1")
+        	{
+        		jQuery("#party_pay").val(data.is_party_pay);
+        	}
+        	else
+        	{
+        		jQuery("#party_pay").val(0);	
+        	}
+
         	if(data.locations)
         	{
         		resetLocations(data.locations);
@@ -773,7 +789,7 @@ $this->load->helper('general'); ?>
 <div class="col-md-12">
 <table width="100%" border="2">
 	<tr>
-        <td colspan="2" align="center">
+        <td align="center">
         <h3>Customer Type</h3>
         <p id="balance"  align="right"><h2 class="red" id="show_balance" ></h2></p>
 
@@ -783,6 +799,15 @@ $this->load->helper('general'); ?>
         <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
         <p align="right"><h4 class="green" id="customerStarRating" ></h4></p>
         <p align="right"><h4 class="green" id="fixNote" ></h4></p>
+   		</td>
+   		<td width="50%" align="center">	
+        	<p align="center">Invoice: <span class="green" id="isInvoice" ></span></p>
+        	<p align="center">Cybera: <span class="green" id="isCybera" ></span></p>
+        	<p align="center">Shipping Cybera Pay: <span class="green" id="isCyberaPay" ></span></p>
+        	<p align="center">Note: <span class="green" id="isNote" ></span></p>
+        </td>
+   	<tr>
+   		<td colspan="2" align="center">
         <div class="row">
             <div class="col-md-3">
                 <span onClick="set_customer('new_customer');">
@@ -806,6 +831,7 @@ $this->load->helper('general'); ?>
             </div>
         </div>
         </td>
+
 	</tr>
 	<tr>
         <td colspan="2">
@@ -1093,7 +1119,13 @@ $this->load->helper('general'); ?>
 				</option>
 			</select>
 			<input type="text" name="manual_transporter" class="pull-right" style="width: 100px;">
-			<br><br>
+			<br>
+			Pay:
+			<select name="party_pay" id="party_pay">
+				<option value="0">Cybera</option>
+				<option value="1">Party</option>
+			</select>
+			<br>
 		</td>
 	</tr>
 	<tr>
@@ -1308,7 +1340,7 @@ $this->load->helper('general'); ?>
 	</table>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-2">
 	Payment Type:
 	<select id="pay_type" name="pay_type" class="form-control" required="">
 		<option value="">Select Mode</option>
@@ -1320,6 +1352,13 @@ $this->load->helper('general'); ?>
 		<option value="Google Pay">Google Pay</option>
 		<option value="Cheque">Cheque</option>
 		<option value="Advance">Advance</option>
+	</select>
+</div>
+<div class="col-md-1">
+	Is Continue
+	<select name="is_continue" class="form-control">
+		<option value="0">No</option>
+		<option value="1">Yes</option>
 	</select>
 </div>
 <div class="col-md-2" class="pull-right">

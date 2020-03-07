@@ -1,5 +1,7 @@
 <?php
 $location = (object)$location;
+$pay = $job_data->party_pay == 1 ? 'P' : 'C';
+//pr($job_data);
 ?>
 <style>
     @media print
@@ -258,6 +260,15 @@ if($customer_details->ctype == 1 )
 								'. $job_data->invoice_details .'
 							</td>
 						</tr>';
+
+				if($job_data->is_continue == 1)
+				{
+					$content .='		<tr>
+								<td colspan="2" align="center" style="font-size: 16px;">
+									<strong>Continue Parcel</strong>
+								</td>
+							</tr>';					
+				}
 				$content .=	'</table></td></tr>';
 			if($j == 0) {
 				$content .= ' <tr><td colspan="2"><br><hr><br></td></tr>';
@@ -399,11 +410,13 @@ echo $pcontent;
 <table align="center" border="0" width="100%">
 	<tr>
 		<td>
-			<center>Total Jobs: <strong><?php echo $job_data->sub_jobs;?></strong></center>
+			<center>Total Jobs: <strong><?php echo $job_data->sub_jobs . '('. $pay .')';?></strong></center>
 		</td>
 		<td>
 			<center><p><?php echo get_acc_balance($customer_details->id);?> </p></center>
+			
 		</td>
+
 	</tr>
 	<tr>
 		<td>
@@ -411,7 +424,7 @@ echo $pcontent;
 			<tr>
 				<td> 
 					<p style="text-align: right; margin-right: 30px;">
-					<span style="font-size:24px;">
+					<span style="font-size:14px;">
 						<strong>
 						<?php
 							echo getJobTransporter($job_data->transporter_id);
@@ -509,7 +522,7 @@ echo $pcontent;
 <table align="center" border="0" width="95%">
 	<tr>
 		<td>
-			<center><h5>Total Jobs: <?php echo $job_data->sub_jobs;?></h5></center>
+			<center><h5>Total Jobs: <?php echo $job_data->sub_jobs . '('. $pay .')';?></h5></center>
 		</td>
 		<td>
 			<center><p><?php echo get_acc_balance($customer_details->id);?> </p></center>

@@ -1,5 +1,6 @@
 <?php
 $token = rand(1111111, 9999999);
+//pr($job_data);
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css"/>
 
@@ -666,7 +667,13 @@ $modified_by = $this->session->userdata['user_id'];
 				</option>
 			</select>
 			<input type="text" name="manual_transporter" class="pull-right" style="width: 200px;">
-			<br><br>
+			<br>
+			Pay:
+			<select name="party_pay" id="party_pay">
+				<option <?php echo $job_data->party_pay == 0 ? 'selected="selected"' : '';?> value="0">Cybera</option>
+				<option <?php echo $job_data->party_pay == 1 ? 'selected="selected"' : '';?> value="1">Party</option>
+			</select>
+			<br>
 		</td>
 	</tr>
 	<tr>
@@ -872,7 +879,7 @@ $modified_by = $this->session->userdata['user_id'];
 	</table>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-2">
 	Payment Type:
 	<select id="pay_type" name="pay_type" class="form-control" required="">
 		<option selected="selected" value="<?php echo $job_data->pay_type;?>">
@@ -890,6 +897,13 @@ $modified_by = $this->session->userdata['user_id'];
 	</select>
 </div>
 
+<div class="col-md-1">
+	Is Continue
+	<select name="is_continue" id="is_continue" class="form-control">
+		<option <?php echo $job_data->is_continue == 0 ? 'selected="selected"' : '';?> value="0">No</option>
+		<option  <?php echo $job_data->is_continue == 1 ? 'selected="selected"' : '';?> value="1">Yes</option>
+	</select>
+</div>
 <div class="col-md-2" class="pull-right">
 Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
 		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">
@@ -1084,6 +1098,8 @@ function showRemindContainer()
 	<?php
 		}
 	?>
+
+	document.getElementById('location_id').value = "<?php echo $job_data->location_id;?>";
 </script>
 
 <?php

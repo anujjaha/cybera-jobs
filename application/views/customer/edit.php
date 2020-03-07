@@ -198,6 +198,14 @@ $this->load->helper('form');
 			</select>
 		</div>
 
+		<div class="form-group">
+			<label>Party Transport Pay</label>
+			<select name="is_party_pay"  id="is_party_pay" class="form-control">
+				<option <?php echo $dealer_info->is_party_pay == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php echo $dealer_info->is_party_pay == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+			</select>
+		</div>
+
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
 </div>
