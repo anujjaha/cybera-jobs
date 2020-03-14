@@ -136,6 +136,7 @@ function set_fbox_data(data) {
 	$("#printing").val(data['c_print']);
 	$("#lamination").val(data['c_lamination']);
 	$("#lamination_info").val(data['c_laminationinfo']);
+	$("#lamination_cutting").val(data['c_lamination_cutting']);
 	$("#binding").val(data['c_binding']);
 	$("#binding_info").val(data['c_bindinginfo']);
 	$("#c_blade_per_sheet").val(data['c_blade_per_sheet']);
@@ -158,6 +159,7 @@ function set_cutting_details_box(id){
 		});
         
         lamination_info = jQuery("#lamination_info").val();
+        lamination_cutting = jQuery("#lamination_cutting").val();
         size_info = jQuery("#size_info").val();
         binding_info = jQuery("#binding_info").val();
         c_blade_per_sheet = jQuery("#c_blade_per_sheet").val();
@@ -178,6 +180,7 @@ function set_cutting_details_box(id){
         jQuery("#c_print_"+data_id).val(printing);
         jQuery("#c_packing_"+data_id).val(packing);
         jQuery("#c_laminationinfo_"+data_id).val(lamination_info);
+        jQuery("#c_lamination_cutting_"+data_id).val(lamination_cutting);
         jQuery("#c_sizeinfo_"+data_id).val(size_info);
         jQuery("#c_blade_per_sheet_"+data_id).val(c_blade_per_sheet);
         jQuery("#c_bindinginfo_"+data_id).val(binding_info);
@@ -203,6 +206,7 @@ function remove_cutting_details(data_id) {
         jQuery("#c_size_"+data_id).val('');
         jQuery("#c_details_"+data_id).val('');
         jQuery("#c_lamination_"+data_id).val('');
+        jQuery("#c_lamination_cutting_"+data_id).val('');
         jQuery("#c_print_"+data_id).val('');
         jQuery("#c_packing_"+data_id).val('');
     }
@@ -873,7 +877,7 @@ $modified_by = $this->session->userdata['user_id'];
 				Total Jobs : 
 			</td>
 			<td>
-				<input type="number" min="1" max="6" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+				<input type="number" min="1" max="10" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
 			</td>
 		</tr>
 	</table>

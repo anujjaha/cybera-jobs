@@ -800,7 +800,9 @@ function print_pending_list() {
         			<label>Delivery BY : </label>
         			<select class="form-control" name="cybera_delivery" id="cybera_delivery" >
         				<option> Yatin Bhai</option>
+        				<option> Rakesh Bhai</option>
         				<option> Bhupesh Bhai</option>
+        				<option> Other </option>
         			</select>
         			<hr>
         			<label>Delivery Location : </label>

@@ -141,6 +141,12 @@ class Ajax extends CI_Controller {
 			$customer = $this->job_model->get_customer_details($job_data->customer_id);
 			
 			$sms_text = 'Dear '.$customer->name.', We have dispatched your parcel via - '.$this->input->post('courier_name').' and the docket number is '.$this->input->post('docket_number').'. Thank You.';
+
+			$subject = 'Dispatched Parcel via - ' . $this->input->post('courier_name') . ' by Cybera';
+			
+			$status = sendBulkEmail(array($customer->emailid), 'cyberaprintart@gmail.com', $subject, $sms_text);
+
+
 			send_sms($this->session->userdata['user_id'], $customer->id,$customer->mobile,$sms_text);
 			
 			$this->user_model->save_courier($job_id,$data);
@@ -889,8 +895,9 @@ class Ajax extends CI_Controller {
 									
 									if(!empty($cutting['c_laminationinfo']))
 									{
-										$laminationBlock .= '<td style="width:100px; font-size: 16px;" align="right"> Extra Info: </td>
-										<td style="font-size:16px;"> '.$cutting['c_laminationinfo'].' </td>';
+										$lCutting = $cutting['c_lamination_cutting'] == 1 ? '': '| NO CUTTING';
+										$laminationBlock .= '<td style="width:100px; font-size: 16px;" align="right">Info: </td>
+										<td style="font-size:16px;"> '.$cutting['c_laminationinfo']. ' <b>' . $lCutting.'</b> </td>';
 									}
 									
 					$laminationBlock .= '</tr></table>';

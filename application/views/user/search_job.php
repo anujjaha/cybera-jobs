@@ -558,6 +558,33 @@ function show_job_details(job_id){
                     "bDestroy": true,
                 });
             });
+
+            function save_shipping(jid) {
+	var c_name,d_number;
+	c_name = $("#courier_name").val();
+	d_number = $("#docket_number").val();
+	if(c_name.length > 0 ) 
+	{
+		
+	jQuery("#saveShippingBtn").hide();
+	$.ajax({
+         type: "POST",
+         url: "<?php echo site_url();?>/ajax/save_courier/"+jid, 
+         data:{"courier_name":c_name,"docket_number":d_number},
+         success: 
+              function(data)
+              {
+				$.fancybox.close();
+                location.reload();
+			 }
+          });
+	}
+	else
+	{
+		$("#courier_name").focus();
+		alert("Courier Name is missig !");
+	}
+}
 </script>
 
 <div id="view_job_details" style="width:900px;display: none;margin-top:-75px;">
@@ -565,4 +592,5 @@ function show_job_details(job_id){
     <div id="job_view"></div>
 </div>
 </div>
+
 

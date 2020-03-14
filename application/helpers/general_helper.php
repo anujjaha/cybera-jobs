@@ -512,6 +512,7 @@ function sendCorePHPMail($to, $from, $subject="Cybera Email System", $content=nu
 }
 
 function send_mail($to, $from,$subject="Cybera Email System",$content=null) {
+
 	$fromMail = getFromEmailId();
 	$mail = new PHPMailer();
 	$mail->Host     	= "smtp.gmail.com"; // SMTP server

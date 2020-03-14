@@ -9,7 +9,7 @@ var cutting_details_qty = $("#qty_"+<?php echo $sr;?>).val();
 $("#c_material").val(cutting_details_material);
 $("#c_qty").val(cutting_details_qty);
 function update_box() {
-	var machine,size,details,lamination,printing,packing,lamination_info,binding,checking,c_corner,c_laser,c_cornerdie,c_rcorner,c_blade_per_sheet;
+	var machine,size,details,lamination,printing,packing,lamination_info, c_lamination_cutting,binding,checking,c_corner,c_laser,c_cornerdie,c_rcorner,c_blade_per_sheet;
         machine = $('input:radio[name=c_machine]:checked').val();// jQuery("#machine").val();
       binding = ""; 
       var $boxes = $('input[name=c_binding]:checked');
@@ -23,7 +23,8 @@ function update_box() {
         //cCorner =  $('input:radio[name=c_corner]:checked').val(); //printing jQuery("#c_corner").val();
         
         c_cornerdie = jQuery("#c_cornerdie").val();
-		c_rcorner   = jQuery("#c_rcorner").val();
+        c_rcorner   = jQuery("#c_rcorner").val();
+		c_lamination_cutting   = jQuery("#c_lamination_cutting").val();
         c_laser = jQuery("#c_laser").val();
         lamination_info = jQuery("#lamination_info").val();
         size_info = jQuery("#size_info").val();
@@ -59,7 +60,8 @@ function update_box() {
 				'c_details':details,'c_lamination':lamination,'c_laminationinfo':lamination_info,
 				'c_binding':binding,'c_bindinginfo':binding_info,'c_packing':packing,
 				'c_checking':checking,'cutting_id':cutting_id,'j_id':j_id,"c_corner":c_corner,"c_laser":c_laser, "c_cornerdie":c_cornerdie, "c_rcorner": c_rcorner,
-                "c_box_box": cBox, "c_box_dubby": cDubby
+                "c_box_box": cBox, "c_box_dubby": cDubby,
+                "c_lamination_cutting": c_lamination_cutting
 		
 			},
 		success: 
@@ -208,6 +210,18 @@ function update_box() {
                     <input type="text" name="c_laminationinfo" id="lamination_info" value="<?php echo $cutting_details->c_laminationinfo;?>">
                 </td>
             </tr>
+            
+            <tr>
+                <td align="right"><strong>Cutting Lamination:</strong></td>
+                <td>
+                    <select class="form-control" name="c_lamination_cutting" id="c_lamination_cutting">
+                        <option <?php echo $cutting_details->c_lamination_cutting == 1 ? 'selected="selected"' : '';?> value="1">Yes</option>
+                        <option <?php echo $cutting_details->c_lamination_cutting == 0 ? 'selected="selected"' : '';?> value="0">No</option>
+                    </select>
+
+                </td>
+            </tr>
+
             <tr>
 				<td align="right">Binding</td>
 				<td>

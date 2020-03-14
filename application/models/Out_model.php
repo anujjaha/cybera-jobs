@@ -13,6 +13,7 @@ class Out_model extends CI_Model {
     {
         if(is_array($data) && count($data))
         {
+            date_default_timezone_set("Asia/Calcutta");
             $data['created_by'] = $this->session->userdata['user_id'];
             $data['created_at'] = date('Y-m-d H:i:s');
             

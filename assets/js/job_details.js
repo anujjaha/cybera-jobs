@@ -78,6 +78,7 @@ function set_customer(type) {
 		jQuery("#customer_type").val('customer');
 
 		jQuery("#user_mobile").removeAttr('required', 'required');
+		jQuery(".select-customer").focus();
 	}
 	if(type == 'cybera_dealer') {
 		jQuery("#new_customer").css("display",'none');
@@ -86,6 +87,9 @@ function set_customer(type) {
 		jQuery("#cybera_dealer").css("display",'block');
 		jQuery("#customer_type").val('dealer');
 		jQuery("#user_mobile").removeAttr('required', 'required');
+
+		jQuery(".select-dealer").focus();
+
 	}
 	if(type == 'voucher_customer') {
 		jQuery("#new_customer").css("display",'none');

@@ -1,6 +1,13 @@
 <?php
 $location = (object)$location;
-$pay = $job_data->party_pay == 1 ? 'P' : 'C';
+$pay = '';
+
+if($job_data->party_pay == 2)
+{
+	$pay = $job_data->party_pay == 1 ? 'PARTY' : 'CYBERA';
+
+	$pay .= ' PAY';
+}
 //pr($job_data);
 ?>
 <style>
@@ -720,3 +727,4 @@ function printOutJob(id)
 	//	pr($job_data);
 ?>
 </div>
+

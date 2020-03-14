@@ -98,9 +98,16 @@ $this->load->helper('form');
 		</div>
 
 		<div class="form-group">
-			<label>Fix Note</label>
+			<label>Message</label>
 			<input type="text" class="form-control" name="fix_note" value="<?php echo $dealer_info->fix_note;?>" placeholder="Fix Note">
 		</div>
+
+		<div class="form-group">
+			<label>Notes</label>
+
+			<textarea class="form-control" name="description"><?php echo  isset($dealer_info->description) ? $dealer_info->description : '' ?></textarea>
+		</div>
+
 
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
@@ -155,12 +162,7 @@ $this->load->helper('form');
 			</select>
 		</div>
 
-		<div class="form-group">
-			<label>Special Notes</label>
-
-			<textarea class="form-control" name="description"><?php echo  isset($dealer_info->description) ? $dealer_info->description : '' ?></textarea>
-		</div>
-
+		
 		<div class="form-group">
 			<label>Customer Reviews</label>
 

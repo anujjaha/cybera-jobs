@@ -1,3 +1,4 @@
+
 <!-- MOdal BOx for Bills -->
 <div id="jobOutModalPopup" class="modal fade" role="dialog">
   <div class="modal-dialog modal-lg" style="width: 1000px;">
@@ -39,8 +40,13 @@
 				<td><input class="form-control" type="text" value="12X18" name="out[size]"> </td>
 				<td>
 					<select name="out[lamination_type]" class="form-control">
-						<option>GLOSS</option>
-						<option>MATT</option>
+						<option>N/A</option>
+						<option>GLOSS Lamination</option>
+						<option>MATT Lamination</option>
+						<option>Velvet Lamination</option>
+						<option>UV</option>
+						<option>Silver Foil</option>
+						<option>Golden Foil</option>
 					</select>
 				</td>
 				<td>

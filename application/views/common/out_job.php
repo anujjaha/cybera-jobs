@@ -29,7 +29,7 @@
     ?>
         <tr>
             <td width="20%" style="font-size: 18px; text-align: center; padding: 5px; font-weight: bold; border: solid 1px;" ><?= $job['out_size'];?></td>
-            <td width="20%" style="font-size: 18px; text-align: center; padding: 5px; font-weight: bold; border: solid 1px;" ><?= $job['out_type'];?> LAMINATION</td>
+            <td width="20%" style="font-size: 18px; text-align: center; padding: 5px; font-weight: bold; border: solid 1px;" ><?= $job['out_type'];?></td>
             <td width="20%" style="font-size: 18px; text-align: center; padding: 5px; font-weight: bold; border: solid 1px;" ><?= $job['out_side'];?> SIDE</td>
             <td width="20%" style="font-size: 18px; text-align: center; padding: 5px; font-weight: bold; border: solid 1px;" ><?= $job['out_qty'];?></td>
             <td width="20%" style="font-size: 18px; text-align: center; padding: 5px; font-weight: bold; border: solid 1px;" ><?= $job['out_notes'];?></td>

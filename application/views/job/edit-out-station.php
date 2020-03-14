@@ -46,8 +46,18 @@
 				<td><input class="form-control" type="text" value="12X18" name="out[size]" value="<?=$firstDetail['out_size'];?>"> </td>
 				<td>
 					<select name="out[lamination_type]" class="form-control">
-						<option <?php echo $firstDetail['out_type'] == 'GLOSS' ? 'selected="selected"' : '';?>>GLOSS</option>
-						<option <?php echo $firstDetail['out_type'] == 'MATT' ? 'selected="selected"' : '';?>>MATT</option>
+						<option <?php echo $firstDetail['out_type'] == 'N/A' ? 'selected="selected"' : '';?>>N/A</option>
+						<option <?php echo $firstDetail['out_type'] == 'GLOSS Lamination' ? 'selected="selected"' : '';?>>GLOSS Lamination</option>
+
+						<option <?php echo $firstDetail['out_type'] == 'MATT Lamination' ? 'selected="selected"' : '';?>>MATT Lamination</option>
+
+						<option <?php echo $firstDetail['out_type'] == 'Velvet Lamination' ? 'selected="selected"' : '';?>>Velvet Lamination</option>
+
+						<option <?php echo $firstDetail['out_type'] == 'UV' ? 'selected="selected"' : '';?>>UV</option>
+
+						<option <?php echo $firstDetail['out_type'] == 'Silver Foil' ? 'selected="selected"' : '';?>>Silver Foil</option>
+
+						<option <?php echo $firstDetail['out_type'] == 'Golden Foil' ? 'selected="selected"' : '';?>>Golden Foil</option>
 					</select>
 				</td>
 				<td>

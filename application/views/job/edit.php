@@ -444,7 +444,8 @@ function set_cutting_details_box(id)
         jQuery("#c_corner_"+data_id).val(cCorner);
 
         jQuery("#c_laser_"+data_id).val($("#c_laser").val());
-        jQuery("#c_rcorner_"+data_id).val($("#c_rcorner").val());
+        
+        jQuery("#c_lamination_cutting_"+data_id).val($("#c_lamination_cutting").val());
         
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
         
@@ -1025,6 +1026,22 @@ $this->load->helper('general'); ?>
         			<td>
         				Extra Notes : <textarea name="extra_notes" style="background-color: pink;" cols="60" rows="5"></textarea>
         			</td>
+        			<!-- <td>
+        				<div class="row">
+        					<div class="col-md-6">
+        						P & F
+        					</div>
+        					<div class="col-md-6">
+        						<input type="text" name="package">
+        					</div>
+        					<div class="col-md-6">
+        						TRA
+        					</div>
+        					<div class="col-md-6">
+        						<input type="text" name="package">
+        					</div>
+        				</div>
+        			</td> -->
         			</tr>
         	</table>
         </td>
@@ -1041,7 +1058,8 @@ $this->load->helper('general'); ?>
         	Apply Tax : 
         </td>
         <td>
-                <select class="form-control" id="gst_tax" name="gst_tax">
+                <select class="form-control" id="gst_tax" name="gst_tax" required="required">
+                	<option value="">Select</option>
                 	<option value="0">N/A</option>
                 	<option value="5">5 %</option>
                 	<option value="12">12 %</option>
@@ -1120,8 +1138,9 @@ $this->load->helper('general'); ?>
 			</select>
 			<input type="text" name="manual_transporter" class="pull-right" style="width: 100px;">
 			<br>
-			Pay:
+			Transportation Charges Paid By:
 			<select name="party_pay" id="party_pay">
+				<option value="2" selected="selected">N/A</option>
 				<option value="0">Cybera</option>
 				<option value="1">Party</option>
 			</select>
@@ -1129,7 +1148,7 @@ $this->load->helper('general'); ?>
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2">
+		<!-- <td colspan="2">
 			Reference Customer : 
 			<select name="reference_customer_id" id="reference_customer_id">
 				<option value="0">
@@ -1147,12 +1166,12 @@ $this->load->helper('general'); ?>
 				?>
 				
 			</select>
-		</td>
+		</td> -->
 	</tr>
 	<tr>
 		<td colspan="2">
 			<br>
-			<div class="col-md-3">
+			<!-- <div class="col-md-3">
 				Percentage : <input type="number" name="percentage" value="0" min="0" 
 				max="100" step="1">
 			</div>
@@ -1160,7 +1179,7 @@ $this->load->helper('general'); ?>
 			<div class="col-md-3">
 				Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
 				max="10000" step="1">
-			</div>
+			</div> -->
 
 			<div class="col-md-3">
 				<label>Print CYBERA : <input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
@@ -1185,11 +1204,11 @@ $this->load->helper('general'); ?>
 				</label>
 			</div>
 			
-			<div class="col-md-12">
+			<!-- <div class="col-md-12">
 				<hr>
-			</div>
+			</div> -->
 
-			<div class="col-md-6">
+			<!-- <div class="col-md-6">
 				<label>Under Observation After This Job : <input value="1"  type="checkbox" name="is_revision_customer_next_job" id="is_revision_customer_next_job">
 				</label>
 			</div>
@@ -1200,7 +1219,7 @@ $this->load->helper('general'); ?>
 			</div>
 			<div class="col-md-12">
 				<hr>
-			</div>
+			</div> -->
 		</td>	
 	</tr>
 	<tr>
@@ -1334,7 +1353,7 @@ $this->load->helper('general'); ?>
 				Total Jobs : 
 			</td>
 			<td>
-				<input  value="1" type="number" min="1" max="6" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+				<input  value="1" type="number" min="1" max="10" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
 			</td>
 		</tr>
 	</table>
@@ -1507,6 +1526,18 @@ $this->load->helper('general'); ?>
                         <input type="radio" id="lamination" name="lamination" value="N/A">N/A
                     </label>
                     <input type="text" name="lamination_info" id="lamination_info">
+                </td>
+            </tr>
+            <tr id="popup_lamination_cutting">
+                <td align="right"><strong>Lamination Cutting:</strong></td>
+                <td>
+                	<br />
+                    <select id="c_lamination_cutting" name="c_lamination_cutting" class="form-control inline">
+
+                    	<option value="1">Yes</option>
+                    	<option value="0">No</option>
+                    </select>
+                    <hr />
                 </td>
             </tr>
             <tr id="popup_binding">
@@ -1703,6 +1734,11 @@ for($i=1;$i<6;$i++) { ?>
     <input type="text" name="c_corner_<?php echo $i;?>" id="c_corner_<?php echo $i;?>">
     <input type="text" name="c_laser_<?php echo $i;?>" id="c_laser_<?php echo $i;?>">
     <input type="text" name="c_rcorner_<?php echo $i;?>" id="c_rcorner_<?php echo $i;?>">
+    
+
+    <input type="text" name="c_lamination_cutting_<?php echo $i;?>" id="c_lamination_cutting_<?php echo $i;?>">
+
+
     <input type="text" name="c_cornerdie_<?php echo $i;?>" id="c_cornerdie_<?php echo $i;?>">
 
     <input type="text" name="c_box_dubby_<?php echo $i;?>" id="c_box_dubby_<?php echo $i;?>">

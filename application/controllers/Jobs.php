@@ -93,6 +93,10 @@ class Jobs extends CI_Controller {
                                        'c_details'		=> $jobCuttingDetail->c_details,
                                        'c_lamination'	=> $jobCuttingDetail->c_lamination,
                                        'c_laminationinfo'=>$jobCuttingDetail->c_laminationinfo,
+
+                                       'c_lamination_cutting'=>$jobCuttingDetail->c_lamination_cutting,
+
+                                       
                                        'c_binding' 		=> $jobCuttingDetail->c_binding,
                                        'c_blade_per_sheet' => $jobCuttingDetail->c_blade_per_sheet,
                                        'c_bindinginfo' 	=> $jobCuttingDetail->c_bindinginfo,
@@ -390,6 +394,9 @@ public function edit($job_id=null)
                                        'c_details'=>$this->input->post('c_details_'.$i),
                                        'c_lamination'=>$this->input->post('c_lamination_'.$i),
                                        'c_laminationinfo'=>$this->input->post('c_laminationinfo_'.$i),
+
+                                       'c_lamination_cutting'=>$this->input->post('c_lamination_cutting_'.$i),
+
                                        'c_binding'=>$this->input->post('c_binding_'.$i),
                                        'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
                                        'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
@@ -647,6 +654,7 @@ public function edit($job_id=null)
                                        'c_details'=>$this->input->post('c_details_'.$i),
                                        'c_lamination'=>$this->input->post('c_lamination_'.$i),
                                        'c_laminationinfo'=>$this->input->post('c_laminationinfo_'.$i),
+                                       'c_lamination_cutting'=>$this->input->post('c_lamination_cutting_'.$i),
                                        'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
                                        'c_binding'=>$this->input->post('c_binding_'.$i),
                                        'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
@@ -748,7 +756,7 @@ public function edit($job_id=null)
         $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
         $jobdata['pay_type'] = $this->input->post('pay_type');
         $jobdata['party_pay'] = $this->input->post('party_pay');
-        
+
         $jobdata['is_continue'] = $this->input->post('is_continue');
 
         $jobdata['is_job_invoice'] = $this->input->post('is_job_invoice') ? $this->input->post('is_job_invoice') :0;
@@ -1515,6 +1523,7 @@ public function edit($job_id=null)
 		                                       'c_details'=>$this->input->post('c_details_'.$i),
 		                                       'c_lamination'=>$this->input->post('c_lamination_'.$i),
 		                                       'c_laminationinfo'=>$this->input->post('c_laminationinfo_'.$i),
+                                           'c_lamination_cutting'=>$this->input->post('c_lamination_cutting_'.$i),
 		                                       'c_binding'=>$this->input->post('c_binding_'.$i),
 		                                       'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
 		                                       'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
