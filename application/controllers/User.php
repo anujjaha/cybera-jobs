@@ -91,6 +91,17 @@ class User extends CI_Controller {
 		$this->template->load('user', 'pending-list', $data);
 	}
 
+	public function mask($maskTitle = null) 
+	{
+		$this->load->model('job_model');
+		$data = array();
+		$data['jobs'] = $this->job_model->get_dashboard_mask_details(str_replace("_2_", " ", $maskTitle));
+		$data['scheduleIds'] = [];
+		$data['title']="Mask - Job List - Cybera Print Art";
+		$data['heading']="Mask Jobs";
+		$this->template->load('user', 'pending-list', $data);
+	}
+
 	public function admin()
 	{
 		$today = date("Y-m-d");

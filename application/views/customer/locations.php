@@ -155,7 +155,7 @@ function saveAddress(element)
 	     		mobile: 	mobile,
 	     		email: 		email,
 	     		add1: 		add1,
-	     		add1: 		add2,
+	     		add2: 		add2,
 	     		city: 		city,
 				state: 		state,
 				pin: 		pin

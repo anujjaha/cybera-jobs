@@ -35,8 +35,20 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="active">
+                            <a href="<?php echo base_url();?>master/unverifyjobs">
+                                <i class="fa fa-dashboard"></i> <span>Job Unverify</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
                             <a href="<?php echo base_url();?>">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>jobs/edit">
+                                <i class="fa fa-dashboard"></i> <span>New Job</span>
                             </a>
                         </li>
 

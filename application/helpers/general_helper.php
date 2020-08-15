@@ -644,7 +644,6 @@ function sendBulkEmail($to, $from,$subject="Cybera Email System",$content=null) 
 	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
 	$mail->AddReplyTo('cyberaprintart@gmail.com', 'Cybera Print Art');
 
-
 	if(isset($from) && $from == 'cyberaprintart@gmail.com')
 	{
 		$mail->addCC('shaishav77@gmail.com');
@@ -667,8 +666,7 @@ function sendBulkEmail($to, $from,$subject="Cybera Email System",$content=null) 
 	  echo 'Message was not sent.';
 	 // echo 'Mailer error: ' . $mail->ErrorInfo;
 	} else {
-	
-	  return true;
+		return true;
 	}
 }	
 
@@ -1227,6 +1225,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 	$created_info 	= get_user_by_param('id',$job_data->user_id);
 	$show_name 		= $customer_details->companyname ? $customer_details->companyname :$customer_details->name;
 	$content ='';
+	$discountAmt = 0;
 	$customerTitle = "Name";
 	if($customer_details->ctype == 1 )
 	{
@@ -1302,7 +1301,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 									if(isset($job_data->discount) && $job_data->discount > 0 )
 									{
 										$due = $job_data->due - $job_data->discount;
-										
+										$discountAmt = $job_data->discount;
 										$content .= '<tr>
 											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
 											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
@@ -1328,7 +1327,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 									 } 
 									$content .= '<tr>
 										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
-										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
+										<td style="font-size:9px;" align="right">'. number_format($job_data->total - $discountAmt, 2).'</td>
 									</tr>';
 									
 									
@@ -1352,7 +1351,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 									$content .=  '<tr>
 										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'</td>
 										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
-										<td style="font-size:9px;" align="right">'. $job_data->due .'</td>
+										<td style="font-size:9px;" align="right">'. number_format($job_data->due - $discountAmt, 2).'</td>
 									</tr>
 								</table>
 							</td>
@@ -1802,3 +1801,114 @@ function isOutSide($jobId = null)
 	return false;
 }
 
+function getMaskCategories()
+{
+	return [
+		[
+			'id' => 1,
+			'name' => 'Single Layer White Border',
+		],
+		[
+			'id' => 2,
+			'name' => 'Single Layer Black Border',
+		],
+		[
+			'id' => 3,
+			'name' => 'Double Layer White Border',
+		],
+		[
+			'id' => 4,
+			'name' => 'Double Layer Black Border',
+		],
+		[
+			'id' => 5,
+			'name' => 'Double Layer Red Border',
+		],
+		[
+			'id' => 6,
+			'name' => 'Double Layer Blue Border',
+		],
+		[
+			'id' => 7,
+			'name' => 'CONE ( Synthetic )',
+		],
+		[
+			'id' => 8,
+			'name' => 'CONE ( Cotton )',
+		],
+		[
+			'id' => 9,
+			'name' => 'Color Mask',
+		],
+		[
+			'id' => 10,
+			'name' => 'Fancy - Gents',
+		],
+		[
+			'id' => 11,
+			'name' => 'Fancy - Ladies',
+		],
+		[
+			'id' => 12,
+			'name' => 'Fancy - Kids',
+		],
+		[
+			'id' => 13,
+			'name' => 'Fancy - Khakhi',
+		],
+		[
+			'id' => 14,
+			'name' => 'Fancy - Black',
+		],
+	];
+}
+
+function getTodayCashReceiptMailContent()
+{
+	$todayDate = date('d-m-y');
+	
+	$sql = 'SELECT user_transactions.*,
+			job.jobname,
+			c.companyname,
+			c.name as customername,
+
+			(
+				select sum(amount) from user_transactions as ut
+				where ut.job_id = user_transactions.job_id
+				AND
+				t_type = "credit"
+				AND
+				date_format(ut.created, "%d-%m-%y") = "'.$todayDate.'"
+			)
+			 as totalCredit,
+
+			(
+				select GROUP_CONCAT(receipt) from user_transactions as ut
+				where ut.job_id = user_transactions.job_id
+				AND
+				t_type = "credit"
+				AND
+				date_format(ut.created, "%d-%m-%y") = "'.$todayDate.'"
+			)
+			as receipts
+
+	 		FROM  user_transactions 
+			LEFT JOIN customer c
+			ON c.id = user_transactions.customer_id			
+			LEFT JOIN job 
+			ON job.id = user_transactions.job_id
+			WHERE
+			t_type = "credit" AND date_format(user_transactions.created, "%d-%m-%y") = "'.$todayDate.'"
+			group by user_transactions.job_id
+			order by user_transactions.id desc
+
+			';
+	//pr($sql);
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);
+	
+	$data['results'] = $query->result_array();
+	$html =  $ci->load->view('user/cash_mail', $data, true);
+	return $html;
+}

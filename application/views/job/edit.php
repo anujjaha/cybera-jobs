@@ -38,9 +38,15 @@ function showSaveButton()
 
 $(document).ready(function() 
 {
-	///jQuery( "#tabs" ).tabs();
+    jQuery(".select-mask").on('change', function(e)
+    {
+        var element = e.target,
+            seqNumber = jQuery(element).attr('data-sequence');
 
-	jQuery("#out-side-btn").on('click', function()
+        jQuery("#details_"+seqNumber).val(jQuery(e.target).find('option:selected').text());
+    });
+	
+    jQuery("#out-side-btn").on('click', function()
 	{
 		jQuery("#jobOutModalPopup").modal('show');
 	});
@@ -568,8 +574,20 @@ function check_form() {
 	
 	return false;
 }
+
 function check_visiting_card(sr) {
-		if($("#category_"+sr).val() == "Cutting") {
+        
+        if($("#category_"+sr).val() == "Mask") {
+            $("#details_"+sr).val("Mask");
+            $("#maskContainer_"+sr).show(); 
+        }
+        else
+        {
+            $("#details_"+sr).val("");
+            $("#maskContainer_"+sr).hide(); 
+        }	
+
+        if($("#category_"+sr).val() == "Cutting") {
 			$("#details_"+sr).val("Cutting");
 		}
 		if($("#category_"+sr).val() == "Digital Print") {
@@ -967,8 +985,11 @@ $this->load->helper('general'); ?>
         <td><?php echo $i;?></td>
             
             <td>
+                <div class="row">
+                <div class="col-md-6">
                     <select class="form-control" style="width: 100px;" name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" onChange="check_visiting_card(<?php echo $i;?>);">
                             <option>Select Category</option>
+                            <option>Mask</option>
                             <option>Digital Print</option>
                             <option>Visiting Card</option>
                             <option>Visiting Card Flat</option>
@@ -990,6 +1011,21 @@ $this->load->helper('general'); ?>
                             <option>B/W Xerox</option>
                             <option>Not Applicable</option>
                     </select>
+                </div>
+                <div class="col-md-6" id="maskContainer_<?php echo $i;?>" style="display: none;">
+                         <select data-sequence="<?php echo $i;?>" class="form-control select-mask" style="width: 100px;" name="mask_<?php echo $i;?>" id="mask_<?php echo $i;?>">
+                         <option value="">Select Mask</option>
+                         <?php
+                            foreach($maskCategories as $maskCate)
+                            {
+                        ?>
+                            <option value="<?= $maskCate['name'];?>" ><?= $maskCate['name'];?></option>
+                        <?php
+                            }
+                         ?>
+                         </select>
+                </div>
+                </div>
             </td>
             <td>
             <!---<a class="fancybox fa fa-fw fa-question-circle" 
@@ -1361,10 +1397,11 @@ $this->load->helper('general'); ?>
 
 <div class="col-md-2">
 	Payment Type:
-	<select id="pay_type" name="pay_type" class="form-control" required="">
+	<select id="pay_type" name="pay_type" onchange="showPaytmId()" class="form-control" required="">
 		<option value="">Select Mode</option>
 		<option value="Cash">Cash</option>
-		<option value="Card">Card</option>
+        <option value="Card">Card</option>
+		<option value="Paytm">Paytm</option>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
 		<option value="No Payment">NO Payment</option>
@@ -1372,6 +1409,8 @@ $this->load->helper('general'); ?>
 		<option value="Cheque">Cheque</option>
 		<option value="Advance">Advance</option>
 	</select>
+    <br />
+    <input type="text" name="paytm_id" id="paytm_id" class="form-control" placeholder="Paytm ID" style="display: none;">
 </div>
 <div class="col-md-1">
 	Is Continue
@@ -1837,4 +1876,14 @@ require_once('out-station.php');
 	      console.log('NO');
 	    }
 	});
+
+function showPaytmId()
+{
+    jQuery("#paytm_id").hide();
+    
+    if(jQuery("#pay_type").val()  == 'Paytm')
+    {
+        jQuery("#paytm_id").show();
+    }
+}    
 </script>

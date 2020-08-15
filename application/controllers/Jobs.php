@@ -159,7 +159,7 @@ public function edit($job_id=null)
         $data['heading']="Jobs";
         if($this->input->post()) 
         {
-        	$this->load->model('customer_model');
+          $this->load->model('customer_model');
                 
             if($this->input->post('customer_type') == 'new') 
             {
@@ -284,6 +284,7 @@ public function edit($job_id=null)
       
       $jobdata['location_id'] = $this->input->post('location_id');
       $jobdata['pay_type'] = $this->input->post('pay_type');
+      $jobdata['paytm_id'] = $this->input->post('paytm_id');
       $jobdata['party_pay'] = $this->input->post('party_pay');
       $jobdata['is_continue'] = $this->input->post('is_continue');
 
@@ -347,6 +348,7 @@ public function edit($job_id=null)
                 $job_id = $this->job_model->insert_job($jobdata);
 				$j_status =$this->add_job_transaction($job_id,JOB_PENDING);
         $job_details = array();
+        $maskData = array();
         $cutting_details = array();
         
         $dealerDiscount = 0;
@@ -369,10 +371,24 @@ public function edit($job_id=null)
       $this->load->model('out_model');
 
       $this->out_model->attachOutSide($this->input->post('job_token'), $job_id, $customer_id);
-      
+       
+      // Set Mask Qty 
+      if($this->input->post('category_'.$i) == "Mask")
+      {
+        $maskData[] = [
+          'job_id'      => $job_id,
+          'name'        => trim($this->input->post('mask_'.$i)),
+          'qty'         => $this->input->post('qty_'.$i),
+          'price'       => $this->input->post('rate_'.$i),
+          'stock_out'   => 1,
+          'created_at'  => date('Y-m-d H:i:s')
+        ];
+      }
+
       $job_details[] = array(
                 'job_id'=>$job_id,
                 'jtype'=>$this->input->post('category_'.$i),
+                'jmaskdetails'=>$this->input->post('mask_'.$i),
                 'jdetails'=>$this->input->post('details_'.$i),
                 'jqty'=>$this->input->post('qty_'.$i),
                 'jrate'=>$this->input->post('rate_'.$i),
@@ -413,6 +429,12 @@ public function edit($job_id=null)
                                     );
         }
         }
+
+          if(count($maskData)) 
+          {
+            $this->job_model->insertMaskDetails($maskData);
+          }
+
 
               
                 $this->job_model->insert_jobdetails($job_details);
@@ -515,6 +537,11 @@ public function edit($job_id=null)
 						$subject = "Estimate - " . $customerName . ' - ' . $job_data->jobname;
 
 						$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+
+            /*// Send Cash Recipt Mail
+            $cashReceiptContent = getTodayCashReceiptMailContent();
+            //shaishav77@gmail.com
+            sendBulkEmail(['er.anujjaha@gmail.com'], 'cyberaprintart@gmail.com', 'Today Cash Receipt -' date('d-m-Y'), $cashReceiptContent);*/
 					}
 				}
 
@@ -568,10 +595,18 @@ public function edit($job_id=null)
 					}
 				}
 
+          // Send Every Update Email Notification
+          $cashReceiptContent = getTodayCashReceiptMailContent();
+          $subject = 'Today Cash Receipt -' . date('d-m-Y h:i');
+          sendBulkEmail(array('shaishav77@gmail.com'), 
+            'cyberaprintart@gmail.com', $subject, $cashReceiptContent);
+
                 redirect("jobs/job_print/".$job_id,'refresh');
         }
         $data['paper_gsm']= $this->get_paper_gsm();
         $data['paper_size']= $this->get_paper_size();
+        $data['maskCategories'] = $this->getMaskCategories();
+        
         $this->template->load('job', 'edit', $data);
 	}
 	
@@ -702,6 +737,7 @@ public function edit($job_id=null)
 			$data['job_details']=$job_details;
       $data['job_data']=$job_data;
 			$data['locations']=$this->customer_model->getCustomerLocations($job_data->customer_id);
+      //pr($data['locations']);
       $data['reference_data']=$this->job_model->getReferenceDetails($job_id);
       
       $this->load->model('out_model');
@@ -755,6 +791,7 @@ public function edit($job_id=null)
 
         $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
         $jobdata['pay_type'] = $this->input->post('pay_type');
+        $jobdata['paytm_id'] = $this->input->post('paytm_id');
         $jobdata['party_pay'] = $this->input->post('party_pay');
 
         $jobdata['is_continue'] = $this->input->post('is_continue');
@@ -875,11 +912,31 @@ public function edit($job_id=null)
 				$customerType 	= getCustomerType($customer_id);
                 $dealerDiscount = 0;
 
-				for($i=1;$i<6;$i++) 
-				{
+        $maskData = [];
+        for($i=1;$i<6;$i++) 
+        {
+          
+
+
 					$job_details=array();
 					$job_id = $this->input->post('job_id');
 					$check = $this->input->post('details_'.$i);
+
+
+          // Set Mask Qty 
+          if($this->input->post('category_'.$i) == "Mask")
+          {
+            $maskData[] = [
+              'job_id'      => $job_id,
+              'name'        => trim($this->input->post('mask_'.$i)),
+              'qty'         => $this->input->post('qty_'.$i),
+              'price'       => $this->input->post('rate_'.$i),
+              'stock_out'   => 1,
+              'created_at'  => date('Y-m-d H:i:s')
+            ];
+          }
+
+
 					if(!empty($check)) 
 					{
 						$j_details_id = $this->input->post('jdid_'.$i);
@@ -888,8 +945,9 @@ public function edit($job_id=null)
 						{
 
 							$job_details['jtype'] = $this->input->post('category_'.$i);
-							$job_details['jdetails'] = $this->input->post('details_'.$i);
-							$job_details['jqty'] = $this->input->post('qty_'.$i);
+              $job_details['jdetails'] = $this->input->post('details_'.$i);
+							$job_details['jmaskdetails'] = $this->input->post('mask_'.$i);
+              $job_details['jqty'] = $this->input->post('qty_'.$i);
 							$job_details['jrate'] = $this->input->post('rate_'.$i);
 							$job_details['jamount'] = $this->input->post('sub_'.$i);
 							$job_details['modifiedby'] = $this->input->post('modified');
@@ -931,6 +989,14 @@ public function edit($job_id=null)
 					}
 				}
 
+      if(count($maskData))
+      {
+        // Delete Old Records
+        $this->job_model->clearMaskDetailsByJobId($job_id);
+
+        // Insert New Mask Job Details
+        $this->job_model->insertMaskDetails($maskData);
+      }
 			if(DEALER_DISCOUNT && $dealerDiscount > 0 )
             {
 				$discountData = array(
@@ -1089,12 +1155,19 @@ public function edit($job_id=null)
 				}
 			}
 
+      // Send Every Update Email Notification
+      $cashReceiptContent = getTodayCashReceiptMailContent();
+      $subject = 'Today Cash Receipt ( Updated ) -' . date('d-m-Y h:i');
+      sendBulkEmail(array('shaishav77@gmail.com'), 
+        'cyberaprintart@gmail.com', $subject, $cashReceiptContent);
 			
 			redirect("jobs/job_print/".$job_id,'refresh');	
 			}
 			$data['all_customers'] = $this->job_model->get_all_customers();
 			$data['paper_gsm']= $this->get_paper_gsm();
 			$data['paper_size']= $this->get_paper_size();
+      $data['maskCategories'] = $this->getMaskCategories();
+
 			$this->template->load('job', 'edit_job', $data);
 		}
 	}
@@ -1263,8 +1336,8 @@ public function edit($job_id=null)
 		$data['heading'] = $data['title']="SMS Estimation - Cybera Print Art";
 		$this->template->load('estimationsms', 'index', $data);
 	}
-	
-	public function print_dealers()
+	 
+  public function print_dealers()
 	{
 		$data['data'] = get_all_dealers();
 
@@ -1275,11 +1348,14 @@ public function edit($job_id=null)
 		//pr($customers);
 		die('11');
 	}
+
 	public function test()
 	{
-		$data =  create_customer_dropdown('customer',true);
-		die('test');
-	}
+    $cashReceiptContent = getTodayCashReceiptMailContent();
+    pr($cashReceiptContent);
+    $subject = 'Today Cash Receipt -' . date('d-m-Y h:i');
+    sendBulkEmail(array('shaishav77@gmail.com'), 'cyberaprintart@gmail.com', $subject, $cashReceiptContent);
+  }
 	
 	public function courier()
 	{
@@ -1420,6 +1496,7 @@ public function edit($job_id=null)
       $jobdata['location_id'] = $this->input->post('location_id') ? $this->input->post('location_id') : null;
 
       $jobdata['pay_type'] = $this->input->post('pay_type');
+      $jobdata['paytm_id'] = $this->input->post('paytm_id');
       $jobdata['party_pay'] = $this->input->post('party_pay');
       $jobdata['is_continue'] = $this->input->post('is_continue');
 
@@ -1691,5 +1768,10 @@ public function edit($job_id=null)
         $data['paper_size']= $this->get_paper_size();
         $this->template->load('job', 'estimate-job', $data);
 	}
-	
+  
+
+  public  function getMaskCategories()
+  {
+    return $this->job_model->getMaskCategories();
+  }	
 }

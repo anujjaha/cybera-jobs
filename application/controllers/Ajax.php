@@ -259,6 +259,11 @@ class Ajax extends CI_Controller {
 			$pay_data['cheque_number'] = $this->input->post('cheque_number') ? $this->input->post('cheque_number') : '';
 			$pay_data['creditedby'] =$this->session->userdata['user_id'];
 			$this->account_model->credit_amount($job_data->customer_id,$pay_data,CREDIT);
+
+			$cashReceiptContent = getTodayCashReceiptMailContent();
+			$subject = 'Today Cash Receipt -' . date('d-m-Y h:i');
+			sendBulkEmail(array('shaishav77@gmail.com'), 'cyberaprintart@gmail.com', $subject, $cashReceiptContent);
+
 			return true;
 		}
 	}
@@ -682,6 +687,21 @@ class Ajax extends CI_Controller {
 			$status = $this->task_model->delete_task($id);
 			echo "done";die;
 		}
+	}
+
+	public function ajax_mask_delete() {
+		if($this->input->post()) {
+			$id = $this->input->post('id');
+			$this->load->model('job_model');
+			$status = $this->job_model->deleteMask($id);
+			echo json_encode(array( 
+				'status' 	=> true,
+			));
+			die();
+		}
+		echo json_encode(array( 
+			'status' 	=> false,
+		));
 	}
 	
 	public function set_schedule() {

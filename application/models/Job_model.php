@@ -12,6 +12,8 @@ class Job_model extends CI_Model {
     public $table_job_transaction = "job_transaction";
     public $table_job_verify = "job_verify";
     public $table_discount = "job_discount";
+    public $table_mask_categories = "mask_categories";
+    public $table_mask_deleted = "mask_deleted";
 	
 	public function insert_job($data) {
 		$data['created'] = date('Y-m-d H:i:s');
@@ -310,13 +312,33 @@ class Job_model extends CI_Model {
 		return $jobData;
 	}
 
-	public function get_dashboard_undeliver_details() {
-		//$today = date('Y-m-d');
+	public function get_dashboard_mask_details($maskTitle = '') {
 		$department = $this->session->userdata['department'];
+		$maskQuery = "SELECT job_id from job_details where jtype = 'Mask' AND jmaskdetails = '".$maskTitle."'";
+		$maskQuery = $this->db->query($maskQuery);
+		$maskResult = $maskQuery->result_array();	
+		$jobIds = array();
+
+		if(count($maskResult))
+		{
+			foreach($maskResult as $maskRes)
+			{
+				$jobIds[] = $maskRes['job_id'];
+			}
+			$jobIds = implode(", ", $jobIds);
+		}
+
+		if(strlen($jobIds) < 1)
+		{
+			return array();
+		}
+		
 		$sql = "SELECT *,job.id as job_id,job.created as 'created',
 				customer.under_revision as revision,
+				
 				(select name from employees where employees.id = job.emp_id )  as emp_name,
 				customer.customer_star_rate as rating,
+				
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
 				
@@ -330,23 +352,22 @@ class Job_model extends CI_Model {
 				
 				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
 				as jstatus
+
 				FROM job
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
 
-				 
-				 WHERE 
-				 is_delivered = 0
+				where job.id IN ($jobIds)
 				 order by job.id DESC
 				";
-		//pr($sql);
+		///pr($sql);
 		$query = $this->db->query($sql);
-		$result = $query->result_array();	
+		return $query->result_array();	
 		$jobData = array();
 
 		foreach($result as $jR)
 		{
-			if(1==1)//$jR['jstatus'] == "Un-delivered")
+			if($jR['maskJobCount'] > 0)
 			{
 				$jobData[] = $jR;
 			}
@@ -916,5 +937,126 @@ class Job_model extends CI_Model {
 
 		$this->db->where('id', $userTransaction->id);
 		return $this->db->update($this->table_transaction, $data);
+	}
+
+	public function getMaskCategories()
+	{
+		$query = $this->db->select('*')
+		->from('mask_categories')
+		->where('stock_in > 0')
+		->where('job_id  IS NULL')
+		->group_by('name')
+		->get();
+
+		return $query->result_array();	
+	}
+
+	public function getMaskList()
+	{
+		$sql = 'SELECT *, 
+				
+				(select sum(qty) from mask_categories 
+					where
+				mask_categories.name = mastCate.name 
+				AND stock_in = 1
+				AND job_id IS NULL
+				) as totalInQty,
+
+				(select sum(qty) from mask_categories 
+					where
+				mask_categories.name = mastCate.name 
+				AND is_damage = 1
+				) as totalDamage,
+
+				(select sum(qty) from mask_categories 
+					where
+				mask_categories.name = mastCate.name 
+				AND is_gift = 1
+				) as totalGift,
+
+				(select sum(qty) from mask_categories 
+					where
+				mask_categories.name = mastCate.name 
+				AND is_sample = 1
+				) as totalSample,
+
+				(select sum(qty) from mask_categories 
+					where
+				 mask_categories.name = mastCate.name
+				 AND 
+				 stock_out = 1
+				 
+				  ) as totalOutQty
+
+				FROM mask_categories mastCate 
+				group by name';
+		
+		//pr($sql);
+
+		$query = $this->db->query($sql);
+		return $query->result_array();
+	}
+
+	public function insertMaskDetails($data)
+	{
+		return $this->db->insert_batch($this->table_mask_categories, $data);		
+	}
+
+	public function clearMaskDetailsByJobId($jobId =  null)
+	{
+		if($jobId)
+		{
+			$this->db->where('job_id', $jobId)->delete($this->table_mask_categories);
+		}
+		return true;
+	}
+
+	public function deleteMask($id = null)
+	{
+		if($id)
+		{
+			$query = $this->db->select('*')
+			->from($this->table_mask_categories)
+			->where('id', $id)
+			->get();
+			$maskData = (array) $query->row();
+			$maskData['deleted_by'] = $this->session->userdata['user_id'];
+			$maskData['deleted_at'] = date('Y-m-d H:i:s');
+			$this->db->insert($this->table_mask_deleted, $maskData);
+			$this->db->where('id', $id)->delete($this->table_mask_categories);
+		}
+
+		return true;
+	}
+
+	public function addUpdateMask($data = array())
+	{
+		if(is_array($data) && count($data))
+		{
+			$data['created_at'] = date('Y-m-d H:i:s');
+			$data['created_by'] = $this->session->userdata['user_id'];
+			$this->db->insert($this->table_mask_categories, $data);
+			return $this->db->insert_id();
+		}
+
+		return true;
+	}
+
+	public function getMaskInList($maskTitle = null)
+	{
+		$this->db->select($this->table_mask_categories.'.*, user_meta.nickname')
+			->from($this->table_mask_categories)
+			->join('user_meta', 'user_meta.user_id = mask_categories.created_by', 'left')
+			->where('stock_in', 1)
+			->order_by('id', 'desc');
+
+		if($maskTitle)
+		{
+			$this->db->where('name', $maskTitle);
+		}
+		
+		$query = $this->db->get();
+
+		return $query->result_array();		
 	}
 }

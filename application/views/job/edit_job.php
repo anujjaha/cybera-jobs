@@ -13,6 +13,14 @@ $token = rand(1111111, 9999999);
 <script>
     $(document).ready(function() 
     {
+    	jQuery(".select-mask").on('change', function(e)
+    	{
+    	    var element = e.target,
+    	        seqNumber = jQuery(element).attr('data-sequence');
+
+    	    jQuery("#details_"+seqNumber).val(jQuery(e.target).find('option:selected').text());
+    	});
+
     	jQuery("#out-side-btn").on('click', function()
 		{
 			jQuery("#jobOutModalPopup").modal('show');
@@ -286,6 +294,16 @@ function check_visiting_card(sr) {
 		if($("#category_"+sr).val() == "Cutting") {
 			$("#details_"+sr).val("Cutting");
 		}
+
+		if($("#category_"+sr).val() == "Mask") {
+            $("#details_"+sr).val("Mask");
+            $("#maskContainer_"+sr).show(); 
+        }
+        else
+        {
+            $("#details_"+sr).val("");
+            $("#maskContainer_"+sr).hide(); 
+        }
 		
 		if($("#category_"+sr).val() == "Laser Cutting") {
 			$("#details_"+sr).val("Laser Cutting");
@@ -443,38 +461,72 @@ $modified_by = $this->session->userdata['user_id'];
 		<td><?php echo $i;?>
 		<input type="hidden" name="jdid_<?php echo $i;?>" value="<?php if(!empty($job_details[$j]['id'])) { echo $job_details[$j]['id']; }?>" >
 		</td>
-		<td>
-			<select name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" onChange="check_visiting_card(<?php echo $i;?>);">
-				<option
-				 <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Digital Print' ) { echo 'selected="selected"';} ?>>Digital Print</option>
-				<option
-				 <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Visiting Card' ) { echo 'selected="selected"';} ?>>Visiting Card</option>
-				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Visiting Card Flat'  ) { echo 'selected="selected"';} ?>>Visiting Card Flat</option>
+		<td width="30%">
+			<div class="row">
+			<div class="col-md-6">
+				<select name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" onChange="check_visiting_card(<?php echo $i;?>);">
+					<option
+					 <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Digital Print' ) { echo 'selected="selected"';} ?>>Digital Print</option>
+					<option
+					 <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Visiting Card' ) { echo 'selected="selected"';} ?>>Visiting Card</option>
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Visiting Card Flat'  ) { echo 'selected="selected"';} ?>>Visiting Card Flat</option>
 
-				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Transparent Visiting Card'  ) { echo 'selected="selected"';} ?>>Transparent Visiting Card</option>
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Transparent Visiting Card'  ) { echo 'selected="selected"';} ?>>Transparent Visiting Card</option>
+
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Mask'  ) { echo 'selected="selected"';} ?>>Mask</option>
 
 
-				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Offset Print' ) { echo 'selected="selected"';} ?>>Offset Print</option>
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Offset Print' ) { echo 'selected="selected"';} ?>>Offset Print</option>
 
-				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Card Box' ) { echo 'selected="selected"';} ?>>Card Box</option>
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Card Box' ) { echo 'selected="selected"';} ?>>Card Box</option>
+					
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Flex' ) { echo 'selected="selected"';} ?>>Flex</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Cutting' ) { echo 'selected="selected"';} ?>>Cutting</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Designing' ) { echo 'selected="selected"';} ?>>Designing</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Editing Charge' ) { echo 'selected="selected"';} ?>>Editing Charge</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Binding' ) { echo 'selected="selected"';} ?>>Binding</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Sticker Sheet' ) { echo 'selected="selected"';} ?>>Sticker Sheet</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Packaging and Forwarding' ) { echo 'selected="selected"';} ?>>Packaging and Forwarding</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Transportation' ) { echo 'selected="selected"';} ?>>Transportation</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Lamination' ) { echo 'selected="selected"';} ?>>Lamination</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Laser Cutting' ) { echo 'selected="selected"';} ?>>Laser Cutting</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'ROUND CORNER CUTTING' ) { echo 'selected="selected"';} ?>>ROUND CORNER CUTTING</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'B/W Print' ) { echo 'selected="selected"';} ?>>B/W Print</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'B/W Xerox' ) {echo 'selected="selected"';} ?>>B/W Xerox</option>
+					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Not Applicable' ) { echo 'selected="selected"';} ?>>Not Applicable</option>
+					
+					
+				</select>
+			</div>
+			<?php
 				
-				<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Flex' ) { echo 'selected="selected"';} ?>>Flex</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Cutting' ) { echo 'selected="selected"';} ?>>Cutting</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Designing' ) { echo 'selected="selected"';} ?>>Designing</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Editing Charge' ) { echo 'selected="selected"';} ?>>Editing Charge</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Binding' ) { echo 'selected="selected"';} ?>>Binding</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Sticker Sheet' ) { echo 'selected="selected"';} ?>>Sticker Sheet</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Packaging and Forwarding' ) { echo 'selected="selected"';} ?>>Packaging and Forwarding</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Transportation' ) { echo 'selected="selected"';} ?>>Transportation</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Lamination' ) { echo 'selected="selected"';} ?>>Lamination</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Laser Cutting' ) { echo 'selected="selected"';} ?>>Laser Cutting</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'ROUND CORNER CUTTING' ) { echo 'selected="selected"';} ?>>ROUND CORNER CUTTING</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'B/W Print' ) { echo 'selected="selected"';} ?>>B/W Print</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'B/W Xerox' ) {echo 'selected="selected"';} ?>>B/W Xerox</option>
-				<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Not Applicable' ) { echo 'selected="selected"';} ?>>Not Applicable</option>
-				
-				
-			</select>
+				$display = "none;";
+
+				if($job_details[$j]['jtype'] == 'Mask')
+				{
+					$display = "block;";
+				}
+			?>
+			<div class="col-md-6" id="maskContainer_<?php echo $i;?>" style="display: <?= $display;?>">
+                         <select data-sequence="<?php echo $i;?>" class="form-control1 select-mask" style="width: 100px;" name="mask_<?php echo $i;?>" id="mask_<?php echo $i;?>">
+                         <option value="">Select Mask</option>
+                         <?php
+                         	//pr($job_details[$j]['jdetails']);	
+                            foreach($maskCategories as $maskCate)
+                            {
+                            	$selected = "";
+                            	if(trim($job_details[$j]['jdetails']) == trim($maskCate['name']))
+                            	{
+                            		$selected = 'selected="selected"';
+                            	}
+                        ?>
+                            <option <?= $selected;?> value="<?= $maskCate['name'];?>" ><?= $maskCate['name'];?></option>
+                        <?php
+                            }
+                         ?>
+                         </select>
+                </div>
+            </div>
 		</td>
 		<td>
 		<a class="fancybox fa fa-fw fa-question-circle" 
@@ -885,13 +937,14 @@ $modified_by = $this->session->userdata['user_id'];
 
 <div class="col-md-2">
 	Payment Type:
-	<select id="pay_type" name="pay_type" class="form-control" required="">
+	<select id="pay_type" name="pay_type" onchange="showPaytmId()" class="form-control" required="">
 		<option selected="selected" value="<?php echo $job_data->pay_type;?>">
 			<?php echo $job_data->pay_type;?>
 		</option>
 		<option value="">Select Mode</option>
 		<option value="Cash">Cash</option>
 		<option value="Card">Card</option>
+		<option value="Paytm">Paytm</option>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
 		<option value="No Payment">NO Payment</option>
@@ -899,6 +952,15 @@ $modified_by = $this->session->userdata['user_id'];
 		<option value="Cheque">Cheque</option>
 		<option value="Advance">Advance</option>
 	</select>
+<?php
+	$payTmDisplay = 'none;';
+	if($job_data->pay_type == 'Paytm') 
+	{
+		$payTmDisplay = 'block;';
+	}
+?>
+	<br />
+    <input  value="<?= $job_data->paytm_id;?>" type="text" name="paytm_id" id="paytm_id" class="form-control" placeholder="Paytm ID" style="display: <?= $payTmDisplay;?>">
 </div>
 
 <div class="col-md-1">
@@ -1104,6 +1166,16 @@ function showRemindContainer()
 	?>
 
 	document.getElementById('location_id').value = "<?php echo $job_data->location_id;?>";
+
+function showPaytmId()
+{
+    jQuery("#paytm_id").hide();
+    
+    if(jQuery("#pay_type").val()  == 'Paytm')
+    {
+        jQuery("#paytm_id").show();
+    }
+}	
 </script>
 
 <?php

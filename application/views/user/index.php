@@ -1,8 +1,8 @@
 <?php
 if(strtolower($this->session->userdata['department']) == "master")
 {
-	redirect('master/unverifyjobs', 'refresh');
-	die;
+	/*redirect('master/unverifyjobs', 'refresh');
+	die;*/
 }
 ?>
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
