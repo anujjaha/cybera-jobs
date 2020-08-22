@@ -139,12 +139,15 @@ class Ajax extends CI_Controller {
 			$this->load->model('job_model');
 			$job_data = $this->job_model->get_job_data($job_id);
 			$customer = $this->job_model->get_customer_details($job_data->customer_id);
+			$cusName = !empty($customer->companyname) ? $customer->companyname : $customer->name;
 			
-			$sms_text = 'Dear '.$customer->name.', We have dispatched your parcel via - '.$this->input->post('courier_name').' and the docket number is '.$this->input->post('docket_number').'. Thank You.';
+			$sms_text = 'Dear '.$cusName.', We have dispatched your parcel via - '.$this->input->post('courier_name').' and the docket number is '.$this->input->post('docket_number').'. Thank You.';
+
+			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.';
 
 			$subject = 'Dispatched Parcel via - ' . $this->input->post('courier_name') . ' by Cybera';
 			
-			$status = sendBulkEmail(array($customer->emailid), 'cyberaprintart@gmail.com', $subject, $sms_text);
+			$status = sendBulkEmail(array($customer->emailid), 'cyberaprintart@gmail.com', $subject, $mailText);
 
 
 			send_sms($this->session->userdata['user_id'], $customer->id,$customer->mobile,$sms_text);

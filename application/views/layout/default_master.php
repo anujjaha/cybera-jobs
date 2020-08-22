@@ -90,5 +90,6 @@
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo base_url('assets/js/AdminLTE/demo.js')?>" type="text/javascript"></script>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" type="text/javascript"></script>
     </body>
 </html>

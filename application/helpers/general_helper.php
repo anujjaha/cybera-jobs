@@ -305,11 +305,13 @@ if ( ! function_exists('test_method'))
 			$user_id = $ci->session->userdata['user_id'];
 		}
 		
-		$msg = str_replace(" ","+",$sms_text);
+		$msg = str_replace(" ", "+", $sms_text);
+		$msg = str_replace("&", "%26", $msg);
+		
 		/*$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$mobile&Text=$msg&GSM=CYBERA";*/
 
 		$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
-		
+
 		$url = urlencode($url);
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, urldecode($url));
@@ -426,7 +428,7 @@ function job_complete_sms($job_id=null) {
 				
 				$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Pay ". $dueAmt ." due amt. (GST Extra) to collect your job. Thank You.";
 		}
-		
+
 		$data['smscount'] = $result->smscount  + 1;
 		$ci->db->where('id',$job_id);
 		$ci->db->update('job',$data);
