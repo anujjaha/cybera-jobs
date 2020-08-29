@@ -74,11 +74,12 @@
 			</td>
 			<td width="100" align="right"  style="border: 1px solid;">
 				<?php 
-					if($cash != '' && !strpos($result['receipts'], 'PAYTM') !== false)
+					if($cash != '' && !strpos($result['receipts'], 'PAYTM') !== false
+						&& $result['receipts'] != 'PAYTM'
+						)
 					{
 						$totalCash = $totalCash + $cash;
 						echo number_format($cash, 2);
-						
 					}
 				?>
 				</td>
