@@ -555,10 +555,12 @@ public function edit($job_id=null)
 					$fixBonusAmount = $fixAmount;
 					$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
 					$finalBonusAmount = 0 ;
+          $preFix = ' - fix amount '. $this->input->post('fix_amount');
 
 					if($fixBonusAmount == 0)
 					{
 						$finalBonusAmount = $percentageAmount;
+            $preFix = " - percentage ". $this->input->post('percentage');
 					}
 
 					if($percentageAmount == 0)
@@ -574,22 +576,22 @@ public function edit($job_id=null)
 					if($finalBonusAmount > 0 )
 					{
 						$bonusData = array(
-							'customer_id' 			=> $refCustomerId,
-							'reference_customer_id' => $job_data->customer_id,
-							'job_id'				=> $job_id,
-							'percentage'			=> $percentage,
-							'fix_amount'			=> $fixAmount,
-							'bonus_amount'			=> $finalBonusAmount,
-							'is_edited'				=> 0
+							'customer_id' 			     => $refCustomerId,
+							'reference_customer_id'  => $job_data->customer_id,
+							'job_id'				         => $job_id,
+							'percentage'			       => $percentage,
+							'fix_amount'			       => $fixAmount,
+							'bonus_amount'			     => $finalBonusAmount,
+							'is_edited'				       => 0
 						);
 
 						$this->job_model->addNewBonus($bonusData);
 
 						$creditBonusData = array(
-							'customer_id' => $refCustomerId,
-							'job_id'	  => $job_id,
-							'credit'	  => $finalBonusAmount,
-							'notes'		  => 'Credited with Ref ' . $job_id,
+							'customer_id'   => $refCustomerId,
+							'job_id'	      => $job_id,
+							'credit'	      => $finalBonusAmount,
+							'notes'     => 'Referral Credited with Ref ' . $job_id . $preFix,
 						);
 						$this->job_model->creditBonus($refCustomerId, $creditBonusData);	
 					}
@@ -1112,10 +1114,12 @@ public function edit($job_id=null)
 				$fixBonusAmount = $fixAmount;
 				$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
 				$finalBonusAmount = 0 ;
+        $preFix = ' - fix amount '. $this->input->post('fix_amount');
 
 				if($fixBonusAmount == 0)
 				{
 					$finalBonusAmount = $percentageAmount;
+          $preFix = " - percentage ". $this->input->post('percentage');
 				}
 
 				if($percentageAmount == 0)
@@ -1149,7 +1153,7 @@ public function edit($job_id=null)
 						'customer_id' => $refCustomerId,
 						'job_id'	  => $job_id,
 						'credit'	  => $finalBonusAmount,
-						'notes'		  => 'Credited with Ref ' . $job_id,
+						'notes'		  => 'Referral Credited with Ref ' . $job_id . $preFix,
 					);
 					$this->job_model->creditBonus($refCustomerId, $creditBonusData);	
 				}
@@ -1715,11 +1719,11 @@ public function edit($job_id=null)
 
 			if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
 			{
-				/*$subTotal 	 	= $this->input->post('subtotal');
-				$percentage  	= $this->input->post('percentage');
-				$fixAmount 	 	= $this->input->post('fix_amount');
-				$refCustomerId  = $this->input->post('reference_customer_id');
-				$fixBonusAmount = $fixAmount;
+				$subTotal 	 	    = $this->input->post('subtotal');
+				$percentage  	    = $this->input->post('percentage');
+				$fixAmount 	 	    = $this->input->post('fix_amount');
+				$refCustomerId    = $this->input->post('reference_customer_id');
+				$fixBonusAmount   = $fixAmount;
 				$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
 				$finalBonusAmount = 0 ;
 
@@ -1741,17 +1745,16 @@ public function edit($job_id=null)
 				if($finalBonusAmount > 0 )
 				{
 					$bonusData = array(
-						'customer_id' 			=> $refCustomerId,
-						'reference_customer_id' => $job_data->customer_id,
-						'job_id'				=> $job_id,
-						'percentage'			=> $percentage,
-						'fix_amount'			=> $fixAmount,
-						'bonus_amount'			=> $finalBonusAmount,
-						'is_edited'				=> 0
+						'customer_id' 			      => $refCustomerId,
+						'reference_customer_id'   => $job_data->customer_id,
+						'job_id'				          => $job_id,
+						'percentage'			        => $percentage,
+						'fix_amount'			        => $fixAmount,
+						'bonus_amount'			      => $finalBonusAmount,
+						'is_edited'				        => 0
 					);
 
-
-					$this->job_model->addNewBonus($bonusData);
+          $this->job_model->addNewBonus($bonusData);
 
 					$creditBonusData = array(
 						'customer_id' => $refCustomerId,
@@ -1759,8 +1762,9 @@ public function edit($job_id=null)
 						'credit'	  => $finalBonusAmount,
 						'notes'		  => 'Credited with Ref ' . $job_id,
 					);
-					$this->job_model->creditBonus($refCustomerId, $creditBonusData);	*/
-			}
+					$this->job_model->creditBonus($refCustomerId, $creditBonusData);
+			  }
+      }
 
             redirect("jobs/estimate_job_print/".$job_id,'refresh');
         }

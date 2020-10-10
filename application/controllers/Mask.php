@@ -38,6 +38,8 @@ class Mask extends CI_Controller {
 	{
 		$this->load->model('job_model');
 		$maskTitle = str_replace("_2_", " ", urldecode($maskTitle));
+		$maskTitle = str_replace("_4_", "(", urldecode($maskTitle));
+		$maskTitle = str_replace("_5_", ")", urldecode($maskTitle));
 		$data = array();
 		$data['masks'] = $this->job_model->getMaskInList($maskTitle);
 		$data['scheduleIds'] = [];

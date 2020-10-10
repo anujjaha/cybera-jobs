@@ -19,7 +19,42 @@
                         </div>
                     </div>
                     <!-- search form -->
-                   
+                    
+                    <!-- search form -->
+                    
+                    <form target="_blank" action="<?php echo base_url();?>user/old_search" method="post" class="sidebar-form">
+                        <div class="input-group">
+                        <?php
+                        $q = $this->input->post('q');
+                        ?>
+                            <input type="text" name="old_q" value="<?php echo $q;?>" class="form-control" placeholder="Old Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    <form target="_blank" action="<?php echo base_url();?>user/search_job" method="post" class="sidebar-form">
+                        <div class="input-group">
+                        <?php
+                        $q = $this->input->post('job_number');
+                        ?>
+                            <input type="text" name="job_number" value="<?php echo $q;?>" class="form-control" placeholder="Search by Job Number"/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                    <form target="_blank" action="<?php echo base_url();?>user/search" method="post" class="sidebar-form">
+                        <div class="input-group">
+                        <?php
+                        $q = $this->input->post('q');
+                        ?>
+                            <input type="text" name="q" value="<?php echo $q;?>" class="form-control" placeholder="Search..."/>
+                            <span class="input-group-btn">
+                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
                     <form action="<?php echo base_url();?>master/search_master" method="post" class="sidebar-form">
                         <div class="input-group">
                         <?php
@@ -69,6 +104,19 @@
                                 <i class="fa fa-envelope"></i> <span>All Jobs</span>
                             </a>
                         </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>mask">
+                                <i class="fa fa-dashboard"></i> <span>Manage Masks</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>expense">
+                                <i class="fa fa-dashboard"></i> <span>Expense List</span>
+                            </a>
+                        </li>
+
                         <li>
                             <a href="<?php echo base_url();?>master/dealercustomerunverify">
                                 <i class="fa fa-envelope"></i> <span>Unverify Dealer/Customer</span>

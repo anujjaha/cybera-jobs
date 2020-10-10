@@ -250,7 +250,11 @@ function fill_discount_account() {
 		print_r($results);
 		die;*/
 		foreach($results as $result) {
-			$j_counts[] = $result['job_id'];
+
+			if($result['job_id'] != 0)
+			{
+				$j_counts[] = $result['job_id'];
+			}
 			
 			if($result['t_type'] == CREDIT and $result['amount'] == 0) { 
 				continue;
@@ -269,7 +273,7 @@ function fill_discount_account() {
 		<td><?php echo date('d M H:i A - Y',strtotime($result['created']));?></td>
 		<td>
 		<?php
-			if($result['job_id']) {
+			if($result['job_id'] && $result['job_id'] != 0) {
 		?>
 			<a class="fancybox"  onclick="show_job_details(<?php echo $result['job_id'];?>);" 
 			href="#view_job_details"><?php echo $result['job_id'];?></a>
@@ -279,7 +283,14 @@ function fill_discount_account() {
 		
 		</td>
 		<td>
-			<a target="_blank" href="<?php echo base_url();?>jobs/edit_job/<?php echo $result['job_id'];?>">Edit</a>
+			<?php
+				if($result['job_id'] != 0)
+				{
+			?>
+				<a target="_blank" href="<?php echo base_url();?>jobs/edit_job/<?php echo $result['job_id'];?>">Edit</a>
+			<?php
+				}
+			?>
 		</td>
 		<td><?php echo $result['jobname'];?></td>
 		<td align="right">
@@ -325,7 +336,17 @@ function fill_discount_account() {
 			} 	
 			if(!empty($result['cheque_number'])) {
 				echo  "Cheque Number  : ".$result['cheque_number'];
-			} ?>	
+			} ?>
+
+			<?php
+				if(!empty($result['ref_job_id']) && $result['ref_job_id'] != 0 )
+				{
+				?>
+					<a class="fancybox"  onclick="show_job_details(<?php echo $result['ref_job_id'];?>);" 
+					href="#view_job_details"><?php echo $result['ref_job_id'];?></a>
+				<?php
+				}
+			?>	
 		</td>
 		<td>
 		<?php

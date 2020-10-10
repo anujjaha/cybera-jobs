@@ -691,6 +691,10 @@ $modified_by = $this->session->userdata['user_id'];
 <table align="center" style="border: 2px solid #000;" border="2">		
 	<tr>
 		<td>
+			<?php
+            if(strtolower($this->session->userdata['department']) == "master")
+            {
+            ?>
 			Reference Customer : 
 			<select  style="width: 250px;" name="reference_customer_id" id="reference_customer_id">
 				<option value="0">
@@ -714,6 +718,9 @@ $modified_by = $this->session->userdata['user_id'];
 				?>
 				
 			</select>
+			<?php
+				}
+			?>
 		</td>
 		<td>
 			Transporter : 
@@ -734,17 +741,21 @@ $modified_by = $this->session->userdata['user_id'];
 	</tr>
 	<tr>
 		<td colspan="2">
+			<?php
+            if(strtolower($this->session->userdata['department']) == "master")
+            {
+            ?>
 			<br>
-			<div class="col-md-3">
-			Percentage : <input type="number" name="percentage" value="<?php echo isset($reference_data) ? $reference_data->percentage :  0;?>" min="0" 
-			max="100" step="1">
-			</div>
+				<div class="col-md-3">
+				Percentage : <input type="number" name="percentage" value="<?php echo isset($reference_data) ? $reference_data->percentage :  0;?>" min="0" 
+				max="100" step="1">
+				</div>
 
-			<div class="col-md-3">
-			Fix Amount : <input type="number" name="fix_amount" value="<?php echo isset($reference_data) ? $reference_data->fix_amount :  0;?>"  min="0" 
-			max="10000" step="1">
-			</div>
-
+				<div class="col-md-3">
+				Fix Amount : <input type="number" name="fix_amount" value="<?php echo isset($reference_data) ? $reference_data->fix_amount :  0;?>"  min="0" 
+				max="10000" step="1">
+				</div>
+			<?php } ?>
 			<div class="col-md-3">
 			<label>Print CYBERA : <input <?php echo $job_data->is_print_cybera == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_print_cybera" id="is_print_cybera">
 			</label>

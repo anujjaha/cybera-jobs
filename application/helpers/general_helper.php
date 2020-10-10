@@ -1862,13 +1862,16 @@ function getMaskCategories()
 			'id' => 14,
 			'name' => 'Fancy - Black',
 		],
+		[
+			'id' => 15,
+			'name' => 'New Coan Mask (Heavy)',
+		],
 	];
 }
 
 function getTodayCashReceiptMailContent()
 {
 	$todayDate = date('d-m-y');
-	
 	$sql = 'SELECT user_transactions.*,
 			job.jobname,
 			c.companyname,
@@ -1881,6 +1884,8 @@ function getTodayCashReceiptMailContent()
 				t_type = "credit"
 				AND
 				date_format(ut.created, "%d-%m-%y") = "'.$todayDate.'"
+				and
+				ut.customer_id = c.id
 			)
 			 as totalCredit,
 
@@ -1891,6 +1896,8 @@ function getTodayCashReceiptMailContent()
 				t_type = "credit"
 				AND
 				date_format(ut.created, "%d-%m-%y") = "'.$todayDate.'"
+				and
+				ut.customer_id = c.id
 			)
 			as receipts
 
@@ -1900,17 +1907,50 @@ function getTodayCashReceiptMailContent()
 			LEFT JOIN job 
 			ON job.id = user_transactions.job_id
 			WHERE
+			user_transactions.job_id != 0
+			AND
 			t_type = "credit" AND date_format(user_transactions.created, "%d-%m-%y") = "'.$todayDate.'"
 			group by user_transactions.job_id
 			order by user_transactions.id desc
+		';
 
-			';
-	//pr($sql);
+	$cashSql = 'SELECT user_transactions.*,
+			c.companyname,
+			c.name as customername,
+			m.nickname,
+
+			(
+				select sum(amount) from user_transactions as ut
+				where ut.job_id = 0
+				AND
+				t_type = "credit"
+				AND
+				date_format(ut.created, "%d-%m-%y") = "'.$todayDate.'"
+				and
+				ut.customer_id = c.id
+			)
+			as directCredit
+
+	 		FROM  user_transactions 
+			LEFT JOIN customer c
+			ON c.id = user_transactions.customer_id			
+			LEFT JOIN user_meta m
+			ON user_transactions.creditedby = m.user_id			
+			
+			WHERE
+			job_id = 0 
+			AND
+			t_type = "credit" AND date_format(user_transactions.created, "%d-%m-%y") = "'.$todayDate.'"
+			group by user_transactions.customer_id
+			order by user_transactions.id desc
+		';
 	$ci=& get_instance();
 	$ci->load->database(); 	
 	$query = $ci->db->query($sql);
+	$query1 = $ci->db->query($cashSql);
 	
 	$data['results'] = $query->result_array();
+	$data['directCash'] = $query1->result_array();
 	$html =  $ci->load->view('user/cash_mail', $data, true);
 	return $html;
 }

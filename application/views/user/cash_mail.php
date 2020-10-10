@@ -10,7 +10,6 @@
 
 <div class="box">
 	<h3>Today Jobs</h3>
-		
 		<div class="box-body table-responsive">
 		<table id="example1" class="table table-bordered table-striped" style="border: 2px solid;">
 		<thead>
@@ -101,8 +100,63 @@
 	</div>
 </div>
 
+<div class="box">
+	<h3>Direct Cash</h3>
+		<div class="box-body table-responsive">
+		<table id="example2" class="table table-bordered table-striped" style="border: 2px solid;">
+		<thead>
+		<tr>
+		<th style="border: 1px solid;">Sr</th>
+		<th style="border: 1px solid;">Company Name</th>
+		<th style="border: 1px solid;">Reference</th>
+		<th style="border: 1px solid;">Credited By</th>
+		<th style="border: 1px solid;">Receipt</th>
+		<th style="border: 1px solid;">Amount</th>
+		</tr>
+		</thead>
+	<tbody>
+		<?php
+		$sr =1;	
+		$total = 0 ;
+		
+		foreach($directCash as $direct) {
 
-
+			$cash = '';
+		?>
+		<tr>
+		<td  style="border: 1px solid;"><?php echo $sr;?></td>
+		<td  style="border: 1px solid;"><?php echo $direct['companyname'];?></td>
+		<td style="border: 1px solid;">
+		<?php
+			if(!empty($direct['other']))
+			{
+				echo $direct['other'];	
+			}
+			else if(!empty($direct['pay_ref']))
+			{
+				echo $direct['pay_ref'];	
+			}
+			else if(!empty($direct['notes']))
+			{
+				echo $direct['notes'];	
+			}
+		?>
+		</td>
+		<td style="border: 1px solid;"><?php echo $direct['nickname'];?></td>
+		<td style="border: 1px solid;"><?php echo $direct['receipt'] ? $direct['receipt'] : '-';?></td>
+		<td width="100" align="right"  style="border: 1px solid;"><?php echo number_format($direct['directCredit'], 2);?></td>
+		<?php 
+			$sr++; 
+			$total = $total + $direct['directCredit'];
+		}
+		?>
+	</tbody>
+	<tfoot>
+		<td style="border: 2px solid;" colspan="6" align="right"><?php echo number_format($total, 2);?></td>
+	</tfoot>
+	</table>
+	</div>
+</div>
 
 <script src="<?php echo base_url('assets/js/plugins/datatables/jquery.dataTables.js')?>" type="text/javascript"></script>
 <script src="<?php echo base_url('assets/js/plugins/datatables/dataTables.bootstrap.js')?>" type="text/javascript"></script>

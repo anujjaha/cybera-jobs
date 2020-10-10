@@ -456,6 +456,16 @@ if(strtolower($this->session->userdata['department']) == "master")
     
     $(document).ready(function() 
     {
+    	jQuery("#cybera_delivery").on('change', function() {
+    		jQuery("#otherContainer").hide();
+    		jQuery("#isOther").val(0);
+    		if(jQuery("#cybera_delivery").val() == "oth")
+    		{
+    			jQuery("#otherContainer").show();
+    			jQuery("#isOther").val(1);
+    		}
+    	});
+
     	 $('.fancybox').fancybox({
         'width':900,
         'height':600,
@@ -645,6 +655,12 @@ function saveJobDelievered()
 		return false;
 	}
 
+	if(jQuery("#isOther").val().toString() == "1" && jQuery("#deliveryBy").val().toString() == "1")
+	{
+		;
+		customDelivery = jQuery("#other_person").val()  + ' (CYBERA) - ' + jQuery("#cybera_delivery_info").val();
+	}
+
 	jQuery.ajax(
 	{
 		url: "<?php echo site_url();?>/ajax/delieveredJobSuccess",
@@ -799,12 +815,17 @@ function print_pending_list() {
         		<div class="form-group col-md-12" id="delivery-cybera" style="display: none;">
         			<label>Delivery BY : </label>
         			<select class="form-control" name="cybera_delivery" id="cybera_delivery" >
-        				<option> Yatin Bhai</option>
-        				<option> Rakesh Bhai</option>
-        				<option> Bhupesh Bhai</option>
-        				<option> Other </option>
+        				<option>Rakesh Bhai</option>
+        				<option value="oth"> Other </option>
         			</select>
+        			<div id="otherContainer" style="display: none;">
+        				<br />
+        				<label>Other Person : </label>
+        				<input type="text" class="form-control" value="" name="other_person" id="other_person">
+        				<input type="hidden" value="0" name="isOther" id="isOther">
+        			</div>
         			<hr>
+
         			<label>Delivery Location : </label>
         			<input type="text" class="form-control" value="" name="cybera_delivery_info" id="cybera_delivery_info">
         		</div>
@@ -825,4 +846,6 @@ function print_pending_list() {
 	{
 		console.log(option);
 	}
+
+
 </script>  

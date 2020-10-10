@@ -802,11 +802,23 @@ class Job_model extends CI_Model {
 
 
 		$data['created_at'] = date('Y-m-d H:i:s');
-		$data['notes'] 		= "Bonus Generated";
+		$data['notes'] 		= empty($data['notes']) ? "Referral Discount Generated" : $data['notes'];
 
 		$this->db->insert("data_bonus_account", $data);
+		$insertId = $this->db->insert_id();
+		
+		$this->db->insert("user_transactions", [
+			'customer_id'	=> $data['customer_id'],
+			'ref_job_id' 	=> $data['job_id'],
+			'amount'		=> $data['credit'],
+			't_type'		=> 'credit',
+			'cmonth'		=> date('M-Y'),
+			'date'			=> date('Y-m-d'),
+			'created'		=> date('Y-m-d H:i:s'),
+			'notes'			=> $data['notes']
+		]);
 
-		return $this->db->insert_id();
+		return $insertId;
 	}	
 
 	public function debitBonus($data = array())
@@ -859,6 +871,12 @@ class Job_model extends CI_Model {
 		$this->db->where('job_id', $job_id);
 
 		$status =  $this->db->update('data_bonus_details', $data);
+
+		if(!empty($bonusRecord->customer_id)) {
+			$this->db->where("ref_job_id", $job_id)
+				->where('customer_id', $bonusRecord->customer_id)
+				->delete('user_transactions');
+		}
 	}
 
 	public function today_view_cuttings()

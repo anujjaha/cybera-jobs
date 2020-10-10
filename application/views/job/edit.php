@@ -465,14 +465,36 @@ function set_cutting_details_box(id)
 
 
         $.fancybox.close();
+        var isCornerCuttingApplied = 0;
         
         if(jQuery("#category_"+data_id).val() != "Visiting Card" && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 5)
         {
+            var nextElement = parseInt(data_id) + 1;
+            
+            jQuery("#category_" + nextElement).val("Cutting");
+            jQuery("#details_" + nextElement).val("Cutting");
+            jQuery("#qty_" + nextElement).focus();
+
+            if(cCorner == "Yes" && data_id < 4)
+            {
+                nextElement = parseInt(nextElement) + 1;
+                jQuery("#category_" + nextElement).val("Cutting");
+                jQuery("#details_" + nextElement).val("Corner Cutting");
+                jQuery("#qty_" + nextElement).focus();
+                isCornerCuttingApplied = 1;
+            }
+        }
+
+        if(isCornerCuttingApplied == 0 && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 4)
+        {
 			var nextElement = parseInt(data_id) + 1;
 			
-			jQuery("#category_" + nextElement).val("Cutting");
-			jQuery("#details_" + nextElement).val("Cutting");
-			jQuery("#qty_" + nextElement).focus();
+            if(cCorner == "Yes" && data_id < 4)
+            {
+                jQuery("#category_" + nextElement).val("Cutting");
+                jQuery("#details_" + nextElement).val("Corner Cutting");
+                jQuery("#qty_" + nextElement).focus();
+            }
 		}
 		
 		if(jQuery("#category_"+data_id).val() == "Visiting Card")
@@ -1183,8 +1205,12 @@ $this->load->helper('general'); ?>
 			<br>
 		</td>
 	</tr>
+    <?php
+    if(strtolower($this->session->userdata['department']) == "master")
+    {
+    ?>
 	<tr>
-		<!-- <td colspan="2">
+		<td colspan="2">
 			Reference Customer : 
 			<select name="reference_customer_id" id="reference_customer_id">
 				<option value="0">
@@ -1202,12 +1228,19 @@ $this->load->helper('general'); ?>
 				?>
 				
 			</select>
-		</td> -->
+		</td>
 	</tr>
+    <?php
+    }
+    ?>
 	<tr>
 		<td colspan="2">
 			<br>
-			<!-- <div class="col-md-3">
+            <?php
+            if(strtolower($this->session->userdata['department']) == "master")
+            {
+            ?>
+            <div class="col-md-3">
 				Percentage : <input type="number" name="percentage" value="0" min="0" 
 				max="100" step="1">
 			</div>
@@ -1215,8 +1248,10 @@ $this->load->helper('general'); ?>
 			<div class="col-md-3">
 				Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
 				max="10000" step="1">
-			</div> -->
-
+			</div>
+            <?php
+            }
+            ?>
 			<div class="col-md-3">
 				<label>Print CYBERA : <input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
 				</label>
