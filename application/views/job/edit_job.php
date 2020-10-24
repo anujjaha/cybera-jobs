@@ -464,7 +464,7 @@ $modified_by = $this->session->userdata['user_id'];
 		<td width="30%">
 			<div class="row">
 			<div class="col-md-6">
-				<select name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" onChange="check_visiting_card(<?php echo $i;?>);">
+				<select name="category_<?php echo $i;?>" id="category_<?php echo $i;?>" onChange="check_visiting_card(<?php echo $i;?>);" class="form-control">
 					<option
 					 <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Digital Print' ) { echo 'selected="selected"';} ?>>Digital Print</option>
 					<option
@@ -490,7 +490,7 @@ $modified_by = $this->session->userdata['user_id'];
 					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Transportation' ) { echo 'selected="selected"';} ?>>Transportation</option>
 					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Lamination' ) { echo 'selected="selected"';} ?>>Lamination</option>
 					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Laser Cutting' ) { echo 'selected="selected"';} ?>>Laser Cutting</option>
-					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'ROUND CORNER CUTTING' ) { echo 'selected="selected"';} ?>>ROUND CORNER CUTTING</option>
+					<!-- <option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'ROUND CORNER CUTTING' ) { echo 'selected="selected"';} ?>>ROUND CORNER CUTTING</option> -->
 					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'B/W Print' ) { echo 'selected="selected"';} ?>>B/W Print</option>
 					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'B/W Xerox' ) {echo 'selected="selected"';} ?>>B/W Xerox</option>
 					<option  <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Not Applicable' ) { echo 'selected="selected"';} ?>>Not Applicable</option>
@@ -508,14 +508,14 @@ $modified_by = $this->session->userdata['user_id'];
 				}
 			?>
 			<div class="col-md-6" id="maskContainer_<?php echo $i;?>" style="display: <?= $display;?>">
-                         <select data-sequence="<?php echo $i;?>" class="form-control1 select-mask" style="width: 100px;" name="mask_<?php echo $i;?>" id="mask_<?php echo $i;?>">
+                         <select data-sequence="<?php echo $i;?>" class="form-control select-mask" style="width: 100px;" name="mask_<?php echo $i;?>" id="mask_<?php echo $i;?>">
                          <option value="">Select Mask</option>
                          <?php
                          	//pr($job_details[$j]['jdetails']);	
                             foreach($maskCategories as $maskCate)
                             {
                             	$selected = "";
-                            	if(trim($job_details[$j]['jdetails']) == trim($maskCate['name']))
+                            	if(trim($job_details[$j]['jmaskdetails']) == trim($maskCate['name']))
                             	{
                             		$selected = 'selected="selected"';
                             	}

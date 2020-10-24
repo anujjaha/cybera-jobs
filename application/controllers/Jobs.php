@@ -999,6 +999,11 @@ public function edit($job_id=null)
         // Insert New Mask Job Details
         $this->job_model->insertMaskDetails($maskData);
       }
+      else
+      {
+        // Clear Mask as no Found in Mask
+        $this->job_model->clearMaskDetailsByJobId($job_id);        
+      }
 			if(DEALER_DISCOUNT && $dealerDiscount > 0 )
             {
 				$discountData = array(

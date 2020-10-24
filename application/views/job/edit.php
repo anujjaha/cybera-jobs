@@ -363,14 +363,14 @@ function set_cutting_details(id){
 	jQuery("#fancybox_cutting_id").val(id);
     jQuery("#cut_icon_"+id).css('display','inline');
 	if(jQuery("#category_"+id).val() == "ROUND CORNER CUTTING") {
-		jQuery("#popup_cornercutting").css('display','none');
+		/*jQuery("#popup_cornercutting").css('display','none');
 		jQuery("#popup_packing").css('display','none');
 		jQuery("#popup_lasercutting").css('display','none');
 		jQuery("#popup_machine").css('display','none');
 		jQuery("#popup_size").css('display','none');
 		jQuery("#popup_printing").css('display','none');
 		jQuery("#popup_lamination").css('display','none');
-		jQuery("#popup_binding").css('display','none');
+		jQuery("#popup_binding").css('display','none');*/
 		jQuery("#cutting_title").html('Round Corner - Cutting Details');
 		return false;
 	} else {
@@ -475,7 +475,7 @@ function set_cutting_details_box(id)
             jQuery("#details_" + nextElement).val("Cutting");
             jQuery("#qty_" + nextElement).focus();
 
-            if(cCorner == "Yes" && data_id < 4)
+            if(cCorner == "Yes" && data_id < 4 && jQuery("#category_"+data_id).val() != "ROUND CORNER CUTTING")
             {
                 nextElement = parseInt(nextElement) + 1;
                 jQuery("#category_" + nextElement).val("Cutting");
@@ -485,7 +485,9 @@ function set_cutting_details_box(id)
             }
         }
 
-        if(isCornerCuttingApplied == 0 && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 4)
+        if(isCornerCuttingApplied == 0 && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 4
+             && jQuery("#category_"+data_id).val() != "ROUND CORNER CUTTING"
+            )
         {
 			var nextElement = parseInt(data_id) + 1;
 			

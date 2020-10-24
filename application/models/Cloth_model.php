@@ -55,6 +55,9 @@ class Cloth_model extends CI_Model
 	public function addMaterial($input = array())
 	{
 		if(is_array($input) && count($input)) {
+			$input['approx_output'] = $input['total_kg'] / $input['approx_ratio'];
+			$input['approx_cost'] = $input['total_cost'] / $input['approx_output'];
+			
 			$input['created_at'] = date('Y-m-d H:i:s');
 			$input['created_by'] = $this->session->userdata['user_id'];
 

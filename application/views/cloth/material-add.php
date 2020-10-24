@@ -74,13 +74,19 @@
 		<tr>
 			<td align="right"> <label>Total KG: </label></td>
 			<td>
-				<input type="number" min="0" max="1000" name="total_kg" required="required" class="form-control">
+				<input type="number" min="0" max="10000" name="total_kg" required="required" class="form-control">
 			</td>
 		</tr>
 		<tr>
 			<td align="right"> <label>Approx Ratio: </label></td>
 			<td>
-				<input type="number" min="0" max="1000" name="approx_ratio" required="required" class="form-control" value="0">
+				<input type="number" min="0" max="10000" name="approx_ratio" required="required" class="form-control" value="0">
+			</td>
+		</tr>
+		<tr>
+			<td align="right"> <label>Total Cost: </label></td>
+			<td>
+				<input type="number" min="0" name="total_cost" required="required" class="form-control">
 			</td>
 		</tr>
 		<tr>

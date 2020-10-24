@@ -41,7 +41,6 @@ class User extends CI_Controller {
         }
 
 		public function dashboard() {
-		
 			if(sendDueEmailToday() == 0 )
 			{
 				$message = getAccountInfo();
