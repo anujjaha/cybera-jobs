@@ -190,11 +190,17 @@ class Job_model extends CI_Model {
 	public function get_dashboard_details() {
 		$today = date('Y-m-d');
 		$department = $this->session->userdata['department'];
-		$sql = "SELECT *,job.id as job_id,job.created as 'created',
+		$sql = "SELECT job.*, customer.*,job.id as job_id,job.created as 'created',
 				customer.fix_note,
 				customer.under_revision as revision,
+				data_bonus_details.bonus_amount,
+				data_bonus_details.customer_id as bonus_customer_id,
+				
+				(select name from customer where customer.id = data_bonus_details.customer_id ) as bonus_customer,
+
 				(select name from employees where employees.id = job.emp_id )  as emp_name,
 				customer.customer_star_rate as rating,
+
 				(select count(id) from job_views where job_views.j_id =job.id AND department = '$department') 
 				as j_view,
 				
@@ -209,9 +215,15 @@ class Job_model extends CI_Model {
 				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
 				as jstatus
 				FROM job
+
+				LEFT JOIN data_bonus_details 
+				ON data_bonus_details.job_id = job.id
+
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
 
+				
+				
 				 
 				 WHERE 
 				 job.status != 0 OR job.is_hold = 1 
@@ -806,7 +818,7 @@ class Job_model extends CI_Model {
 
 		$this->db->insert("data_bonus_account", $data);
 		$insertId = $this->db->insert_id();
-		
+
 		$this->db->insert("user_transactions", [
 			'customer_id'	=> $data['customer_id'],
 			'ref_job_id' 	=> $data['job_id'],
@@ -817,6 +829,7 @@ class Job_model extends CI_Model {
 			'created'		=> date('Y-m-d H:i:s'),
 			'notes'			=> $data['notes']
 		]);
+
 
 		return $insertId;
 	}	
@@ -857,25 +870,32 @@ class Job_model extends CI_Model {
 		$query 			= $this->db->query($sql);
 		$bonusRecord 	=  $query->row();		
 
-		$debitData = [
-			'customer_id' => $bonusRecord->customer_id,
-			'job_id'	  => $job_id,
-			'debit'	  	  => $bonusRecord->credit,
-			'balance'	  => $bonusRecord->balance - $bonusRecord->credit,
-			'notes'		  => 'Debit - Due to Job Updated with Ref  ' . $job_id,
-			'created_at'  => date('Y-m-d H:i:s')
-		];
-		
-		$this->debitBonus($debitData);
+		if(isset($bonusRecord) && !empty($bonusRecord))
+		{
+			$debitData = [
+				'customer_id' => $bonusRecord->customer_id,
+				'job_id'	  => $job_id,
+				'debit'	  	  => $bonusRecord->credit,
+				'balance'	  => $bonusRecord->balance - $bonusRecord->credit,
+				'notes'		  => 'Debit - Due to Job Updated with Ref  ' . $job_id,
+				'created_at'  => date('Y-m-d H:i:s')
+			];
+			
+			$this->debitBonus($debitData);
+			$this->db->where('job_id', $job_id);
 
-		$this->db->where('job_id', $job_id);
+			$status =  $this->db->update('data_bonus_details', $data);
 
-		$status =  $this->db->update('data_bonus_details', $data);
-
-		if(!empty($bonusRecord->customer_id)) {
-			$this->db->where("ref_job_id", $job_id)
-				->where('customer_id', $bonusRecord->customer_id)
-				->delete('user_transactions');
+			if(!empty($bonusRecord->customer_id)) {
+				$this->db->where("ref_job_id", $job_id)
+					->where('customer_id', $bonusRecord->customer_id)
+					->delete('user_transactions');
+			}
+		}
+		else
+		{
+			$data['is_edited'] = 0;
+			return $this->addNewBonus($data);
 		}
 	}
 

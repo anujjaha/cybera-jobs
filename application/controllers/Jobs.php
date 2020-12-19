@@ -159,6 +159,7 @@ public function edit($job_id=null)
         $data['heading']="Jobs";
         if($this->input->post()) 
         {
+          //pr($this->input->post());
           $this->load->model('customer_model');
                 
             if($this->input->post('customer_type') == 'new') 
@@ -740,15 +741,15 @@ public function edit($job_id=null)
       $data['job_data']=$job_data;
 			$data['locations']=$this->customer_model->getCustomerLocations($job_data->customer_id);
       //pr($data['locations']);
-      $data['reference_data']=$this->job_model->getReferenceDetails($job_id);
+      ///$data['reference_data']=$this->job_model->getReferenceDetails($job_id);
       
       $this->load->model('out_model');
       
       $data['jobOutInfo']     = $this->out_model->checkOutside($job_id);
       $data['jobOutDetails']  = $this->out_model->getJobAdditionalDetails($data['jobOutInfo']->{id});
 
-      //pr($data);
       $data['reference_data']=$this->job_model->getReferenceDetails($job_id);
+      //pr($data['reference_data']);
 
 
 			if($this->input->post()) 
@@ -1112,7 +1113,7 @@ public function edit($job_id=null)
 
 			if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
 			{
-				$subTotal 	 	= $this->input->post('subtotal');
+        $subTotal 	 	= $this->input->post('subtotal');
 				$percentage  	= $this->input->post('percentage');
 				$fixAmount 	 	= $this->input->post('fix_amount');
 				$refCustomerId  = $this->input->post('reference_customer_id');
@@ -1151,8 +1152,7 @@ public function edit($job_id=null)
 						'is_edited'				=> 1
 					);
 
-
-					$this->job_model->resetBonus($refCustomerId, $job_id, $bonusData);
+          $this->job_model->resetBonus($refCustomerId, $job_id, $bonusData);
 
 					$creditBonusData = array(
 						'customer_id' => $refCustomerId,
@@ -1160,7 +1160,9 @@ public function edit($job_id=null)
 						'credit'	  => $finalBonusAmount,
 						'notes'		  => 'Referral Credited with Ref ' . $job_id . $preFix,
 					);
-					$this->job_model->creditBonus($refCustomerId, $creditBonusData);	
+
+          $this->job_model->addNewBonus($bonusData);
+          $this->job_model->creditBonus($refCustomerId, $creditBonusData);	
 				}
 			}
 
@@ -1721,8 +1723,7 @@ public function edit($job_id=null)
 				}
 			}
 
-
-			if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
+      if(REFERENCE_BONUS && $this->input->post('reference_customer_id') && $this->input->post('reference_customer_id') != '')
 			{
 				$subTotal 	 	    = $this->input->post('subtotal');
 				$percentage  	    = $this->input->post('percentage');

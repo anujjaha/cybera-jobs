@@ -401,6 +401,7 @@ function get_papers_size() {
 
 function job_complete_sms($job_id=null) {
 	if($job_id) {
+
 		$ci = & get_instance();
 		$sql = "SELECT if(CHAR_LENGTH(c.companyname) > 0,c.companyname,c.name) as customer_name,
 				job.smscount,job.customer_id,c.mobile,job.smscount,
@@ -418,13 +419,13 @@ function job_complete_sms($job_id=null) {
 		$balance = $result->total_credit - $result->due - $result->discount;
 		
 		if($result->smscount != 0 ) {
-				return true;
+			return true;
 		}
 		
 		if( $balance < 0 ) {
 			$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. $balance (GST Extra) Thank You.";
 		} else {
-				$dueAmt = $result->due - $result->discount ;
+				$dueAmt = $result->total - $result->discount ;
 				
 				$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Pay ". $dueAmt ." due amt. (GST Extra) to collect your job. Thank You.";
 		}

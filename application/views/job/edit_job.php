@@ -692,8 +692,15 @@ $modified_by = $this->session->userdata['user_id'];
 	<tr>
 		<td>
 			<?php
-            if(strtolower($this->session->userdata['department']) == "master")
+            if(
+                strtolower($this->session->userdata['department']) == "master"
+                
+                ||
+
+                $this->session->userdata['user_id'] == 14
+            )
             {
+
             ?>
 			Reference Customer : 
 			<select  style="width: 250px;" name="reference_customer_id" id="reference_customer_id">
@@ -742,7 +749,13 @@ $modified_by = $this->session->userdata['user_id'];
 	<tr>
 		<td colspan="2">
 			<?php
-            if(strtolower($this->session->userdata['department']) == "master")
+            if(
+		        strtolower($this->session->userdata['department']) == "master"
+		                
+		        ||
+
+		        $this->session->userdata['user_id'] == 14
+		    )
             {
             ?>
 			<br>
@@ -1090,7 +1103,7 @@ function showRemindContainer()
 <script type="text/javascript">
 	setTimeout(function()
 	{
-		jQuery("#reference_customer_id").select2();
+		//jQuery("#reference_customer_id").select2();
 		fetch_transporter(<?php echo $job_data->customer_id;?>);
 	}, 100);
 
@@ -1163,7 +1176,7 @@ function showRemindContainer()
 	setTimeout(function()
 	{
 		jQuery("#reference_customer_id").select2();
-		//jQuery("#emp_id").select2();
+		jQuery("#emp_id").select2();
 	}, 100);
 
 	<?php

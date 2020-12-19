@@ -70,16 +70,11 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         <li class="active">
-                            <a href="<?php echo base_url();?>master/unverifyjobs">
-                                <i class="fa fa-dashboard"></i> <span>Job Unverify</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
                             <a href="<?php echo base_url();?>">
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
+
 
                         <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>jobs/edit">
@@ -94,10 +89,18 @@
                         </li>
                         
                         <li class="active">
-                            <a href="<?php echo base_url();?>/etransaction">
-                                <i class="fa fa-dashboard"></i> <span>Employee Walet</span>
+                            <a href="<?php echo base_url();?>master/unverifyjobs">
+                                <i class="fa fa-dashboard"></i> <span>Job Unverify</span>
                             </a>
                         </li>
+
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>expense">
+                                <i class="fa fa-dashboard"></i> <span>Expense List</span>
+                            </a>
+                        </li>
+
+                        
                         
                         <li>
                             <a href="<?php echo base_url();?>master/all">
@@ -108,12 +111,6 @@
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>mask">
                                 <i class="fa fa-dashboard"></i> <span>Manage Masks</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a target="_blank" href="<?php echo base_url();?>expense">
-                                <i class="fa fa-dashboard"></i> <span>Expense List</span>
                             </a>
                         </li>
 
@@ -153,6 +150,13 @@
                                 <i class="fa fa-envelope"></i> <span>All Users</span>
                             </a>
                         </li>
+                        
+                        <li class="active">
+                            <a href="<?php echo base_url();?>/etransaction">
+                                <i class="fa fa-dashboard"></i> <span>Employee Walet</span>
+                            </a>
+                        </li>
+
                         <li>
                             <a href="<?php echo base_url();?>master/job_category">
                                 <i class="fa fa-envelope"></i> <span>Job Categories</span>
@@ -167,6 +171,11 @@
                             <a href="#">
                                 <i class="fa fa-envelope"></i> <span>Tasks Alloted</span>
                                 <small class="badge pull-right bg-yellow">5</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="<?php echo base_url();?>book">
+                                <i class="fa fa-calendar"></i> <span>Sample Books</span>
                             </a>
                         </li>
                     </ul>

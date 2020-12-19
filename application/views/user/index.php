@@ -51,7 +51,15 @@ if(strtolower($this->session->userdata['department']) == "master")
 		<?php
 		$sr =1;	
 		$billNumber = [];
+		$processedJobs = [];
 		foreach($jobs as $job) { 
+
+			if(in_array($job['job_id'], $processedJobs))
+			{
+				continue;
+			}
+
+			$processedJobs[] = $job['job_id'];
 			//pr($job);
 			?>
 		<tr>
@@ -102,6 +110,19 @@ if(strtolower($this->session->userdata['department']) == "master")
 			<span style="font-size:11px;">
 				<?php echo 	date('h:i A',strtotime($job['created']));?>
 			</span>
+			<?php
+				if(isset($job['bonus_amount']) && !empty($job['bonus_amount']))
+				{
+			?>
+				<br />
+				<strong>
+					<a target="_blank" href="<?php echo site_url();?>account/account_details/<?= $job['bonus_customer_id'];?>">
+						<?php echo $job['bonus_customer'];?> ( <?= $job['bonus_amount'];?> )
+					</a>
+				</strong>
+			<?php
+				}
+			?>
 		</td>
 		<td width="10px">
 
@@ -154,9 +175,12 @@ if(strtolower($this->session->userdata['department']) == "master")
 				}
 			?>	
 		</td>
-		<td><?php 
+		<td>
+			<a target="_blank" href="<?php echo site_url();?>/account/account_details/<?php echo $job['customer_id'];?>">
+		<?php
+
 			echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
-			echo '<br><span class="green">'. $job['fix_note'] .'</span>';
+			echo '</a><br><span class="green">'. $job['fix_note'] .'</span>';
 			echo $job['ctype'] == 1 ? '<span class="red">[D]</span>' : '<span class="green">[R]</span>';
 
 			if($job['rating'] == 5)

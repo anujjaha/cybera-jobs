@@ -1199,8 +1199,9 @@ $this->load->helper('general'); ?>
 			<input type="text" name="manual_transporter" class="pull-right" style="width: 100px;">
 			<br>
 			Transportation Charges Paid By:
-			<select name="party_pay" id="party_pay">
-				<option value="2" selected="selected">N/A</option>
+			<select name="party_pay" id="party_pay" required="required">
+                <option value="" selected="selected">Select Transporter Charges</option>
+				<option value="2" >N/A</option>
 				<option value="0">Cybera</option>
 				<option value="1">Party</option>
 			</select>
@@ -1208,7 +1209,13 @@ $this->load->helper('general'); ?>
 		</td>
 	</tr>
     <?php
-    if(strtolower($this->session->userdata['department']) == "master")
+    if(
+        strtolower($this->session->userdata['department']) == "master"
+                
+        ||
+
+        $this->session->userdata['user_id'] == 14
+    )
     {
     ?>
 	<tr>
@@ -1239,7 +1246,13 @@ $this->load->helper('general'); ?>
 		<td colspan="2">
 			<br>
             <?php
-            if(strtolower($this->session->userdata['department']) == "master")
+            if(
+                strtolower($this->session->userdata['department']) == "master"
+                
+                ||
+
+                $this->session->userdata['user_id'] == 14
+            )
             {
             ?>
             <div class="col-md-3">
@@ -1895,8 +1908,8 @@ require_once('out-station.php');
 <script type="text/javascript">
 	setTimeout(function()
 	{
-		jQuery("#reference_customer_id").select2();
-		//jQuery("#emp_id").select2();
+		//jQuery("#reference_customer_id").select2();
+		jQuery("#emp_id").select2();
 	}, 100);
 
 	jQuery(".corner-cut-details").hide();

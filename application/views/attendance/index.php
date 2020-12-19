@@ -5,8 +5,13 @@
 		Add New Attendance
 	</a>
 	<hr>
-	<div>
-		<h3> Attendance For <?php echo date('F - Y', strtotime('last month'));?></h3>
+	<div class="row">
+		<div class="col-md-9">
+			<h3> Attendance For <?php echo date('F - Y', strtotime('last month'));?></h3>
+		</div>
+		<div class="col-md-3">
+			<button onclick='ajax_print_attendance();'>Print Attendence</button>
+		</div>
 	</div>
 	</div>
 </div>
@@ -17,14 +22,17 @@
 		<tr>
 		<th>Sr</th>
 		<th>Name</th>
-		<th>Half Day</th>
+		<th>W. Days</th>
+		<th>Present</th>
 		<th>Full Day</th>
+		<th>Half Day</th>
+		<th>Going Out (Office Hours)</th>
 		<th>Late</th>
-		<th>Office Half Day</th>
+		<th>Before 10:00</th>
+		<th>Stay After Office Time</th>
 		<th>Half Night</th>
 		<th>Full Night</th>
 		<th>Sunday</th>
-		<th>W. Days</th>
 		<th>Notes</th>
 		<!--<th>Action</th>-->
 		</tr>
@@ -39,14 +47,17 @@
 		<tr id="emp-<?php echo $item['id'];?>">
 		<td><?php echo $sr;?></td>
 		<td><?php echo $item['name'];?></td>
-		<td><?php echo $item['half_day'];?></td>
+		<td><?php echo $item['working_days'];?></td>
+		<td><?php echo $item['working_days'] - $item['full_day'] - ( $item['half_day'] / 2);?></td>
 		<td><?php echo $item['full_day'];?></td>
-		<td><?php echo $item['office_late'];?></td>
+		<td><?php echo $item['half_day'];?></td>
 		<td><?php echo $item['office_halfday'];?></td>
+		<td><?php echo $item['office_late'];?></td>
+		<td><?php echo $item['before_10'];?></td>
+		<td><?php echo $item['after_office_hrs'];?></td>
 		<td><?php echo $item['half_night'];?></td>
 		<td><?php echo $item['full_night'];?></td>
 		<td><?php echo $item['sunday'];?></td>
-		<td><?php echo $item['working_days'];?></td>
 		<td><?php echo $item['notes'];?></td>
 		<!--<td>
 				<a onclick="deleteEmployee(<?php echo $item['id'];?>);" href="javascript:void(0);">
@@ -95,6 +106,23 @@ function deleteEmployee(id) {
 		}
           });
     }
+}
+
+function ajax_print_attendance() {
+
+	$.ajax({
+         type: "POST",
+         url: "<?php echo site_url();?>/ajax/ajax_print_attendance",
+         data : {
+         	'month': "<?= date('F', strtotime('last month'));?>",
+         	'year': "<?= date('Y', strtotime('last month'));?>",
+         }, 
+         success: 
+            function(data){
+            	window.open(data);
+	        }
+    });
+
 }
 </script>
 

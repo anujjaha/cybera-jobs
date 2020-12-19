@@ -2051,4 +2051,20 @@ class Ajax extends CI_Controller {
 		));
 		die;
 	}
+
+	public function ajax_print_attendance()
+	{
+		$month = $this->input->post('month');
+		$year = $this->input->post('year');
+		$this->load->model('attendance_model');
+		$data = array();
+		
+		$data['items'] = $this->attendance_model->getAllAttendance();
+		$data['title'] = "Attendance List : " . $month . ' ' . $year;
+		
+		$html = $this->load->view('attendance/print-list', $data, true);
+		$pdfFile = create_pdf($html, 'A4-L');
+
+		echo $pdfFile;
+	}
 }

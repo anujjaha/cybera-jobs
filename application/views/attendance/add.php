@@ -102,7 +102,7 @@
 			</td>
 			<td>&nbsp;</td>
 			
-			<td align="right"> <label>Office Half Day : </label></td>
+			<td align="right"> <label>Going Out ( Office Hours ) : </label></td>
 			<td> <input type="number" min="0" name="office_halfday"  value="0" required="required" class="form-control"> </td>
 		</tr>
 		<tr>
@@ -139,7 +139,17 @@
 		</tr>
 
 		<tr>
-			<td  colspan="3" align="right"> <label>Working Days  : </label></td>
+			<td align="right"> <label>Before 10:00 </label></td>
+			<td> <input type="number" name="before_10" min="0" max="31" value="0" required="required" class="form-control"> </td>
+			
+			<td>&nbsp;</td>
+			
+			<td align="right"> <label>After Office Hours: </label></td>
+			<td> <input type="number" name="after_office_hrs" min="0" max="32" value="0" required="required" class="form-control"> </td>
+		</tr>
+
+		<tr>
+			<td  colspan="3" align="right"> <label> Working Days : </label></td>
 			<td> <input type="number" name="working_days" min="0" max="32" value="0" required="required" class="form-control"> </td>
 			
 			<td>&nbsp;</td>

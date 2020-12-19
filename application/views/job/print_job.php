@@ -16,7 +16,7 @@ if($job_data->party_pay == 2)
         body div, body table {display: none;}
         body div#FAQ, body div#FAQ table {display: block;}
         }
-td{font-size:9px; font-family:Arial, Helvetica, sans-serif}
+td{font-size:11px; font-family:Arial, Helvetica, sans-serif}
 .own-address td {
 	font-size:12px;
 	
@@ -109,10 +109,10 @@ if($customer_details->ctype == 1 )
 			 $mobileNumber = (strlen($job_data->jsmsnumber) > 1 ) ? "-".$job_data->jsmsnumber : '';
 			 $mobileNumber = $customer_details->mobile.$mobileNumber;
 			$content .= '
-				<table align="center" width="90%" border="0" style="border:0px solid;font-size:9px;height:3in;">
+				<table align="center" width="90%" border="0" style="border:0px solid;font-size:11px;height:3in;">
 				<tr>
 				<td width="100%" align="left">
-					<table width="100%"  align="left" style="border:1px solid;font-size:9px;">
+					<table width="100%"  align="left" style="border:1px solid;font-size:11px;">
 						<tr>
 							<td align="center" style="font-size:12px;" colspan="2">
 								<strong>Estimate</strong>
@@ -142,33 +142,33 @@ if($customer_details->ctype == 1 )
 						</tr>
 						<tr>
 							<td colspan="2">
-								<table width="100%" align="center" style="border:1px solid; font-size:9px;">
+								<table width="100%" align="center" style="border:1px solid; font-size:11px;">
 									<tr>
-										<td style="font-size:9px;">Sr.</td>
-										<td style="font-size:9px;">Details</td>
-										<td style="font-size:9px;">Qty</td>
-										<td style="font-size:9px;">Rate</td>
-										<td><p align="right" style="font-size:9px;">Amount</p></td>
+										<td style="font-size:11px;">Sr.</td>
+										<td style="font-size:11px;">Details</td>
+										<td style="font-size:11px;">Qty</td>
+										<td style="font-size:11px;">Rate</td>
+										<td><p align="right" style="font-size:11px;">Amount</p></td>
 									</tr>';
 									 for($i=0;$i<6;$i++) {
 										 $j1 = $i+1;
 										if(isset($job_details[$i]['id'])){
 										$content .= '
 										<tr>
-											<td style="font-size:9px;"> '.$j1 .'</td>
-											<td style="font-size:9px;"> '.$job_details[$i]['jdetails'].'</td>
-											<td style="font-size:9px;"> '.$job_details[$i]['jqty'].'</td>
-											<td style="font-size:9px;"> '.$job_details[$i]['jrate'].' </td>
-											<td style="font-size:9px;" align="right"> '.$job_details[$i]['jamount'].'</td>
+											<td style="font-size:11px;"> '.$j1 .'</td>
+											<td style="font-size:11px;"> '.$job_details[$i]['jdetails'].'</td>
+											<td style="font-size:11px;"> '.$job_details[$i]['jqty'].'</td>
+											<td style="font-size:11px;"> '.$job_details[$i]['jrate'].' </td>
+											<td style="font-size:11px;" align="right"> '.$job_details[$i]['jamount'].'</td>
 										</tr>';
 										} else {
 											break;
 										}
 									} 
 									$content .= '<tr>
-										<td style="font-size:9px;" colspan="2">Receipt Number:'.$job_data->receipt.'</td>
-										<td style="font-size:9px;" colspan="2" align="right">Sub Total :</td>
-										<td style="font-size:9px;" align="right">'.$job_data->subtotal .'</td>
+										<td style="font-size:11px;" colspan="2">Receipt Number:'.$job_data->receipt.'</td>
+										<td style="font-size:11px;" colspan="2" align="right">Sub Total :</td>
+										<td style="font-size:11px;" align="right">'.$job_data->subtotal .'</td>
 									</tr>';
 									
 									
@@ -178,43 +178,43 @@ if($customer_details->ctype == 1 )
 										
 										
 										$content .= '<tr>
-											<td style="font-size:9px;" colspan="4" align="right">Discount :</td>
-											<td style="font-size:9px;" align="right">'.$job_data->discount.'</td>
+											<td style="font-size:11px;" colspan="4" align="right">Discount :</td>
+											<td style="font-size:11px;" align="right">'.$job_data->discount.'</td>
 										</tr>';
 									}
 
 									if(!empty($job_data->tax)) 
 									{
 										$content .= '<tr>
-											<td style="font-size:9px;" colspan="4" align="right">Taxable Amount :</td>
-											<td style="font-size:9px;" align="right">'. ($job_data->subtotal - $job_data->discount ) .'</td>
+											<td style="font-size:11px;" colspan="4" align="right">Taxable Amount :</td>
+											<td style="font-size:11px;" align="right">'. ($job_data->subtotal - $job_data->discount ) .'</td>
 										</tr>';
 									}
 
 									if(!empty($job_data->tax)) 
 									{
 										$content .= '<tr>
-											<td style="font-size:9px;" colspan="4" align="right">Tax :</td>
-											<td style="font-size:9px;" align="right">'.$job_data->tax.'</td>
+											<td style="font-size:11px;" colspan="4" align="right">Tax :</td>
+											<td style="font-size:11px;" align="right">'.$job_data->tax.'</td>
 										</tr>';
 									 } 
 
 									$content .= '<tr>
-										<td style="font-size:9px;" colspan="4" align="right">Total :</td>
-										<td style="font-size:9px;" align="right">'. $job_data->total.'</td>
+										<td style="font-size:11px;" colspan="4" align="right">Total :</td>
+										<td style="font-size:11px;" align="right">'. $job_data->total.'</td>
 									</tr>';
 									
 									
 									
 									$content .= '<tr>
-										<td style="font-size:9px;" colspan="4" align="right">Advance :</td>
-										<td style="font-size:9px;" align="right">'.$job_data->advance.'</td>
+										<td style="font-size:11px;" colspan="4" align="right">Advance :</td>
+										<td style="font-size:11px;" align="right">'.$job_data->advance.'</td>
 									</tr>';
 									$due = $job_data->due - $job_data->discount;
 									$content .=  '<tr>
-										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'<br>Operator :'.$job_data->emp_name.'</td>
-										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
-										<td style="font-size:9px;" align="right">'. $due .'</td>
+										<td style="font-size:11px;" colspan="2">Created by :'.$created_info->nickname.'<br>Operator :'.$job_data->emp_name.'</td>
+										<td style="font-size:11px;" colspan="2" align="right">Due :</td>
+										<td style="font-size:11px;" align="right">'. $due .'</td>
 									</tr>
 								</table>
 							</td>
@@ -226,7 +226,7 @@ if($customer_details->ctype == 1 )
 						</tr>
 						<tr>
 							<td colspan="2">
-								<span style="font-size:9px;">
+								<span style="font-size:11px;">
 								<strong>Note :</strong>'.$job_data->notes.'
 								</span>
 							</td>
@@ -238,7 +238,7 @@ if($customer_details->ctype == 1 )
 						}
 						$content .= '<tr>
 							<td colspan="2">
-							<span style="font-size:9px;">
+							<span style="font-size:11px;">
 								I/We have checked all content,color,material in the sample print.
 								It is acceptable to me/us.
 							</span>
