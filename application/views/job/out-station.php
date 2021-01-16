@@ -16,10 +16,10 @@
 
       	<div class="text-center">
       		<div class="col-md-2">
-      			Location : 
+      			Job Name : 
       		</div>
       		<div class="col-md-3">
-      			<input class="form-control" type="text" name="location" value="SHALVIK">
+      			<input class="form-control" type="text" name="location" value="Out Job - <?= date('Y-m-d H:i:s');?>">
       		</div>
 
       		
@@ -28,6 +28,7 @@
 
 		<table id="outItem" class="table">
 			<tr>
+				<td> Location </td>
 				<td> Size </td>
 				<td> LAMINATION </td>
 				<td> SIDE </td>
@@ -37,6 +38,7 @@
 			</tr>
 
 			<tr id="primary-row">
+				<td><input class="form-control" type="text" value="SHALVIK" name="out[out_location]"> </td>
 				<td><input class="form-control" type="text" value="12X18" name="out[size]"> </td>
 				<td>
 					<select name="out[lamination_type]" class="form-control">

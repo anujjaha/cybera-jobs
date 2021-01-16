@@ -35,7 +35,7 @@ class Cashier extends CI_Controller {
 	public function add()
 	{
 		$data['heading'] = $data['title']="Add New Cashier - Cybera Print Art";
-		
+		date_default_timezone_set('Asia/Kolkata');
 		if($this->input->post())
 		{
 			$data = $this->input->post();
@@ -47,8 +47,12 @@ class Cashier extends CI_Controller {
 			$todayCollection 	= getBusinessCollectionByDate();
 			$todayCash 			= getBusinessCashCollectionByDate();
 			$totalBusiness 		= $totalSale + $totalXeros;
-			
-			$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Cash ". $todayCash ." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .".";
+			$lastRecord 		= getLastCashier();	
+			$m1x				= $data['m1x'] - $lastRecord->m1x;
+			$m2x				= $data['m2x'] - $lastRecord->m2x;
+			$totalCopies		= $m1x + $m2x;
+
+			$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Copies - ". $totalCopies ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Cash ". $todayCash ." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .".";
 			send_account_sms('9898618697', $msgText);
 			$this->cashier_model->createCashier($data);
 			

@@ -1,11 +1,7 @@
 <?php
 $token = rand(1111111, 9999999);
 ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css"/>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
- 
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="<?php echo base_url();?>assets/js/job_details.js"></script>
 
 
@@ -401,6 +397,112 @@ function set_cutting_details(id){
 }
 function set_cutting_details_box(id)
 {
+    var data_id = jQuery("#fancybox_cutting_id").val();
+    var machine,size,details,lamination,printing,packing,lamination_info,binding,checking,c_corner,c_laser,c_rcorner,c_cornerdie;
+        machine = $('input:radio[name=machine]:checked').val();// jQuery("#machine").val();
+        
+      binding = ""; 
+      var $boxes = $('input[name=binding]:checked');
+      $boxes.each(function(){
+          if($(this).val().length > 0 ) {
+            binding = $(this).val() + ","+binding;  
+          }
+        });
+        
+        lamination_info = jQuery("#lamination_info").val();
+        
+        size_info = jQuery("#size_info").val();
+        sheet_qty = jQuery("#sheet_qty").val();
+
+        blade_per_sheet = jQuery("#blade_per_sheet").val();
+        binding_info = jQuery("#binding_info").val();
+        details = jQuery("#details").val();
+        lamination = $('input:radio[name=lamination]:checked').val();//jQuery("#lamination").val();
+        checking = $('input:radio[name=checking]:checked').val();//jQuery("#lamination").val();
+        size = $('input:radio[name=size]:checked').val();//jQuery("#lamination").val();
+        printing =  $('input:radio[name=printing]:checked').val();// jQuery("#printing").val();
+        packing =  $('input:radio[name=packing]:checked').val(); //printing jQuery("#packing").val();
+        cCorner =  $('input:radio[name=c_corner]:checked').val(); //printing jQuery("#c_corner").val();
+
+
+        jQuery("#c_machine_"+data_id).val(machine);
+        jQuery("#c_qty_"+data_id).val(jQuery("#qty_"+data_id).val());
+        jQuery("#c_material_"+data_id).val(jQuery("#details_"+data_id).val());
+        jQuery("#c_size_"+data_id).val(size);
+        jQuery("#c_details_"+data_id).val(details);
+        jQuery("#c_lamination_"+data_id).val(lamination);
+        jQuery("#c_print_"+data_id).val(printing);
+        jQuery("#c_packing_"+data_id).val(packing);
+        jQuery("#c_laminationinfo_"+data_id).val(lamination_info);
+        jQuery("#c_sizeinfo_"+data_id).val(size_info);
+
+        jQuery("#c_sheetinfo_"+data_id).val(sheet_qty);
+
+        jQuery("#c_blade_per_sheet_"+data_id).val(blade_per_sheet);
+        jQuery("#c_bindinginfo_"+data_id).val(binding_info);
+        jQuery("#c_binding_"+data_id).val(binding);
+        jQuery("#c_checking_"+data_id).val(checking);
+        
+        jQuery("#c_corner_"+data_id).val(cCorner);
+
+        jQuery("#c_laser_"+data_id).val($("#c_laser").val());
+        
+        jQuery("#c_lamination_cutting_"+data_id).val($("#c_lamination_cutting").val());
+        
+        jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
+        
+
+        var cBox = $('input[name=c_box_box]:checked').val();
+        var cDubby = $('input[name=c_box_dubby]:checked').val();
+
+
+        jQuery("#c_box_box_"+data_id).val(cBox ? cBox : 'No');
+        jQuery("#c_box_dubby_"+data_id).val(cDubby ? cDubby : "No");
+
+
+        $.fancybox.close();
+        var isCornerCuttingApplied = 0;
+        
+        if(jQuery("#category_"+data_id).val() != "Visiting Card" && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 5)
+        {
+            var nextElement = parseInt(data_id) + 1;
+            
+            jQuery("#category_" + nextElement).val("Cutting");
+            jQuery("#details_" + nextElement).val("Cutting");
+            jQuery("#qty_" + nextElement).focus();
+
+            if(cCorner == "Yes" && data_id < 4 && jQuery("#category_"+data_id).val() != "ROUND CORNER CUTTING")
+            {
+                nextElement = parseInt(nextElement) + 1;
+                jQuery("#category_" + nextElement).val("Cutting");
+                jQuery("#details_" + nextElement).val("Corner Cutting");
+                jQuery("#qty_" + nextElement).focus();
+                isCornerCuttingApplied = 1;
+            }
+        }
+
+        if(isCornerCuttingApplied == 0 && jQuery("#c_machine_"+data_id).val().length > 0 && data_id < 4
+             && jQuery("#category_"+data_id).val() != "ROUND CORNER CUTTING"
+            )
+        {
+            var nextElement = parseInt(data_id) + 1;
+            
+            if(cCorner == "Yes" && data_id < 4)
+            {
+                jQuery("#category_" + nextElement).val("Cutting");
+                jQuery("#details_" + nextElement).val("Corner Cutting");
+                jQuery("#qty_" + nextElement).focus();
+            }
+        }
+        
+        if(jQuery("#category_"+data_id).val() == "Visiting Card")
+        {
+            jQuery("#sub_"+data_id).focus();
+        }
+}
+
+function set_cutting_details_boxAndOut()
+{
 	var data_id = jQuery("#fancybox_cutting_id").val();
 	var machine,size,details,lamination,printing,packing,lamination_info,binding,checking,c_corner,c_laser,c_rcorner,c_cornerdie;
         machine = $('input:radio[name=machine]:checked').val();// jQuery("#machine").val();
@@ -503,6 +605,8 @@ function set_cutting_details_box(id)
 		{
 			jQuery("#sub_"+data_id).focus();
 		}
+
+        jQuery("#jobOutModalPopup").modal('show');
 }
 function remove_cutting_details(data_id) {
     jQuery("#cut_icon_"+data_id).css('display','none');
@@ -1674,6 +1778,7 @@ $this->load->helper('general'); ?>
                 <td colspan="2" align="center">
                     <input type="hidden" name="fancybox_cutting_id" value="" id="fancybox_cutting_id">
                     <span class="btn btn-primary btn-sm" onclick="set_cutting_details_box()">Save</span>
+                    <span class="btn btn-primary btn-sm" onclick="set_cutting_details_boxAndOut()">Save & Outside</span>
                 </td>
             </tr>
         </table>
@@ -1909,7 +2014,7 @@ require_once('out-station.php');
 	setTimeout(function()
 	{
 		//jQuery("#reference_customer_id").select2();
-		jQuery("#emp_id").select2();
+		//jQuery("#emp_id").select2();
 	}, 100);
 
 	jQuery(".corner-cut-details").hide();

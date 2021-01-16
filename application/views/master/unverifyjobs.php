@@ -55,7 +55,44 @@ function direct_verify_job(id) {
 			?>
 		<tr>
 		<td><?php echo $sr;?></td>
-		<td><?php echo $job['job_id'];?></td>
+		<td>
+		<?php
+
+			if($job['is_pin'] == 1)
+			{
+			?>
+				<span class="green">PINNED</span>
+				<br><br>	
+				<a href="javascript:void(0);" class="pin-job">
+					<i data-value="0" title="Un Pin" data-id="<?php echo $job['job_id'];?>" class="fa fa-2x fa-thumbs-o-down" aria-hidden="true"></i>
+				</a>
+
+			<?php
+			}
+			else
+			{
+				echo "<br><br>";
+			?>
+				<a href="javascript:void(0);" class="pin-job">
+					<i data-value="1" title="Pin" data-id="<?php echo $job['job_id'];?>" class="fa fa-2x fa-thumbs-o-up" aria-hidden="true"></i>
+				</a>
+
+			<?php
+			}
+
+			if(isset($job['is_5_gst']) && $job['is_5_gst'] == 1)
+			{
+				echo '<span style="color: green; font-size: 22px; font-weight:bold;"><br>5%</span>';
+			}
+
+			if(isset($job['is_job_invoice']) && $job['is_job_invoice'] == 1)
+			{
+				echo '<span style="color: green; font-size: 22px; font-weight:bold;"><br>INVOICE</span>';
+				echo "<br>" . $job['invoice_details'];
+			}
+		?>
+		</td>
+		<!-- <td><?php echo $job['job_id'];?></td> -->
 		<td><?php echo $job['companyname'];?></td>
 		<td><?php echo $job['name'];?></td>
 		<td><?php echo $job['jobname'];?></td>
@@ -166,6 +203,45 @@ function show_job_details(job_id){
                   jQuery("#job_view").html(data);
             }
           });
+}
+
+jQuery(document).on('click', ".pin-job", function(e)
+{
+	pinJob(e.target);
+});
+
+function pinJob(element)
+{
+	var jobId = element.getAttribute('data-id'),
+		isPin = element.getAttribute('data-value'),
+		msg   = isPin == 1 ? "Job Pinned Successfully" : "Job Un Pinned Successfully";
+
+	if(jobId)
+	{
+		$.ajax(
+	    {
+	     	type: "POST",
+	     	dataType: 'JSON',
+	     	data: {
+	     		jobId: jobId,
+	     		isPin: isPin
+	     	},
+	     	url: "<?php echo site_url();?>/ajax/pinJob", 
+	     	success:  function(data)
+	        {
+	        	if(data.status == true)
+	        	{
+
+	        		swal("Yeah!", msg, "success");
+	        		location.reload();
+	        		return;
+	        	}
+
+	        	swal("OH!", "Please Try Again ", "error");
+	        }
+	  });
+	}
+
 }
 </script>
 

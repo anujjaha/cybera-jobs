@@ -14,6 +14,16 @@
 			<td> <input type="number" min="0" name="total" value="0" required="required" class="form-control"> </td>
 		</tr>
 		<tr>
+			<td align="right"> <label>M1 Xerox Meter Count : </label></td>
+			<td> <input type="number" min="0" name="m1x" value="0" required="required" class="form-control"> </td>
+		</tr>
+
+		<tr>
+			<td align="right"> <label>M4 Xerox Meter Count : </label></td>
+			<td> <input type="number" min="0" name="m2x" value="0" required="required" class="form-control"> </td>
+		</tr>
+
+		<tr>
 			<td align="right"> <label>Total Xerox : </label></td>
 			<td> <input type="number" min="0" name="xerox_business" value="0" required="required" class="form-control"> </td>
 		</tr>

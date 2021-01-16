@@ -71,6 +71,8 @@ function printDiv(divName) {
 
 <button class="btn btn-primary" onclick="edit_job()">Edit Job</button>
 
+<button class="btn btn-primary" onclick="custom_print()">Custom Print</button>
+
 <a href="<?php echo site_url();?>jobs/job_print_with/<?php echo $job_data->id;?>#editCuttingSlipLive">Quick Edit Cutting Slip</a>
 <!--<button class="btn btn-primary" onclick="print_cutting()">Cutting Slip</button>-->
 <div class="row">
@@ -631,6 +633,31 @@ echo $pcontent;
 </div>
 <!--Small Print Courier Service End-->
 
+
+<!--Custom Print Service-->
+<div id="customPrintPaper" style="height:3.5in; width:3.5in;  font-family:Arial, Helvetica, sans-serif;">
+<table align="center" border="2" width="65%" style="border: 2px solid #000000; border-radius: 10px;">
+<tr>
+<td>
+<table align="center" border="0" width="95%">
+	<tr>
+		<td>
+			<span id="customPrintToContainer"></span>
+		</td>
+	</tr>
+
+	<tr>
+		<td style="text-align: right;">
+			<span id="customPrintFromContainer"></span>
+		</td>
+	</tr>
+</table>
+</td>
+</tr>
+</table>
+</div>
+<!--Custom Print End-->
+
 <script>
 function print_job() {
 	printDiv('printJobTicket');
@@ -720,6 +747,25 @@ function printOutJob(id)
 	});
 
 }
+
+function custom_print()
+{
+	jQuery("#customPrintModal").modal('show');
+	jQuery("#customTo1").val('');
+	jQuery("#customTo2").val('');
+	jQuery("#customTo3").val('');
+	jQuery("#customFrom1").val('');
+	jQuery("#customFrom2").val('');
+	jQuery("#customFrom3").val('');
+}
+
+function printCustom()
+{
+	jQuery("#customPrintToContainer").html('<strong>To, </strong> <br />' + jQuery("#customTo1").val() + '<br />' + jQuery("#customTo2").val() + '<br />' + jQuery("#customTo3").val());
+	jQuery("#customPrintFromContainer").html('<br /><strong>From, </strong> <br />'+jQuery("#customFrom1").val() + '<br />' +jQuery("#customFrom2").val() + '<br />' +jQuery("#customFrom3").val());	
+	jQuery("#customPrintModal").modal('hide');
+	printDiv('customPrintPaper');
+}
 </script>
 <div id="editCuttingSlipLive">
 <?php
@@ -728,3 +774,39 @@ function printOutJob(id)
 ?>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="customPrintModal" role="dialog">
+    <div class="modal-dialog">
+		<div class="modal-content">
+        <div class="modal-header">
+        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+         	<h4 class="modal-title">Custom Address</h4>
+        </div>
+        <div class="modal-body">
+        	<div class="form-group">
+        		<label for="customTo1">To: </label>
+        		<input type="text" id="customTo1" name="customTo1" class="form-control" placeholder="To Party Name" />
+        		<br />
+        		<input type="text" id="customTo2" name="customTo2" class="form-control"  placeholder="To Address 1"/>
+        		<br />
+        		<input type="text" id="customTo3" name="customTo3" class="form-control"  placeholder="To Address 2" />
+        	</div>
+
+        	<div class="form-group">
+        		<label for="customFrom1">From: </label>
+        		<input type="text" id="customFrom1" name="customFrom1" class="form-control" placeholder="From Party Name"  />
+        		<br />
+        		<input type="text" id="customFrom2" name="customFrom2" class="form-control" placeholder="From Address 1"  />
+        		<br />
+        		<input type="text" id="customFrom3" name="customFrom3" class="form-control" placeholder="From Address 2"/>
+        	</div>
+        </div>
+        <div class="modal-footer">
+        	<button type="button" class="btn btn-primary" onclick="printCustom();">Print</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+</div>

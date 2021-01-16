@@ -1895,6 +1895,7 @@ class Ajax extends CI_Controller {
 					{
 						$masterData[] = [
 							'out_id' 	=> $outJobId,
+							'out_location'	=> isset($detailData['out_location'][$i]) && !empty($detailData['out_location'][$i]) ? $detailData['out_location'][$i] : '',
 							'out_size'	=> $detailData['size'][$i],
 							'out_type'	=> $detailData['lamination_type'][$i],
 							'out_side'	=> $detailData['lamination_side'][$i],
@@ -1999,6 +2000,7 @@ class Ajax extends CI_Controller {
 					{
 						$masterData[] = [
 							'out_id' 	=> $outJobId,
+							'out_location'	=> isset($detailData['out_location'][$i]) && !empty($detailData['out_location'][$i]) ? $detailData['out_location'][$i] : '',
 							'out_size'	=> $detailData['size'][$i],
 							'out_type'	=> $detailData['lamination_type'][$i],
 							'out_side'	=> $detailData['lamination_side'][$i],
@@ -2037,7 +2039,7 @@ class Ajax extends CI_Controller {
 			$data['jobDetails'] = $this->out_model->getJobAdditionalDetails($data['jobInfo']->{id});
 
 			$html 		= $this->load->view('common/out_job.php', $data, true);
-			$pdfFile 	= create_pdf($html, 'A5');
+			$pdfFile 	= create_pdf($html, 'A6');
 
 			echo json_encode(array(
 				'status' => true,

@@ -828,7 +828,7 @@ function getAllEmployees($active = false)
 	if($active == true)
 	{
 		$sql = 'SELECT id,name FROM employees
-			where is_active = 1
+			where status = 1
 			order by name';
 	}
 	$query = $ci->db->query($sql);	
@@ -874,6 +874,23 @@ function getBusinessByDate($date = null)
 	$query = $ci->db->query($sql);
 	
 	return $query->row()->totalBusiness;
+}
+
+/**
+ * Get Last Cashier
+ *
+ */
+function getLastCashier()
+{
+	$ci=& get_instance();
+	$ci->load->database(); 	
+
+	return $ci->db->select('*')
+		->from('cashier')
+		->order_by('id', 'desc')
+		->limit(1)
+		->get()
+		->row();
 }
 
 function getSaleByDate($date = null)

@@ -33,24 +33,23 @@ class Jobs extends CI_Controller {
 			$jobDetails 		= $this->job_model->get_job_details($jobId);
 			$jobCuttingDetails 	= $this->job_model->get_cutting_details($jobId);
 			
-			
-			
-			$jobdata['customer_id'] = $jobData->customer_id;
-            $jobdata['user_id'] = $this->session->userdata['user_id'];
-            $jobdata['jobname'] = $jobData->jobname;
-            $jobdata['subtotal'] = $jobData->subtotal;
-            $jobdata['tax'] = 0;
-            $jobdata['total'] = $jobData->total;
-            $jobdata['advance'] = 0;
-            $jobdata['due'] = $jobData->total;
-            $jobdata['notes'] = $jobData->notes;
-            $jobdata['extra_notes'] = $jobData->extra_notes;
-            $jobdata['receipt'] = '';
-            $jobdata['voucher_number'] = '';
-            $jobdata['bill_number'] = '';
-            $jobdata['jsmsnumber']= $jobData->jsmsnumber;
-            $jobdata['jmonth'] = date('M-Y');
-            $jobdata['jdate'] = date('Y-m-d');
+      $jobdata['customer_id'] = $jobData->customer_id;
+      $jobdata['transporter_id'] = $jobData->transporter_id;
+      $jobdata['user_id'] = $this->session->userdata['user_id'];
+      $jobdata['jobname'] = $jobData->jobname;
+      $jobdata['subtotal'] = $jobData->subtotal;
+      $jobdata['tax'] = 0;
+      $jobdata['total'] = $jobData->total;
+      $jobdata['advance'] = 0;
+      $jobdata['due'] = $jobData->total;
+      $jobdata['notes'] = $jobData->notes;
+      $jobdata['extra_notes'] = $jobData->extra_notes;
+      $jobdata['receipt'] = '';
+      $jobdata['voucher_number'] = '';
+      $jobdata['bill_number'] = '';
+      $jobdata['jsmsnumber']= $jobData->jsmsnumber;
+      $jobdata['jmonth'] = date('M-Y');
+      $jobdata['jdate'] = date('Y-m-d');
             
             $job_id = $this->job_model->insert_job($jobdata);
 			$j_status =$this->add_job_transaction($job_id,JOB_PENDING);

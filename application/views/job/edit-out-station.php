@@ -19,7 +19,7 @@
 
       	<div class="text-center">
       		<div class="col-md-2">
-      			Location : 
+      			Job Name: 
       		</div>
       		<div class="col-md-3">
       			<input class="form-control" type="text" name="location" value="<?=$jobOutInfo->location_name;?>">
@@ -31,6 +31,7 @@
 
 		<table id="outItem" class="table">
 			<tr>
+				<td> Location </td>
 				<td> Size </td>
 				<td> LAMINATION </td>
 				<td> SIDE </td>
@@ -40,9 +41,11 @@
 			</tr>
 
 			<?php
-				$firstDetail = $jobOutDetails[0];
+				foreach ($jobOutDetails as $firstDetail)
+				{
 			?>
-			<tr id="primary-row">
+			<tr id="primary-row-<?= $firstDetail['id'];?>">
+				<td><input class="form-control" type="text" value="<?php echo $firstDetail['out_location'];?>" name="out[out_location]" value="<?=$firstDetail['out_size'];?>"> </td>
 				<td><input class="form-control" type="text" value="12X18" name="out[size]" value="<?=$firstDetail['out_size'];?>"> </td>
 				<td>
 					<select name="out[lamination_type]" class="form-control">
@@ -74,6 +77,8 @@
 					<a style="display: none;" href="javascript:void(0);" class="remove-new-row">Remove</a>
 				</td>
 			</tr>
+			<?php }
+			?>
 		</table>
 		
       </div>
