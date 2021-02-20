@@ -1,15 +1,15 @@
 <div style="width: 570px;">
-<h1><center><?= $jobInfo->location_name;?></center></h1>
+<h5><center><?= $jobInfo->location_name;?></center></h5>
 
 <table align="center" border="2" style="border: solid 2px black;" width="100%">
 <tr>
-    <td style="border: solid 1px; width: 33%; padding: 10px; font-weight: bold; font-size: 22px;" > 
+    <td style="border: solid 1px; width: 33%; padding: 5px; font-weight: bold; font-size: 12px;" > 
         Job Id: <?= $jobInfo->job_id;?>
     </td>
-    <td style="border: solid 1px; width: 33%; padding: 10px; font-weight: bold; font-size: 22px;" > 
+    <td style="border: solid 1px; width: 33%; padding: 5px; font-weight: bold; font-size: 12px;" > 
         Person: <?= $jobInfo->person;?>
     </td>
-    <td style="text-align: right; border: solid 1px; width: 33%; padding: 10px; font-weight: bold; font-size: 22px;" > 
+    <td style="text-align: right; border: solid 1px; width: 33%; padding: 5px; font-weight: bold; font-size: 12px;" > 
         <?= date('H:i a', strtotime($jobInfo->created_at));?>
     </td>
 </tr>
@@ -18,25 +18,28 @@
 <td colspan="3">
 <table align="center" style="border: solid 1px black;" width="100%">
     <tr>
-        <td width="8%" style="text-align: center; font-size: 20px; border: solid 1px; padding: 10px;" >Location</td>
-        <td width="7%" style="text-align: center; font-size: 20px; border: solid 1px; padding: 10px;" >Size</td>
-        <td width="15%" style="text-align: center; font-size: 20px; border: solid 1px; padding: 10px;" >Type</td>
-        <td width="15%" style="text-align: center; font-size: 20px; border: solid 1px; padding: 10px;" >Side</td>
-        <td width="15%" style="text-align: center; font-size: 20px; border: solid 1px; padding: 10px;" >Qty(Sheets)</td>
-        <td width="40%" style="text-align: center; font-size: 20px; border: solid 1px; padding: 10px;" >Notes</td>
+        <td style="width: 20%; text-align: center; font-size: 10px; border: solid 1px; padding: 2px;" >Location</td>
+        <td style="width: 10%; text-align: center; font-size: 10px; border: solid 1px; padding: 2px;" >Size</td>
+        <td style="width: 10%; text-align: center; font-size: 10px; border: solid 1px; padding: 2px;" >Type</td>
+        <td style="width: 10%; text-align: center; font-size: 10px; border: solid 1px; padding: 2px;" >Side</td>
+        <td style="width: 10%; text-align: center; font-size: 10px; border: solid 1px; padding: 2px;" >Qty(Sheets)</td>
     </tr>
     <?php
     foreach($jobDetails as $job)
     {
     ?>
         <tr>
-            <td style="font-size: 14px; text-align: center; padding: 2px; font-weight: bold; border: solid 1px;" ><?= $job['out_location'];?></td>
-            <td style="font-size: 14px; text-align: center; padding: 2px; font-weight: bold; border: solid 1px;" ><?= $job['out_size'];?></td>
-            <td style="font-size: 14px; text-align: center; padding: 2px; font-weight: bold; border: solid 1px;" ><?= $job['out_type'];?></td>
-            <td style="font-size: 14px; text-align: center; padding: 2px; font-weight: bold; border: solid 1px;" ><?= $job['out_side'];?> SIDE</td>
-            <td style="font-size: 14px; text-align: center; padding: 2px; font-weight: bold; border: solid 1px;" ><?= $job['out_qty'];?></td>
-            <td style="font-size: 14px; text-align: center; padding: 2px; font-weight: bold; border: solid 1px;" ><?= $job['out_notes'];?></td>
+            <td style="font-size: 10px; text-align: center; padding: 1px; border: solid 0.2px;" ><?= $job['out_location'];?></td>
+            <td style="font-size: 10px; text-align: center; padding: 1px; border: solid 0.2px;" ><?= $job['out_size'];?></td>
+            <td style="font-size: 10px; text-align: center; padding: 1px; border: solid 0.2px;" ><?= $job['out_type'];?></td>
+            <td style="font-size: 10px; text-align: center; padding: 1px; border: solid 0.2px;" ><?= $job['out_side'];?> SIDE</td>
+            <td style="font-size: 10px; text-align: center; padding: 1px; border: solid 0.2px;" ><?= $job['out_qty'];?></td>
+            
         </tr>   
+        <tr>
+            <td  colspan="5" style="font-size: 11px; text-align: center; padding: 2px; border: solid 0.2px;" >Note: <?= $job['out_notes'];?></td>
+            </td>
+        </tr>
     <?php
     }
     ?>

@@ -110,19 +110,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 			<span style="font-size:11px;">
 				<?php echo 	date('h:i A',strtotime($job['created']));?>
 			</span>
-			<?php
-				if(isset($job['bonus_amount']) && !empty($job['bonus_amount']))
-				{
-			?>
-				<br />
-				<strong>
-					<a target="_blank" href="<?php echo site_url();?>account/account_details/<?= $job['bonus_customer_id'];?>">
-						<?php echo $job['bonus_customer'];?> ( <?= $job['bonus_amount'];?> )
-					</a>
-				</strong>
-			<?php
-				}
-			?>
+			
 		</td>
 		<td width="10px">
 
@@ -253,7 +241,19 @@ if(strtolower($this->session->userdata['department']) == "master")
 				}
 			?>
 
-
+			<?php
+				if(isset($job['bonus_amount']) && !empty($job['bonus_amount']))
+				{
+			?>
+				<br />
+				<strong>
+					<a target="_blank" href="<?php echo site_url();?>account/account_details/<?= $job['bonus_customer_id'];?>">
+						Reference: <?php echo $job['bonus_customer'];?> ( <?= $job['bonus_amount'];?> )
+					</a>
+				</strong>
+			<?php
+				}
+			?>
 
 		</td>
 		<td>

@@ -469,6 +469,9 @@ function fill_discount_account() {
 				<select name="p_year" id="p_year">
 					<option><?php echo date('Y');?></option>
 					<option><?php echo date("Y",strtotime("-1 year"));?></option>
+					<option><?php echo date("Y",strtotime("-2 year"));?></option>
+					<option><?php echo date("Y",strtotime("-3 year"));?></option>
+					<option><?php echo date("Y",strtotime("-4 year"));?></option>
 					<option value="all">All</option>
 				</select>
 			</td>

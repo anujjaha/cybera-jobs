@@ -585,6 +585,68 @@ function show_job_details(job_id){
 		alert("Courier Name is missig !");
 	}
 }
+
+function update_job_status(id, defaultstatus) {
+	
+	var setDefault = false;
+	
+	if(defaultstatus)
+	{
+		setDefault = true;
+	}
+	var value = $( "input:radio[name=jstatus]:checked" ).val();
+	var send_sms = $( "input:radio[name=send_sms]:checked" ).val();
+	var is_delivered = $( "input:radio[name=is_delivered]:checked" ).val();
+	var is_pickup = $( "input:radio[name=is_pickup]:checked" ).val();
+	var is_hold = $( "input:radio[name=is_hold]:checked" ).val();
+	var is_manual = $( "input:radio[name=is_manual]:checked" ).val();
+	var cyb_delivery = $( "input:radio[name=cyb_delivery]:checked" ).val();
+	var bill_number = $( "#bill_number").val();
+	var pickup_details = $( "#pickup_details").val();
+	var voucher_number = $( "#voucher_number").val();
+
+	var payment_details = $("#payment_details").val();
+	var delivery_details = $("#delivery_details").val();
+	var manual_complete = $("#manual_complete").val();
+
+	var receipt = $( "#receipt").val();
+	
+	jQuery("#saveJobStatusBtn").attr('disabled', true);
+	
+	if(jQuery("#jobStatusTbl") && setDefault == false)
+	{
+		alert('Job Status Updated');
+		jQuery("#jobStatusTbl").hide();
+	}
+	var params = {"j_id":id, "is_delivered": is_delivered,"j_status":value,"send_sms" : send_sms,"receipt":receipt,"bill_number":bill_number,"voucher_number":voucher_number,
+         "is_hold": is_hold,
+         "cyb_delivery": cyb_delivery,
+         "is_pickup": is_pickup,
+         "pickup_details": pickup_details,
+         "payment_details": payment_details,
+         "delivery_details": delivery_details,
+         "manual_complete": manual_complete,
+		 "is_manual": is_manual
+     };	
+
+    console.log(params);
+
+	$.ajax({
+         type: "POST",
+         url: "<?php echo site_url();?>/prints/update_job_status/"+id, 
+         data: params,
+         success: 
+              function(data){
+				  console.log(data);
+				  if(setDefault)
+				  {
+					$.fancybox.close();
+                    
+				  }
+							
+			 }
+          });
+}
 </script>
 
 <div id="view_job_details" style="width:900px;display: none;margin-top:-75px;">

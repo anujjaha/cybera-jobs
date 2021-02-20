@@ -97,6 +97,7 @@ $this->load->helper('form');
 			</select>
 		</div>
 
+
 		<div class="form-group">
 			<label>Message</label>
 			<input type="text" class="form-control" name="fix_note" value="<?php echo $dealer_info->fix_note;?>" placeholder="Fix Note">
@@ -108,6 +109,31 @@ $this->load->helper('form');
 			<textarea class="form-control" name="description"><?php echo  isset($dealer_info->description) ? $dealer_info->description : '' ?></textarea>
 		</div>
 
+		<div class="form-group">
+			<label>Referral Customer</label>
+			<select class="form-control" name="referral_customer_id" id="referral_customer_id">
+				<option value="0">
+					Please Select Reference Customer
+				</option>
+				<?php
+
+					foreach(get_all_customers() as $customer)
+					{
+						$selected = '';
+						if(isset($dealer_info) && $dealer_info->referral_customer_id == $customer->id)
+						{
+							$selected = 'selected="selected"';
+						}
+				?>
+					<option <?php echo $selected;?> value="<?php echo $customer->id;?>">
+						<?php echo !empty($customer->companyname) ? $customer->companyname : $customer->name;?>
+					</option>
+				<?php
+					}
+				?>
+				
+			</select>
+		</div>
 
 	</div><!-- /.box-body -->
 	</div><!-- /.box -->
@@ -205,6 +231,14 @@ $this->load->helper('form');
 			<select name="is_party_pay"  id="is_party_pay" class="form-control">
 				<option <?php echo $dealer_info->is_party_pay == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
 				<option <?php echo $dealer_info->is_party_pay == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
+			</select>
+		</div>
+
+		<div class="form-group">
+			<label>Include Daily Mail</label>
+			<select name="is_daily_mail"  id="is_daily_mail" class="form-control">
+				<option <?php echo $dealer_info->is_daily_mail == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
+				<option <?php echo $dealer_info->is_daily_mail == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
 			</select>
 		</div>
 

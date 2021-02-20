@@ -143,7 +143,7 @@ class Ajax extends CI_Controller {
 			
 			$sms_text = 'Dear '.$cusName.', We have dispatched your parcel via - '.$this->input->post('courier_name').' and the docket number is '.$this->input->post('docket_number').'. Thank You.';
 
-			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.';
+			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.<br /><br/><br /> અમે હંમેશાં તમારા પાર્સલને કુરિયર અથવા પરિવહન સેવાઓમાં નિર્ધારિત  સમય મર્યાદામાં પહોંચાડવાનો પ્રયાસ કરીએ છીએ. જો કોઈ કારણોસર તમારું પાર્સલ મોડું થાય તો સાયબેરા જવાબદાર રહેશે નહીં. અસુવિધા બદલ દિલગીર છીએ.';
 
 			$subject = 'Dispatched Parcel via - ' . $this->input->post('courier_name') . ' by Cybera';
 			
@@ -1873,6 +1873,16 @@ class Ajax extends CI_Controller {
 					$inputData['total'] = $jobInput['value'];
 				}
 
+				if($jobInput['name'] == 'outJobId'  && $jobInput['value'] != 0)
+				{
+					$inputData['job_id'] = $jobInput['value'];
+				}
+
+				if($jobInput['name'] == 'outJobCustomerId' && $jobInput['value'] != 0)
+				{
+					$inputData['customer_id'] = $jobInput['value'];
+				}
+
 				if(strpos($jobInput['name'], 'out') !== false)
 				{
 					$key = substr($jobInput['name'], 4, -1);
@@ -1966,6 +1976,8 @@ class Ajax extends CI_Controller {
 					$inputData['total'] = $jobInput['value'];
 				}
 
+				
+
 				if(strpos($jobInput['name'], 'out') !== false)
 				{
 					$key = substr($jobInput['name'], 4, -1);
@@ -1989,6 +2001,7 @@ class Ajax extends CI_Controller {
 				}	
 				else
 				{
+
 					$outJobId = $this->out_model->create($inputData);
 				}
 				

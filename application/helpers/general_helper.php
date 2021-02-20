@@ -441,6 +441,11 @@ function job_complete_sms($job_id=null) {
 		$user_id = $ci->session->userdata['user_id'];
 		
 		send_sms($user_id,$customer_id,$mobile,$sms_text);
+
+
+		$reviewSmsText = "Hi ". $result->customer_name .", thank you for doing business with Cybera.Please share your review about your experience. Click https://bit.ly/3aBXueZ. Thank you.";
+		
+		send_sms($user_id,$customer_id,$mobile,$reviewSmsText);
 		if(strlen($otherMobile) > 2 )
 		{
 			send_sms($user_id,$customer_id,$otherMobile,$sms_text);
@@ -981,7 +986,7 @@ function getAccountInfo()
 	$sql = "select DISTINCT(job.customer_id), customer.id, customer.name, customer.companyname, customer.mobile 
 			from job 
 			LEFT JOIN customer  on customer.id = job.customer_id
-			WHERE ctype != 2";
+			WHERE ctype != 2 and is_daily_mail = 1";
 			
 		$ci=& get_instance();
 	$ci->load->database(); 	

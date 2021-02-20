@@ -28,13 +28,13 @@
 
 		<table id="outItem" class="table">
 			<tr>
-				<td> Location </td>
-				<td> Size </td>
-				<td> LAMINATION </td>
-				<td> SIDE </td>
-				<td> Qty </td>
-				<td> Notes </td>
-				<td> Action </td>
+				<td width="20%"> Location </td>
+				<td width="10%"> Size </td>
+				<td width="10%"> LAMINATION </td>
+				<td width="10%"> SIDE </td>
+				<td width="10%"> Qty </td>
+				<td width="30%"> Notes </td>
+				<td width="10%"> Action </td>
 			</tr>
 
 			<tr id="primary-row">
@@ -66,7 +66,10 @@
 				</td>
 			</tr>
 		</table>
-		
+		<input type="hidden" name="outJobId" id="outJobId" value="<?php echo isset($job_data) && !empty($job_data->id) ? $job_data->id : '0';?>">
+
+		<input type="hidden" name="outJobCustomerId" id="outJobCustomerId" value="<?php echo isset($job_data) && !empty($job_data->customer_id) ? $job_data->customer_id : '0';?>">
+		</form>
       </div>
       <div class="modal-footer">
       	<div>
@@ -129,7 +132,14 @@ function saveOutStationJob()
         formObj[input.name] = input.value;
     });
 
-
+    if(jQuery("#outJobId").val().toString() === "0")
+    {
+    	var setURL = "<?php echo site_url();?>/ajax/createOutStationJob";
+    }
+    else
+    {
+    	var setURL = "<?php echo site_url();?>/ajax/updateOutStationJob";
+    }
 
 	$.ajax({
 		 type: "POST",

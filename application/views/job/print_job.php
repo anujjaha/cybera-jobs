@@ -238,6 +238,8 @@ if($customer_details->ctype == 1 )
 							$content .= '	
 							';
 						}
+						/*
+						// I/we Accept
 						$content .= '<tr>
 							<td colspan="2">
 							<span style="font-size:11px;">
@@ -250,25 +252,24 @@ if($customer_details->ctype == 1 )
 							<td colspan="2" align="right">
 								Signature : __________________________
 							</td>
-						</tr>';
+						</tr>';*/
+
+				$approxCompletionTime = '';
+				$genInvoiceDetails = '';
+
 				if(strlen($job_data->approx_completion) > 2)
 				{
-					$content .='		<tr>
-								<td colspan="2" align="center">
-								<br>
-									Approximate Completion Time : '. $job_data->approx_completion .'
-								</td>
-							</tr>';
+					$approxCompletionTime = 'Approximate Completion Time : '. $job_data->approx_completion;
 				}
 
 				$genInvoice = $job_data->is_job_invoice == 1 ?  'Generate INVOICE<br>' : '';
-				$content .='		<tr>
-							<td colspan="2" align="center" style="font-size: 16px;">
-							<br>
-								<strong>'. $genInvoice .'</strong>
-								'. $job_data->invoice_details .'
-							</td>
-						</tr>';
+				$genInvoiceDetails = '<strong>' . $genInvoice .'</strong>'. $job_data->invoice_details;
+				
+				
+				$content .='<tr>
+					<td> '. $approxCompletionTime .'</td>
+					<td> '. $genInvoiceDetails .'</td>
+				</tr>';
 
 				if($job_data->is_continue == 1)
 				{

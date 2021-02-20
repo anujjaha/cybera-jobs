@@ -111,4 +111,33 @@ class Out_model extends CI_Model {
         }
         return true;
     }
+
+    public function getAllJobOut($jobId = null)
+    {   
+        $outJob = [];
+        $outJobDetails = [];
+
+        if($jobId)
+        {
+            $outJob = $this->db->select('*')
+                ->from($this->table)
+                ->where('job_id', $jobId)
+                ->get()
+                ->row();
+
+            if(isset($outJob->id) && !empty($outJob->id))
+            {
+                $outJobDetails = $this->db->select('*')
+                    ->from($this->tableDetails)
+                    ->where('out_id', $outJob->id)
+                    ->get()
+                    ->result_array();
+            }
+        }
+
+        return [
+            'outJob'        => $outJob,
+            'outJobDetails' => $outJobDetails,
+        ];
+    }
 }

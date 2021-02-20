@@ -278,6 +278,11 @@ function customer_selected(type,userid) {
         		$('input[type=submit]', this).removeAttr('disabled', 'disabled');
         	}
 
+            if(data.referral_customer_id && data.referral_customer_id.toString() != "0" && data.referral_customer_id.length > 0)
+            {
+                jQuery("#reference_customer_id").val(data.referral_customer_id);
+                jQuery("#fix_amount").val(1);
+            }
         	console.log(data.email);
         	/*console.log(data);
         	console.log(data.email);*/
@@ -1273,44 +1278,38 @@ $this->load->helper('general'); ?>
 <table align="center" class="table" style="border: 1px solid;"  border="2">	 	
 	<tr>
 		<td>
-			Job Creator : 
-			<select name="emp_id" id="emp_id">
-				<option selected="selected" value="0">
-					Please Select Operator
-				</option>
-				<?php
-					foreach(getAllEmployees(true) as $employee)
-					{
-				
-				?>
-					<option value="<?php echo $employee->id;?>">
-						<?php echo $employee->name;?>
-					</option>
-				<?php
-					}
-				?>
-				
-			</select>
-		</td>
+            <div class="row">
+                <div class="col-md-4">
+                    Transporter : 
+                    <select name="transporter_id" id="transporter_id">
+                        <option selected="selected" value="0">
+                            Please Select Transporter
+                        </option>
+                    </select>
+                    <input type="text" name="manual_transporter" class="pull-right" style="width: 300px;">
+                </div>
+                <div class="col-md-4">
+        			Transportation Charges Paid By:
+        			<select name="party_pay" id="party_pay" required="required">
+                        <option value="" selected="selected">Select Transporter Charges</option>
+        				<option value="2" >N/A</option>
+        				<option value="0">Cybera</option>
+        				<option value="1">Party</option>
+        			</select>
+                </div>
 
-		<td>
-			Transporter : 
-			<select name="transporter_id" id="transporter_id">
-				<option selected="selected" value="0">
-					Please Select Transporter
-				</option>
-			</select>
-			<input type="text" name="manual_transporter" class="pull-right" style="width: 100px;">
-			<br>
-			Transportation Charges Paid By:
-			<select name="party_pay" id="party_pay" required="required">
-                <option value="" selected="selected">Select Transporter Charges</option>
-				<option value="2" >N/A</option>
-				<option value="0">Cybera</option>
-				<option value="1">Party</option>
-			</select>
-			<br>
-		</td>
+                <div class="col-md-2">
+                    Total Jobs : <input  value="1" type="number" min="1" max="10" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">        
+                </div>
+
+                <div class="col-md-2">
+                    <a href="javascript:void(0);" class="btn btn-primary pull-right" id="out-side-btn">
+                        Out Side
+                    </a>
+                </div>
+            </div>
+        </td>
+         
 	</tr>
     <?php
     if(
@@ -1348,7 +1347,7 @@ $this->load->helper('general'); ?>
     ?>
 	<tr>
 		<td colspan="2">
-			<br>
+			
             <?php
             if(
                 strtolower($this->session->userdata['department']) == "master"
@@ -1365,18 +1364,15 @@ $this->load->helper('general'); ?>
 			</div>
 
 			<div class="col-md-3">
-				Fix Amount : <input type="number" name="fix_amount" value="0"  min="0" 
+				Fix Amount : <input type="number" name="fix_amount" id="fix_amount" value="0"  min="0" 
 				max="10000" step="1">
 			</div>
             <?php
             }
             ?>
-			<div class="col-md-3">
-				<label>Print CYBERA : <input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
-				</label>
-			</div>
+			
 
-			<div class="col-md-3">
+			<div class="col-md-3" style="display: none;">
 				<label><input value="0" type="radio" name="is_customer_waiting" id="is_customer_waiting" checked="checked">
 				Normal
 				</label>
@@ -1466,53 +1462,47 @@ $this->load->helper('general'); ?>
 						<input type="text" name="delivery_details" id="delivery_details"  class="form-control" value="">
 					</td>
 
+                    <td>
+                        <label>
+                            <input type="checkbox" name="is_5_gst" id="is_5_gst"  value="1">
+                            FIX 5% GST
+                        </label>
+                        <br>
+                        Used to Generate 5% BILL
+                    </td>
+
+                    <td>
+                        <label>
+                            <input type="checkbox" name="is_job_invoice" id="is_job_invoice"  value="1">
+                            Invoice
+                        </label>
+                        <br>
+                        <input type="text" name="invoice_details" id="invoice_details"  class="form-control" value="">
+                    </td>
+
 					<td>
-						<label>
+
+                            <label><input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
+                            Print CYBERA 
+                            </label>
+                        
+						<!-- <label>
 							<input type="checkbox" name="is_manual" value="1">
 							Complete ON
 						</label>
-						<!-- <label>
-							<input type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
-							Delivery Done
-						</label> -->
 						<br>
-						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value="">
-					</td>
-					<td>
-						<label>
-							<input type="checkbox" name="is_5_gst" id="is_5_gst"  value="1">
-							FIX 5% GST
-						</label>
-						<br>
-						Used to Generate 5% BILL
-					</td>
+						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value=""> -->
 
-					<td>
-						<label>
-							<input type="checkbox" name="is_job_invoice" id="is_job_invoice"  value="1">
-							Invoice
-						</label>
-						<br>
-						<input type="text" name="invoice_details" id="invoice_details"  class="form-control" value="">
+                        
+                        <!-- <label>
+                            <input type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
+                            Delivery Done
+                        </label> -->
 					</td>
-
 				</tr>
 			</table>
 		</td>
 	</tr>
-	<tr>		
-		<td align="center"> Remind Me :
-		<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
-			<option value="0">No</option>		
-			<option value="1">Yes</option>		
-		</select>		
-		</td>		
-		<td align="center">
-			<a href="javascript:void(0);" class="btn btn-primary" id="out-side-btn">
-				Out Side
-			</a>
-		</td>
-	</tr>		
 			
 	<tr id="remindContainer" style="display: none;">		
 	<td>		
@@ -1536,18 +1526,6 @@ $this->load->helper('general'); ?>
 	<input type="text" name="approx_completion" id="approx_completion" class="form-control" required="required">
 </div>
 
-<div class="col-md-2">
-	<table>
-		<tr>
-			<td>
-				Total Jobs : 
-			</td>
-			<td>
-				<input  value="1" type="number" min="1" max="10" step="1" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
-			</td>
-		</tr>
-	</table>
-</div>
 
 <div class="col-md-2">
 	Payment Type:
@@ -1573,9 +1551,30 @@ $this->load->helper('general'); ?>
 		<option value="1">Yes</option>
 	</select>
 </div>
+<div class="col-md-2">
+    Job Creator :  <br />
+    <select name="emp_id" id="emp_id" class="form-control">
+        <option selected="selected" value="0">
+            Please Select Operator
+        </option>
+        <?php
+            foreach(getAllEmployees(true) as $employee)
+            {
+        
+        ?>
+            <option value="<?php echo $employee->id;?>">
+                <?php echo $employee->name;?>
+            </option>
+        <?php
+            }
+        ?>
+        
+    </select>
+</div>
+
 <div class="col-md-2" class="pull-right">
 
-	Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
+Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
 			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">
 </div>
 <input type="hidden" name="is_outside" id="is_outside" value="0">
@@ -1741,9 +1740,10 @@ $this->load->helper('general'); ?>
 					<label><input type="checkbox" name="binding" value="Perfect Binding">Perfect Binding</label>
 					<label><input type="checkbox" name="binding" value="Perforation">Perforation</label>
 					<label><input type="checkbox" name="binding" value="Folding">Folding</label>
-					<label><input type="checkbox" name="binding" value="Half Cutting">Half Cutting</label>
+                    <label><input type="checkbox" name="binding" value="Half Cutting">Half Cutting</label>
+					<label><input type="checkbox" name="binding" value="Full & Half Cutting">Full & Half Cutting</label>
 					<br>
-					Half Cutting:<input type="text" name="binding_info" id="binding_info">
+					Half Cutting Details: <br /><input type="text" name="binding_info" id="binding_info">
 					<br>
 					Half Cutting Blades:<input type="number" style="width: 80px;" name="blade_per_sheet" id="blade_per_sheet">
 				</td>
@@ -2011,11 +2011,6 @@ require_once('out-station.php');
 ?>
 
 <script type="text/javascript">
-	setTimeout(function()
-	{
-		//jQuery("#reference_customer_id").select2();
-		//jQuery("#emp_id").select2();
-	}, 100);
 
 	jQuery(".corner-cut-details").hide();
 

@@ -53,6 +53,8 @@ function customer_selected(type,userid) {
 	        		document.getElementById('location_id').innerHTML = '';
 	        	}
 
+
+
 				jQuery("#mobile_"+type).val('');
 				jQuery("#mobile_"+type).val(data);
 				jQuery("#showEmailId").html("Email Id : " + data.email);
@@ -77,6 +79,17 @@ function customer_selected_set() {
               	
               	jQuery("#mobile_customer").val(data.mobile);
 	        	jQuery("#showEmailId").html("Email Id : " + data.email);
+
+        		if(data.referral_customer_id && data.referral_customer_id.toString() != "0" && data.referral_customer_id.length > 0)
+        	    {
+        	        jQuery("#reference_customer_id").val(data.referral_customer_id);
+        	        jQuery("#fix_amount").val(1);
+        	    }
+        	    else
+        	    {
+        	    	jQuery("#reference_customer_id").val('0');
+        	        jQuery("#fix_amount").val(0);	
+        	    }
 
 	        	if(data.under_revision == 1)
         	{
@@ -636,50 +649,6 @@ $modified_by = $this->session->userdata['user_id'];
     
     <hr>
 <div class="col-md-12">
-<div class="row">
-
-	<div class="col-md-4">
-		<?php
-			//pr($job_data->user_id);
-		?>
-		Job Creator : 
-		<select name="emp_id" id="emp_id">
-			<option selected="selected" value="0">
-				Please Select Operator
-			</option>
-			<?php
-				foreach(getAllEmployees() as $employee)
-				{
-			
-			?>
-				<option 
-
-				<?php
-					echo $employee->id == $job_data->emp_id ? 'selected="selected"'  :'';
-
-				?>
-				value="<?php echo $employee->id;?>">
-					<?php echo $employee->name;?>
-				</option>
-			<?php
-				}
-			?>
-			
-		</select>
-	</div>
-	
-	<div class="col-md-4">
-		<input type="hidden" name="job_id" value="<?php echo $job_data->id;?>">
-		<input type="hidden" name="modified" value="<?php echo $modified_by;?>">
-		
-		<input type="hidden" name="hasDiscount" value="1">
-            Bill Number : <input type="text" name="bill_number" value="<?php if(!empty($job_data->bill_number)) { echo $job_data->bill_number;}?>">
-	</div>
-	<div class="col-md-4">
-		Reciept Number : <input type="text" name="receipt"  value="<?php if(!empty($job_data->receipt)) { echo $job_data->receipt;}?>">
-	</div>
-</div>
-<hr>
 <div class="col-md-12">
 <div class="form-group">
 		
@@ -688,9 +657,11 @@ $modified_by = $this->session->userdata['user_id'];
 
 		
 
-<table align="center" style="border: 2px solid #000;" border="2">		
+<table align="center" style="border: 2px solid #000; width: 100% !important;" border="2">	 	
 	<tr>
 		<td>
+		<div class="row">
+			<div class="col-md-12">
 			<?php
             if(
                 strtolower($this->session->userdata['department']) == "master"
@@ -728,22 +699,37 @@ $modified_by = $this->session->userdata['user_id'];
 			<?php
 				}
 			?>
-		</td>
-		<td>
-			Transporter : 
-			<select name="transporter_id" id="transporter_id">
-				<option selected="selected" value="0">
-					Please Select Transporter
-				</option>
-			</select>
-			<input type="text" name="manual_transporter" class="pull-right" style="width: 200px;">
-			<br>
-			Pay:
-			<select name="party_pay" id="party_pay">
-				<option <?php echo $job_data->party_pay == 0 ? 'selected="selected"' : '';?> value="0">Cybera</option>
-				<option <?php echo $job_data->party_pay == 1 ? 'selected="selected"' : '';?> value="1">Party</option>
-			</select>
-			<br>
+			</div>
+		</div>
+			<div class="row">
+				<div class="col-md-4">
+					Transporter : 
+					<select name="transporter_id" id="transporter_id">
+						<option selected="selected" value="0">
+							Please Select Transporter
+						</option>
+					</select>
+					<input type="text" name="manual_transporter" class="pull-right" style="width: 200px;">
+				</div>
+				<div class="col-md-4">
+					Transportation Charges Paid By:
+					<select name="party_pay" id="party_pay">
+						<option <?php echo $job_data->party_pay == 0 ? 'selected="selected"' : '';?> value="0">Cybera</option>
+						<option <?php echo $job_data->party_pay == 1 ? 'selected="selected"' : '';?> value="1">Party</option>
+					</select>
+				</div>
+
+				<div class="col-md-2">
+					Total Jobs : 
+					<input type="number" min="1" max="10" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
+				</div>
+
+				<div class="col-md-2">
+					<a href="javascript:void(0);" class="btn btn-primary pull-right" id="out-side-btn">
+						Out Side
+					</a>
+				</div>
+			</div>
 		</td>
 	</tr>
 	<tr>
@@ -765,16 +751,15 @@ $modified_by = $this->session->userdata['user_id'];
 				</div>
 
 				<div class="col-md-3">
-				Fix Amount : <input type="number" name="fix_amount" value="<?php echo isset($reference_data) ? $reference_data->fix_amount :  0;?>"  min="0" 
+				Fix Amount : <input type="number" name="fix_amount"  id="fix_amount" value="<?php echo isset($reference_data) ? $reference_data->fix_amount :  0;?>"  min="0" 
 				max="10000" step="1">
 				</div>
 			<?php } ?>
 			<div class="col-md-3">
-			<label>Print CYBERA : <input <?php echo $job_data->is_print_cybera == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_print_cybera" id="is_print_cybera">
-			</label>
+			
 			</div>
 
-			<div class="col-md-3">
+			<div class="col-md-3" style="display: none;">
 			<label><input value="0" <?php echo $job_data->is_customer_waiting == 0 ? 'checked="checked"' : '';?>  type="radio" name="is_customer_waiting" id="is_customer_waiting" checked="checked">
 			Normal
 			</label>
@@ -793,11 +778,11 @@ $modified_by = $this->session->userdata['user_id'];
 
 			</div>
 
-			<div class="col-md-12">
+			<!-- <div class="col-md-12">
 				<hr>
-			</div>
+			</div> -->
 
-			<div class="col-md-6">
+			<!-- <div class="col-md-6">
 				<label>Under Observation After This Job : <input value="1"  type="checkbox" name="is_revision_customer_next_job" id="is_revision_customer_next_job">
 				</label>
 			</div>
@@ -808,7 +793,7 @@ $modified_by = $this->session->userdata['user_id'];
 			</div>
 			<div class="col-md-12">
 				<hr>
-			</div>
+			</div> -->
 		</td>	
 	</tr>
 	<tr>
@@ -858,7 +843,7 @@ $modified_by = $this->session->userdata['user_id'];
 						<input type="text" name="delivery_details" id="delivery_details"  class="form-control"  value="<?=$job_data->delivery_details?>">
 					</td>
 
-					<td>
+					<!-- <td>
 						<label>
 							<input <?php if($job_data->is_manual == 1) echo 'checked="checked"';?> type="radio" name="is_manual" value="1">
 							Complete ON
@@ -870,7 +855,7 @@ $modified_by = $this->session->userdata['user_id'];
 						</label>
 						<br>
 						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value="<?=$job_data->manual_complete?>">
-					</td>
+					</td> -->
 
 					<td>
 						<label>
@@ -892,7 +877,7 @@ $modified_by = $this->session->userdata['user_id'];
 			</table>
 		</td>
 	</tr>
-	<tr>		
+	<!-- <tr>		
 		<td align="center"> Remind Me : 
 			<select name="remindMe" id="remindMe" onchange="showRemindContainer()">		
 				<option value="0">No</option>		
@@ -901,11 +886,9 @@ $modified_by = $this->session->userdata['user_id'];
 		</td>		
 
 		<td align="center">
-			<a href="javascript:void(0);" class="btn btn-primary" id="out-side-btn">
-				Out Side
-			</a>
+			
 		</td>
-	</tr>		
+	</tr>		 -->
 			
 	<tr id="remindContainer" style="display: none;">		
 	<td>		
@@ -947,16 +930,30 @@ $modified_by = $this->session->userdata['user_id'];
 	<input type="text" name="approx_completion" id="approx_completion" value="<?php echo $job_data->approx_completion;?>" class="form-control">
 </div>
 <div class="col-md-2">
-	<table>
-		<tr>
-			<td>
-				Total Jobs : 
-			</td>
-			<td>
-				<input type="number" min="1" max="10" step="1"  value="<?php echo $job_data->sub_jobs;?>" type="text" name="sub_jobs" id="sub_jobs" class="form-control" required="required">
-			</td>
-		</tr>
-	</table>
+	Job Creator : 
+	<select name="emp_id" id="emp_id" class="form-control">
+		<option selected="selected" value="0">
+			Please Select Operator
+		</option>
+		<?php
+			foreach(getAllEmployees() as $employee)
+			{
+		
+		?>
+			<option 
+
+			<?php
+				echo $employee->id == $job_data->emp_id ? 'selected="selected"'  :'';
+
+			?>
+			value="<?php echo $employee->id;?>">
+				<?php echo $employee->name;?>
+			</option>
+		<?php
+			}
+		?>
+		
+	</select>
 </div>
 
 <div class="col-md-2">
@@ -995,9 +992,28 @@ $modified_by = $this->session->userdata['user_id'];
 	</select>
 </div>
 <div class="col-md-2" class="pull-right">
+
+<label><input <?php echo $job_data->is_print_cybera == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_print_cybera" id="is_print_cybera">Print CYBERA</label>
+<br />
+<label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
 Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
 		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">
 </div>
+
+<div class="row">
+	<div class="col-md-4">
+		<input type="hidden" id="job_id" name="job_id" value="<?php echo $job_data->id;?>">
+		<input type="hidden" name="modified" value="<?php echo $modified_by;?>">
+		
+		<input type="hidden" name="hasDiscount" value="1">
+            Bill Number : <input type="text" name="bill_number" value="<?php if(!empty($job_data->bill_number)) { echo $job_data->bill_number;}?>">
+	</div>
+	<div class="col-md-4">
+		Reciept Number : <input type="text" name="receipt"  value="<?php if(!empty($job_data->receipt)) { echo $job_data->receipt;}?>">
+	</div>
+</div>
+<hr>
+
 </form>
 
 
@@ -1175,8 +1191,8 @@ function showRemindContainer()
 <script type="text/javascript">
 	setTimeout(function()
 	{
-		jQuery("#reference_customer_id").select2();
-		jQuery("#emp_id").select2();
+		/*jQuery("#reference_customer_id").select2();
+		jQuery("#emp_id").select2();*/
 	}, 100);
 
 	<?php
@@ -1199,9 +1215,17 @@ function showPaytmId()
     {
         jQuery("#paytm_id").show();
     }
-}	
+}
+
 </script>
 
 <?php
-	require_once('edit-out-station.php');
+	if(isset($jobOutDetails) && !empty($jobOutDetails))
+	{
+		require_once('edit-out-station.php');
+	}
+	else
+	{
+		require_once('out-station.php');
+	}
 ?>

@@ -27,11 +27,13 @@ class Jobs extends CI_Controller {
 	{
 		if($jobId)
 		{
-			$this->load->model('job_model');
+      $this->load->model('job_model');
+			$this->load->model('Out_model');
 			
 			$jobData 			= $this->job_model->get_job_data($jobId);
 			$jobDetails 		= $this->job_model->get_job_details($jobId);
 			$jobCuttingDetails 	= $this->job_model->get_cutting_details($jobId);
+      $outJobDetails  = $this->Out_model->getAllJobOut($jobId);
 			
       $jobdata['customer_id'] = $jobData->customer_id;
       $jobdata['transporter_id'] = $jobData->transporter_id;
@@ -73,6 +75,44 @@ class Jobs extends CI_Controller {
 			}
 			
 			$this->job_model->insert_jobdetails($job_details);
+
+      //COPY OUT JOB 
+      $outJobDetails  = $this->Out_model->getAllJobOut($jobId);
+      $newOutJob = [];
+      $newOutJobDetails = [];
+      if(isset($outJobDetails['outJob']) && count($outJobDetails))
+      {
+        $newOutJob = [
+          'job_id' => $job_id,
+          'customer_id'  => $jobData->customer_id,
+          'location_name' => $outJobDetails['outJob']->location_name,
+          'total'  => $outJobDetails['outJob']->total
+        ];
+
+        if(count($newOutJob))
+        {
+          $outJobId = $this->Out_model->create($newOutJob);
+          
+          foreach($outJobDetails['outJobDetails'] as $outJobDetail)
+          {
+            $newOutJobDetails[] = [
+              'out_id' => $outJobId,
+              'out_location' => $outJobDetail['out_location'],
+              'out_size' => $outJobDetail['out_size'],
+              'out_type' => $outJobDetail['out_type'],
+              'out_side' => $outJobDetail['out_side'],
+              'out_qty' => $outJobDetail['out_qty'],
+              'out_notes' => $outJobDetail['out_notes'],
+              'created_at' => date('Y-m-d H:i:s'),
+            ];
+          }
+
+          if(count($newOutJobDetails))
+          {
+            $this->Out_model->insertDetails($newOutJobDetails);
+          }
+        }
+      }
 			
 			if(count($jobCuttingDetails))
 			{
@@ -753,7 +793,7 @@ public function edit($job_id=null)
 
 			if($this->input->post()) 
 			{
-				$customer_id = $this->input->post('customer_id');
+        $customer_id = $this->input->post('customer_id');
 				$original_customer_id = $this->input->post('original_customer_id');
 
 				flushDiscountTransaction($job_id, $customer_id, 'Visiting Card Special Discount');
@@ -1105,7 +1145,11 @@ public function edit($job_id=null)
 					$to  	 = array($customer_details->emailid);
 					$subject = "Estimate ( Updated ) - " . $job_data->jobname;
 
-					$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+          $mailInput = $this->input->post();
+          if(isset($mailInput['sendUpdateMail']) && $mailInput['sendUpdateMail'] == 1)
+          {
+            $status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+          }
 				}
 			}
 
@@ -1173,12 +1217,14 @@ public function edit($job_id=null)
 			
 			redirect("jobs/job_print/".$job_id,'refresh');	
 			}
+      $this->load->model('out_model');
 			$data['all_customers'] = $this->job_model->get_all_customers();
 			$data['paper_gsm']= $this->get_paper_gsm();
 			$data['paper_size']= $this->get_paper_size();
       $data['maskCategories'] = $this->getMaskCategories();
-
-			$this->template->load('job', 'edit_job', $data);
+      $data['out_jobs'] = $this->out_model->getAllJobOut($job_id);
+      
+      $this->template->load('job', 'edit_job', $data);
 		}
 	}
 	public function job_print($job_id=null) {
@@ -1361,6 +1407,40 @@ public function edit($job_id=null)
 
 	public function test()
 	{
+    $this->load->model('Out_model');
+
+    $outJobDetails  = $this->Out_model->getAllJobOut(33506);
+    $newOutJob = [];
+    $newOutJobDetails = [];
+    if(isset($outJobDetails) && count($outJobDetails))
+    {
+      $newOutJob = [
+        'job_id' => 1,
+        'customer_id'  => 1,
+        'location_name' => $outJobDetails['outJob']->location_name,
+        'total'  => $outJobDetails['outJob']->total
+      ];
+      //PR($newOutJob, false);
+
+      foreach($outJobDetails['outJobDetails'] as $outJobDetail)
+      {
+        $newOutJobDetails[] = [
+          'out_id' => 1,
+          'out_location' => $outJobDetail['out_location'],
+          'out_size' => $outJobDetail['out_size'],
+          'out_type' => $outJobDetail['out_type'],
+          'out_side' => $outJobDetail['out_side'],
+          'out_qty' => $outJobDetail['out_qty'],
+          'out_notes' => $outJobDetail['out_notes'],
+          'created_at' => date('Y-m-d H:i:s'),
+        ];
+      }
+
+      PR($newOutJobDetails);
+    }
+
+    pr($outJobDetails);
+    die;
     $cashReceiptContent = getTodayCashReceiptMailContent();
     pr($cashReceiptContent);
     $subject = 'Today Cash Receipt -' . date('d-m-Y h:i');

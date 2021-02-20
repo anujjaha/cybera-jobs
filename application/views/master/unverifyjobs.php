@@ -44,8 +44,7 @@ function direct_verify_job(id) {
 		<th>Verify</th>
 		<th>Date / Time</th>
 		<th>Status</th>
-		<th>View</th>
-		<th>Edit</th>
+		<th>Action</th>
 		</tr>
 		</thead>
 	<tbody>
@@ -57,7 +56,7 @@ function direct_verify_job(id) {
 		<td><?php echo $sr;?></td>
 		<td>
 		<?php
-
+			echo $job['job_id'];
 			if($job['is_pin'] == 1)
 			{
 			?>
@@ -167,11 +166,28 @@ function direct_verify_job(id) {
 				}
 				?>
 		</td>
-		<td><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a></td>
+		<td width="85px;"><a class="fancybox"  onclick="show_job_details(<?php echo $job['job_id'];?>);" href="#view_job_details">View</a>
+		| 
+		<a href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a>
+		|
 		
-		<td>
-			<a target="_blank" href="<?php echo site_url();?>/jobs/edit_job/<?php echo $job['job_id'];?>">Edit</a>
-		</td>
+		<a target="_blank" href="<?php echo site_url();?>/jobs/job_print_with/<?php echo $job['job_id'];?>#editCuttingSlipLive">Q Edit</a>
+		|
+			<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
+			Print</a>
+
+		|
+			<strong><a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $job['customer_id'];?>">Customer</a></strong>
+
+			<?php
+				if(isset($job['approx_completion']))
+				{
+					echo "<hr><strong>".$job['approx_completion']. '</strong>';
+				}
+			?>
+			</td>
+
+
 		</tr>
 		<?php $sr++; } ?>
 	</tfoot>

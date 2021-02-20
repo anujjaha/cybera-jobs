@@ -1,6 +1,11 @@
 <?php
-	/*pr($jobOutInfo, false);
-	pr($jobOutDetails);*/
+	/*$oJobName = '';
+	if(isset($out_jobs['outJob']) && count($out_jobs['outJob']))
+	{
+		$oJobName = $out_jobs['outJob']->location_name;
+		pr($out_jobs);
+		
+	}*/
 ?>
 <!-- MOdal BOx for Bills -->
 <div id="jobOutModalPopup" class="modal fade" role="dialog">
@@ -31,21 +36,30 @@
 
 		<table id="outItem" class="table">
 			<tr>
-				<td> Location </td>
-				<td> Size </td>
-				<td> LAMINATION </td>
-				<td> SIDE </td>
-				<td> Qty </td>
-				<td> Notes </td>
-				<td> Action </td>
+				<td width="20%"> Location </td>
+				<td width="10%"> Size </td>
+				<td width="10%"> LAMINATION </td>
+				<td width="10%"> SIDE </td>
+				<td width="10%"> Qty </td>
+				<td width="30%"> Notes </td>
+				<td width="10%"> Action </td>
 			</tr>
 
+
+
 			<?php
+				$sr = 0;
 				foreach ($jobOutDetails as $firstDetail)
 				{
+					$elementId = 'primary-row-'. $firstDetail['id'];
+					if($sr == 0)
+					{
+						$elementId = 'primary-row';
+					}
+					
 			?>
-			<tr id="primary-row-<?= $firstDetail['id'];?>">
-				<td><input class="form-control" type="text" value="<?php echo $firstDetail['out_location'];?>" name="out[out_location]" value="<?=$firstDetail['out_size'];?>"> </td>
+			<tr id="<?= $elementId;?>">
+				<td><input class="form-control" type="text" value="<?php echo $firstDetail['out_location'];?>" name="out[out_location]" value="<?=$firstDetail['out_location'];?>"> </td>
 				<td><input class="form-control" type="text" value="12X18" name="out[size]" value="<?=$firstDetail['out_size'];?>"> </td>
 				<td>
 					<select name="out[lamination_type]" class="form-control">
@@ -73,11 +87,25 @@
 				
 				<td><textarea  class="form-control" name="out[notes]"><?=$firstDetail['out_notes'];?></textarea></td>
 				<td>
-					<a href="javascript:void(0);" class="add-new-row">Add</a>
-					<a style="display: none;" href="javascript:void(0);" class="remove-new-row">Remove</a>
+					<?php
+					if($sr == 0)
+					{
+					?>
+						<a href="javascript:void(0);" class="add-new-row">Add</a>
+					<?php
+					}
+					else
+					{
+					?>
+						<a href="javascript:void(0);" class="remove-new-row">Remove</a>
+					<?php
+					}
+					?>
 				</td>
 			</tr>
-			<?php }
+			<?php 
+			$sr++;
+			}
 			?>
 		</table>
 		
@@ -132,7 +160,7 @@
 	jQuery(".add-new-row").on('click', function()
 	{
 		jQuery("#primary-row").clone().appendTo("#outItem");
-		jQuery("#outItem tr").last().find('a').first().html('');
+		jQuery("#outItem tr").last().find('a').first().html('<a href="javascript:void(0);" class="remove-new-row">Remove</a>');
 		jQuery("#outItem tr").last().find('a').last().css('display', 'block');
 		jQuery("#outItem tr").last().find('input').val('');
 		jQuery("#outItem tr").last().find('textarea').val('');

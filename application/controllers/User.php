@@ -90,7 +90,7 @@ class User extends CI_Controller {
 		$this->template->load('user', 'pending-list', $data);
 	}
 
-	public function mask($maskTitle = null) 
+	public function mask($maskTitle = null)
 	{
 		$this->load->model('job_model');
 		$maskTitle = str_replace("_2_", " ", urldecode($maskTitle));
