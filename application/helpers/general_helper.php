@@ -427,7 +427,7 @@ function job_complete_sms($job_id=null) {
 		} else {
 				$dueAmt = $result->total - $result->discount ;
 				
-				$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Pay ". $dueAmt ." due amt. (GST Extra) to collect your job. Thank You.";
+				$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. ". $dueAmt ." (GST Extra) to collect your job. Thank You.";
 		}
 
 		$data['smscount'] = $result->smscount  + 1;

@@ -1406,7 +1406,27 @@ public function edit($job_id=null)
 	}
 
 	public function test()
-	{
+	{  
+    $job_id = 33724;
+    $ci = & get_instance();
+    $sql = "SELECT if(CHAR_LENGTH(c.companyname) > 0,c.companyname,c.name) as customer_name,
+        job.bill_number,
+        job.smscount,job.customer_id,c.mobile,job.smscount,
+        job.total,job.due,job.discount, job.jsmsnumber,
+        (SELECT SUM(total) from job WHERE job.customer_id = c.id)  as 'total_amount' ,
+        (SELECT SUM(due) from job WHERE job.customer_id = c.id)  as 'total_due' ,
+        (select sum(amount) from user_transactions where user_transactions.customer_id=c.id) as 'total_credit'
+        FROM job 
+        LEFT JOIN customer c
+        ON c.id = job.customer_id
+        WHERE job.id = $job_id";
+    $query = $ci->db->query($sql);
+    $result = $query->row();
+    $balance = $result->total_credit - $result->due - $result->discount;
+    pr($balance, false);
+    pr($result);
+    die;
+
     $this->load->model('Out_model');
 
     $outJobDetails  = $this->Out_model->getAllJobOut(33506);

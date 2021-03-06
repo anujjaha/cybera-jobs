@@ -1267,7 +1267,7 @@ $this->load->helper('general'); ?>
 			<input type="hidden" name="dealer_id" value="<?php if(!empty($dealer_info->id)){echo $dealer_info->id;}?>">
 			<input type="hidden" name="customer_type" id="customer_type">
 			<input type="hidden" name="customer_id" id="customer_id">
-			<input type="hidden" name="job_token" id="job_token" value="<?php echo $token;?>">
+			
 			
 		</td>
 	</tr>

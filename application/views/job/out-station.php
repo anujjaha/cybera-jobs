@@ -69,6 +69,7 @@
 		<input type="hidden" name="outJobId" id="outJobId" value="<?php echo isset($job_data) && !empty($job_data->id) ? $job_data->id : '0';?>">
 
 		<input type="hidden" name="outJobCustomerId" id="outJobCustomerId" value="<?php echo isset($job_data) && !empty($job_data->customer_id) ? $job_data->customer_id : '0';?>">
+		<input type="hidden" name="token" id="token" value="<?php echo $token;?>">
 		</form>
       </div>
       <div class="modal-footer">
@@ -126,7 +127,7 @@ function saveOutStationJob()
 
 	var formObj = {};
  	var inputs = $('#out-job').serializeArray();
-    $.each(inputs, function (i, input) {
+ 	$.each(inputs, function (i, input) {
     	console.log(i);
     	console.log(input);
         formObj[input.name] = input.value;
@@ -140,6 +141,8 @@ function saveOutStationJob()
     {
     	var setURL = "<?php echo site_url();?>/ajax/updateOutStationJob";
     }
+
+    console.log(inputs);
 
 	$.ajax({
 		 type: "POST",
