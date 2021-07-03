@@ -410,7 +410,11 @@ public function edit($job_id=null)
 
       $this->load->model('out_model');
 
-      $this->out_model->attachOutSide($this->input->post('job_token'), $job_id, $customer_id);
+      if(!empty($this->input->post('token')))
+      {
+        // Attach outside job
+        $this->out_model->attachOutSide($this->input->post('token'), $job_id, $customer_id);
+      }
        
       // Set Mask Qty 
       if($this->input->post('category_'.$i) == "Mask")
@@ -576,7 +580,12 @@ public function edit($job_id=null)
 						$customerName 	= isset($customer_details->companyname) ? $customer_details->companyname : $customer_details->name;
 						$subject = "Estimate - " . $customerName . ' - ' . $job_data->jobname;
 
-						$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+          $mailInput = $this->input->post('sendUpdateMail');
+            if(isset($mailInput) && $mailInput == 1)
+          {
+            $status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+          }
+						//$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
 
             /*// Send Cash Recipt Mail
             $cashReceiptContent = getTodayCashReceiptMailContent();
@@ -1407,6 +1416,7 @@ public function edit($job_id=null)
 
 	public function test()
 	{  
+    pr(get_balance(4825));
     $job_id = 33724;
     $ci = & get_instance();
     $sql = "SELECT if(CHAR_LENGTH(c.companyname) > 0,c.companyname,c.name) as customer_name,
@@ -1883,4 +1893,10 @@ public function edit($job_id=null)
   {
     return $this->job_model->getMaskCategories();
   }	
+
+  public function send_review_sms()
+  {
+    return sendJobReviewSMS($this->input->post());
+  }
+              
 }

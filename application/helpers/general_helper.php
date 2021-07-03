@@ -416,18 +416,26 @@ function job_complete_sms($job_id=null) {
 				
 		$query = $ci->db->query($sql);
 		$result = $query->row();
-		$balance = $result->total_credit - $result->due - $result->discount;
+		//$balance =  $result->total_credit - $result->due - $result->discount;
+		$balance = get_balance($result->customer_id);
+		$balance =  sprintf('%0.2f', $balance);
+
 		
 		if($result->smscount != 0 ) {
 			return true;
 		}
 		
 		if( $balance < 0 ) {
-			$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. $balance (GST Extra) Thank You.";
+			/*$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. $balance (GST Extra) Thank You.";*/
+
+			$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. $balance Thank You. CYBERA";
+
 		} else {
 				$dueAmt = $result->total - $result->discount ;
 				
-				$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. ". $dueAmt ." (GST Extra) to collect your job. Thank You.";
+				/*$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. ". $dueAmt ." (GST Extra) to collect your job. Thank You.";*/
+
+				$sms_text = "Dear ".$result->customer_name." Your Job Num $job_id of rs. ".$result->total." completed and ready for delivery. Total due Rs. $balance (GST Extra) to collect your job. Thank You. CYBERA";
 		}
 
 		$data['smscount'] = $result->smscount  + 1;
@@ -443,9 +451,11 @@ function job_complete_sms($job_id=null) {
 		send_sms($user_id,$customer_id,$mobile,$sms_text);
 
 
-		$reviewSmsText = "Hi ". $result->customer_name .", thank you for doing business with Cybera.Please share your review about your experience. Click https://bit.ly/3aBXueZ. Thank you.";
+		/*$reviewSmsText = "Hi ". $result->customer_name .", thank you for doing business with Cybera.Please share your review about your experience. Click https://bit.ly/3aBXueZ. Thank you.";
+
+
 		
-		send_sms($user_id,$customer_id,$mobile,$reviewSmsText);
+		send_sms($user_id,$customer_id,$mobile,$reviewSmsText);*/
 		if(strlen($otherMobile) > 2 )
 		{
 			send_sms($user_id,$customer_id,$otherMobile,$sms_text);
@@ -1976,4 +1986,66 @@ function getTodayCashReceiptMailContent()
 	$data['directCash'] = $query1->result_array();
 	$html =  $ci->load->view('user/cash_mail', $data, true);
 	return $html;
+}
+
+function cyberaRoundOff($value)
+{
+	return sprintf('%0.2f', $value);	
+}
+
+/**
+ * Get Expense Category
+ *
+ * @return array
+ */
+function getGProductCategory()
+{
+	$sql = "SELECT * FROM products order by id";
+	$ci=& get_instance();
+	$ci->load->database(); 	
+	$query = $ci->db->query($sql);
+	return $query->result();
+}
+
+function sendJobReviewSMS($input = array())
+{
+	$ci=& get_instance();
+	$ci->load->database(); 
+	if(! $user_id) {
+		$user_id = $ci->session->userdata['user_id'];
+	}
+
+	$customer_id 	= $input['customerId'];
+	$jobId 			= $input['jobId'];
+	$mobile 		= $input['mobile'];
+	$sms_text  		= $input['content'];
+
+	
+	$msg = str_replace(" ", "+", $sms_text);
+	$msg = str_replace("&", "%26", $msg);
+	
+	$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
+
+	$url = urlencode($url);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, urldecode($url));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+	$response = curl_exec($ch);
+	curl_close($ch);
+	
+	
+	if($user_id && $customer_id)
+	{
+		$ci->load->model('sms_transaction_model','sms');
+		$sms_data['job_id'] = $jobId;
+		$sms_data['customer_id'] = $customer_id;
+		$sms_data['prospect_id'] = 0;
+		$sms_data['sms_text'] = $sms_text;
+		$sms_data['mobile'] = $mobile;
+		$sms_data['char_count'] = strlen($sms_text);
+		$sms_data['status'] = $response;
+		$ci->sms->insert_sms($sms_data);
+	}
 }

@@ -143,6 +143,6 @@ td{font-size:9px; font-family:Arial, Helvetica, sans-serif}
 		setTimeout(function()
 		{
 			printDiv('smallprintCourierTickret');
-		}, 10);	
+		}, 100);	
 	})
 </script>

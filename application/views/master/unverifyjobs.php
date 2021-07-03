@@ -175,6 +175,11 @@ function direct_verify_job(id) {
 		|
 			<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
 			Print</a>
+		|
+		<a href="javascript:void(0);" class="job-review" data-job-name="<?= $job['jobname'];?>" data-customer-id="<?php echo $job['customer_id'];?>" data-customer-mobile="<?= $job['mobile'];?>" data-customer-name="<?= $job['companyname'] ? $job['companyname'] : $job['name'] ;?>" data-job-id="<?php echo $job['job_id'];?>">
+			Review
+		</a>
+		
 
 		|
 			<strong><a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $job['customer_id'];?>">Customer</a></strong>

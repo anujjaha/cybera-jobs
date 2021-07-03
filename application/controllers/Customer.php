@@ -340,6 +340,7 @@ class Customer extends CI_Controller {
 		$paper_size = $this->input->post('paper_size');
 		$paper_print = $this->input->post('paper_print');
 		$paper_qty = $this->input->post('paper_qty');
+		$paper_print = $paper_print == "SS" ? 1 : 2;
 		$addPerPrint = 0;
 		$data = array();
 		$customerId = $this->input->post('check_customer_id');
@@ -347,13 +348,14 @@ class Customer extends CI_Controller {
 		if(isset($customerId) && $customerId != 0)
 		{
 			$customerDetails = $this->customer_model->get_customer_details('id', $customerId);
-
+			
 			$addPerPrint = $customerDetails->extra_amount;
 			//echo $customerDetails->extra_amount;
 		}
 
 		$this->load->model('paper_model');
-		$data = $this->paper_model->get_paper_rate($paper_gram,$paper_size,$paper_qty);
+		$data = $this->paper_model->get_paper_rate($paper_gram,$paper_size,$paper_qty, $paper_print);
+
 		if(!empty($data)) {
 
 			$data->paper_amount = $data->paper_amount + $addPerPrint;

@@ -636,7 +636,7 @@ function calculate_paper_cost(){
 	paper_qty = jQuery("#paper_qty").val();
 	ori_paper_qty = jQuery("#paper_qty").val();
 	if(paper_print == "FB") {
-		paper_qty = paper_qty *2;
+		//paper_qty = paper_qty *2;
 	}
 	
 	$.ajax({
@@ -657,8 +657,8 @@ function calculate_paper_cost(){
 					if(paper_print == "FB" ) {
 						if(paper_size == "13X19" || paper_size == "13x19" ) {
 							//amount = amount * 2 - 3;
-							amount = amount * 2 - 2;
-							paper_qty = paper_qty / 2;
+							/*amount = amount * 2 - 2;
+							paper_qty = paper_qty / 2;*/
 						}
 					}
                   
@@ -669,14 +669,15 @@ function calculate_paper_cost(){
                   
                   
 
-                  if(paper_print == "FB") {
+                  /*if(paper_print == "FB") {
 					jQuery("#rate_"+id).val(amount * 2);
                     if(paper_size == "13X19" || paper_size == "13x19" ) {
 						  jQuery("#rate_"+id).val(amount);
 					}
                   } else {
-					  jQuery("#rate_"+id).val(amount);
-				  }
+                      jQuery("#rate_"+id).val(amount);
+                  }*/
+				    jQuery("#rate_"+id).val(amount);
                   
                   jQuery("#qty_"+id).val(ori_paper_qty);
                   jQuery("#sub_"+id).val(total);
@@ -1485,6 +1486,8 @@ $this->load->helper('general'); ?>
                             <label><input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
                             Print CYBERA 
                             </label>
+                            <br />
+                            <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
                         
 						<!-- <label>
 							<input type="checkbox" name="is_manual" value="1">

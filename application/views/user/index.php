@@ -437,7 +437,10 @@ if(strtolower($this->session->userdata['department']) == "master")
 		|
 			<a href="<?php echo site_url();?>/jobs/job_print/<?php echo $job['job_id'];?>">
 			Print</a>
-
+		|
+		<a href="javascript:void(0);" class="job-review" data-job-name="<?= $job['jobname'];?>" data-customer-id="<?php echo $job['customer_id'];?>" data-customer-mobile="<?= $job['mobile'];?>" data-customer-name="<?= $job['companyname'] ? $job['companyname'] : $job['name'] ;?>" data-job-id="<?php echo $job['job_id'];?>">
+			Review
+		</a>
 		|
 			<strong><a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $job['customer_id'];?>">Customer</a></strong>
 
@@ -477,9 +480,53 @@ if(strtolower($this->session->userdata['department']) == "master")
                     "bDestroy": true,
                 });
             });
-    
+
+    /*function bindAddJobReview()
+    {
+    	jQuery(".job-review").on('click', function(e) {
+    		$("#reviewSms").modal('show');
+
+    		$("#job_sms_customer_name").html($(e.target).attr('data-customer-name'));
+    		$("#job_sms_title").html($(e.target).attr('data-job-name'));
+    		$("#job_review_id").val($(e.target).attr('data-job-id'));
+    		$("#job_review_mobile").val($(e.target).attr('data-customer-mobile'));
+    		$("#job_review_customer_id").val($(e.target).attr('data-customer-id'));
+
+    		$("#job_review_content").val("Dear "+ $(e.target).attr('data-customer-name') +", Kindly request you to please share your valuable feedback http://bit.ly/2z6bxpo Cybera");
+    	});
+    }
+    	
+    function bindSendJobReview()
+    {
+    	$("body").on('click', '#job_review_send_btn', function(e)
+    	{
+			$.ajax(
+			{
+		        type: "POST",
+		        url: "<?php echo site_url();?>/jobs/send_review_sms", 
+		        data: {
+		        	content: $("#job_review_content").val(),
+		        	mobile: $("#job_review_mobile").val(),
+		        	jobId: $("#job_review_id").val(),
+		        	customerId: $("#job_review_customer_id").val()
+		        },
+		        dataType: 'JSON',
+		        success: function(data)
+		        {
+		        	$("#reviewSms").modal('hide');
+				},
+				complete: function(data)
+				{
+					$("#reviewSms").modal('hide');
+				}
+	        });
+    	})
+    }*/
     $(document).ready(function() 
     {
+    	/*bindAddJobReview();
+    	bindSendJobReview();*/
+
     	jQuery("#cybera_delivery").on('change', function() {
     		jQuery("#otherContainer").hide();
     		jQuery("#isOther").val(0);
@@ -808,6 +855,8 @@ function print_pending_list() {
 
 }
 </script>
+
+
 
 <!-- Modal -->
 <div class="modal fade" id="deliveryModalBox" role="dialog">

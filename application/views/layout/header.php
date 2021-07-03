@@ -244,7 +244,7 @@ function show_notifications(data) {
     <ul class="tabs" data-persist="true">
             <li><a href="#regular_customers">Regular Customers</a></li>
             <li><a href="#new_customers">New Customer</a></li>
-            <li><a href="#send_address">Cybera Address</a></li>
+            <!-- <li><a href="#send_address">Cybera Address</a></li> -->
     </ul>
     <div class="tabcontents">
 		<div id="regular_customers">
@@ -317,7 +317,7 @@ function show_notifications(data) {
 				</tr>
 			</table>
 		</div>
-		<div id="send_address">
+		<!-- <div id="send_address">
 			<table align="center" border="2" width="80%">
 				<tr>
 					<td align="right"> Select Customer :</td>
@@ -331,7 +331,7 @@ function show_notifications(data) {
 				</tr>
 				<tr>
 					<td align="right">Message:</td>
-					<td><textarea id="address_sms_message" name="address_sms_message" cols="80" rows="6">Cybera G-3 and 4, Samudra Annexe, Nr. Girish Cold Drinks Cross Road, Off C.G. Road, Navrangpura, Ahmedabad-009 Call 079-26565720 / 9898309897 goo.gl/Fpci9H</textarea>
+					<td><textarea id="address_sms_message" name="address_sms_message" cols="80" rows="6">Cybera G-3 & 4, Samudra Annexe, Nr. Girish Cold Drinks Cross Road,Off C.G. Road, Navrangpura, Ahmedabad-009 Call 079-26565720 / 9898309897 http://goo.gl/Fpci9H</textarea>
 						Characters : <span id="charCount">0</span>
 					</td>
 				</tr>
@@ -340,6 +340,76 @@ function show_notifications(data) {
 						<input type="hidden" id="address_customer_email" name="customer_email">
 						<input type="hidden" name="sms_customer_name" id="address_sms_customer_name">
 						<input type="submit" name="send" class="btn btn-success btn-lg" value="Send SMS" onclick="send_address();">
+					</td>
+				</tr>
+			</table>
+		</div> -->
+    </div>
+    
+    </div>
+</div>
+</div>
+
+<div id="sms_address" style="width:900px;display: none;margin-top:-75px;">
+<div style="width: 900px; margin: 0 auto; padding: 120px 0 40px;">
+	
+    <div id="send_sms">
+    <?php $all_customer = get_all_customers(); ?>
+    <center>
+		<a href="javascript:void(0);" onclick="show_calculator();" class="btn btn-success btn-lg">Calculator</a>
+    </center>
+    <ul class="tabs" data-persist="true">
+            <li><a href="#send_address">Cybera Address</a></li>
+            <li><a href="#send_feedback">Cybera Feedback</a></li>
+    </ul>
+    <div class="tabcontents">
+		<div id="send_address">
+			<table align="center" border="2" width="100%">
+				<tr style="display: none;">
+					<td align="right"> Select Customer :</td>
+					<td> 
+						<input type="text" class="form-control" name="address_customer" id="address_customer">
+						</td>
+				</tr>
+				<tr>
+					<td align="right">Contact Number:</td>
+					<td><input type="text" class="form-control" id="address_sms_mobile" name="address_sms_mobile"></td>
+				</tr>
+				<tr>
+					<td align="right">Message:</td>
+					<td>
+					<br />
+					<textarea id="address_sms_message" name="address_sms_message" cols="80" rows="6">Cybera G-3 & 4, Samudra Annexe, Nr. Girish Cold Drinks Cross Road,Off C.G. Road, Navrangpura, Ahmedabad-009 Call 079-26565720 / 9898309897 http://goo.gl/Fpci9H</textarea>
+						Characters : <span id="charCount">0</span>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="hidden" id="address_customer_email" name="customer_email">
+						<input type="hidden" name="sms_customer_name" id="address_sms_customer_name">
+						<input type="submit" name="send" class="btn btn-success btn-lg" value="Send SMS" onclick="send_address();">
+					</td>
+				</tr>
+			</table>
+		</div>
+		<div id="send_feedback">
+			<table align="center" border="2" width="100%">
+				<tr>
+					<td align="right">Contact Number:</td>
+					<td><input type="text" class="form-control" id="feedback_sms_mobile" name="feedback_sms_mobile"></td>
+				</tr>
+				<tr>
+					<td align="right">Message:</td>
+					<td>
+					<br />
+					<textarea id="feedback_sms_message" name="feedback_sms_message" cols="80" rows="6">Dear {{Customer}}, Kindly request you to please share your valuable feedback http://bit.ly/2z6bxpo Cybera</textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="hidden" id="address_customer_email" name="customer_email">
+						<input type="hidden" name="sms_customer_name" id="address_sms_customer_name">
+						<input type="submit" name="send" class="btn btn-success btn-lg" value="Send SMS" onclick="send_feedback();">
 					</td>
 				</tr>
 			</table>
@@ -357,6 +427,9 @@ function show_notifications(data) {
         'height':600,
         'autoSize' : false,
     });
+
+    bindSendJobReview();
+    bindAddJobReview();
     
 
 
@@ -401,6 +474,28 @@ function send_address()
          type: "POST",
          url: "<?php echo site_url();?>/ajax/send_address/", 
          data:{'customer_id':customer_id,'customer_email':customer_email,"sms_message":sms_message,"sms_mobile":sms_mobile,"sms_customer_name":sms_customer_name},
+         success: 
+            function(data){
+				//console.log(data);
+				alert("SMS Sent :"+data);
+				$.fancybox.close();
+            }
+          });
+}
+
+function send_feedback()
+{
+	var customer_id,sms_message,sms_mobile;
+	sms_message = $("#feedback_sms_message").val();
+	sms_mobile = $("#feedback_sms_mobile").val();
+	
+    $.ajax({
+         type: "POST",
+         url: "<?php echo site_url();?>/ajax/send_feedback/", 
+         data:{
+         	"sms_message":sms_message,
+         	"sms_mobile":sms_mobile,
+         },
          success: 
             function(data){
 				//console.log(data);
@@ -715,5 +810,82 @@ jQuery(document).ready(function() {
 
 	jQuery(".date-picker").datepicker();
 });
+
+function bindAddJobReview()
+    {
+    	jQuery(".job-review").on('click', function(e) {
+    		$("#reviewSms").modal('show');
+
+    		$("#job_sms_customer_name").html($(e.target).attr('data-customer-name'));
+    		$("#job_sms_title").html($(e.target).attr('data-job-name'));
+    		$("#job_review_id").val($(e.target).attr('data-job-id'));
+    		$("#job_review_mobile").val($(e.target).attr('data-customer-mobile'));
+    		$("#job_review_customer_id").val($(e.target).attr('data-customer-id'));
+
+    		$("#job_review_content").val("Dear "+ $(e.target).attr('data-customer-name') +", Kindly request you to please share your valuable feedback http://bit.ly/2z6bxpo Cybera");
+    	});
+    }
+    	
+    function bindSendJobReview()
+    {
+    	$("body").on('click', '#job_review_send_btn', function(e)
+    	{
+			$.ajax(
+			{
+		        type: "POST",
+		        url: "<?php echo site_url();?>/jobs/send_review_sms", 
+		        data: {
+		        	content: $("#job_review_content").val(),
+		        	mobile: $("#job_review_mobile").val(),
+		        	jobId: $("#job_review_id").val(),
+		        	customerId: $("#job_review_customer_id").val()
+		        },
+		        dataType: 'JSON',
+		        success: function(data)
+		        {
+		        	$("#reviewSms").modal('hide');
+				},
+				complete: function(data)
+				{
+					$("#reviewSms").modal('hide');
+				}
+	        });
+    	})
+    }
 </script>
 
+<div id="reviewSms" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+
+	<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Google Review</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+        	Job Title: <span id="job_sms_title"></span>
+        </div>
+
+        <div class="form-group">
+        	Customer: <span id="job_sms_customer_name"></span>
+        </div>
+
+        <div class="form-group">
+        	<p>SMS Content</p>
+        	<textarea class="form-control" id="job_review_content" name="job_review_content"></textarea>
+
+        	<input type="hidden" name="job_review_mobile" id="job_review_mobile" />
+        	<input type="hidden" name="job_review_id" id="job_review_id" />
+        	<input type="hidden" name="job_review_customer_id" id="job_review_customer_id" />
+		    
+        </div>
+      </div>
+      <div class="modal-footer">
+     	<button type="button" class="btn btn-info" id="job_review_send_btn">Send SMS</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

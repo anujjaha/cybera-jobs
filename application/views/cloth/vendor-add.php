@@ -1,5 +1,5 @@
 <link href="<?php echo base_url('assets/css/datatables/dataTables.bootstrap.css');?>" rel="stylesheet" type="text/css" />
-<form action="<?php echo site_url();?>/cloth/add_vendor" method="post">
+<form action="<?php echo site_url();?>cloth/add_vendor" method="post">
 	<div>
 		<h3>Add New Vendor</h3>
 	</div>

@@ -36,7 +36,7 @@ function direct_verify_job(id) {
 		<th>Job Num</th>
 		<th>Company Name</th>
 		<th>Customer Name</th>
-		<th>Job Name</th>
+		<th  width="150">Job Name</th>
 		<th>Mobile</th>
 		<th>Bill Amount</th>
 		<th>Advance</th>
@@ -44,7 +44,7 @@ function direct_verify_job(id) {
 		<th>Receipt</th>
 		<th>Bill Number</th>
 		<th>Pay Ref</th>
-		<th>Date / Time</th>
+		<th width="100">Date / Time</th>
 		<th>Status</th>
 		<th>View</th>
 		<th>Verify</th>

@@ -37,21 +37,32 @@
 						continue;
 					?>
 				<tr id="emp-<?php echo $item['id'];?>">
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $sr;?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['name'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['working_days'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['working_days'] - $item['full_day'] - ( $item['half_day'] / 2);?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['full_day'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['half_day'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['office_halfday'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['office_late'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['before_10'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['after_office_hrs'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['half_night'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['full_night'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['sunday'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"><?php echo $item['notes'];?></td>
-				<td style="border: 1px solid black; padding: 1px;"> &nbsp;&nbsp;&nbsp;&nbsp; </td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $sr;?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['name'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['working_days'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['working_days'] - $item['full_day'] - ( $item['half_day'] / 2);?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['full_day'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['half_day'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['office_halfday'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['office_late'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['before_10'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['after_office_hrs'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['half_night'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['full_night'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['sunday'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;">
+					<?php echo $item['notes'];?>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					<br /><br /><br /><br />
+				</td>
+				<td style="border: 1px solid black; padding: 1px;">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					<br /><br /><br /><br />
+				</td>
 				</tr>
 			<?php $sr++; } ?>
 			</tbody>

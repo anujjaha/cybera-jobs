@@ -15,6 +15,7 @@
 		<th>Paper Name</th>
 		<th>Gram</th>
 		<th>Size</th>
+		<th>Print</th>
 		<th>Quantity Range</th>
 		<th>Cost</th>
 		<th>Edit</th>
@@ -31,6 +32,7 @@
 		<td><?php echo $paper['paper_name'];?></td>
 		<td><?php echo $paper['paper_gram'];?></td>
 		<td><?php echo $paper['paper_size'];?></td>
+		<td><?php echo $paper['paper_print'] == 1 ? "SS" : "FB";?></td>
 		<td id="range_<?php echo $paper['id'];?>">
 
 			<?php echo $paper['paper_qty_min']."-".$paper['paper_qty_max'];?></td>

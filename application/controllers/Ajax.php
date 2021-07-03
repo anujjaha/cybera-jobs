@@ -141,7 +141,7 @@ class Ajax extends CI_Controller {
 			$customer = $this->job_model->get_customer_details($job_data->customer_id);
 			$cusName = !empty($customer->companyname) ? $customer->companyname : $customer->name;
 			
-			$sms_text = 'Dear '.$cusName.', We have dispatched your parcel via - '.$this->input->post('courier_name').' and the docket number is '.$this->input->post('docket_number').'. Thank You.';
+			$sms_text = 'Dear '. $cusName .', We have dispatched your parcel via - '. $this->input->post('courier_name') .' and the docket number is '.$this->input->post('docket_number').'. Thank You. CYBERA';
 
 			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.<br /><br/><br /> અમે હંમેશાં તમારા પાર્સલને કુરિયર અથવા પરિવહન સેવાઓમાં નિર્ધારિત  સમય મર્યાદામાં પહોંચાડવાનો પ્રયાસ કરીએ છીએ. જો કોઈ કારણોસર તમારું પાર્સલ મોડું થાય તો સાયબેરા જવાબદાર રહેશે નહીં. અસુવિધા બદલ દિલગીર છીએ.';
 
@@ -180,7 +180,8 @@ class Ajax extends CI_Controller {
 			$quote_data['mobile'] = $mobile = $sms_mobile;
 			$quote_data['user_id'] = $user_id =  $this->session->userdata['user_id'];
 			$quote_id = $this->estimationsms_model->insert_estimation($quote_data);
-			$sms_text = "Dear ".$sms_customer_name.", ".$sms_message." GST Extra.Quote No. ".$quote_id." valid for 7 days.";
+			$sms_text = "Dear ".$sms_customer_name.", ".$sms_message." GST Extra.Quote No. ".$quote_id." valid for 7 days. CYBERA";
+
 			send_sms($user_id,$customer_id,$mobile,$sms_text,$prospect_id);
 			sendCorePHPMail('cybera.printart@gmail.com', 'cybera.printart@gmail.com', 'Cybera Estimation - ' .$sms_customer_name, $sms_text);
 			
@@ -443,7 +444,8 @@ class Ajax extends CI_Controller {
 				$customer_name = $customer_details->companyname ? $customer_details->companyname : $customer_details->name; 
 				//$sms_text = "Dear \$customer_name, we have received ".$pay_data['amount']." Rs. by Cash on date ".$today.". Thank You.";
 				$user_balance  = get_balance($customer_id);
-				$sms_text = "Dear $customer_name, received Rs. ".$pay_data['amount']." on ".$today." total due Rs. ".$user_balance." Thank You.";
+				$sms_text = "Dear $customer_name, we have received ".$pay_data['amount']." Rs. by Cash on date ".$today.". Thank You. CYBERA";
+
 				send_sms($this->session->userdata['user_id'],$customer_id,$mobile,$sms_text) ;
 			
 			return true;
@@ -1300,12 +1302,38 @@ class Ajax extends CI_Controller {
 		if($this->input->post())
 		{
 			$sms_message = $this->input->post('sms_message');
-			$sms_mobile = $this->input->post('sms_mobile');
-				
+			$mobile = $this->input->post('sms_mobile');
+			
 			echo $sms_mobile . "<br>";
 			$msg = str_replace(" ","+",$sms_message);
-			$url = "http://ip.infisms.com/smsserver/SMS10N.aspx?Userid=cyberabill&UserPassword=cyb123&PhoneNumber=$sms_mobile&Text=$msg&GSM=CYBERA";
+			$msg = str_replace("&", "%26", $msg);
+			$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
+			$url = urlencode($url);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, urldecode($url));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+			$response = curl_exec($ch);
+			curl_close($ch);
 			
+			//send_sms(NULL, 0,$sms_mobile,$sms_message);
+			echo $sms_message;
+		}
+		return true;
+	}
+
+	public function send_feedback()
+	{
+		if($this->input->post())
+		{
+			$sms_message = $this->input->post('sms_message');
+			$mobile = $this->input->post('sms_mobile');
+
+			echo $sms_mobile . "<br>";
+			$msg = str_replace(" ","+",$sms_message);
+			$msg = str_replace("&", "%26", $msg);
+			$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
 			$url = urlencode($url);
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, urldecode($url));
@@ -1354,7 +1382,7 @@ class Ajax extends CI_Controller {
 			$name 		= $this->input->post('customrName');
 			$balance 	= abs($this->input->post('balance'));
 			$mobile 	= $this->input->post('mobile');
-			$messageO 	= "Dear $name Gentle reminder for overdue outstanding of rs $balance Expecting it at the earliest.";
+			$messageO 	= "Dear $name Gentle reminder for overdue outstanding of rs $balance Expecting it at the earliest. CYBERA";
 
 			$message = str_replace(" ","+",$messageO);
 			send_sms(NULL, 0,$mobile,$message);

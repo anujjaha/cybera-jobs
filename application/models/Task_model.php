@@ -113,7 +113,7 @@ class Task_model extends CI_Model {
 					$sms_text = "Dear ".$data['first_name'].", Please check ".$data['title'].". Reminder Time ".$data['reminder_time'];
 					$user_id = $data['id'];
 					$mobile = $data['mobile'];
-					send_sms($user_id,0,$mobile,$sms_text,0);
+					//send_sms($user_id,0,$mobile,$sms_text,0);
 				}
 				$count++;
 				$this->task_completed($data['master_id']);
@@ -129,7 +129,7 @@ class Task_model extends CI_Model {
 					$sms_text = "Dear ".$data['first_name'].", Please check Task ".$data['title'].". Reminder Time ".$data['reminder_time'];
 					$user_id = $data['id'];
 					$mobile = $data['mobile'];
-					send_sms($user_id=null,'',$mobile,$sms_text,0);
+					///send_sms($user_id=null,'',$mobile,$sms_text,0);
 				}
 				$count++;	
 				$this->task_completed($data['master_id']);

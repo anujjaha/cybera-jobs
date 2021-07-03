@@ -261,24 +261,25 @@ function calculate_paper_cost(){
 
                   amount = amount + parseFloat(data.paper_amount);
                   if(paper_print == "FB" ) {
-						if(paper_size == "13X19" || paper_size == "13x19" ) {
+						/*if(paper_size == "13X19" || paper_size == "13x19" ) {
 							//amount = amount * 2 - 3;
 							amount = amount * 2 - 3;
 							paper_qty = paper_qty / 2;
-						}
+						}*/
 					}
 					
                   total = (amount * paper_qty )* mby;
                   jQuery("#result_paper_cost").html("--- "+paper_qty +" * "+amount+" [per unit] * "+paper_print+" = "+total );
                   jQuery("#details_"+id).val(paper_gram+"_"+paper_size+"_"+paper_print);
-                  if(paper_print == "FB") {
+                  /*if(paper_print == "FB") {
                           jQuery("#rate_"+id).val(amount * 2);
                     if(paper_size == "13X19" || paper_size == "13x19" ) {
 						  jQuery("#rate_"+id).val(amount );
 					}
                   } else {
 					  jQuery("#rate_"+id).val(amount);
-				  }
+				  }*/
+					jQuery("#rate_"+id).val(amount);
                   
                   jQuery("#qty_"+id).val(ori_paper_qty);
                   jQuery("#sub_"+id).val(total);

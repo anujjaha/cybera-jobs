@@ -150,6 +150,18 @@
                         </li>
 
                         <li class="active">
+                            <a href="#sms_address" class="fancybox">
+                                <i class="fa fa-dashboard"></i> <span>Send Address</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>product">
+                                <i class="fa fa-dashboard"></i> <span>Manage Products</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>expense">
                                 <i class="fa fa-dashboard"></i> <span>Expense List</span>
                             </a>

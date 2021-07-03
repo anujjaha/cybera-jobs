@@ -44,7 +44,7 @@ class Cashier extends CI_Controller {
 			$todayBusiness 		= getBusinessByDate();	
 			$totalSale 			= getSaleByDate();	
 			$totalXeros 		= $data['xerox_business'];
-			$todayCollection 	= getBusinessCollectionByDate();
+			$todayCollection 	= cyberaRoundOff(getBusinessCollectionByDate());
 			$todayCash 			= getBusinessCashCollectionByDate();
 			$totalBusiness 		= $totalSale + $totalXeros;
 			$lastRecord 		= getLastCashier();	
@@ -52,7 +52,8 @@ class Cashier extends CI_Controller {
 			$m2x				= $data['m2x'] - $lastRecord->m2x;
 			$totalCopies		= $m1x + $m2x;
 
-			$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Copies - ". $totalCopies ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Cash ". $todayCash ." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .".";
+			$msgText = "RA - ".$data['open_balance']." PO - ". $data['expense'] ." Copies - ". $totalCopies ." Xerox - ".$data['xerox_business']." Wd - ". $data['withdrawal'] ." Closing ".$data['close_balance']." Business ".$totalBusiness." Cash ". $todayCash ." Collection ".$todayCollection." Time ". date('m-d-Y H:i A') .". CYBERA";
+
 			send_account_sms('9898618697', $msgText);
 			$this->cashier_model->createCashier($data);
 			

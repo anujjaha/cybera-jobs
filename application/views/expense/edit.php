@@ -9,25 +9,57 @@
 			<td align="right"> <label>Category : </label></td>
 			<td>
 				<select name="category_id"  required="required" class="form-control" id="category_id">
-					<option value="1">
-						Tea & Coffe
-					</option>
+				<option value="1">
+					Tea, Coffee, Milk, G Tea
+				</option>
 
-					<option value="2">
-						Petrol
-					</option>
+				<option value="8">
+					Petrol - PY-1215
+				</option>
 
-					<option value="3">
-						Courier
-					</option>
+				<option value="9">
+					Petrol - LV-1215
+				</option>
 
-					<option value="4">
-						Girish Bhai ( Marketing )
-					</option>
+				<option value="10">
+					Petrol - RV-8166
+				</option>
 
-					<option value="5">
-						General
-					</option>
+				<option value="11">
+					Petrol - MR-8915
+				</option>
+
+				<option value="12">
+					Petrol - EA-6640
+				</option>
+
+				<option value="13">
+					Mask
+				</option>
+
+				<option value="3">
+					Courier
+				</option>
+
+				<option value="4">
+					Girish Bhai ( Marketing )
+				</option>
+
+				<option value="5">
+					General
+				</option>
+
+				<option value="6">
+					Lamination
+				</option>
+
+				<option value="7">
+					Foil
+				</option>
+
+				<option value="2">
+					Petrol (General)
+				</option>
 				</select>
 			</td>
 		</tr>

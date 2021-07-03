@@ -136,7 +136,7 @@ class Dealer extends CI_Controller {
 				$mobile 	= $this->input->post('mobile');
 				$user_id  	= $this->session->userdata['user_id'];
 
-				$sms_text = "Dear ".$this->input->post('name').", Thank you for being part of Cybera Family as Authorised Dealer.Let's grow together";
+				$sms_text = "Dear ".$this->input->post('name').", Thank you for being part of Cybera Family as Authorised Dealer.Let's grow together. CYBERA";
 				send_sms($user_id, $dealer_id, $mobile,$sms_text);
 				
 			}

@@ -99,10 +99,22 @@
                                 <i class="fa fa-dashboard"></i> <span>Expense List</span>
                             </a>
                         </li>
+                        
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>customer/special_rates">
+                                <i class="fa fa-dashboard"></i> <span>Special Rates</span>
+                            </a>
+                        </li>
 
                         <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>dealer/edit">
                                 <i class="fa fa-dashboard"></i> <span>Add New Dealer</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="#sms_address" class="fancybox">
+                                <i class="fa fa-dashboard"></i> <span>Send Address</span>
                             </a>
                         </li>
                         

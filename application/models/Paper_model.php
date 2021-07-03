@@ -8,7 +8,8 @@ class Paper_model extends CI_Model {
     
     public function get_all_papers() {
 		$this->db->select('*')
-				->from($this->table);
+				->from($this->table)
+				->order_by('paper_name');
 		$query = $this->db->get();
 		return $query->result_array();
 	}
@@ -40,14 +41,16 @@ class Paper_model extends CI_Model {
 		return false;
 	}
 	
-	public function get_paper_rate($paper_gram,$paper_size,$paper_qty) {
+	public function get_paper_rate($paper_gram,$paper_size,$paper_qty, $paper_print = 1) {
 		$query = "select paper_gram,paper_amount from $this->table
 					WHERE
 					$paper_qty between paper_qty_min AND paper_qty_max
 					AND paper_gram = '$paper_gram'
 					AND paper_size = '$paper_size'
+					AND paper_print = '$paper_print'
 					order by id desc LIMIT 1;
 				 ";
+
 		$result = $this->db->query($query);
 		$rows =$result->num_rows();
 		if($rows > 0) {
