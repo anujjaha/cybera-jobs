@@ -18,11 +18,11 @@
 				</option>
 
 				<option value="9">
-					Petrol - LV-1215
+					Petrol - LU-1215
 				</option>
 
 				<option value="10">
-					Petrol - RV-8166
+					Petrol - RU-8166
 				</option>
 
 				<option value="11">

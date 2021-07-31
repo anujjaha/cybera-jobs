@@ -379,7 +379,7 @@ function show_notifications(data) {
 					<td align="right">Message:</td>
 					<td>
 					<br />
-					<textarea id="address_sms_message" name="address_sms_message" cols="80" rows="6">Cybera G-3 & 4, Samudra Annexe, Nr. Girish Cold Drinks Cross Road,Off C.G. Road, Navrangpura, Ahmedabad-009 Call 079-26565720 / 9898309897 http://goo.gl/Fpci9H</textarea>
+					<textarea id="address_sms_message" name="address_sms_message" cols="80" rows="6">CYBERA PRINT ART G-3 & 4, Samudra Annexe, Nr. Girish Cold Drinks Cross Road, Off C.G. Road, Navrangpura, Ahmedabad. Mobile No: 9898309897- http://goo.gl/Fpci9H</textarea>
 						Characters : <span id="charCount">0</span>
 					</td>
 				</tr>
@@ -402,7 +402,7 @@ function show_notifications(data) {
 					<td align="right">Message:</td>
 					<td>
 					<br />
-					<textarea id="feedback_sms_message" name="feedback_sms_message" cols="80" rows="6">Dear {{Customer}}, Kindly request you to please share your valuable feedback http://bit.ly/2z6bxpo Cybera</textarea>
+					<textarea id="feedback_sms_message" name="feedback_sms_message" cols="80" rows="6">Valuable Customer, CYBERA is seeking your precious feedback, kindly rate us on http://bit.ly/2z6bxpo for better products and services THANK YOU CYBERA PRINT ART</textarea>
 					</td>
 				</tr>
 				<tr>

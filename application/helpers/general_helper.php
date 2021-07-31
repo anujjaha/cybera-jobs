@@ -1656,11 +1656,19 @@ function getJobBillNumber($jobId)
 function getExpenseCategory($id)
 {
 	$category = array(
-		1 => 'Tea & Coffe',
-		2 => 'Petrol',
-		3 => 'Courier',
-		4 => 'Girish Bhai ( Marketing )',
-		5 => 'General'
+		1 => "Tea, Coffee, Milk, G Tea",
+		8 => "Petrol - PY-1215",
+		9 => "Petrol - LU-1215",
+		10 => "Petrol - RU-8166",
+		11 => "Petrol - MR-8915",
+		12 => "Petrol - EA-6640",
+		13 => "Mask",
+		3 => "Courier",
+		4 => "Girish Bhai ( Marketing )",
+		5 => "General",
+		6 => "Lamination",
+		7 => "Foil",
+		2 => "Petrol (General)",
 	);
 
 	return $category[$id];

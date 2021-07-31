@@ -1333,7 +1333,11 @@ class Ajax extends CI_Controller {
 			echo $sms_mobile . "<br>";
 			$msg = str_replace(" ","+",$sms_message);
 			$msg = str_replace("&", "%26", $msg);
-			$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
+			$msg = str_replace(",", "%2C", $msg);
+			$msg = urlencode($msg);
+			/*$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";*/
+			
+			$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=Valuable%20Customer%2C%20%0ACYBERA%20is%20seeking%20your%20precious%20feedback%2C%20kindly%20rate%20us%20on%20http%3A%2F%2Fbit.ly%2F2z6bxpo%20for%20better%20products%20and%20services%20THANK%20YOU%20CYBERA%20PRINT%20ART&SenderId=CYBERA&AccountType=2&MessageType=0";
 			$url = urlencode($url);
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, urldecode($url));
