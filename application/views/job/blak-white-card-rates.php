@@ -6,6 +6,7 @@
 }
 .Vcard_active {
 	font-size:30px;
+	opacity: 1 !important;
 }
 </style>
 

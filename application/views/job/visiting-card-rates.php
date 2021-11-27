@@ -6,6 +6,7 @@
 }
 .Vcard_active {
 	font-size:30px;
+	opacity: 1 !important;
 }
 </style>
 
@@ -43,8 +44,8 @@
 	
 	<tr class="rowQty" id="qty_96">
 		<td>
-			<a href="javascript:void(0);" class="btn btn-primary setVQty" onclick="setQty(96);">
-				96
+			<a href="javascript:void(0);" class="btn btn-primary setVQty" onclick="setQty(95);">
+				95
 			</a> 
 		</td>
 		
@@ -120,8 +121,8 @@
 	
 	<tr  class="rowQty" id="qty_192">
 		<td>
-			<a href="javascript:void(0);" class="btn btn-primary setVQty" onclick="setQty(192);">
-				192
+			<a href="javascript:void(0);" class="btn btn-primary setVQty" onclick="setQty(190);">
+				190
 			</a>
 		</td>
 		
@@ -194,8 +195,8 @@
 	
 	<tr  class="rowQty" id="qty_288">
 		<td> 
-			<a href="javascript:void(0);" class="btn btn-primary setVQty" onclick="setQty(288);">
-				288
+			<a href="javascript:void(0);" class="btn btn-primary setVQty" onclick="setQty(285);">
+				285
 			</a> 
 		</td>
 		

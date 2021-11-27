@@ -207,6 +207,9 @@ function update_box() {
                     <label>
                         <input type="radio" id="lamination" name="c_lamination" <?php if($cutting_details->c_lamination == "FB") { echo "checked='checked'";}?> value="FB">Double
                     </label>
+                    <label>
+                        <input type="radio" id="lamination" name="c_lamination" value="POUCH"  <?php if($cutting_details->c_lamination == "POUCH") { echo "checked='checked'";}?>>POUCH
+                    </label>
                     <input type="text" name="c_laminationinfo" id="lamination_info" value="<?php echo $cutting_details->c_laminationinfo;?>">
                 </td>
             </tr>
@@ -230,6 +233,9 @@ function update_box() {
 					<label><input type="checkbox" <?php if(in_array('Perfect Binding',$binding)) { echo "checked='checked'";}?>name="c_binding" value="Perfect Binding">Perfect Binding</label>
 					<label><input type="checkbox" <?php if(in_array('Perforation',$binding)) { echo "checked='checked'";}?>name="c_binding" value="Perforation">Perforation</label>
 					<label><input type="checkbox" <?php if(in_array('Folding',$binding)) { echo "checked='checked'";}?> name="c_binding" value="Folding">Folding</label>
+                    <label><input type="checkbox" <?php if(in_array('Spiral',$binding)) { echo "checked='checked'";}?> name="c_binding" value="Spiral">Spiral</label>
+                    <label><input type="checkbox" <?php if(in_array('Wiro',$binding)) { echo "checked='checked'";}?> name="c_binding" value="Wiro">Wiro</label>
+
 					<label><input type="checkbox" <?php if(in_array('Half Cutting',$binding)) { echo "checked='checked'";}?> name="c_binding" value="Half Cutting">Half Cutting</label>
 					<br>
 					Half Cutting:<input type="text" name="c_bindinginfo" id="binding_info" value="<?php echo $cutting_details->c_bindinginfo;?>">

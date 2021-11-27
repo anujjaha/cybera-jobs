@@ -640,7 +640,7 @@ class Job_model extends CI_Model {
 	public function get_all_customers() {
 		$this->db->select('id,name,companyname,mobile')
 				->from($this->table_customer)
-				->where('status',1)
+				//->where('status',1)
 				->order_by('companyname');
 		$query = $this->db->get();
 		return $query->result_array();

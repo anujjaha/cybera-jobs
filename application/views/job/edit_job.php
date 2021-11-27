@@ -10,6 +10,17 @@ $token = rand(1111111, 9999999);
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery-tab.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/tab.css" media="screen" />
+<style>
+.gsm300
+{
+	background-color:red !important;
+	border-color:red !important;
+}
+.Vcard_active {
+	font-size:30px;
+	opacity: 1 !important;
+}
+</style>
 <script>
     $(document).ready(function() 
     {
@@ -20,6 +31,30 @@ $token = rand(1111111, 9999999);
 
     	    jQuery("#details_"+seqNumber).val(jQuery(e.target).find('option:selected').text());
     	});
+
+    	jQuery(".select-rest").on('change', function(e)
+    	{
+    	    var element = e.target,
+    	        seqNumber = jQuery(element).attr('data-sequence');
+
+    	    for(i in resMenus)
+    	    {
+    	        if($(element).val() == resMenus[i].code)
+    	        {
+    	            jQuery("#details_"+seqNumber).val('Code '+resMenus[i].code +': '+resMenus[i].title);
+    	            jQuery("#qty_"+seqNumber).val(resMenus[i].qty);
+    	            jQuery("#rate_"+seqNumber).val(resMenus[i].price);
+    	            jQuery("#sub_"+seqNumber).val(resMenus[i].price * resMenus[i].qty);
+    	            jQuery("#restExtra_"+seqNumber).html(resMenus[i].extra);
+
+    	            $("#notes").val(menuTerms);
+
+    	            jQuery("#flat_"+seqNumber).iCheck('toggle');
+    	            jQuery("#flat_"+seqNumber).iCheck('update'); 
+    	        }
+    	    }
+    	});
+    	
 
     	jQuery("#out-side-btn").on('click', function()
 		{
@@ -103,6 +138,8 @@ function auto_suggest_price(id){
 	jQuery("#fancybox_id").val(id);
 }
 function set_cutting_details(id,cutting_id,job_id){
+
+	console.log('xxxxxx');
 	$.ajax({
          type: "POST",
          url: "<?php echo site_url();?>/ajax/ajax_update_cutting_details/"+cutting_id+"/"+job_id+"/"+id, 
@@ -308,6 +345,19 @@ function check_visiting_card(sr) {
 		if($("#category_"+sr).val() == "Cutting") {
 			$("#details_"+sr).val("Cutting");
 		}
+		else if($("#category_"+sr).val() == "Menu")
+        {
+            $("#details_"+sr).val("");
+            $("#restContainer_"+sr).show();  
+
+            // Empty Select Box
+            $('#sel_rest_'+sr).empty();
+
+            for(i in resMenus)
+            {
+                $('#sel_rest_'+sr).append(`<option>`+resMenus[i].code+`</option>`);
+            }  
+        }
 
 		if($("#category_"+sr).val() == "Mask") {
             $("#details_"+sr).val("Mask");
@@ -492,6 +542,8 @@ $modified_by = $this->session->userdata['user_id'];
 
 					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Offset Print' ) { echo 'selected="selected"';} ?>>Offset Print</option>
 
+					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Menu' ) { echo 'selected="selected"';} ?>>Menu</option>
+
 					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Card Box' ) { echo 'selected="selected"';} ?>>Card Box</option>
 					
 					<option <?php if( !empty($job_details[$j]['jtype']) && $job_details[$j]['jtype'] == 'Flex' ) { echo 'selected="selected"';} ?>>Flex</option>
@@ -539,6 +591,12 @@ $modified_by = $this->session->userdata['user_id'];
                             }
                          ?>
                          </select>
+
+                </div>
+                <div class="col-md-6" id="restContainer_<?php echo $i;?>" style="display: none;">
+                    <select data-sequence="<?php echo $i;?>" class="form-control select-rest" style="width: 75px;" name="rest_<?php echo $i;?>" id="sel_rest_<?php echo $i;?>">
+                    </select>
+                    <span id="restExtra_<?php echo $i;?>"></span>
                 </div>
             </div>
 		</td>
@@ -570,10 +628,15 @@ $modified_by = $this->session->userdata['user_id'];
         	<table>
         			<tr>
 	        			<td>
-	        				Notes : <textarea name="notes" cols="60" rows="5"><?php echo $job_data->notes;?></textarea>
+	        				Notes : <textarea name="notes" cols="40" rows="5"><?php echo $job_data->notes;?></textarea>
 	        			</td>
+			            <td>&nbsp;</td>
+			            <td>
+							<span class="green">EMAIL Notes:</span> <textarea name="mail_note" id="mail_note" cols="40" rows="5"><?php echo $job_data->mail_note;?></textarea>
+						</td>
+			            <td>&nbsp;</td>
 	        			<td>
-	        				Extra Notes : <textarea name="extra_notes" style="background-color: pink;"  cols="60" rows="5"><?php echo $job_data->extra_notes;?></textarea>
+	        				Extra Notes : <textarea name="extra_notes" style="background-color: pink;" cols="40" rows="5"><?php echo $job_data->extra_notes;?></textarea>
 	        			</td>
         			</tr>
         	</table>

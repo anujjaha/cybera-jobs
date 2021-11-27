@@ -81,6 +81,11 @@
                                 <i class="fa fa-dashboard"></i> <span>New Job</span>
                             </a>
                         </li>
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>diwali">
+                                <i class="fa fa-dashboard"></i> <span>Diwali 2021</span>
+                            </a>
+                        </li>
 
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>account/quick">
@@ -117,6 +122,25 @@
                                 <i class="fa fa-dashboard"></i> <span>Send Address</span>
                             </a>
                         </li>
+
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxRestuarant" onclick="openPopupBoxRestuarant();">
+                                <i class="fa fa-dashboard"></i> <span>Restaurant Menu</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxGEstimate" onclick="openPopupBoxGEstimate();">
+                                <i class="fa fa-dashboard"></i> <span>Estimate</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="<?php echo base_url();?>menu" class="">
+                                <i class="fa fa-dashboard"></i> <span>Manage Menu</span>
+                            </a>
+                        </li>
+
                         
                         <li>
                             <a href="<?php echo base_url();?>master/all">

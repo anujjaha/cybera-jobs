@@ -108,11 +108,11 @@ td{font-size:9px; font-family:Arial, Helvetica, sans-serif}
 						Off C.G. Road, Navrangpura Ahmedabad - 009
 						<br>
 						Call : 079-26565720 / 26465720 | 9898309897
-						<br>
+						<!-- <br>
 						<br>
 						We will Remain Close during 28th OCT TO 3rd NOV 2019
 						<br>
-						<strong>Wish you Happy Diwali</strong>
+						<strong>Wish you Happy Diwali</strong> -->
 						<br>
 					</td>
 					</tr>

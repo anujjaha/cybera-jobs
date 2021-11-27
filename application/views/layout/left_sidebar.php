@@ -156,6 +156,24 @@
                         </li>
 
                         <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxRestuarant" onclick="openPopupBoxRestuarant();">
+                                <i class="fa fa-dashboard"></i> <span>Restaurant Menu</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxGEstimate" onclick="openPopupBoxGEstimate();">
+                                <i class="fa fa-dashboard"></i> <span>Estimate</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="<?php echo base_url();?>menu" class="">
+                                <i class="fa fa-dashboard"></i> <span>Manage Menu</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>product">
                                 <i class="fa fa-dashboard"></i> <span>Manage Products</span>
                             </a>

@@ -3,7 +3,7 @@
 		<thead>
 		<tr>
 		<th>Sr</th>
-		<th><span onclick="sort_filter('companyname','ASC');">
+		<th width="25%"><span onclick="sort_filter('companyname','ASC');">
 				<i class="fa fa-sort-desc" aria-hidden="true"></i>
 			</span>
 			Company Name
@@ -50,16 +50,8 @@
 		<th><span onclick="sort_filter('mobile','ASC');">
 				<i class="fa fa-sort-desc" aria-hidden="true"></i>
 			</span>
-				Mobile
+			Contact
 			<span onclick="sort_filter('mobile','DESC');">
-				<i class="fa fa-sort-asc" aria-hidden="true"></i>
-			</span>
-		</th>
-		<th><span onclick="sort_filter('emailid','ASC');">
-				<i class="fa fa-sort-desc" aria-hidden="true"></i>
-			</span>
-			Email Id
-			<span onclick="sort_filter('emailid','DESC');">
 				<i class="fa fa-sort-asc" aria-hidden="true"></i>
 			</span>
 		</th>
@@ -71,13 +63,25 @@
 	<tbody>
 		<?php
 		$sr =1;	
-		foreach($customers as $customer) { ?>
+		foreach($customers as $customer) { 
+			//pr($customer);
+		?>
 		<tr>
 		<td><?php echo $sr;?></td>
 		<td>
 			<?php echo $customer->companyname;?>
 			<hr>
 			<span class="green"><?php echo $customer->fix_note;?></span>
+			<?php
+				if(!empty($customer->description))
+				{
+					$description = explode("- ", $customer->description);
+					$description = implode("<br />- ", $description);
+				?>	
+					<span class="green"><?php echo $description;?></span>
+				<?php
+				}
+			?>
 		</td>
 		<td><?php echo $customer->name;?></td>
 		<td><?php echo round($customer->total_debit,2);?></td>
@@ -90,8 +94,20 @@
 			} 
 			echo $show;
 		?></td>
-		<td><?php echo $customer->mobile;?><br><?php echo $customer->officecontact;?></td>
-		<td><?php echo $customer->emailid;?></td>
+		<td>
+			<?php echo $customer->mobile;?>
+			<?php
+			if(!empty($customer->officecontact))
+			{
+				echo "<br>" . $customer->officecontact;
+			}
+
+			if(!empty($customer->emailid))
+			{
+				echo "<hr />" . $customer->emailid;
+			}
+			?>
+		</td>
 		<td><?php echo $customer->city;?></td>
 		<td><?php 
 			$status = "Inactive";
@@ -110,6 +126,9 @@
 			 <a target="_blank" href="<?php echo site_url();?>/customer/print_small/<?php echo $customer->id;?>">
 			 	<i class="fa fa-2x fa-print" aria-hidden="true"></i>
 			 </a>
+
+			<a href="javascript:void(0);" data-cid="<?php echo $customer->id;?>" class="add-diwali-2021"><i class="fa fa-2x fa-gift"></i></a>
+
 			</td>
 		</td>
 		</tr>

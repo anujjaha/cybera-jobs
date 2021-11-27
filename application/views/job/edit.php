@@ -41,6 +41,29 @@ $(document).ready(function()
 
         jQuery("#details_"+seqNumber).val(jQuery(e.target).find('option:selected').text());
     });
+
+    jQuery(".select-rest").on('change', function(e)
+    {
+        var element = e.target,
+            seqNumber = jQuery(element).attr('data-sequence');
+
+        for(i in resMenus)
+        {
+            if($(element).val() == resMenus[i].code)
+            {
+                jQuery("#details_"+seqNumber).val('Code '+resMenus[i].code +': '+resMenus[i].title);
+                jQuery("#qty_"+seqNumber).val(resMenus[i].qty);
+                jQuery("#rate_"+seqNumber).val(resMenus[i].price);
+                jQuery("#sub_"+seqNumber).val(resMenus[i].price * resMenus[i].qty);
+                jQuery("#restExtra_"+seqNumber).html(resMenus[i].extra);
+
+                $("#notes").val(menuTerms);
+
+                jQuery("#flat_"+seqNumber).iCheck('toggle');
+                jQuery("#flat_"+seqNumber).iCheck('update'); 
+            }
+        }
+    });
 	
     jQuery("#out-side-btn").on('click', function()
 	{
@@ -78,9 +101,12 @@ $(document).ready(function()
          	var fancyBoxId = jQuery("#fancybox_id").val();
 
          	jQuery("#details").val(jQuery("#details_"+fancyBoxId).val());
-
-      		console.log('// fancybox is open, run myFunct()');
-   		},
+            console.log('// fancybox is open, run myFunct()');
+            setTimeout(function() {
+                console.log('rest value');
+                
+            }, 100);
+        },
         'afterClose':function () {
 			fancy_box_closed();
 		},
@@ -233,7 +259,7 @@ function customer_selected(type,userid) {
         	{
         		alert("Please Collect Payment in Advance for the Job.");
 
-        		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 34px;'> <br>"+ data.message +"</span>");
+        		jQuery("#showEmailId").append("<br> <span class='red' style='font-size: 34px;'>"+ data.message +"</span>");
 
         		jQuery("#customerReviews").append("<br> <span class='red' style='font-size: 16px;'> <br>"+ data.customer_reviews +"</span>");
 
@@ -504,6 +530,8 @@ function set_cutting_details_box(id)
         {
             jQuery("#sub_"+data_id).focus();
         }
+
+        resetCuttingForm();
 }
 
 function set_cutting_details_boxAndOut()
@@ -611,6 +639,7 @@ function set_cutting_details_boxAndOut()
 			jQuery("#sub_"+data_id).focus();
 		}
 
+        resetCuttingForm();
         jQuery("#jobOutModalPopup").modal('show');
 }
 function remove_cutting_details(data_id) {
@@ -711,9 +740,25 @@ function check_form() {
 
 function check_visiting_card(sr) {
         
+        $("#maskContainer_"+sr).hide(); 
+        $("#restContainer_"+sr).hide(); 
+
         if($("#category_"+sr).val() == "Mask") {
             $("#details_"+sr).val("Mask");
             $("#maskContainer_"+sr).show(); 
+        }
+        else if($("#category_"+sr).val() == "Menu")
+        {
+            $("#details_"+sr).val("");
+            $("#restContainer_"+sr).show();  
+
+            // Empty Select Box
+            $('#sel_rest_'+sr).empty();
+
+            for(i in resMenus)
+            {
+                $('#sel_rest_'+sr).append(`<option>`+resMenus[i].code+`</option>`);
+            }  
         }
         else
         {
@@ -813,6 +858,15 @@ function check_visiting_card(sr) {
 			$("#sub_"+sr).val("0");
 		}
 		
+        for(i in resMenus)
+        {
+            if($("#category_"+sr).val() == i)
+            {
+                $("#details_"+sr).val(resMenus[i]);
+            }
+        }
+        
+
 		open_price_list(sr);
 }
 function open_price_list(sr)
@@ -947,17 +1001,19 @@ $this->load->helper('general'); ?>
         <p id="balance"  align="right"><h2 class="red" id="show_balance" ></h2></p>
 
         
-        <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
-        <p align="right"><h4 class="green" id="showStatstics" ></h4></p>
-        <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
-        <p align="right"><h4 class="green" id="customerStarRating" ></h4></p>
+        
+        <p align="center"  style="font-size: 22px;">Notes: <span class="red" id="isNote" ></span></p>
         <p align="right"><h4 class="green" id="fixNote" ></h4></p>
-   		</td>
-   		<td width="50%" align="center">	
-        	<p align="center">Invoice: <span class="green" id="isInvoice" ></span></p>
-        	<p align="center">Cybera: <span class="green" id="isCybera" ></span></p>
-        	<p align="center">Shipping Cybera Pay: <span class="green" id="isCyberaPay" ></span></p>
-        	<p align="center">Note: <span class="green" id="isNote" ></span></p>
+        </td>
+        <td width="50%" align="center"> 
+            <p align="right"><h4 class="green" id="showEmailId" ></h4></p>
+            <p align="right"><h4 class="green" id="showStatstics" ></h4></p>
+            <p align="right"><h4 class="green" id="customerReviews" ></h4></p>
+            <p align="right"><h4 class="green" id="customerStarRating" ></h4></p>
+            
+            <p align="center">Invoice: <span class="green" id="isInvoice" ></span></p>
+            <p align="center">Cybera: <span class="green" id="isCybera" ></span></p>
+            <p align="center">Shipping Cybera Pay: <span class="green" id="isCyberaPay" ></span></p>
         </td>
    	<tr>
    		<td colspan="2" align="center">
@@ -1128,6 +1184,7 @@ $this->load->helper('general'); ?>
                             <option>Visiting Card</option>
                             <option>Visiting Card Flat</option>
                             <option>Transparent Visiting Card</option>
+                            <option>Menu</option>
                             <option>Offset Print</option>
                             <option>Card Box</option>
                             <option>Flex</option>
@@ -1144,6 +1201,9 @@ $this->load->helper('general'); ?>
                             <option>B/W Print</option>
                             <option>B/W Xerox</option>
                             <option>Not Applicable</option>
+                            
+                            <!-- <option>02</option>
+                            <option>02-A</option> -->
                     </select>
                 </div>
                 <div class="col-md-6" id="maskContainer_<?php echo $i;?>" style="display: none;">
@@ -1158,6 +1218,12 @@ $this->load->helper('general'); ?>
                             }
                          ?>
                          </select>
+                </div>
+
+                <div class="col-md-6" id="restContainer_<?php echo $i;?>" style="display: none;">
+                    <select data-sequence="<?php echo $i;?>" class="form-control select-rest" style="width: 75px;" name="rest_<?php echo $i;?>" id="sel_rest_<?php echo $i;?>">
+                    </select>
+                    <span id="restExtra_<?php echo $i;?>"></span>
                 </div>
                 </div>
             </td>
@@ -1191,10 +1257,15 @@ $this->load->helper('general'); ?>
         	<table>
         			<tr>
         			<td>
-        				Notes : <textarea name="notes" cols="60" rows="5"></textarea>
+                        Notes : <textarea name="notes" id="notes" cols="40" rows="5"></textarea>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td>
+        				<span class="green">EMAIL Notes:</span> <textarea name="mail_note" id="mail_note" cols="40" rows="5"></textarea>
         			</td>
+                    <td>&nbsp;</td>
         			<td>
-        				Extra Notes : <textarea name="extra_notes" style="background-color: pink;" cols="60" rows="5"></textarea>
+        				Extra Notes : <textarea name="extra_notes" style="background-color: pink;" cols="40" rows="5"></textarea>
         			</td>
         			<!-- <td>
         				<div class="row">
@@ -1584,6 +1655,7 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
 </form>
 
 <div id="fancy_box_cutting" style="width:800px;display: none;">
+    <form id="fancyBoxCuttingForm">
     <div style="width: 800px; margin: 0 auto;">
         <table  width="80%" border="2" align="center">
             <tr>
@@ -1718,6 +1790,9 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
                         <input type="radio" id="lamination" name="lamination" value="FB">Double
                     </label>
                     <label>
+                        <input type="radio" id="lamination" name="lamination" value="POUCH">POUCH
+                    </label>
+                    <label>
                         <input type="radio" id="lamination" name="lamination" value="N/A">N/A
                     </label>
                     <input type="text" name="lamination_info" id="lamination_info">
@@ -1745,6 +1820,8 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
 					<label><input type="checkbox" name="binding" value="Folding">Folding</label>
                     <label><input type="checkbox" name="binding" value="Half Cutting">Half Cutting</label>
 					<label><input type="checkbox" name="binding" value="Full & Half Cutting">Full & Half Cutting</label>
+                    <label><input type="checkbox" name="binding" value="Spiral">Spiral</label>
+                    <label><input type="checkbox" name="binding" value="Wiro">Wiro</label>
 					<br>
 					Half Cutting Details: <br /><input type="text" name="binding_info" id="binding_info">
 					<br>
@@ -1786,6 +1863,7 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
             </tr>
         </table>
     </div>
+    </form>
 </div>
 
 
@@ -2039,4 +2117,13 @@ function showPaytmId()
         jQuery("#paytm_id").show();
     }
 }    
+
+function resetCuttingForm()
+{
+    console.log("RESET FORM");
+    $("#fancyBoxCuttingForm").trigger("reset");
+    $('#fancyBoxCuttingForm :radio').iCheck('uncheck');
+    $('#fancyBoxCuttingForm :checkbox').iCheck('uncheck');
+    $("#details").val('');
+}
 </script>

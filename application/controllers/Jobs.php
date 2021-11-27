@@ -198,6 +198,7 @@ public function edit($job_id=null)
         $data['heading']="Jobs";
         if($this->input->post()) 
         {
+          $isMenu = 0;
           //pr($this->input->post());
           $this->load->model('customer_model');
                 
@@ -378,6 +379,7 @@ public function edit($job_id=null)
                 $jobdata['due'] = $this->input->post('due');
                 $jobdata['notes'] = $this->input->post('notes');
                 $jobdata['extra_notes'] = $this->input->post('extra_notes');
+                $jobdata['mail_note'] = $this->input->post('mail_note');
                 $jobdata['receipt'] = $this->input->post('receipt');
                 $jobdata['voucher_number'] = $this->input->post('voucher_number');
                 $jobdata['bill_number'] = $this->input->post('bill_number');
@@ -428,6 +430,12 @@ public function edit($job_id=null)
           'created_at'  => date('Y-m-d H:i:s')
         ];
       }
+
+      // Set JOB as Menu Type
+        if(strtolower($this->input->post('category_'.$i)) == 'menu')
+        {
+          $isMenu = 1;
+        }
 
       $job_details[] = array(
                 'job_id'=>$job_id,
@@ -563,9 +571,9 @@ public function edit($job_id=null)
 
 					if(isset($customer_details->emailid) && $customer_details->emailid != '')
 					{
-						$content = sendDealerJobTicket($customer_details, $job_data, $job_details);
+            $content = sendDealerJobTicket($customer_details, $job_data, $job_details, $isMenu);
 
-						if(isset($customer_details->emailid2) && strlen($customer_details->emailid2) > 4)
+            if(isset($customer_details->emailid2) && strlen($customer_details->emailid2) > 4)
 						{
 							$to = [
 								$customer_details->emailid,
@@ -584,6 +592,7 @@ public function edit($job_id=null)
             if(isset($mailInput) && $mailInput == 1)
           {
             $status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
+
           }
 						//$status = sendBulkEmail($to, 'cyberaprintart@gmail.com', $subject, $content);
 
@@ -601,6 +610,7 @@ public function edit($job_id=null)
 					$percentage  	= $this->input->post('percentage');
 					$fixAmount 	 	= $this->input->post('fix_amount');
 					$refCustomerId  = $this->input->post('reference_customer_id');
+          $refCustomerDetails = getCustomerById($refCustomerId);
 					$fixBonusAmount = $fixAmount;
 					$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
 					$finalBonusAmount = 0 ;
@@ -643,7 +653,15 @@ public function edit($job_id=null)
 							'notes'     => 'Referral Credited with Ref ' . $job_id . $preFix,
 						);
 						$this->job_model->creditBonus($refCustomerId, $creditBonusData);	
-					}
+
+            $refSmsText = "Dear ". $refCustomerDetails->name .", CYBERA PRINT ART credited RS. ". $finalBonusAmount ." in your account as referral discount on printing job by Customer ". $customerName ." LET'S GROW TOGETHER.";
+
+            // Send Referral SMS
+            sendReferralSMS($refCustomerId, 
+                $refCustomerDetails->mobile,
+                $refSmsText
+              );
+          }
 				}
 
           // Send Every Update Email Notification
@@ -780,6 +798,11 @@ public function edit($job_id=null)
 
 			$job_data = $this->job_model->get_job_data($job_id);
 
+      if($job_id == 36408)
+      {
+        //pr($job_data);
+      }
+
 			$job_details = $this->job_model->get_job_details($job_id);
 			$customer_details = $this->job_model->get_customer_details($job_data->customer_id);
 			$customer_mobile = $customer_details->mobile;
@@ -802,6 +825,7 @@ public function edit($job_id=null)
 
 			if($this->input->post()) 
 			{
+        $isMenu = 0;
         $customer_id = $this->input->post('customer_id');
 				$original_customer_id = $this->input->post('original_customer_id');
 
@@ -922,7 +946,8 @@ public function edit($job_id=null)
 				$jobdata['advance'] = $this->input->post('advance');
 				$jobdata['due'] = $this->input->post('due');
 				$jobdata['notes'] = $this->input->post('notes');
-        		$jobdata['extra_notes'] = $this->input->post('extra_notes');
+        $jobdata['extra_notes'] = $this->input->post('extra_notes');
+        $jobdata['mail_note'] = $this->input->post('mail_note');
 				$jobdata['bill_number'] = $this->input->post('bill_number');
 				$jobdata['voucher_number'] = $this->input->post('voucher_number');
 				$jobdata['receipt'] = $this->input->post('receipt');
@@ -994,8 +1019,14 @@ public function edit($job_id=null)
 
 						if($j_details_id)
 						{
+              $job_details['jtype'] = $this->input->post('category_'.$i);
 
-							$job_details['jtype'] = $this->input->post('category_'.$i);
+              // Set JOB as Menu Type
+              if(strtolower($job_details['jtype']) == 'menu')
+              {
+                $isMenu = 1;
+              }
+
               $job_details['jdetails'] = $this->input->post('details_'.$i);
 							$job_details['jmaskdetails'] = $this->input->post('mask_'.$i);
               $job_details['jqty'] = $this->input->post('qty_'.$i);
@@ -1149,9 +1180,9 @@ public function edit($job_id=null)
 
 				if(isset($customer_details->emailid) && $customer_details->emailid != '')
 				{
-					$content = sendDealerJobTicket($customer_details, $job_data, $job_details);
+					$content = sendDealerJobTicket($customer_details, $job_data, $job_details, $isMenu);
 
-					$to  	 = array($customer_details->emailid);
+          $to  	 = array($customer_details->emailid);
 					$subject = "Estimate ( Updated ) - " . $job_data->jobname;
 
           $mailInput = $this->input->post();
@@ -1169,6 +1200,8 @@ public function edit($job_id=null)
 				$percentage  	= $this->input->post('percentage');
 				$fixAmount 	 	= $this->input->post('fix_amount');
 				$refCustomerId  = $this->input->post('reference_customer_id');
+        $refCustomerDetails = getCustomerById($refCustomerId);
+        $customerName    = isset($customer_details->companyname) ? $customer_details->companyname : $customer_details->name;
 				$fixBonusAmount = $fixAmount;
 				$percentageAmount = ($subTotal * $this->input->post('percentage')) / 100;
 				$finalBonusAmount = 0 ;
@@ -1201,7 +1234,7 @@ public function edit($job_id=null)
 						'percentage'			=> $percentage,
 						'fix_amount'			=> $fixAmount,
 						'bonus_amount'			=> $finalBonusAmount,
-						'is_edited'				=> 1
+						'is_edited'				=> 0
 					);
 
           $this->job_model->resetBonus($refCustomerId, $job_id, $bonusData);
@@ -1215,6 +1248,14 @@ public function edit($job_id=null)
 
           $this->job_model->addNewBonus($bonusData);
           $this->job_model->creditBonus($refCustomerId, $creditBonusData);	
+
+          $refSmsText = "Dear ". $refCustomerDetails->name .", CYBERA PRINT ART credited RS. ". $finalBonusAmount ." in your account as referral discount on printing job by Customer ". $customerName ." LET'S GROW TOGETHER.";
+
+          // Send Referral SMS
+          sendReferralSMS($refCustomerId, 
+              $refCustomerDetails->mobile,
+              $refSmsText
+            );
 				}
 			}
 
@@ -1232,6 +1273,8 @@ public function edit($job_id=null)
 			$data['paper_size']= $this->get_paper_size();
       $data['maskCategories'] = $this->getMaskCategories();
       $data['out_jobs'] = $this->out_model->getAllJobOut($job_id);
+
+      //pr($data['all_customers']);
       
       $this->template->load('job', 'edit_job', $data);
 		}
@@ -1416,6 +1459,13 @@ public function edit($job_id=null)
 
 	public function test()
 	{  
+   $ci = & get_instance();
+    $ci->load->model('menu_model'); 
+
+  $ci->menu_model->migrateDCustomers();
+  echo "test";
+  pr($ajson);
+  die;
     pr(get_balance(4825));
     $job_id = 33724;
     $ci = & get_instance();
@@ -1668,6 +1718,7 @@ public function edit($job_id=null)
             $jobdata['due'] = $this->input->post('due');
             $jobdata['notes'] = $this->input->post('notes');
             $jobdata['extra_notes'] = $this->input->post('extra_notes');
+            $jobdata['mail_note'] = $this->input->post('mail_note');
             $jobdata['receipt'] = $this->input->post('receipt');
             $jobdata['voucher_number'] = $this->input->post('voucher_number');
             $jobdata['bill_number'] = $this->input->post('bill_number');

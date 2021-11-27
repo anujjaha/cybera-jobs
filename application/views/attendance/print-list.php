@@ -9,6 +9,12 @@
 </div>
 <div class="box">
 	<div class="box-body table-responsive">
+		<?php
+			if(!empty($pdfTitle))
+			{
+				echo '<center><h4 style="text-align: center;">'. $pdfTitle .'</h4></center>';
+			}
+		?>
 		<table id="example1" class="example1 table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -54,13 +60,13 @@
 					<?php echo $item['notes'];?>
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<br /><br /><br /><br />
 				</td>
 				<td style="border: 1px solid black; padding: 1px;">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
 					<br /><br /><br /><br />
 				</td>
 				</tr>

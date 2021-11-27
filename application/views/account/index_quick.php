@@ -134,6 +134,8 @@
 			 <a target="_blank" href="<?php echo site_url();?>/customer/print_small/<?php echo $customer->id;?>">
 			 	<i class="fa fa-2x fa-print" aria-hidden="true"></i>
 			 </a>
+
+			 <a href="javascript:void(0);" data-cid="<?php echo $customer->id;?>" class="add-diwali-2021"><i class="fa fa-2x fa-gift"></i></a>
 			</td>
 		</tr>
 		<?php $sr++; } ?>
@@ -293,6 +295,36 @@ jQuery(document).on('click', '.remind-amount', function(e)
 
 	remindSms(e.target.getAttribute('data-customer'), e.target.getAttribute('data-mobile'), e.target.getAttribute('data-balance'));
 })
+
+jQuery(document).on('click', '.add-diwali-2021', function(e)
+{
+	addToDiwali2021($(e.target).closest('a').attr('data-cid'));
+})
+
+function addToDiwali2021(cid)
+{
+	jQuery.ajax(
+	{
+		type: "POST",
+		dataType: "JSON",
+		url: "<?php echo site_url();?>/ajax/add_to_diwali", 
+		data : { 
+			'cid': cid,
+			'year': '2021'
+		},
+		success: function(data)
+		{
+			if(data.message)
+			{
+				alert(data.message);
+			}
+			else
+			{
+				alert("Added to 2021 List");
+			}
+        }
+	});
+}
 
 
 function remindSms(customrName, mobile, balance)

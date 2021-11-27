@@ -92,7 +92,14 @@ function direct_verify_job(id) {
 		?>
 		</td>
 		<!-- <td><?php echo $job['job_id'];?></td> -->
-		<td><?php echo $job['companyname'];?></td>
+		<td>
+			<?php echo $job['companyname'];?>
+			<?php 
+				echo "<hr />";
+				echo isset($job['emailid']) && !empty($job['emailid']) ?  '<span class="green">' . $job['emailid'] .'</span>' : '';
+			?>
+			
+		</td>
 		<td><?php echo $job['name'];?></td>
 		<td><?php echo $job['jobname'];?></td>
 		<td><?php echo $job['mobile'];?></td>

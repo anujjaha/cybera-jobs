@@ -68,7 +68,7 @@ $this->load->helper('form');
 		</div>
 
 		<div class="form-group">
-			<label>Mail Active</label>
+			<label>Marketing Mail Allow</label>
 			<select name="is_mail"  id="is_mail" class="form-control">
 				<option <?php $dealer_info->is_mail == 0 ? 'selected="selected"' : ''; ?> value="0">No </option>
 				<option <?php $dealer_info->is_mail == 1 ? 'selected="selected"' : ''; ?> value="1">Yes </option>
@@ -104,7 +104,7 @@ $this->load->helper('form');
 		</div>
 
 		<div class="form-group">
-			<label>Notes</label>
+			<label>Notes about Customer</label>
 
 			<textarea class="form-control" name="description"><?php echo  isset($dealer_info->description) ? $dealer_info->description : '' ?></textarea>
 		</div>

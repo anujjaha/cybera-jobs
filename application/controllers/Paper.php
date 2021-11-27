@@ -34,6 +34,8 @@ class Paper extends CI_Controller {
 			$paper_amount = $this->input->post('paper_amount');
 			$paper_name = $this->input->post('paper_name');
 			$paper_gram = $this->input->post('paper_gram');
+			$paper_print = $this->input->post('paper_print');
+			
 			$paper_size = $this->input->post('paper_size');
 			$paper_qty_min = $this->input->post('paper_qty_min');
 			$paper_qty_max= $this->input->post('paper_qty_max');
@@ -44,6 +46,7 @@ class Paper extends CI_Controller {
 					$data[]=array( 'paper_name'=>$paper_name[$i],
 									'paper_gram'=>strtolower($paper_gram[$i]),
 									'paper_size'=>$paper_size[$i],
+									'paper_print'=>$paper_print[$i],
 									'paper_qty_min'=>$paper_qty_min[$i],
 									'paper_qty_max'=>$paper_qty_max[$i],
 									'paper_amount'=>$paper_amount[$i],

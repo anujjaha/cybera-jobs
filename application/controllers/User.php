@@ -132,6 +132,12 @@ class User extends CI_Controller {
 		$data['search']="";
 		if($this->input->post('q')) {
 			$search = $this->input->post('q');
+
+			if(strlen($search) == 11 && $search[5] == ' ')
+			{
+				$search = str_replace(" ", "", $search);
+			}
+			
 			$data['dealers'] = $data['customers'] = $this->user_model->search_customers($search);
 			$data['job_data'] = $this->user_model->search_job($search);
 			//echo "<pre>";

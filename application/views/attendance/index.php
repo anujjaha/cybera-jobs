@@ -6,11 +6,16 @@
 	</a>
 	<hr>
 	<div class="row">
-		<div class="col-md-9">
+		<div class="col-md-6">
 			<h3> Attendance For <?php echo date('F - Y', strtotime('last month'));?></h3>
 		</div>
-		<div class="col-md-3">
-			<button onclick='ajax_print_attendance();'>Print Attendence</button>
+		<div class="col-md-6">
+			<div class="col-md-8">
+				<input type="text" name="attendance_title" id="attendance_title" class="form-control">
+			</div>
+			<div class="col-md-4">
+				<button onclick='ajax_print_attendance();'>Print Attendence</button>
+			</div>
 		</div>
 	</div>
 	</div>
@@ -116,6 +121,7 @@ function ajax_print_attendance() {
          data : {
          	'month': "<?= date('F', strtotime('last month'));?>",
          	'year': "<?= date('Y', strtotime('last month'));?>",
+         	'title': $("#attendance_title").val()
          }, 
          success: 
             function(data){

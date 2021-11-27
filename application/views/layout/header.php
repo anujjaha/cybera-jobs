@@ -9,7 +9,24 @@
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/fancybox/jquery.fancybox.css?v=2.1.5" media="screen" />
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/tab.css" media="screen" />
 
+<style type="text/css">
+.ui-autocomplete {
+	z-index: 10000000;
+	font-size: 18px;
+	font-weight: bolder;
+}
 
+
+</style>
+
+
+
+<?php
+	if(!isset($_SESSION['transporters_data']))
+	{
+		$_SESSION['transporters_data'] = getCurrentTransporters();	
+	}
+?>
 <script>
 function show_calculator()
 	{
@@ -88,6 +105,173 @@ function show_notifications(data) {
 		}
 	});
 }
+var currentLoginUserFName = "<?= explode(" ", $_SESSION['username'])[0];?>";
+
+if(currentLoginUserFName == "Master")
+{
+	currentLoginUserFName = 'Shaishav';
+}
+var menuTerms = `\n*Please Note:*
+- No Guaranty for Lamination / Coating while Folding / Creasing.
+- Life of Lamination / Coating Depends on Usage of the menu.
+- Keep this menu out of reach of hot vessel or Hot Surface.
+
+Thank You\n
+`+ currentLoginUserFName.toUpperCase() +`
+CYBERA PRINT ART`.toUpperCase();
+var resMenus = JSON.parse('<?= json_encode(getAllMenu());?>');
+
+var cnoteTerms = `\n\nThank You\n
+`+ currentLoginUserFName.toUpperCase() +`
+CYBERA PRINT ART`;
+
+function copyCNotesNow()
+{
+	var payment = '';
+	var cjnotes = '';
+	var cjexnotes = '';
+
+	var cjprocess = '';
+	var cjpacking = '';
+	var cjtby = '';
+	var cjprocessTime = '';
+	var cjtPayby = '';
+
+	var cjgst = '';
+	var cjprocessType = '';
+	var cjTotalAmt = '';
+
+	if($("#cpayment").val() != '0' )
+	{
+		payment = '\n\n *- Payment Terms:' + $("#cpayment").val() + '*';
+	}
+
+	if($("#cjprocessTime").val() != '0')
+	{
+		cjprocessTime = ' + Delivery Time Extra';
+	}
+
+	if($("#cjprocess").val() != '0' )
+	{
+		cjprocessType = $("#cjprocessType").val();
+		cjprocess = '\n *- PROCESS: ' + $("#cjprocess").val() + ' WORKING '+ cjprocessType + ' ' + cjprocessTime +'*';
+		 
+	}
+
+	if($("#cjpacking").val() != '0' )
+	{
+		cjpacking = '\n *- Packing Forwading Extra RS ' + $("#cjpacking").val() + '*';
+	}
+
+	if($("#cjtPayby").val() != '0')
+	{
+		cjtPayby = ' Charges Pay By:' + $("#cjtPayby").val();
+	}
+
+	if($("#cjtby").val() != '0' )
+	{
+		cjtby = '\n *- Transportation By: ' + $("#cjtby").val() + ' ' + cjtPayby + '*';
+	}
+
+	if($("#cjgst").val() != '0' )
+	{
+		cjgst = '\n *- GST: ' + $("#cjgst").val() + ' EXTRA*';
+	}
+
+	if($("#cjnotes").val() != '0' )
+	{
+		cjnotes = '\n *' + $("#cjnotes").val() + '*';
+	}
+
+	if($("#cjexnotes").val().length > 0 )
+	{
+		cjexnotes = '\n\n *Note:* ' + $("#cjexnotes").val();
+	}
+
+	if($("#cjTotalAmt").val() != '0' )
+	{
+		cjTotalAmt = '\n\n *TOTAL Amount RS. ' + $("#cjTotalAmt").val() + '*';
+	}
+
+	$("#resEstimateData").val('*'+ $("#cname").val() +'*'+ '\n \n*'+ $("#ctitle").val() + '*\n\n'
+	+ $("#cnotes").val()
+	+  '\n'
+	+ cjprocess.toUpperCase() 
+	+ cjpacking.toUpperCase() 
+	+ cjtby.toUpperCase() 
+	+ cjgst.toUpperCase() 
+	+ cjTotalAmt.toUpperCase() 
+	+ payment.toUpperCase() 
+	+ cjnotes.toUpperCase() 
+	+ cjexnotes.toUpperCase()
+	+ cnoteTerms.toUpperCase());
+
+	$("#resEstimateData").select();
+	document.execCommand('copy');
+}
+
+function openPopupBoxRestuarant()
+{
+	$("#resMenuManager").modal('show');
+	$('#resMenuOptionsPopUp').empty();
+	$('#resMenuOptionsPopUp').append(`<option>Select Code</option>`);
+	var shortName = '';
+	for(i in resMenus)
+	{
+		$('#resMenuOptionsPopUp').append(`<option value="`+resMenus[i].code+`">`+resMenus[i].code +` (`+ resMenus[i].short_name +` )</option>`);
+	}
+}
+
+function openPopupBoxGEstimate()
+{
+	$("#generalEstimate").modal('show');
+	$( "#cjtby" ).autocomplete({
+      source: (<?= $_SESSION['transporters_data'];?>),
+      	messages: {
+        	noResults: '',
+        	results: function() {}
+    	}
+    });
+
+	$("#cname").val('');
+	$("#ctitle").val('');
+	$("#cnotes").val('');
+
+	$("#cpayment").val('0');
+	$("#cjnotes").val('0');
+	
+	$("#cjprocess").val('0');
+	$("#cjprocessType").val('0');
+	$("#cjpacking").val('0');
+	$("#cjtby").val('0');
+	$("#cjgst").val('0');
+	$("#cjTotalAmt").val('0');
+
+	
+	$("#resEstimateData").val('');
+}
+
+function showResMenuOptToVal()
+{
+	var processTime = 'PROCESS: __ Day/s + Delivery Time Extra';
+	for(i in resMenus)
+	{
+		if($("#resMenuOptionsPopUp").val() == resMenus[i].code)
+		{
+			$("#resMenuOptionsPopUpVal").val(('*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST').toUpperCase());
+
+
+			$("#resMenuOptionsPopUpValWith").val(('*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST' + '\n\n'+ processTime + '\n' + menuTerms).toUpperCase());
+
+			$("#resMenuOptionsPopUpExtra").html(resMenus[i].extra);
+
+			$("#resMenuOptionsPopUpValWith").select();
+			document.execCommand('copy');
+		}
+	}
+}
+
+
 </script>
     <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -156,6 +340,12 @@ function show_notifications(data) {
 						<li class="dropdown messages-menu">
 							<a href="<?php echo base_url().'cashier'?>">
 								Cashier
+							</a>
+						</li>
+
+						<li class="dropdown messages-menu">
+							<a href="<?php echo base_url().'transporter'?>">
+								Transporter
 							</a>
 						</li>
                         <!-- Messages: style can be found in dropdown.less-->
@@ -884,6 +1074,201 @@ function bindAddJobReview()
       <div class="modal-footer">
      	<button type="button" class="btn btn-info" id="job_review_send_btn">Send SMS</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div id="resMenuManager" class="modal fade " role="dialog">
+	<div class="modal-dialog modal-lg">
+
+	<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Restaurant Menu</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+			<div class="col-md-6">
+		  	<select id="resMenuOptionsPopUp" class="form-control" onchange="showResMenuOptToVal()"></select>
+			</div>
+			<div class="col-md-6">
+				<textarea id="resMenuOptionsPopUpVal" rows="6" class="form-control"></textarea>
+				<strong><span id="resMenuOptionsPopUpExtra"></span></strong>
+			</div>
+			<div class="col-md-6"></div>
+			<div class="col-md-6">
+			<br />
+				<textarea id="resMenuOptionsPopUpValWith" rows="6" class="form-control"></textarea>
+			</div>
+		</div>
+		<br /><br />
+      </div>
+      <div class="modal-footer">
+     	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="generalEstimate" class="modal fade modal-lg" role="dialog">
+	<div class="modal-dialog modal-lg" style="width: 60%;">
+
+	<div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">General Estimate</h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-12">
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Customer:</label>
+		  				<input type="text" name="cname" id="cname" class="form-control">
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Title:</label>
+		  				<input type="text" name="ctitle" id="ctitle" class="form-control">
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Details:</label>
+		  				<textarea id="cnotes" rows="6" name="cnotes" class="form-control"></textarea>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="row form-group">
+						<div class="col-md-4">
+							<label>Process:</label>
+			  				<select class="form-control" name="cjprocess" id="cjprocess">
+			  					<option selected="selected" value="0">N/A</option>
+			  					<option value="1">1</option>
+			  					<option value="2">2</option>
+			  					<option value="3">3</option>
+			  					<option value="4">4</option>
+			  					<option value="5">5</option>
+			  					<option value="6">6</option>
+			  					<option value="7">7</option>
+			  				</select>
+						</div>
+						<div class="col-md-4">
+						<label>Process Time:</label>
+			  				<select id="cjprocessType" name="cjprocessType" class="form-control">
+			  					<option value="0">N/A</option>
+			  					<option>Day/s</option>
+			  					<option>Hour/s</option>
+			  				</select>
+						</div>
+						<div class="col-md-4">
+						<label>Delivery Time:</label>
+			  				<select id="cjprocessTime" name="cjprocessTime" class="form-control">
+			  					<option value="0">N/A</option>
+			  					<option>Extra</option>
+			  				</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Packing Forwading:</label>
+		  				<input class="form-control" name="cjpacking" id="cjpacking" value="0">
+		  			</div>
+		  		</div>
+
+		  		<div class="row col-md-6">
+		  			<div class="form-group">
+		  				<div class="col-md-8">
+							<label>Transportation By:</label>
+			  				<input class="form-control" name="cjtby" id="cjtby" value="0">
+		  				</div>
+		  				<div class="col-md-4">
+							<label>Pay By:</label>
+			  				<select class="form-control" name="cjtPayby" id="cjtPayby">
+			  					<option value="0">N/A</option>
+			  					<option>Cybera</option>
+			  					<option>Party</option>
+			  				</select>
+		  				</div>
+		  			</div>
+		  		</div>
+
+		  		<div class="col-md-6">
+		  			<div class="row form-group">
+		  				<div class="col-md-6">
+						<label>GST:</label>
+		  				<select id="cjgst" name="cjgst" class="form-control">
+		  					<option selected value="0">N/A</option>
+		  					<option value="5%">5</option>
+		  					<option value="10%">10</option>
+		  					<option value="12%">12</option>
+		  					<option value="15%">15</option>
+		  					<option value="18%">18</option>
+		  				</select>
+		  				</div>
+		  				<div class="col-md-6">
+							<label>Total Amount:</label>
+			  				<input class="form-control" name="cjTotalAmt" id="cjTotalAmt" value="0">
+		  				</div>
+		  			</div>
+		  		</div>
+
+		  		<div class="col-md-6">
+		  			<div class="form-group">
+						<label>Payment:</label>
+		  				<select class="form-control" name="cpayment" id="cpayment">
+		  					<option selected="selected" value="0">N/A</option>
+		  					<option value="100% Advance">Advance</option>
+		  				</select>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Job Notes:</label>
+		  				<select class="form-control" name="cjnotes" id="cjnotes">
+		  					<option selected="selected" value="0">N/A</option>
+		  					<option value="- Job Will be start after Approval of Estimate">After Approval</option>
+		  				</select>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="form-group">
+						<label>Extra Notes:</label>
+		  				<textarea class="form-control" name="cjexnotes" id="cjexnotes"></textarea>
+					</div>
+				</div>
+
+				<div class="col-md-12">
+					<div class="form-group">
+						<a href="javascript:void(0);" class="btn btn-primary" id="copy-c-data" onclick="copyCNotesNow()">Copy</a>
+					</div>
+				</div>
+
+				</div>
+			</div>
+
+			<div class="col-md-12 text-center">
+				<textarea id="resEstimateData" rows="12" class="form-control"></textarea>
+			</div>
+		</div>
+		<br /><br />
+      </div>
+      <div class="modal-footer">
+     	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
 

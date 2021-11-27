@@ -1255,13 +1255,24 @@ function isAdmin()
 	return false;
 }
 
-function sendDealerJobTicket($customer_details, $job_data, $job_details)
+function sendDealerJobTicket($customer_details, $job_data, $job_details, $isMenu = 0)
 {
 	$created_info 	= get_user_by_param('id',$job_data->user_id);
 	$show_name 		= $customer_details->companyname ? $customer_details->companyname :$customer_details->name;
 	$content ='';
 	$discountAmt = 0;
 	$customerTitle = "Name";
+	$menuTerms = '';
+
+	if($isMenu == 1)
+	{
+		$menuTerms = '<br/>
+		<ul>
+		<li><strong>No Guaranty for Lamination / Coating while Folding / Creasing. </strong></li>
+		<li><strong>Life of Lamination / Coating Depends on Usage of the menu. </strong></li>
+		<li><strong>Keep this menu out of reach of hot vessel or Hot Surface.</strong></li>
+		</ul>';
+	}
 	if($customer_details->ctype == 1 )
 	{
 		$customerTitle = "Dealer";
@@ -1270,12 +1281,22 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 		 {
 			$mobileNumber = (strlen($job_data->jsmsnumber) > 1 ) ? "-".$job_data->jsmsnumber : '';
 			$mobileNumber = $customer_details->mobile.$mobileNumber;
+			$estimateJobNote = '';
 
+			if(!empty($job_data->mail_note))
+			{
+				$estimateJobNote = '<tr>
+					<td align="center" style="font-size:12px;" colspan="2">
+						<span style="font-size: 16px;"><strong style="color: green; font-weight: bold">Note:</strong> '.$job_data->mail_note.'</span>
+					</td>
+				</tr>';
+			}
 			$content .= '
 				<table align="center" width="90%" border="0" style="border:0px solid;font-size:9px;height:3in;">
 				<tr>
 				<td width="100%" align="left">
 					<table width="100%"  align="left" style="border:1px solid;font-size:9px;">
+						'. $estimateJobNote .'
 						<tr>
 							<td align="center" style="font-size:12px;" colspan="2">
 								<strong>Estimate</strong>
@@ -1384,7 +1405,9 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 									
 									
 									$content .=  '<tr>
-										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'</td>
+										<td style="font-size:9px;" colspan="2">Created by :'.$created_info->nickname.'
+										'.$menuTerms.'
+										</td>
 										<td style="font-size:9px;" colspan="2" align="right">Due :</td>
 										<td style="font-size:9px;" align="right">'. number_format($job_data->due - $discountAmt, 2).'</td>
 									</tr>
@@ -1412,7 +1435,7 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details)
 
 			if(isset($job_data->approx_completion) && strlen($job_data->approx_completion) > 2)
 			{
-				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Approximate Completion Time : '. $job_data->approx_completion .'</center></span> </td></tr>';
+				$content .= ' <tr><td colspan="2"><span style="margin-top: -10px;"> <center> Approximate Completion Time : '. $job_data->approx_completion .' (Courier Time extra if Applicable)</center></span></td></tr>';
 			}
 
 			if($customer_details->ctype == 1)
@@ -2056,4 +2079,68 @@ function sendJobReviewSMS($input = array())
 		$sms_data['status'] = $response;
 		$ci->sms->insert_sms($sms_data);
 	}
+}
+
+function sendReferralSMS($customer_id = null, $mobile = null, $sms_text = null, $user_id = null)
+{
+	$ci = & get_instance();
+	$ci->load->database();
+
+	if(! $user_id) {
+		$user_id = $ci->session->userdata['user_id'];
+	}
+	
+	$msg = str_replace(" ", "+", $sms_text);
+	$msg = str_replace("&", "%26", $msg);
+
+	$url = "http://sms.infisms.co.in/API/SendSMS.aspx?UserID=cyberabill&UserPassword=cybSat19&PhoneNumber=$mobile&Text=$msg&SenderId=CYBERA&AccountType=2&MessageType=0";
+
+	$url = urlencode($url);
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, urldecode($url));
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+	$response = curl_exec($ch);
+	curl_close($ch);
+	
+	
+	if($user_id && $customer_id)
+	{
+		$ci->load->model('sms_transaction_model','sms');
+		$sms_data['user_id'] = $user_id;
+		$sms_data['customer_id'] = $customer_id;
+		$sms_data['prospect_id'] = 0;
+		$sms_data['sms_text'] = $sms_text;
+		$sms_data['mobile'] = $mobile;
+		$sms_data['char_count'] = strlen($sms_text);
+		$sms_data['status'] = $response;
+		$sms_data['is_referral'] = 1;
+		$ci->sms->insert_sms($sms_data);
+	}
+	return true;	
+}
+
+function getAllMenu()
+{	
+	$ci = & get_instance();
+	$ci->load->model('menu_model');	
+
+	return $ci->menu_model->getAll();
+}
+
+function getCurrentTransporters()
+{
+	$ci = & get_instance();
+	$ci->load->model('transport_model');	
+
+	$transporters = $ci->transport_model->getAll();
+	$output = [];
+
+	foreach ($transporters as $transporter) 
+	{
+		$output[] = $transporter['title'];
+	}
+
+	return json_encode($output);
 }

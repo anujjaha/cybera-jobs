@@ -166,9 +166,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 		<td>
 			<a target="_blank" href="<?php echo site_url();?>/account/account_details/<?php echo $job['customer_id'];?>">
 		<?php
-
 			echo $job['companyname'] ? $job['companyname'] : $job['name'] ;
 			echo '</a><br><span class="green">'. $job['fix_note'] .'</span>';
+			
+			if(isset($job['description']) && !empty($job['description']))
+			{
+				echo '<br>Notes: <span class="red">'. $job['description'] .'</span>';
+			}
 			echo $job['ctype'] == 1 ? '<span class="red">[D]</span>' : '<span class="green">[R]</span>';
 
 			if($job['rating'] == 5)

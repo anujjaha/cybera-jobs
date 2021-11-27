@@ -143,7 +143,11 @@ class Ajax extends CI_Controller {
 			
 			$sms_text = 'Dear '. $cusName .', We have dispatched your parcel via - '. $this->input->post('courier_name') .' and the docket number is '.$this->input->post('docket_number').'. Thank You. CYBERA';
 
-			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.<br /><br/><br /> અમે હંમેશાં તમારા પાર્સલને કુરિયર અથવા પરિવહન સેવાઓમાં નિર્ધારિત  સમય મર્યાદામાં પહોંચાડવાનો પ્રયાસ કરીએ છીએ. જો કોઈ કારણોસર તમારું પાર્સલ મોડું થાય તો સાયબેરા જવાબદાર રહેશે નહીં. અસુવિધા બદલ દિલગીર છીએ.';
+			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.<br /><br/><br />';
+
+				// Hindi / Gujarati Courier version
+
+				 /*અમે હંમેશાં તમારા પાર્સલને કુરિયર અથવા પરિવહન સેવાઓમાં નિર્ધારિત  સમય મર્યાદામાં પહોંચાડવાનો પ્રયાસ કરીએ છીએ. જો કોઈ કારણોસર તમારું પાર્સલ મોડું થાય તો સાયબેરા જવાબદાર રહેશે નહીં. અસુવિધા બદલ દિલગીર છીએ.<br /><br/><br /><br/><br />हम हमेशा आपके पार्सल को कूरियर या परिवहन सेवाओं मेंं समय सीमा के भीतर वितरित करने का कोशिश करते हैं। यदि आपका पार्सल किसी भी कारण से लेट होता है तो साइबेरा जिम्मेदार नहीं होगा। असुविधा के लिए खेद है।';*/
 
 			$subject = 'Dispatched Parcel via - ' . $this->input->post('courier_name') . ' by Cybera';
 			
@@ -2084,7 +2088,7 @@ class Ajax extends CI_Controller {
 			$data['jobDetails'] = $this->out_model->getJobAdditionalDetails($data['jobInfo']->{id});
 
 			$html 		= $this->load->view('common/out_job.php', $data, true);
-			$pdfFile 	= create_pdf($html, 'A6');
+			$pdfFile 	= create_pdf($html, 'A5');
 
 			echo json_encode(array(
 				'status' => true,
@@ -2103,15 +2107,228 @@ class Ajax extends CI_Controller {
 	{
 		$month = $this->input->post('month');
 		$year = $this->input->post('year');
+		$pdfTitle = $this->input->post('title');
 		$this->load->model('attendance_model');
 		$data = array();
 		
 		$data['items'] = $this->attendance_model->getAllAttendance();
 		$data['title'] = "Attendance List : " . $month . ' ' . $year;
+		$data['pdfTitle'] = !empty($pdfTitle) ? $pdfTitle : '';
 		
 		$html = $this->load->view('attendance/print-list', $data, true);
 		$pdfFile = create_pdf($html, 'A4-L');
 
 		echo $pdfFile;
 	}
+
+	public function ajax_menu_delete()
+	{
+		if($this->input->post()) {
+			$id = $this->input->post('id');
+			$this->load->model('menu_model');
+			$status = $this->menu_model->softDeleteMenu($id);
+			echo json_encode([
+				'status' => 1
+			]);
+			die;
+		}		
+	}
+
+
+	public function ajax_menu_update()
+	{
+		if($this->input->post()) {
+			$input = $this->input->post();
+			$this->load->model('menu_model');
+			if($this->menu_model->updateMenu($input))
+			{
+				echo json_encode([
+					'status' => 1
+				]);
+				die;
+			}
+		}	
+	}
+
+	public function ajax_menu_add()
+	{
+		if($this->input->post()) 
+		{
+			$data = array(
+				'code' 			=> $this->input->post('code'),
+				'title'  		=> $this->input->post('title'),
+				'price'  		=> $this->input->post('price'),
+				'qty'  			=> $this->input->post('qty'),
+				'extra'  		=> $this->input->post('extra'),
+				'created_at'  => date('Y-m-d H:i:s')
+			);
+
+			$this->load->model('menu_model');
+			
+			if($this->menu_model->create($data))
+			{
+				echo json_encode([
+					'status' => 1
+				]);
+				die;
+			}
+		}
+
+		echo json_encode([
+			'status' => 0
+		]);
+		die;	
+	}
+
+	public function ajax_print_menu_list()
+	{
+		$this->load->model('menu_model');
+		$data = array();
+		$data['menus'] = $this->menu_model->getAll();
+		$data['title'] = "Menu List : " . date('m-d-y H:i:s');
+		$html = $this->load->view('menu/print-list', $data, true);
+		$pdfFile = create_pdf($html, 'A4-L');
+
+		echo $pdfFile;
+	}
+
+
+	public function ajax_d_customer_delete()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('Diwali_model');
+			$this->Diwali_model->soft_delete($this->input->post('id'));
+			echo json_encode([
+			]);
+			die();
+		}		
+
+		echo json_encode([], 400);
+		die();
+	}
+
+	public function ajax_d_customer_g_update()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('Diwali_model');
+			$this->Diwali_model->update_gtype($this->input->post('id'), $this->input->post('gtype'));
+			echo json_encode([
+			]);
+			die();
+		}		
+
+		echo json_encode([], 400);
+		die();
+	}
+
+	public function ajax_d_customer_add()
+	{
+		if($this->input->post())
+		{
+			$this->load->model('Diwali_model');
+			$this->Diwali_model->create($this->input->post());
+			echo json_encode([
+			]);
+			die();
+		}		
+
+		echo json_encode([], 400);
+		die();	
+	}
+
+	public function add_to_diwali()
+	{
+		if($this->input->post())
+		{
+			$input = $this->input->post();
+			$this->load->model('Diwali_model');
+			$status = $this->Diwali_model->copy_to_diwali($input['cid']);
+			if($status)
+			{
+				echo json_encode([
+				]);
+				die();
+			}
+		}		
+
+		echo json_encode([
+			'message' => 'Already Exists'
+			]);
+		die();	
+	}
+
+	public function ajax_transporter_add()
+	{
+		if($this->input->post()) 
+		{
+			$data = array(
+				'title'  				=> $this->input->post('title'),
+				'full_address'  		=> $this->input->post('full_address'),
+				'contact_number1'  		=> $this->input->post('contact_number1'),
+				'contact_number2'  		=> $this->input->post('contact_number2'),
+				'google_map'  			=> $this->input->post('google_map'),
+				'approx_fare'  			=> $this->input->post('approx_fare'),
+				'cities'  			=> $this->input->post('cities'),
+			);
+
+			$this->load->model('transport_model');
+			
+			if($this->transport_model->create($data))
+			{
+				echo json_encode([
+					'status' => 1
+				]);
+				die;
+			}
+		}
+
+		echo json_encode([
+			'status' => 0
+		]);
+		die;			
+	}
+
+	public function ajax_transport_update()
+	{
+		if($this->input->post()) {
+			$input = $this->input->post();
+			$this->load->model('transport_model');
+			if($this->transport_model->updateTransport($input))
+			{
+				echo json_encode([
+					'status' => 1
+				]);
+				die;
+			}
+		}	
+	}
+
+
+	public function ajax_transporter_delete()
+	{
+		if($this->input->post()) {
+			$id = $this->input->post('id');
+			$this->load->model('transport_model');
+			$status = $this->transport_model->softDeleteTransporter($id);
+			echo json_encode([
+				'status' => 1
+			]);
+			die;
+		}		
+	}
+
+	public function ajax_print_transporter_list()
+	{
+		$this->load->model('transport_model');
+		$data = array();
+		$data['menus'] = $this->transport_model->getAll();
+		$data['title'] = "Transporter List : " . date('m-d-y H:i:s');
+		$html = $this->load->view('transporter/print-list', $data, true);
+		$pdfFile = create_pdf($html, 'A4-L');
+
+		echo $pdfFile;
+	}	
+
 }

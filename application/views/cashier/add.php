@@ -29,7 +29,7 @@
 		</tr>
 
 		<tr>
-			<td align="right"> <label>Total Card : </label></td>
+			<td align="right"> <label>Total PayTm : </label></td>
 			<td> <input type="number" min="0" name="card_business" value="0" required="required" class="form-control"> </td>
 		</tr>
 
