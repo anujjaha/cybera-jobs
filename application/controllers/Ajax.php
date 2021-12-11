@@ -143,7 +143,8 @@ class Ajax extends CI_Controller {
 			
 			$sms_text = 'Dear '. $cusName .', We have dispatched your parcel via - '. $this->input->post('courier_name') .' and the docket number is '.$this->input->post('docket_number').'. Thank You. CYBERA';
 
-			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.<br /><br/><br />';
+			$note2 = 'Our responsibility ceases absolutely as soon as the goods have been handed over to Rail, Motor Lorry and other career on in person.';
+			$mailText = $sms_text . '<br /><br /><br /> <strong>Note:</strong> We always try to deliver your parcels to courier or transport services within committed time frame. In case, if your parcel is delayed due to any reason, Cybera will not be responsible. Inconvenience is regretted.<br /><br/><br /> ' . $note2;
 
 				// Hindi / Gujarati Courier version
 

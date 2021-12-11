@@ -134,12 +134,14 @@ function copyCNotesNow()
 	var cjprocess = '';
 	var cjpacking = '';
 	var cjtby = '';
+	var cjtbyRs = $("#cjtbyRs").val();
 	var cjprocessTime = '';
 	var cjtPayby = '';
 
 	var cjgst = '';
 	var cjprocessType = '';
 	var cjTotalAmt = '';
+	var cjSubTotalAmt = '';
 
 	if($("#cpayment").val() != '0' )
 	{
@@ -160,22 +162,44 @@ function copyCNotesNow()
 
 	if($("#cjpacking").val() != '0' )
 	{
-		cjpacking = '\n *- Packing Forwading Extra RS ' + $("#cjpacking").val() + '*';
+		cjpacking = '\n *- Packing Forwarding RS. ' + $("#cjpacking").val() + '*';
 	}
 
 	if($("#cjtPayby").val() != '0')
 	{
-		cjtPayby = ' Charges Pay By:' + $("#cjtPayby").val();
+		cjtPayby = ' PAID By:' + $("#cjtPayby").val();
 	}
 
-	if($("#cjtby").val() != '0' )
+	if($("#cjtby").val() != '0' && $("#cjtbyRs").val() != '0')
+	{
+		cjtby = '\n *- Transportation By: ' + $("#cjtby").val() + ' RS. ' +$("#cjtbyRs").val() + cjtPayby +'*';
+	}
+	else
 	{
 		cjtby = '\n *- Transportation By: ' + $("#cjtby").val() + ' ' + cjtPayby + '*';
 	}
 
-	if($("#cjgst").val() != '0' )
+	if($("#cjgst").val() != '0' && $("#cjgst").val() != 'Extra')
 	{
-		cjgst = '\n *- GST: ' + $("#cjgst").val() + ' EXTRA*';
+		var showGSTAmt = parseFloat($("#cjgstHide").val());
+
+		console.log('showGSTAmt', showGSTAmt);
+
+		if(showGSTAmt.toString().length > 0 && showGSTAmt > 0)
+		{
+			
+			cjgst = '\n *- GST: ' + $("#cjgst").val() + '% : RS. '+showGSTAmt+'*';
+		}
+		else
+		{
+			$("#gstLabel").html('');
+			cjgst = '\n *- GST: ' + $("#cjgst").val() + '% EXTRA*';	
+		}
+		
+	}
+	if($("#cjgst").val() == 'Extra' )
+	{
+		cjgst = '\n *- GST: EXTRA*';
 	}
 
 	if($("#cjnotes").val() != '0' )
@@ -213,6 +237,7 @@ function copyCNotesNow()
 function openPopupBoxRestuarant()
 {
 	$("#resMenuManager").modal('show');
+	$("#resMenuClientName").val('');
 	$('#resMenuOptionsPopUp').empty();
 	$('#resMenuOptionsPopUp').append(`<option>Select Code</option>`);
 	var shortName = '';
@@ -253,15 +278,17 @@ function openPopupBoxGEstimate()
 
 function showResMenuOptToVal()
 {
-	var processTime = 'PROCESS: __ Day/s + Delivery Time Extra';
+	var partyName   = $("#resMenuClientName").val();
+	var preFix 		= '*' + partyName + '* \n \n*MENU ESTIMATE*\n\n'.toUpperCase();
+	var processTime = 'PROCESS: __ WORKING Day/s + Delivery Time Extra';
 	for(i in resMenus)
 	{
 		if($("#resMenuOptionsPopUp").val() == resMenus[i].code)
 		{
-			$("#resMenuOptionsPopUpVal").val(('*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST').toUpperCase());
+			$("#resMenuOptionsPopUpVal").val(( preFix + '*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST').toUpperCase());
 
 
-			$("#resMenuOptionsPopUpValWith").val(('*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST' + '\n\n'+ processTime + '\n' + menuTerms).toUpperCase());
+			$("#resMenuOptionsPopUpValWith").val((preFix + '*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST' + '\n\n'+ processTime + '\n' + menuTerms).toUpperCase());
 
 			$("#resMenuOptionsPopUpExtra").html(resMenus[i].extra);
 
@@ -271,7 +298,30 @@ function showResMenuOptToVal()
 	}
 }
 
+function estimateCalcTotal()
+{
+	var gst = $("#cjgst").val();
+	var forwarding = parseFloat($("#cjpacking").val());
+	var subTotal = parseFloat($("#cjSubTotalAmt").val());
+	var transportRs = parseFloat($("#cjtbyRs").val());
+	var finalTotal =  parseFloat(forwarding) + parseFloat(subTotal) + parseFloat(transportRs);
 
+	$("#cjgstHide").val(0);
+	$("#gstLabel").html('');
+	if(gst != 0 && gst != 'Extra')
+	{
+		gst = parseFloat(gst);
+		var gstValue = parseFloat(finalTotal * (parseFloat(gst)/100)).toFixed(2);
+
+		$("#gstLabel").html('RS. '+ gstValue);
+		$("#cjgstHide").val(parseFloat(gstValue));
+
+		finalTotal = parseFloat(finalTotal) + parseFloat(gstValue);
+	}
+	
+	$("#cjTotalAmt").val(finalTotal);
+	console.log('estimateCalcTotal', finalTotal);
+}
 </script>
     <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -1091,7 +1141,14 @@ function bindAddJobReview()
       </div>
       <div class="modal-body">
       	<div class="row">
+
 			<div class="col-md-6">
+
+			<div>
+	      		<label>Party Name:</label>
+				<input type="text" name="resMenuClientName" id="resMenuClientName" class="form-control">
+      		</div>
+      		<br />
 		  	<select id="resMenuOptionsPopUp" class="form-control" onchange="showResMenuOptToVal()"></select>
 			</div>
 			<div class="col-md-6">
@@ -1181,7 +1238,12 @@ function bindAddJobReview()
 					</div>
 				</div>
 
-				<div class="col-md-6">
+				<div class="col-md-3">
+					<label>Sub Total:</label>
+	  				<input class="form-control" name="cjSubTotalAmt" id="cjSubTotalAmt" value="0">
+  				</div>
+
+				<div class="col-md-3">
 					<div class="form-group">
 						<label>Packing Forwading:</label>
 		  				<input class="form-control" name="cjpacking" id="cjpacking" value="0">
@@ -1193,31 +1255,32 @@ function bindAddJobReview()
 		  				<div class="col-md-8">
 							<label>Transportation By:</label>
 			  				<input class="form-control" name="cjtby" id="cjtby" value="0">
-		  				</div>
-		  				<div class="col-md-4">
-							<label>Pay By:</label>
-			  				<select class="form-control" name="cjtPayby" id="cjtPayby">
-			  					<option value="0">N/A</option>
-			  					<option>Cybera</option>
-			  					<option>Party</option>
-			  				</select>
-		  				</div>
+			  			</div>
+			  			<div class="col-md-4">
+							<label>RS:</label>
+			  				<input class="form-control" name="cjtbyRs" id="cjtbyRs" value="0">
+			  			</div>
+		  				
 		  			</div>
 		  		</div>
 
 		  		<div class="col-md-6">
 		  			<div class="row form-group">
 		  				<div class="col-md-6">
-						<label>GST:</label>
-		  				<select id="cjgst" name="cjgst" class="form-control">
+						<label>GST: <span id="gstLabel"></span></label>
+		  				<select onchange="estimateCalcTotal()" id="cjgst" name="cjgst" class="form-control">
 		  					<option selected value="0">N/A</option>
-		  					<option value="5%">5</option>
-		  					<option value="10%">10</option>
-		  					<option value="12%">12</option>
-		  					<option value="15%">15</option>
-		  					<option value="18%">18</option>
+		  					<option value="Extra">Extra</option>
+		  					<option value="5">5</option>
+		  					<option value="10">10</option>
+		  					<option value="12">12</option>
+		  					<option value="15">15</option>
+		  					<option value="18">18</option>
 		  				</select>
 		  				</div>
+		  				<input type="hidden" name="cjgstHide" id="cjgstHide">
+		  				
+
 		  				<div class="col-md-6">
 							<label>Total Amount:</label>
 			  				<input class="form-control" name="cjTotalAmt" id="cjTotalAmt" value="0">
@@ -1225,13 +1288,24 @@ function bindAddJobReview()
 		  			</div>
 		  		</div>
 
-		  		<div class="col-md-6">
-		  			<div class="form-group">
-						<label>Payment:</label>
-		  				<select class="form-control" name="cpayment" id="cpayment">
-		  					<option selected="selected" value="0">N/A</option>
-		  					<option value="100% Advance">Advance</option>
+		  		<div class="row col-md-6">
+		  			<div class="col-md-6">
+						<label>Pay By:</label>
+		  				<select class="form-control" name="cjtPayby" id="cjtPayby">
+		  					<option value="0">N/A</option>
+		  					<option>Cybera</option>
+		  					<option>Party</option>
 		  				</select>
+	  				</div>
+
+	  				<div class="col-md-6">
+			  			<div class="form-group">
+							<label>Payment:</label>
+			  				<select class="form-control" name="cpayment" id="cpayment">
+			  					<option selected="selected" value="0">N/A</option>
+			  					<option value="100% Advance">Advance</option>
+			  				</select>
+						</div>
 					</div>
 				</div>
 
@@ -1240,7 +1314,8 @@ function bindAddJobReview()
 						<label>Job Notes:</label>
 		  				<select class="form-control" name="cjnotes" id="cjnotes">
 		  					<option selected="selected" value="0">N/A</option>
-		  					<option value="- Job Will be start after Approval of Estimate">After Approval</option>
+		  					<option value="- Job Will be start after Approval of Estimate">Job Will be start after Approval of Estimate</option>
+		  					<option value="- Job Will be start after receipt of the Payment">Job Will be start after receipt of the Payment</option>
 		  				</select>
 					</div>
 				</div>
