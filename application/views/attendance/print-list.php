@@ -27,9 +27,9 @@
 				<th width="5%" style="border: 2px solid black; padding: 2px;">Going Out <br />(Office Hours)</th>
 				<th width="5%" style="border: 2px solid black; padding: 2px;">Late <br /> Reached</th>
 				<th width="5%" style="border: 2px solid black; padding: 2px;">Before 10:00</th>
-				<th width="5%" style="border: 2px solid black; padding: 2px;">Stay After Office Time</th>
+				<!-- <th width="5%" style="border: 2px solid black; padding: 2px;">Stay After Office Time</th>
 				<th width="5%" style="border: 2px solid black; padding: 2px;">Half Night</th>
-				<th width="5%" style="border: 2px solid black; padding: 2px;">Full Night</th>
+				<th width="5%" style="border: 2px solid black; padding: 2px;">Full Night</th> -->
 				<th width="5%" style="border: 2px solid black; padding: 2px;">Sunday</th>
 				<th width="20%" style="border: 2px solid black; padding: 2px;">Notes</th>
 				<th width="20%" style="border: 2px solid black; padding: 2px;">Sign</th>
@@ -52,9 +52,9 @@
 				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['office_halfday'];?></td>
 				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['office_late'];?></td>
 				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['before_10'];?></td>
-				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['after_office_hrs'];?></td>
+				<!-- <td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['after_office_hrs'];?></td>
 				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['half_night'];?></td>
-				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['full_night'];?></td>
+				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['full_night'];?></td> -->
 				<td style="text-align: center; border: 1px solid black; padding: 1px;"><?php echo $item['sunday'];?></td>
 				<td style="text-align: center; border: 1px solid black; padding: 1px;">
 					<?php echo $item['notes'];?>

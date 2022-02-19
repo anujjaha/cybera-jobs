@@ -78,7 +78,12 @@ class Master_model extends CI_Model {
 				from user_transactions where user_transactions.job_id = job.id) as 't_reciept',
 				
 				(select j_status from job_transaction where job_transaction.j_id=job.id ORDER BY id DESC LIMIT 0,1) 
-				as jstatus
+				as jstatus,
+				(select id from data_bonus_details 
+				where data_bonus_details.job_id=job.id
+				ORDER BY id DESC LIMIT 0,1) 
+				as job_ref_id
+				
 				FROM job
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id

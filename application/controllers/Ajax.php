@@ -2332,4 +2332,41 @@ class Ajax extends CI_Controller {
 		echo $pdfFile;
 	}	
 
+	public function createWAestimate()
+	{
+		$this->load->model('wa_model');
+		$saveId = $this->wa_model->create($this->input->post());
+		if($saveId)
+		{
+			echo json_encode(array(
+				'status' 	=> true,
+				'id'		=> $saveId,
+				'message' 	=> 'Estimate saved Successfully.'
+			));
+			die();			
+		}
+		echo json_encode(array( 
+			'status' 	=> false,
+		));
+		die;		
+	}
+
+	public function getRefDetails()
+	{
+		$this->load->model('job_model');
+		$refData = $this->job_model->getReferenceDetailsById($this->input->post('refId'));
+		pr($refData);
+	}
+
+	public function getWAById()
+	{
+		$this->load->model('wa_model');
+		$waRecord = $this->wa_model->getById($this->input->post('id'));
+
+		echo json_encode(array(
+			'status' => true,
+			'result' => $waRecord
+		));
+		die();
+	}
 }

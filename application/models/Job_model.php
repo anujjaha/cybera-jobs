@@ -51,7 +51,7 @@ class Job_model extends CI_Model {
 			$dis_transaction_data['customer_id'] =  $data['customer_id'];
 			$dis_transaction_data['amount'] =  0;
 			$dis_transaction_data['notes'] =  "Apply Discount";
-			$dis_transaction_data['creditedby'] =  $this->session->userdata['user_id'];
+			$dis_transaction_data['creditedby'] =  $this->session->userdata['user_id'] ? $this->session->userdata['user_id'] : 1;
 			$dis_transaction_data['t_type'] =  CREDIT;
 			$dis_transaction_data['cmonth']=$data['jmonth'];
 			$discount_transaction_id = $this->insert_transaction($dis_transaction_data);
@@ -1096,5 +1096,20 @@ class Job_model extends CI_Model {
 		$query = $this->db->get();
 
 		return $query->result_array();		
+	}
+
+	public function getReferenceDetailsById($id = null)
+	{
+		if($id)
+		{
+			$this->db->select('*')
+					->from('data_bonus_details')
+					->join('customer', 'customer.id = data_bonus_details.customer_id', 'left')
+					->where('data_bonus_details.id ='.$id);
+
+			return $this->db->get()->row();
+		}
+
+		return [];
 	}
 }

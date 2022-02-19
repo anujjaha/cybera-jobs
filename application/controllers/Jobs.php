@@ -398,7 +398,7 @@ public function edit($job_id=null)
         for($i=1;$i<6;$i++) 
         {
         $check = $this->input->post('details_'.$i);
-        $check_cutting = $this->input->post('c_machine_'.$i);
+        $check_cutting = $this->input->post('c_details_'.$i);
         $check_rount_cutting = $this->input->post('c_rcorner_'.$i);
         if(!empty($check)) 
         {
@@ -449,7 +449,7 @@ public function edit($job_id=null)
                 );
             }
 
-        if(!empty($check_cutting) || !empty($check_rount_cutting) ) {
+        if(!empty($check_cutting)) {
             $cutting_details[] = array('j_id'=>$job_id,
                                        'c_machine'=>$this->input->post('c_machine_'.$i),
                                        'c_material'=>$this->input->post('c_material_'.$i),

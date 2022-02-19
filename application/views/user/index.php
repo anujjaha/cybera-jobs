@@ -1,4 +1,12 @@
 <?php
+//pr($this->session->userdata);
+$showSidebard = true;
+
+if($this->session->userdata['department'] == 'new')
+{
+    $showSidebard = false;    
+}
+
 if(strtolower($this->session->userdata['department']) == "master")
 {
 	/*redirect('master/unverifyjobs', 'refresh');
@@ -12,16 +20,39 @@ if(strtolower($this->session->userdata['department']) == "master")
 
 <div class="row" style="margin-bottom: 10px;">
 
-<div class="col-md-6 pull-right">
+<div class="col-md-3 pull-right">
+<?php
+	if($showSidebard)
+	{
+?>
 	<a href="javascript:void(0);" onclick="print_pending_list();" class="btn btn-info">
 		Print List
 	</a>
+<?php		
+	}
+?>
+	
 </div>
-<div class="col-md-6 ">
+<div class="col-md-6 pull-right">
+	<div class="col-md-3 mt-5">
+		Search
+	</div>
+	<div class="col-md-6">
+		<input type="text" name="search_box_d" id="search_box_d" class="form-control col-md-6" onkeyup="search_filter_d();" >	
+	</div>
+	<div class="col-md-3">
+		<span class="btn btn-primary" onclick="clear_filter_d();">Clear</span>
+	</div>
+</div>
+<div class="col-md-3">
 	<a href="<?php echo base_url();?>jobs/edit">
 		Add New Job
 	</a>
 	</div>
+</div>
+
+<div class="row">
+	<div style="display: none;" id="show_result_d"></div>
 </div>
 <style>
 	td { font-size: 12px; }
@@ -262,6 +293,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 		</td>
 		<td>
 
+
 			<?php 
 			echo $job['jobname'];
 			if(isset($job['emp_name']))
@@ -271,7 +303,13 @@ if(strtolower($this->session->userdata['department']) == "master")
 
 		?>
 		</td>
-		<td><?php echo $job['mobile'];?>
+		<td>
+		<?php
+		if($showSidebard)
+		{
+
+		?>
+		<?php echo $job['mobile'];?>
 			<hr>
 			<?php echo $job['jsmsnumber'];
 			if(isset($job['emailid']))
@@ -279,7 +317,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 				echo '<span style="color: green;">'.$job['emailid'].'</span>';
 			}
 
-			
+		}
 		?>
 
 		</td>
@@ -925,4 +963,37 @@ function print_pending_list() {
 	}
 
 
+	function search_filter_d() 
+	{
+		$("#show_result_d").show();
+	var search = $("#search_box_d").val();
+	var sort_by = "id";
+	if(search.length > 3 ) {
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url();?>/account/quick_ajax_d/", 
+			data : { 'search_box' : search, 'limit' :10, 'offset':0,"sort_by":sort_by},
+			success: 
+            function(data){
+                  jQuery("#show_result_d").html(data);
+                  //console.log(data);
+            }
+		});
+	}
+}
+
+function clear_filter_d() {
+	$("#search_box_d").val("");
+	jQuery("#show_result_d").hide();
+	$.ajax({
+			type: "POST",
+			url: "<?php echo site_url();?>/account/quick_ajax_clear/", 
+			success: 
+            function(data){
+                  jQuery("#show_result_d").html(data);
+                  //console.log(data);
+            }
+		});
+}
 </script>  
+

@@ -44,6 +44,7 @@ class Master extends CI_Controller {
 		$data['heading'] = $data['title']="Unverified Job List";
 		
 		$data['unverify_jobs'] = $this->master_model->get_all_unverify_jobs();
+
 		$this->template->load('master', 'unverifyjobs', $data);
 	}
 	
