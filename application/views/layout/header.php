@@ -120,14 +120,14 @@ if(currentLoginUserFName == "Master")
 {
 	currentLoginUserFName = 'Shaishav';
 }
-var menuTerms = `\n*Please Note:*
+var menuTerms1 = `\n*Please Note:*
 - No Guaranty for Lamination / Coating while Folding / Creasing.
 - Life of Lamination / Coating Depends on Usage of the menu.
-- Keep this menu out of reach of hot vessel or Hot Surface.
+- Keep this menu out of reach of hot vessel or Hot Surface. \n`;
 
+var menuTerms2 = `
 Thank You\n
-`+ currentLoginUserFName.toUpperCase() +`
-CYBERA PRINT ART \n
+`+ currentLoginUserFName.toUpperCase() + `CYBERA PRINT ART \n
 Please Feel Free to call for more clarifications`.toUpperCase();
 var resMenus = JSON.parse('<?= json_encode(getAllMenu());?>');
 
@@ -271,8 +271,9 @@ function copyCNotesNow()
 	+ cjnotes.toUpperCase() 
 	+ cjexnotes.toUpperCase()
 	+ eApproxDeli.toUpperCase()
+	+ cnoteTerms.toUpperCase()
 	+ eValidTill.toUpperCase()
-	+ cnoteTerms.toUpperCase());
+	);
 }
 
 
@@ -635,6 +636,7 @@ function showResMenuOptToVal()
 	var rEstimateExnotes	= '';
 	var rEstimateNote 		= '';
 	var extraMsg 			= '\n';
+	var estimateValMsg		= '';
 
 	if($("#rEstimateExnotes").val().length > 0 )
 	{
@@ -711,8 +713,7 @@ function showResMenuOptToVal()
 
 	if(rEstimateValidity != '')
 	{
-		extraMsg += '\n*ESTIMATE VALIDITY: '+ rEstimateValidity +' WORKING DAY/S *\n';	
-
+		estimateValMsg += '\n\nESTIMATE VALIDITY: '+ rEstimateValidity +' WORKING DAY/S \n';	
 	}
 
 	var buildMenu = '';
@@ -738,7 +739,7 @@ function showResMenuOptToVal()
 			
 		}
 
-		 $("#resMenuOptionsPopUpValWith").val((preFix +  buildMenu + '\n'+ extraMsg.toUpperCase()+ '\n' + rEstimateExnotes + '\n' + rEstimateNote + '\n' + menuTerms).toUpperCase() );
+		 $("#resMenuOptionsPopUpValWith").val((preFix +  buildMenu + '\n'+ extraMsg.toUpperCase()+ '\n' + rEstimateExnotes + '\n' + rEstimateNote + '\n' + menuTerms1 +  estimateValMsg + menuTerms2 ).toUpperCase());
 
 		$("#resMenuOptionsPopUpExtra").html(resMenus[i].extra);
 

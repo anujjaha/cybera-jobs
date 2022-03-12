@@ -61,8 +61,8 @@
 	
 	<tr class="rowQty-bw" id="qty_96">
 		<td>
-			<a href="javascript:void(0);" class="btn btn-primary setVQty-bw" onclick="setQtyBw(96);">
-				96
+			<a href="javascript:void(0);" class="btn btn-primary setVQty-bw" onclick="setQtyBw(95);">
+				95
 			</a> 
 		</td>
 		
