@@ -81,17 +81,38 @@
                                 <i class="fa fa-dashboard"></i> <span>New Job</span>
                             </a>
                         </li>
-                        <li class="active">
-                            <a target="_blank" href="<?php echo base_url();?>diwali">
-                                <i class="fa fa-dashboard"></i> <span>Diwali 2021</span>
-                            </a>
-                        </li>
 
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>account/quick">
                                 <i class="fa fa-envelope"></i> <span>Quick Account</span>
                             </a>
                         </li>
+
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxGEstimate" onclick="openPopupBoxGEstimate();">
+                                <i class="fa fa-dashboard"></i> <span>Estimate</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="<?php echo base_url();?>wa" class="">
+                                <i class="fa fa-dashboard"></i> <span>Estimate List</span>
+                            </a>
+                        </li>
+
+                        
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxRestuarant" onclick="openPopupBoxRestuarant();">
+                                <i class="fa fa-dashboard"></i> <span>Restaurant Menu</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="openPopupBoxPEstimate" onclick="openPopupBoxPEstimate();">
+                                <i class="fa fa-dashboard"></i> <span>Sticker Estimate</span>
+                            </a>
+                        </li>
+                        
                         
                         <li class="active">
                             <a href="<?php echo base_url();?>master/unverifyjobs">
@@ -114,36 +135,6 @@
                         <li class="active">
                             <a target="_blank" href="<?php echo base_url();?>dealer/edit">
                                 <i class="fa fa-dashboard"></i> <span>Add New Dealer</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="#sms_address" class="fancybox">
-                                <i class="fa fa-dashboard"></i> <span>Send Address</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="javascript:void(0);" class="" id="popupBoxRestuarant" onclick="openPopupBoxRestuarant();">
-                                <i class="fa fa-dashboard"></i> <span>Restaurant Menu</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="javascript:void(0);" class="" id="openPopupBoxPEstimate" onclick="openPopupBoxPEstimate();">
-                                <i class="fa fa-dashboard"></i> <span>Sticker Estimate</span>
-                            </a>
-                        </li>
-                        
-                        <li class="active">
-                            <a href="javascript:void(0);" class="" id="popupBoxGEstimate" onclick="openPopupBoxGEstimate();">
-                                <i class="fa fa-dashboard"></i> <span>Estimate</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="<?php echo base_url();?>wa" class="">
-                                <i class="fa fa-dashboard"></i> <span>Estimate List</span>
                             </a>
                         </li>
 
@@ -228,6 +219,12 @@
                         <li>
                             <a target="_blank" href="<?php echo base_url();?>book">
                                 <i class="fa fa-calendar"></i> <span>Sample Books</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a target="_blank" href="<?php echo base_url();?>diwali">
+                                <i class="fa fa-dashboard"></i> <span>Diwali 2021</span>
                             </a>
                         </li>
                     </ul>

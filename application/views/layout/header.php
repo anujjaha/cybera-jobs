@@ -20,11 +20,22 @@ if($this->session->userdata['department'] == 'new')
 
 <style type="text/css">
 .ui-autocomplete {
+	position: absolute;
 	z-index: 10000000;
 	font-size: 18px;
 	font-weight: bolder;
+	height: 200px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	background-color: #e4e2e2;
 }
 
+
+.ui-menu .ui-menu-item a{
+    height: 12px;
+    font-size: 14px;
+    color: black;
+}
 
 </style>
 
@@ -35,11 +46,20 @@ if($this->session->userdata['department'] == 'new')
 	{
 		$_SESSION['transporters_data'] = getCurrentTransporters();	
 	}
+
+	if(!isset($_SESSION['customer_names_data']))
+	{
+		$_SESSION['customer_names_data'] = getCustomerTitlesOnly();	
+	}
+
+
+
+	
 ?>
 <script>
 function show_calculator()
 	{
-		window.open('<?php echo base_url();?>calc.html','welcome','width=360,height=320')
+		window.open('<?php echo base_url();?>calc.html','Calculator','width=360,height=320,left=775,top=50')
 	}
 
 
@@ -121,19 +141,18 @@ if(currentLoginUserFName == "Master")
 	currentLoginUserFName = 'Shaishav';
 }
 var menuTerms1 = `\n*Please Note:*
-- No Guaranty for Lamination / Coating while Folding / Creasing.
+- No Guaranty for Lamination / Coating in the menu.
 - Life of Lamination / Coating Depends on Usage of the menu.
 - Keep this menu out of reach of hot vessel or Hot Surface. \n`;
 
 var menuTerms2 = `
 Thank You\n
-`+ currentLoginUserFName.toUpperCase() + `CYBERA PRINT ART \n
+`+ currentLoginUserFName.toUpperCase() + `\n\nCYBERA PRINT ART \n
 Please Feel Free to call for more clarifications`.toUpperCase();
 var resMenus = JSON.parse('<?= json_encode(getAllMenu());?>');
 
-var cnoteTerms = `\n\nThank You\n
-`+ currentLoginUserFName.toUpperCase() +`
-CYBERA PRINT ART \n
+var cnoteTerms = `\n\nThank You\n`+ currentLoginUserFName.toUpperCase() +`\n\n
+CYBERA PRINT ART \n\n
 Please Feel Free to call for more clarifications`.toUpperCase();
 
 function copyCNotesNow()
@@ -457,6 +476,13 @@ function saveSAestimate(jnotes)
 }
 function saveWAestimate()
 {
+	var showB = $("#cnotes_b").val(),
+		printB = '';
+
+	if(showB.length > 0 && showB != '' && $("#cnotes_b_show").val() == 'Yes')
+	{
+		printB = '\n\n*' + showB + '*';
+	}
     $.ajax({
        	type: "POST",
        	dataType: "JSON",
@@ -478,6 +504,7 @@ function saveWAestimate()
 			"job_notes"		: $("#cjnotes").val(),
 			"extra_notes"	: $("#cjexnotes").val(),
 			"details"		: $("#cnotes").val(),
+			"details_b"		: $("#cnotes_b").val(),
 			"validity_days" : $("#e_valid_till").val(),
 			"approx_delivery_days" : $("#e_approx_delivery").val(),
 		},
@@ -488,7 +515,7 @@ function saveWAestimate()
         		console.log('inside');
         		var oldVal = $("#resEstimateData").val();
 
-        		$("#resEstimateData").val(oldVal + '\n\n*EST-ID-'+ data.id + '*');
+        		$("#resEstimateData").val(oldVal + printB + '\n\n*EST-ID-'+ data.id + '*');
         		$("#resEstimateData").select();
 				document.execCommand('copy');	
         	}
@@ -535,9 +562,9 @@ function getParkingNotes()
 		html += '*' +selWheeler + '*\n';
 			html +=  $($("[name='corner_type[]']")[i]).val() + ' - ' + $($("[name='corner[]']")[i]).val() + ' - ' + $($('input[name="wdetails"]')[i]).val() + ' - ' + $($("[name='design[]']")[i]).val() + '\n';
 
-			html +=  '\n *Qty : ' +  $($("[name='p_qty[]']")[i]).val() + 'PCS @ RS. '+ parseFloat($($("[name='p_rate[]']")[i]).val()).toFixed(2) +'*';
+			html +=  '\n*Qty : ' +  $($("[name='p_qty[]']")[i]).val() + 'PCS @ RS. '+ parseFloat($($("[name='p_rate[]']")[i]).val()).toFixed(2) +'*';
 
-			html += '\n';
+			html += '\n\n';
 		sr++;
 	}
 	
@@ -560,6 +587,8 @@ function openPopupBoxRestuarant()
 function openPopupBoxGEstimate()
 {
 	$("#generalEstimate").modal('show');
+	$("#cname").focus();
+	
 	$( "#cjtby" ).autocomplete({
       source: (<?= $_SESSION['transporters_data'];?>),
       	messages: {
@@ -568,9 +597,26 @@ function openPopupBoxGEstimate()
     	}
     });
 
-	$("#cname").val('');
+    $( "#cname" ).autocomplete({
+      source: (<?= $_SESSION['customer_names_data'];?>),
+      	messages: {
+        	noResults: '',
+        	results: function() {}
+    	}
+    });
+
+    $( "#ctitle" ).autocomplete({
+      source: (<?= $_SESSION['estimate_title_data'];?>),
+      	messages: {
+        	noResults: '',
+        	results: function() {}
+    	}
+    });
+
+    $("#cname").val('');
 	$("#ctitle").val('');
 	$("#cnotes").val('');
+	$("#cnotes_b").val('');
 
 	$("#cpayment").val('0');
 	$("#cjnotes").val('0');
@@ -668,7 +714,10 @@ function showResMenuOptToVal()
 		extraMsg += '*\n';
 	}
 
-	
+	if($("#rTransportPfrwd").val() != '0' )
+	{
+		extraMsg += '*- Packing Forwarding RS. ' + $("#rTransportPfrwd").val() + '*\n';
+	}
 
 	if(rTransportBy != 0)
 	{
@@ -688,10 +737,7 @@ function showResMenuOptToVal()
 		extraMsg += '*\n';
 	}
 
-	if($("#rTransportPfrwd").val() != '0' )
-	{
-		extraMsg += '*- Packing Forwarding RS. ' + $("#rTransportPfrwd").val() + '*\n';
-	}
+	
 
 	if(rGst != 0 )
 	{
@@ -726,7 +772,7 @@ function showResMenuOptToVal()
 			{
 				if(selectedOptions[j] == resMenus[i].code)
 				{
-					buildMenu += ('*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST').toUpperCase() + '\n';
+					buildMenu += ('*Code '+resMenus[i].code +':* '+resMenus[i].title + '\n'+ resMenus[i].qty + ' PCS @ RS.' + resMenus[i].price + ' PER PC + GST'+ '\n' + resMenus[i].extra).toUpperCase() + '\n\n';
 				}		
 			}
 			
@@ -826,6 +872,12 @@ function estimateCalcPTotal()
                     		{
                     	?>
                     		<li class="dropdown messages-menu">
+								<a href="#sms_address" class="fancybox">
+                                <i class="fa fa-dashboard"></i> <span>Send Address</span>
+                            </a>
+							</li>
+
+							<li class="dropdown messages-menu">
 								<a href="<?php echo base_url().'employee/index'?>">
 									Employee
 								</a>
@@ -1912,7 +1964,33 @@ function bindAddJobReview()
       </div>
       <div class="modal-body">
       	<div class="row">
+
+      		<div class="col-md-12">
+      			<div class="col-md-6">
+      			</div>
+      			<div class="col-md-6">
+	      			<div class="col-md-2 mt-5">
+	      				Search
+	      			</div>
+	      			<div class="col-md-6">
+	      				<input type="text" name="search_box_fd" id="search_box_fd" class="form-control col-md-6" onkeyup="search_filter_fd();" >	
+	      			</div>
+	      			<div class="col-md-2">
+	      				<span class="btn btn-primary" onclick="clear_filter_fd();">Clear</span>
+	      			</div>
+	      			<div class="col-md-2">
+	      				<a href="#show_calculator" class="btn btn-sm btn-primary" onclick="show_calculator();">
+							Calculator
+						</a>
+					</div>
+				</div>
+
+      			<div class="col-md-12" id="showFResults" style="display: none;">
+      				<div style="display: none;" id="show_result_fd"></div>
+      			</div>
+      		</div>
 			<div class="col-md-12">
+				<hr />	
 				<div class="col-md-12">
 
 				<div class="col-md-6">
@@ -1934,6 +2012,23 @@ function bindAddJobReview()
 						<label>Details:</label>
 		  				<textarea id="cnotes" rows="6" name="cnotes" class="form-control"></textarea>
 					</div>
+
+					<div class="col-md-9">
+						<div class="form-group">
+							<label>Bifurcation:</label>
+			  				<input type="text" id="cnotes_b" name="cnotes_b" class="form-control" />
+			  			</div>
+					</div>
+					<div class="col-md-3">
+						<div class="form-group">
+							<label>Show:</label>
+							<select class="form-control" id="cnotes_b_show" name="cnotes_b_show">
+								<option>Yes</option>
+								<option>No</option>
+							</select>
+			  			</div>
+					</div>
+
 				</div>
 
 				<div class="col-md-6">
@@ -2077,19 +2172,25 @@ function bindAddJobReview()
 				</div>
 
 				<div class="col-md-6">
-					<div class="form-group">
-						<label>Approx Delivery Time ( in Days ):</label>
-		  				<input type="number" step="1" min="0" value="0" name="e_approx_delivery" id="e_approx_delivery" class="form-control">
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Approx Delivery Time ( in Days ):</label>
+			  				<input type="number" step="1" min="0" value="0" name="e_approx_delivery" id="e_approx_delivery" class="form-control">
+						</div>
 					</div>
-					<div class="form-group">
-						<label>Estimate Validity ( in Days ):</label>
-		  				<input type="number" step="1" min="0" value="7" name="e_valid_till" id="e_valid_till" class="form-control">
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>Estimate Validity ( in Days ):</label>
+			  				<input type="number" step="1" min="0" value="7" name="e_valid_till" id="e_valid_till" class="form-control">
+						</div>
 					</div>
 				</div>
 
 				<div class="col-md-6">
 					<div class="form-group">
-						<a style="margin-top: 10px;" href="javascript:void(0);" class="btn btn-primary" id="copy-c-data" onclick="copyCNotesNow()">Copy</a>
+						<a style="margin-top: 5px;" href="javascript:void(0);" class="btn btn-lg btn-primary" id="copy-c-data" onclick="copyCNotesNow()">Copy</a>
 					</div>
 				</div>
 
@@ -2375,3 +2476,41 @@ function bindAddJobReview()
 
   </div>
 </div>
+
+<script type="text/javascript">
+	
+function search_filter_fd() 
+	{
+		$("#show_result_fd").show();
+	var search = $("#search_box_fd").val();
+	var sort_by = "id";
+	if(search.length > 3 ) {
+		$.ajax({
+			type: "POST",
+			url: "<?php echo site_url();?>/account/quick_ajax_d/", 
+			data : { 'search_box' : search, 'limit' :10, 'offset':0,"sort_by":sort_by},
+			success: 
+            function(data)
+            {
+            	$("#showFResults").toggle();
+            	jQuery("#show_result_fd").html(data);
+            }
+		});
+	}
+}
+
+function clear_filter_fd() {
+	$("#search_box_fd").val("");
+	jQuery("#show_result_fd").hide();
+	$.ajax({
+			type: "POST",
+			url: "<?php echo site_url();?>/account/quick_ajax_clear/", 
+			success: 
+            function(data)
+            {
+            	$("#showFResults").toggle();
+            	jQuery("#show_result_fd").html(data);
+            }
+		});
+}
+</script>

@@ -74,6 +74,8 @@ if ( ! function_exists('test_method'))
 			$dropdown = "<select  class='form-control select-customer' name='customer' $extra><option value=0> Select Customer</option>";
 			
 			foreach($query->result() as $customer) {
+
+				if($customer->name != '' || $customer->companyname != '')
 					$cname = ucwords($customer->name);
 					if($customer->companyname) {
 						$cname = ucwords($customer->companyname);
@@ -2143,6 +2145,43 @@ function getCurrentTransporters()
 	foreach ($transporters as $transporter) 
 	{
 		$output[] = $transporter['title'];
+	}
+
+	return json_encode($output);
+}
+
+function getCustomerTitlesOnly()
+{
+	$ci = & get_instance();
+	$ci->load->model('Customer_model', 'customer');
+
+	$names = $ci->customer->getOnlyNames();
+	$output = [];
+
+	foreach ($names as $name) 
+	{
+		$output[] = isset($name->companyname) && !empty($name->companyname) ? $name->companyname : $name->name;
+	}
+
+	return json_encode($output);
+}
+
+
+function getEstimateTitlesData()
+{
+	$ci = & get_instance();
+	$ci->load->model('Wa_model', 'wa_model');
+
+	$names = $ci->wa_model->getOnlyTitles();
+
+	$output = [];
+
+	foreach ($names as $name) 
+	{
+		if(isset($name['title']) && !empty($name['title']))
+		{
+			$output[] = trim($name['title']);
+		}
 	}
 
 	return json_encode($output);

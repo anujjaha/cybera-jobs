@@ -1,5 +1,16 @@
 <?php
-//pr($this->session->userdata);
+
+if($this->session->userdata['user_id'] == 6 )
+{
+	//specify for BINA - Test User only
+}
+
+if(!isset($_SESSION['estimate_title_data']))
+{
+	$_SESSION['estimate_title_data'] = getEstimateTitlesData();	
+}
+
+
 $showSidebard = true;
 
 if($this->session->userdata['department'] == 'new')
@@ -302,6 +313,12 @@ if(strtolower($this->session->userdata['department']) == "master")
 			}
 
 		?>
+			<?php
+				if(isset($job['approx_completion']))
+				{
+					echo "<hr><strong>".$job['approx_completion']. '</strong>';
+				}
+			?>
 		</td>
 		<td>
 		<?php
@@ -486,12 +503,7 @@ if(strtolower($this->session->userdata['department']) == "master")
 		|
 			<strong><a target="_blank" href="<?php echo site_url();?>/customer/edit/<?php echo $job['customer_id'];?>">Customer</a></strong>
 
-			<?php
-				if(isset($job['approx_completion']))
-				{
-					echo "<hr><strong>".$job['approx_completion']. '</strong>';
-				}
-			?>
+			
 			</td>
 		</tr>
 		<?php $sr++; } ?>
@@ -982,6 +994,8 @@ function print_pending_list() {
 	}
 }
 
+
+
 function clear_filter_d() {
 	$("#search_box_d").val("");
 	jQuery("#show_result_d").hide();
@@ -995,5 +1009,6 @@ function clear_filter_d() {
             }
 		});
 }
+
 </script>  
 

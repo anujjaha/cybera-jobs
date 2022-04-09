@@ -1281,7 +1281,7 @@ $this->load->helper('general'); ?>
         	<table>
         			<tr>
         			<td>
-                        Notes : <textarea name="notes" id="notes" cols="40" rows="5"></textarea>
+                        Sheet Qty : <textarea name="notes" id="notes" cols="40" rows="5" required="required"></textarea>
                     </td>
                     <td>&nbsp;</td>
                     <td>

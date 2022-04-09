@@ -92,7 +92,7 @@ if($this->session->userdata['department'] == 'new')
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
-                        <li class="active">
+                        <li class="active hide">
                             <a target="_blank" href="<?php echo base_url();?>/user/pending">
                                 <i class="fa fa-dashboard"></i> <span>Pending List</span>
                             </a>
@@ -102,7 +102,7 @@ if($this->session->userdata['department'] == 'new')
                         if($showSidebard)
                         {
                         ?>
-                            <li class="active">
+                            <li class="active hide">
                             <a target="_blank" href="<?php echo base_url();?>/user/undelivered">
                                 <i class="fa fa-dashboard"></i> <span>Undelivered List</span>
                             </a>
@@ -146,57 +146,10 @@ if($this->session->userdata['department'] == 'new')
                                 <i class="fa fa-dashboard"></i> <span>New Job</span>
                             </a>
                         </li>
-                        <?php
-                            if($showSidebard)
-                            {
-                        ?>
-                            <li class="active">
-                                <a target="_blank" href="<?php echo base_url();?>customer/special_rates">
-                                    <i class="fa fa-dashboard"></i> <span>Special Rates</span>
-                                </a>
-                            </li>
-
-                            <li class="active">
-                                <a target="_blank" href="<?php echo base_url();?>account/quick">
-                                    <i class="fa fa-dashboard"></i> <span>Quick Account</span>
-                                </a>
-                            </li>
-
-                            <li class="active">
-                                <a target="_blank" href="<?php echo base_url();?>mask">
-                                    <i class="fa fa-dashboard"></i> <span>Manage Masks</span>
-                                </a>
-                            </li>
-                        <?php
-                            }
-                        ?>
-                        
-
-                        
-
-                        
-
-                        <li class="active">
-                            <a href="#sms_address" class="fancybox">
-                                <i class="fa fa-dashboard"></i> <span>Send Address</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="javascript:void(0);" class="" id="popupBoxRestuarant" onclick="openPopupBoxRestuarant();">
-                                <i class="fa fa-dashboard"></i> <span>Restaurant Menu</span>
-                            </a>
-                        </li>
 
                         <li class="active">
                             <a href="javascript:void(0);" class="" id="popupBoxGEstimate" onclick="openPopupBoxGEstimate();">
                                 <i class="fa fa-dashboard"></i> <span>Estimate</span>
-                            </a>
-                        </li>
-
-                        <li class="active">
-                            <a href="javascript:void(0);" class="" id="openPopupBoxPEstimate" onclick="openPopupBoxPEstimate();">
-                                <i class="fa fa-dashboard"></i> <span>Sticker Estimate</span>
                             </a>
                         </li>
 
@@ -206,6 +159,44 @@ if($this->session->userdata['department'] == 'new')
                                 </a>
                             </li>
 
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="openPopupBoxPEstimate" onclick="openPopupBoxPEstimate();">
+                                <i class="fa fa-dashboard"></i> <span>Sticker Estimate</span>
+                            </a>
+                        </li>
+
+                        <li class="active">
+                            <a href="javascript:void(0);" class="" id="popupBoxRestuarant" onclick="openPopupBoxRestuarant();">
+                                <i class="fa fa-dashboard"></i> <span>Restaurant Menu</span>
+                            </a>
+                        </li>
+                        <?php
+                            if($showSidebard)
+                            {
+                        ?>
+                            <li class="active">
+                                <a target="_blank" href="<?php echo base_url();?>account/quick">
+                                    <i class="fa fa-dashboard"></i> <span>Quick Account</span>
+                                </a>
+                            </li>
+
+
+                            <li class="active">
+                                <a target="_blank" href="<?php echo base_url();?>customer/special_rates">
+                                    <i class="fa fa-dashboard"></i> <span>Special Rates</span>
+                                </a>
+                            </li>
+
+                            
+                            <li class="active">
+                                <a target="_blank" href="<?php echo base_url();?>mask">
+                                    <i class="fa fa-dashboard"></i> <span>Manage Masks</span>
+                                </a>
+                            </li>
+                        <?php
+                            }
+                        ?>
+                        
                         <?php
                             if($showSidebard)
                             {

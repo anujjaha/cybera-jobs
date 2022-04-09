@@ -420,4 +420,11 @@ class Customer_model extends CI_Model {
 		return true;
 	}
 
+	public function getOnlyNames()
+	{
+		$sql = "SELECT name,companyname FROM $this->table 
+				order by companyname";
+		$query = $this->db->query($sql);
+		return $query->result();		
+	}
 }

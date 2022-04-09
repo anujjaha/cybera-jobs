@@ -73,6 +73,20 @@ class Wa_model extends CI_Model
 		return $query->result_array();
 	}
 
+    public function getOnlyTitles() 
+    {
+        $this->db->select($this->table.'.title')
+                ->where("title != '' ")
+                ->from($this->table)
+                ->order_by('title')
+                ->group_by('title');
+
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    
+
 	/**
 	 * Get By Id
 	 *
