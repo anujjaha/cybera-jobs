@@ -71,13 +71,27 @@ $(document).ready(function()
 	});
 
 	jQuery("#save_button").on('click', function(event)
+    {
+        hideSaveButton();
+
+        setTimeout(function()
+        {
+            showSaveButton();
+        }, 5000);
+    });
+
+    jQuery("#skip_save_button").on('click', function(event)
 	{
+        $("#notes").val('N/A');
+
 		hideSaveButton();
 
 		setTimeout(function()
 		{
 			showSaveButton();
 		}, 5000);
+
+        $("#save_button").trigger('click');
 	});
 
 
@@ -458,7 +472,7 @@ function set_cutting_details_box(id)
         lamination_info = jQuery("#lamination_info").val();
         
         size_info = jQuery("#size_info").val();
-        sheet_qty = jQuery("#sheet_qty").val();
+        sheet_qty = jQuery("#c_sheet_qty").val();
 
         blade_per_sheet = jQuery("#blade_per_sheet").val();
         binding_info = jQuery("#binding_info").val();
@@ -575,7 +589,7 @@ function set_cutting_details_boxAndOut()
         lamination_info = jQuery("#lamination_info").val();
         
         size_info = jQuery("#size_info").val();
-        sheet_qty = jQuery("#sheet_qty").val();
+        sheet_qty = jQuery("#c_sheet_qty").val();
 
         blade_per_sheet = jQuery("#blade_per_sheet").val();
         binding_info = jQuery("#binding_info").val();
@@ -1016,7 +1030,7 @@ function check_receipt() {
 <?php
 $this->load->helper('form');
 $this->load->helper('general'); ?>
-<form action="<?php echo site_url();?>/jobs/edit" method="post" onsubmit="return check_form();check_receipt();calc_due();">
+<form id="submitJForm" action="<?php echo site_url();?>/jobs/edit" method="post" onsubmit="return check_form();check_receipt();calc_due();">
 <div class="col-md-12">
 <table width="100%" border="2">
 	<tr>
@@ -1630,8 +1644,9 @@ $this->load->helper('general'); ?>
 	<select id="pay_type" name="pay_type" onchange="showPaytmId()" class="form-control" required="">
 		<option value="">Select Mode</option>
 		<option value="Cash">Cash</option>
-        <option value="Card">Card</option>
-		<option value="Paytm">Paytm</option>
+        <!-- <option value="Card">Card</option> -->
+        <option value="Paytm">Paytm</option>
+        <option value="Phone Pay">Phone Pay</option>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
 		<option value="No Payment">NO Payment</option>
@@ -1674,6 +1689,8 @@ $this->load->helper('general'); ?>
 
 Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="confirmation" value="">
 			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">
+
+            <a href="javascript:void(0);" id="skip_save_button" class="btn btn-success btn-lg">QT & Save</a>
 </div>
 <input type="hidden" name="is_outside" id="is_outside" value="0">
 </form>
@@ -1717,7 +1734,7 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
             <tr>
             	<td align="right">Sheet Qty:</td>
             	<td>
-                	<input type="text" name="sheet_qty" id="sheet_qty" value="1">
+                	<input type="text" name="sheet_qty" id="c_sheet_qty" value="1">
             	</td>
             </tr>
             <tr>

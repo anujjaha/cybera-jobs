@@ -140,6 +140,7 @@ function actualCopy(activeItem)
 	$("#e_valid_till").val(activeItem.validity_days);
 	$("#e_approx_delivery").val(activeItem.approx_delivery_days);
 	$("#cnotes").val(activeItem.details);
+	$("#cnotes_b").val(activeItem.details_b);
 
 	$("#cjnotes").val((activeItem.job_notes).split(','));
 

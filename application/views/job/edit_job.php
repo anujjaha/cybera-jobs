@@ -1028,8 +1028,9 @@ $modified_by = $this->session->userdata['user_id'];
 		</option>
 		<option value="">Select Mode</option>
 		<option value="Cash">Cash</option>
-		<option value="Card">Card</option>
+		<!-- <option value="Card">Card</option> -->
 		<option value="Paytm">Paytm</option>
+		<option value="Phone Pay">Phone Pay</option>
 		<option value="Aangadiya">Aangadiya</option>
 		<option value="NEFT">NEFT</option>
 		<option value="No Payment">NO Payment</option>

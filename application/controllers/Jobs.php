@@ -1950,4 +1950,13 @@ public function edit($job_id=null)
     return sendJobReviewSMS($this->input->post());
   }
               
+
+  public function testabc()
+  {
+    $to = ["er.anujjaha@gmail.com"];
+    $from = "estimate.cybera@gmail.com";
+    $subject="Cybera Email System";
+    $content ="THis is testig mail";
+    pr(sendEstimationEmail($to, $from,$subject,$content));
+  }
 }

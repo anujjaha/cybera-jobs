@@ -368,6 +368,7 @@ function create_pdf($content=null,$size ='A5-L') {
 		//print_r($content);die("F");
 		$ci = & get_instance();
 		$mpdf = new mPDF('', $size,8,'',4,4,10,2,4,4);
+
 		//$mpdf->SetHeader('CYBERA Print ART');
 		$mpdf->defaultheaderfontsize=8;
 		//$mpdf->SetFooter('{PAGENO}');
@@ -633,6 +634,15 @@ function sendEstimationEmail($to, $from,$subject="Cybera Email System",$content=
 	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
 	$mail->AddReplyTo('cyberaprintart@gmail.com', 'Cybera Print Art');
 
+	// $mail->IsSMTP();
+	// $mail->Host = "smtp.gmail.com";
+	
+	// optional
+	// used only when SMTP requires authentication  
+	// $mail->SMTPAuth = true;
+	// $mail->Username = 'estimate.cybera@gmail.com';
+	// $mail->Password = 'cyb_1215@printart';
+
 	
 	foreach($to as $sendTo) 
 	{
@@ -649,8 +659,10 @@ function sendEstimationEmail($to, $from,$subject="Cybera Email System",$content=
 	$mail->Body     = $content;
 	if(!$mail->Send()) {
 	  echo 'Message was not sent.';
-	 // echo 'Mailer error: ' . $mail->ErrorInfo;
+	 	pr($mail);
 	} else {
+		echo "xc";
+		pr($mail);
 	  return true;
 	}
 }	
@@ -2185,4 +2197,24 @@ function getEstimateTitlesData()
 	}
 
 	return json_encode($output);
+}
+
+function getEstimateTitles()
+{
+	$ci = & get_instance();
+	$ci->load->model('Wa_model', 'wa_model');
+
+	$names = $ci->wa_model->getOnlyTitles();
+
+	$output = [];
+
+	foreach ($names as $name) 
+	{
+		if(isset($name['title']) && !empty($name['title']))
+		{
+			$output[] = trim($name['title']);
+		}
+	}
+
+	return json_encode($output);	
 }

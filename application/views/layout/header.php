@@ -19,6 +19,9 @@ if($this->session->userdata['department'] == 'new')
 <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/tab.css" media="screen" />
 
 <style type="text/css">
+
+
+
 .ui-autocomplete {
 	position: absolute;
 	z-index: 10000000;
@@ -37,6 +40,17 @@ if($this->session->userdata['department'] == 'new')
     color: black;
 }
 
+.mt-20 {
+	margin-top: 20px;
+}
+
+.w75 {
+	width: 75% !important;
+}
+
+.d-none {
+	display: none;
+}
 </style>
 
 
@@ -50,6 +64,11 @@ if($this->session->userdata['department'] == 'new')
 	if(!isset($_SESSION['customer_names_data']))
 	{
 		$_SESSION['customer_names_data'] = getCustomerTitlesOnly();	
+	}
+
+	if(!isset($_SESSION['sticker_estimate_titles']))
+	{
+		$_SESSION['sticker_estimate_titles'] = getEstimateTitles();	
 	}
 
 
@@ -481,7 +500,7 @@ function saveWAestimate()
 
 	if(showB.length > 0 && showB != '' && $("#cnotes_b_show").val() == 'Yes')
 	{
-		printB = '\n\n*' + showB + '*';
+		printB = '\n' + showB;
 	}
     $.ajax({
        	type: "POST",
@@ -512,7 +531,6 @@ function saveWAestimate()
         	console.log(data);
         	if(data.status == true)
         	{
-        		console.log('inside');
         		var oldVal = $("#resEstimateData").val();
 
         		$("#resEstimateData").val(oldVal + printB + '\n\n*EST-ID-'+ data.id + '*');
@@ -642,6 +660,26 @@ function openPopupBoxPEstimate()
         	results: function() {}
     	}
     });
+
+    $("#pcname").focus();
+
+    $( "#pcname" ).autocomplete({
+      source: (<?= $_SESSION['customer_names_data'];?>),
+      	messages: {
+        	noResults: '',
+        	results: function() {}
+    	}
+    });
+
+    $( "#pctitle" ).autocomplete({
+      source: (<?= $_SESSION['sticker_estimate_titles'];?>),
+      	messages: {
+        	noResults: '',
+        	results: function() {}
+    	}
+    });
+
+    
 
 	$("#pcname").val('');
 	$("#pctitle").val('');
@@ -1242,18 +1280,6 @@ function estimateCalcPTotal()
 						<option>Other</option>
 					</select>
 				</div>
-				<div class="col-md-6">
-					<label>Qty:</label>	
-					<input type="text" name="p_qty[]" class="form-control">
-				</div>
-				<div class="col-md-6">
-					<label>Rate:</label>	
-					<input type="text" name="p_rate[]" class="form-control">
-				</div>
-				<div class="col-md-12">
-					<label>Details:</label>	
-					<input type="text" name="wdetails" class="wdetails form-control">
-				</div>
 				<div class="col-md-12">
 					<label>Design:</label>	
   					<select class="form-control" name="design[]">
@@ -1262,6 +1288,20 @@ function estimateCalcPTotal()
   						<option value="Variable Design">Variable</option>
   					</select>
 				</div>
+				<div class="col-md-12">
+					<label>Details:</label>	
+					<input type="text" name="wdetails" class="wdetails form-control">
+				</div>
+				<div class="col-md-6">
+					<label>Qty:</label>	
+					<input type="text" name="p_qty[]" class="form-control">
+				</div>
+				<div class="col-md-6">
+					<label>Rate:</label>	
+					<input type="text" name="p_rate[]" class="form-control">
+				</div>
+				
+				
 				<div class="col-md-8">
 					<span class="wdetails_info"></span>
 				</div>
@@ -2009,8 +2049,88 @@ function bindAddJobReview()
 
 				<div class="col-md-6">
 					<div class="form-group">
-						<label>Details:</label>
-		  				<textarea id="cnotes" rows="6" name="cnotes" class="form-control"></textarea>
+						<div class="row col-md-12">
+							<div class="col-md-6">
+								<label>Details:</label>
+							</div>
+							<div class="col-md-3">
+								<a href="javascript:void(0);" onclick="showMrgTmp()" class="text"> MRG</a>
+							</div>
+							<div class="col-md-3">
+								<a href="javascript:void(0);" onclick="showRSTKTmp()" class="text">R STK</a>
+							</div>
+						</div>
+						
+						<div class="row col-md-12">
+
+						<div class="row d-none" id="mrg_container">
+							<div class="col-md-4">
+							Sheet: <input type="text" name="sheet_qty" class="form-control w75" id="sheet_qty">
+							</div>
+							<div class="col-md-4">
+							Rate: <input type="text" name="sheet_rate" class="form-control w75" id="sheet_rate">
+							</div>
+							<div class="col-md-4">
+								<a onclick="setMrgTemplate();" href="javascript:void(0);" class="btn btn-info" style="margin-top: 12.5px;">
+									Done
+								</a>
+								<a onclick="setMrgTemplate(1);" href="javascript:void(0);" class="btn btn-info" style="margin-top: 12.5px;">
+									Clear
+								</a>
+							</div>
+						</div>
+
+						<div class="row d-none" id="rstk_container">
+							
+							<div class="col-md-4">
+								<div class="col-md-12">
+									Size:
+								</div>
+								<div class="col-md-6">
+									<input type="text" class="form-control" name="rstk_size_val" id="rstk_size_val"> 
+								</div>
+								
+								<div class="col-md-6">
+									<select name="rstk_size_type" class="form-control" id="rstk_size_type">
+										<option>INCH</option>
+										<option>MM</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="col-md-2">
+								Shape: 
+								<select name="rstk_shape" class="form-control" id="rstk_shape">
+									<option>ROUND</option>
+									<option>OTHER</option>
+								</select>
+							</div>
+
+							<div class="col-md-2">
+								Qty: <input type="text" name="rstk_qty" class="form-control w75" id="rstk_qty">
+							</div>
+
+							<div class="col-md-2">
+								Rate: <input type="text" name="rstk_rate" class="form-control w75" id="rstk_rate">
+							</div>
+
+							<div class="col-md-1">
+								<a onclick="setRSTKTemplate();" href="javascript:void(0);">
+									<i class="fa fa-2x fa-check"></i>
+								</a>
+							</div>
+							<div class="col-md-1">
+								<a onclick="setRSTKTemplate(1);" href="javascript:void(0);">
+									<i class="fa fa-2x fa-copy"></i>
+								</a>
+							</div>
+							<br />
+						</div>
+
+						</div>
+
+						<br />
+						<textarea style="margin-	70px;" id="cnotes" rows="6" name="cnotes" class="form-control"></textarea>
 					</div>
 
 					<div class="col-md-9">
@@ -2078,21 +2198,31 @@ function bindAddJobReview()
 
 		  		<div class="row col-md-6">
 		  			<div class="form-group">
-		  				<div class="col-md-8">
+		  				<div class="col-md-6">
 							<label>Transportation By:</label>
 			  				<input class="form-control" name="cjtby" id="cjtby" value="0">
 			  			</div>
-			  			<div class="col-md-4">
+			  			<div class="col-md-2">
 							<label>RS:</label>
 			  				<input class="form-control" name="cjtbyRs" id="cjtbyRs" value="0">
+			  			</div>
+
+			  			<div class="col-md-3">
+				  			<label>Pay By:</label>
+			  				<select class="form-control" name="cjtPayby" id="cjtPayby">
+			  					<option value="0">N/A</option>
+			  					<option>Cybera</option>
+			  					<option>Party</option>
+			  				</select>
 			  			</div>
 		  				
 		  			</div>
 		  		</div>
 
-		  		<div class="col-md-6">
-		  			<div class="row form-group">
-		  				<div class="col-md-6">
+
+		  		<div class="row col-md-6 mt-20">
+		  			<div class="form-group">
+		  				<div class="col-md-4">
 						<label>GST: <span id="gstLabel"></span></label>
 		  				<select onchange="estimateCalcTotal()" id="cjgst" name="cjgst" class="form-control">
 		  					<option selected value="0">N/A</option>
@@ -2107,35 +2237,24 @@ function bindAddJobReview()
 		  				<input type="hidden" name="cjgstHide" id="cjgstHide">
 		  				
 
-		  				<div class="col-md-6">
+		  				<div class="col-md-4">
 							<label>Total Amount:</label>
 			  				<input class="form-control" name="cjTotalAmt" id="cjTotalAmt" value="0">
 		  				</div>
+
+		  				<div class="col-md-4">
+				  			<div class="form-group">
+								<label>Payment:</label>
+				  				<select class="form-control" name="cpayment" id="cpayment">
+				  					<option selected="selected" value="0">N/A</option>
+				  					<option value="100% Advance">Advance</option>
+				  				</select>
+							</div>
+						</div>
 		  			</div>
 		  		</div>
 
-		  		<div class="row col-md-6">
-		  			<div class="col-md-6">
-						<label>Pay By:</label>
-		  				<select class="form-control" name="cjtPayby" id="cjtPayby">
-		  					<option value="0">N/A</option>
-		  					<option>Cybera</option>
-		  					<option>Party</option>
-		  				</select>
-	  				</div>
-
-	  				<div class="col-md-6">
-			  			<div class="form-group">
-							<label>Payment:</label>
-			  				<select class="form-control" name="cpayment" id="cpayment">
-			  					<option selected="selected" value="0">N/A</option>
-			  					<option value="100% Advance">Advance</option>
-			  				</select>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6">
+		  		<div class="col-md-6">
 					<div class="form-group">
 						<label>Job Notes:</label>
 		  				<select class="form-control" style="height: 180px;" name="cjnotes[]" multiple="multiple" id="cjnotes">
@@ -2270,6 +2389,20 @@ function bindAddJobReview()
 				  					</select>
 				  				</div>
 
+								<div class="col-md-12">
+									<label>Design:</label>	
+				  					<select class="form-control" name="design[]">
+					  					<option value="">Select Design</option>
+					  					<option value="All Same Design">Same</option>
+  										<option value="Variable Design">Variable</option>
+				  					</select>
+								</div>
+
+								<div class="col-md-12">
+									<label>Details:</label>	
+									<input type="text" name="wdetails" class="wdetails form-control">
+								</div>
+
 		  						<div class="col-md-6">
 		  							<label>Qty:</label>	
 		  							<input type="text" name="p_qty[]" class="form-control">
@@ -2279,19 +2412,9 @@ function bindAddJobReview()
 				  					<input type="text" name="p_rate[]" class="form-control">
 				  				</div>
 			  					
-			  					<div class="col-md-12">
-									<label>Details:</label>	
-									<input type="text" name="wdetails" class="wdetails form-control">
-								</div>
+			  					
 
-								<div class="col-md-12">
-									<label>Design:</label>	
-				  					<select class="form-control" name="design[]">
-					  					<option value="">Select Design</option>
-					  					<option value="All Same Design">Same</option>
-  										<option value="Variable Design">Variable</option>
-				  					</select>
-								</div>
+								
 			  					
 			  					<div class="col-md-8">
 									<div class="wdetails_info"></div>
@@ -2353,21 +2476,29 @@ function bindAddJobReview()
 
 		  		<div class="row col-md-6">
 		  			<div class="form-group">
-		  				<div class="col-md-8">
+		  				<div class="col-md-6">
 							<label>Transportation By:</label>
 			  				<input class="form-control" name="pcjtby" id="pcjtby" value="0">
 			  			</div>
-			  			<div class="col-md-4">
+			  			<div class="col-md-2">
 							<label>RS:</label>
 			  				<input class="form-control" name="pcjtbyRs" id="pcjtbyRs" value="0">
 			  			</div>
 		  				
+			  			<div class="col-md-4">
+							<label>Pay By:</label>
+			  				<select class="form-control" name="pcjtPayby" id="pcjtPayby">
+			  					<option value="0">N/A</option>
+			  					<option>Cybera</option>
+			  					<option>Party</option>
+			  				</select>
+			  			</div>
 		  			</div>
 		  		</div>
 
 		  		<div class="col-md-6">
 		  			<div class="row form-group">
-		  				<div class="col-md-6">
+		  				<div class="col-md-4">
 						<label>GST: <span id="pgstLabel"></span></label>
 		  				<select onchange="estimateCalcPTotal()" id="pcjgst" name="pcjgst" class="form-control">
 		  					<option selected value="0">N/A</option>
@@ -2382,35 +2513,23 @@ function bindAddJobReview()
 		  				<input type="hidden" name="pcjgstHide" id="pcjgstHide" value="0">
 		  				
 
-		  				<div class="col-md-6">
+		  				<div class="col-md-4">
 							<label>Total Amount:</label>
 			  				<input class="form-control" name="pcjTotalAmt" id="pcjTotalAmt" value="0">
+		  				</div>
+		  				<div class="col-md-4">
+				  			<div class="form-group">
+								<label>Payment:</label>
+				  				<select class="form-control" name="pcpayment" id="pcpayment">
+				  					<option selected="selected" value="0">N/A</option>
+				  					<option value="100% Advance">Advance</option>
+				  				</select>
+							</div>
 		  				</div>
 		  			</div>
 		  		</div>
 
-		  		<div class="row col-md-6">
-		  			<div class="col-md-6">
-						<label>Pay By:</label>
-		  				<select class="form-control" name="pcjtPayby" id="pcjtPayby">
-		  					<option value="0">N/A</option>
-		  					<option>Cybera</option>
-		  					<option>Party</option>
-		  				</select>
-	  				</div>
-
-	  				<div class="col-md-6">
-			  			<div class="form-group">
-							<label>Payment:</label>
-			  				<select class="form-control" name="pcpayment" id="pcpayment">
-			  					<option selected="selected" value="0">N/A</option>
-			  					<option value="100% Advance">Advance</option>
-			  				</select>
-						</div>
-					</div>
-				</div>
-
-				<div class="col-md-6">
+		  		<div class="col-md-6">
 					<div class="form-group">
 						<label>Job Notes:</label>
 		  				<select style="height: 200px;" class="form-control" multiple="multiple" name="pcjnotes[]" id="pcjnotes">
@@ -2512,5 +2631,62 @@ function clear_filter_fd() {
             	jQuery("#show_result_fd").html(data);
             }
 		});
+}
+
+function showMrgTmp()
+{
+	$("#rstk_container").hide();
+	$("#mrg_container").toggle();
+}
+
+function showRSTKTmp()
+{
+	$("#mrg_container").hide();
+	$("#rstk_container").toggle();
+}
+
+function setMrgTemplate(isReset = 0)
+{
+	$("#rstk_container").hide();
+
+	if(isReset == 1)
+	{
+		$("#cnotes").val('');
+		$("#sheet_qty").val('');
+		$("#sheet_rate").val('');
+		showMrgTmp();
+		return;
+	}
+	var qty = $("#sheet_qty").val(),
+		rate = $("#sheet_rate").val();
+
+	$("#cnotes").val('12X18 - MIRROR COAT REGULAR GUMMING PAPER STICKER - '+ qty +' SHEETS @ RS. '+ parseFloat(rate).toFixed(2));
+
+	showMrgTmp();
+}
+
+function setRSTKTemplate(isReset = 0)
+{
+	$("#mrg_container").hide();
+	if(isReset == 1)
+	{
+		$("#cnotes").val('');
+		$("#rstk_size_val").val('');
+		$("#rstk_qty").val('');
+		$("#rstk_rate").val('');
+
+		showRSTKTmp();
+		return;
+	}
+	
+	var stk_size = $("#rstk_size_val").val(),
+		stk_type = $("#rstk_size_type").val(),
+		stk_shape = $("#rstk_shape").val(),
+		stk_qty = $("#rstk_qty").val(),
+		stk_rate = $("#rstk_rate").val();
+
+	$("#cnotes").val(stk_size +' '+ stk_type +' '+ stk_shape +' SHAPE - MIRROR COAT HEAVY GUMMING PAPER STICKER - DIE CUTTING - '+ stk_qty +' PCS @ RS. '+ parseFloat(stk_rate).toFixed(2));
+
+	showRSTKTmp();
 }
 </script>

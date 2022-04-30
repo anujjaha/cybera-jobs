@@ -29,6 +29,10 @@ class User extends CI_Controller {
           if($this->session->userdata['login']) {
               $this->dashboard();
           }
+          else
+          {
+          	$this->login();
+          }
         }
         
         public function logout() {

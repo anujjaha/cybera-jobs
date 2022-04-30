@@ -6,12 +6,6 @@ class Etransaction extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->model('employee_transaction_model');
-		$this->load->model('employee_model');
-
-		if(!isAdmin())
-		{
-			redirect('user/index', "refresh");			
-		}
 	}
 
 	/**
@@ -34,39 +28,27 @@ class Etransaction extends CI_Controller {
 		$data = array();
 		$data['items'] = $this->employee_transaction_model->getAllEmployeeTransactions();
 		$data['heading'] = $data['title']="Employee Transactions - Cybera Print Art";
-
-		$this->template->load('etransaction', 'index', $data);
+		pr($data);
+		$this->template->load('expense', 'index', $data);
 	}
-	
-
-	public function view($empId = null)
-	{
-		$data = array();
-		$data['items'] = $this->employee_transaction_model->getEmployeeTransactionByEmpId($empId);
-		$data['heading'] = $data['title']="Employee Detailed Transactions - Cybera Print Art";
-		$data['employee'] = $this->employee_model->getEmployeeById($empId);
-		
-		$this->template->load('etransaction', 'detail', $data);
-	}
-
-	
 	
 	public function add()
 	{
-		$data['heading'] = $data['title']="Add Employee Transaction - Cybera Print Art";
+		$data['heading'] = $data['title']="Add New Expense - Cybera Print Art";
 		
 		if($this->input->post())
 		{
 			$data = $this->input->post();
 			unset($data['save']);
-			$this->employee_transaction_model->create($data);
-				
-			redirect('etransaction', "refresh");
+			
+			$this->expense_model->createExpense($data);
+			
+			redirect('expense', "refresh");
 		}
 		
 		//$data['record'] =$this->cashier_model->getLastRecord();
 		
-		$this->template->load('etransaction', 'add', $data);
+		$this->template->load('expense', 'add', $data);
 	}
 	
 	public function edit($id = null)

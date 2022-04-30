@@ -67,7 +67,7 @@ function PreparePreText($text,$ff='//FF//') {
 	return ('<pre>'.$text.'</pre>');
 }
 
-if(!function_exists('strcode2utf')){ 
+/*if(!function_exists('strcode2utf')){ 
   function strcode2utf($str,$lo=true) {
 	//converts all the &#nnn; and &#xhhh; in a string to Unicode
 	if ($lo) { $lo = 1; } else { $lo = 0; }
@@ -75,7 +75,30 @@ if(!function_exists('strcode2utf')){
 	$str = preg_replace('/\&\#x([0-9a-fA-F]+)\;/me', "codeHex2utf('\\1',{$lo})",$str);
 	return $str;
   }
+}*/
+
+
+// mpdf/includes/functions.php
+if (!function_exists('strcode2utf')) {
+    function strcode2utf($str,$lo=true)
+    {
+        //converts all the &#nnn; and &#xhhh; in a string to Unicode
+        if ($lo) { $lo = 1; } else { $lo = 0; }
+        // Deprecated modifier "E" in preg_replace
+        //$str = @preg_replace('/\&\#([0-9]+)\;/me', "code2utf('\\1',{$lo})",$str); // blocked errors output!! wtf?
+        //$str = @preg_replace('/\&\#x([0-9a-fA-F]+)\;/me', "codeHex2utf('\\1',{$lo})",$str);
+        $str = preg_replace_callback('/\&\#([0-9]+)\;/m',
+            function($num) use ($lo) {
+                return code2utf($num, $lo);
+            }, $str);
+        $str = preg_replace_callback('/\&\#x([0-9a-fA-F]+)\;/m',
+            function($num) use ($lo) {
+                return codeHex2utf($num, $lo);
+            }, $str);
+        return $str;
+    }
 }
+
 
 if(!function_exists('code2utf')){ 
   function code2utf($num,$lo=true){

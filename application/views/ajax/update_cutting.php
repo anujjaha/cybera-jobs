@@ -28,7 +28,7 @@ function update_box() {
         c_laser = jQuery("#c_laser").val();
         lamination_info = jQuery("#lamination_info").val();
         size_info = jQuery("#size_info").val();
-        sheet_qty = jQuery("#sheet_qty").val();
+        sheet_qty = jQuery("#c_sheet_qty").val();
 
 
         binding_info = jQuery("#binding_info").val();
@@ -112,7 +112,7 @@ function update_box() {
             <tr>
                 <td align="right">Sheet Qty:</td>
                 <td>
-                    <input type="text" name="sheet_qty" id="sheet_qty" value="<?php echo $cutting_details->c_sheet_qty;?>">
+                    <input type="text" name="sheet_qty" id="c_sheet_qty" value="<?php echo $cutting_details->c_sheet_qty;?>">
                 </td>
             </tr>
             <tr>
