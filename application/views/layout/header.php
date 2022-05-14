@@ -496,12 +496,34 @@ function saveSAestimate(jnotes)
 function saveWAestimate()
 {
 	var showB = $("#cnotes_b").val(),
-		printB = '';
+		printB = '',
+		gPay   = '',
+		payTm  = '';
 
 	if(showB.length > 0 && showB != '' && $("#cnotes_b_show").val() == 'Yes')
 	{
 		printB = '\n' + showB;
 	}
+
+
+	if($("#e_p_g_pay").is(':checked'))
+	{
+		gPay = '\n' + 'Google/Phone Pay: 9898618697';
+	}
+	else
+	{
+		gPay = '';	
+	}
+	
+	if($("#e_pay_tm").is(':checked'))
+	{
+		payTm = '\n' + 'PayTm (walet): 9898309897';
+	}
+	else
+	{
+		payTm = '';
+	}
+
     $.ajax({
        	type: "POST",
        	dataType: "JSON",
@@ -533,7 +555,7 @@ function saveWAestimate()
         	{
         		var oldVal = $("#resEstimateData").val();
 
-        		$("#resEstimateData").val(oldVal + printB + '\n\n*EST-ID-'+ data.id + '*');
+        		$("#resEstimateData").val(oldVal + printB + '\n\n*EST-ID-'+ data.id + '*'+ gPay +payTm);
         		$("#resEstimateData").select();
 				document.execCommand('copy');	
         	}
@@ -2305,6 +2327,25 @@ function bindAddJobReview()
 			  				<input type="number" step="1" min="0" value="7" name="e_valid_till" id="e_valid_till" class="form-control">
 						</div>
 					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>
+								<input type="checkbox" name="e_p_g_pay" id="e_p_g_pay" value="1">
+								Phone / Google Pay
+							</label>
+						</div>
+					</div>
+
+					<div class="col-md-6">
+						<div class="form-group">
+							<label>
+								<input type="checkbox" name="e_pay_tm" id="e_pay_tm" value="1">
+								PAYTM (walet)
+							</label>
+						</div>
+					</div>
+
 				</div>
 
 				<div class="col-md-6">
@@ -2660,7 +2701,20 @@ function setMrgTemplate(isReset = 0)
 	var qty = $("#sheet_qty").val(),
 		rate = $("#sheet_rate").val();
 
-	$("#cnotes").val('12X18 - MIRROR COAT REGULAR GUMMING PAPER STICKER - '+ qty +' SHEETS @ RS. '+ parseFloat(rate).toFixed(2));
+	var nVal = '12X18 - MIRROR COAT REGULAR GUMMING PAPER STICKER - '+ qty +' SHEETS @ RS. '+ parseFloat(rate).toFixed(2);
+	var xVal = $("#cnotes").val();
+	var fVal = '';
+
+	if(xVal.length > 2)
+	{
+		fVal = xVal + '\n' + nVal;
+	}
+	else
+	{
+		fVal = nVal;	
+	}
+
+	$("#cnotes").val(fVal);
 
 	showMrgTmp();
 }
@@ -2685,7 +2739,22 @@ function setRSTKTemplate(isReset = 0)
 		stk_qty = $("#rstk_qty").val(),
 		stk_rate = $("#rstk_rate").val();
 
-	$("#cnotes").val(stk_size +' '+ stk_type +' '+ stk_shape +' SHAPE - MIRROR COAT HEAVY GUMMING PAPER STICKER - DIE CUTTING - '+ stk_qty +' PCS @ RS. '+ parseFloat(stk_rate).toFixed(2));
+
+	var nVal =stk_size +' '+ stk_type +' '+ stk_shape +' SHAPE - MIRROR COAT HEAVY GUMMING PAPER STICKER - DIE CUTTING - '+ stk_qty +' PCS @ RS. '+ parseFloat(stk_rate).toFixed(2);
+	var xVal = $("#cnotes").val();
+	var fVal = '';
+
+	if(xVal.length > 2)
+	{
+		fVal = xVal + '\n' + nVal;
+	}
+	else
+	{
+		fVal = nVal;	
+	}
+
+
+	$("#cnotes").val(fVal);
 
 	showRSTKTmp();
 }

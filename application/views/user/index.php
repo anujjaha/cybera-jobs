@@ -348,7 +348,8 @@ if(strtolower($this->session->userdata['department']) == "master")
 				
 				if(isset($job['pay_type']))		
 				{
-					echo '<hr><span class="green"> Mode : ' .$job['pay_type']. '</span>';	
+					$payId = ' (' . $job['paytm_id'] . ')' ?? '';
+					echo '<hr><span class="green"> Mode : ' .$job['pay_type'] . $payId .  '</span>';	
 				}
 			?>
 		</td>
@@ -771,7 +772,19 @@ function saveJobDelievered()
 
 		if(jQuery("#deliveryBy").val().toString() == "1")
 		{
+			if(jQuery("#cybera_delivery_info").val().length == 0)
+			{
+				alert("Please add Delivery Location");
+				return;
+			}
+
 			customDelivery = customDelivery + ' - ' + jQuery("#cybera_delivery_info").val();
+		}
+
+		if(jQuery("#deliveryBy").val().toString() == "0" && $("#customer_name").val().length == 0)
+		{
+			alert("Please add Customer Name");
+				return;
 		}
 		
 	if(customDelivery.trim() == '' || customDelivery.trim().length < 1)
@@ -782,10 +795,21 @@ function saveJobDelievered()
 
 	if(jQuery("#isOther").val().toString() == "1" && jQuery("#deliveryBy").val().toString() == "1")
 	{
-		;
+		
 		customDelivery = jQuery("#other_person").val()  + ' (CYBERA) - ' + jQuery("#cybera_delivery_info").val();
 	}
 
+	if($("#cybera_delivery").val() == 'oth')
+	{
+		if(
+			$("#other_person").val().length == 0
+			|| $("#cybera_delivery_info").val().length == 0
+		)
+		{
+			alert('Please add Other Person and Delivery Location.');
+			return false;
+		}
+	}
 	jQuery.ajax(
 	{
 		url: "<?php echo site_url();?>/ajax/delieveredJobSuccess",

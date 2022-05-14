@@ -82,7 +82,11 @@ $(document).ready(function()
 
     jQuery("#skip_save_button").on('click', function(event)
 	{
-        $("#notes").val('N/A');
+		if($("#notes").val().length == 0)
+		{
+			$("#notes").val('N/A');	
+		}
+        
 
 		hideSaveButton();
 
@@ -1655,7 +1659,7 @@ $this->load->helper('general'); ?>
 		<option value="Advance">Advance</option>
 	</select>
     <br />
-    <input type="text" name="paytm_id" id="paytm_id" class="form-control" placeholder="Paytm ID" style="display: none;">
+    <input type="text" name="paytm_id" id="paytm_id" class="form-control" placeholder="Phone Number" style="display: none;">
 </div>
 <div class="col-md-1">
 	Is Continue
@@ -2153,7 +2157,10 @@ function showPaytmId()
 {
     jQuery("#paytm_id").hide();
     
-    if(jQuery("#pay_type").val()  == 'Paytm')
+    if(	jQuery("#pay_type").val()  == 'Paytm'
+    	|| jQuery("#pay_type").val()  == 'Phone Pay'
+    	|| jQuery("#pay_type").val()  == 'Google Pay' 
+    )
     {
         jQuery("#paytm_id").show();
     }

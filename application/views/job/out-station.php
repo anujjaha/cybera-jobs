@@ -37,11 +37,11 @@
 				<td width="10%"> Action </td>
 			</tr>
 
-			<tr id="primary-row">
-				<td><input class="form-control" type="text" value="SHALVIK" name="out[out_location]"> </td>
-				<td><input class="form-control" type="text" value="12X18" name="out[size]"> </td>
+			<tr id="primary-row" class="table-tr">
+				<td><input class="form-control out-location" type="text" value="SHALVIK" name="out[out_location]"> </td>
+				<td><input class="form-control out-size" type="text" value="12X18" name="out[size]"> </td>
 				<td>
-					<select name="out[lamination_type]" class="form-control">
+					<select name="out[lamination_type]" class="form-control out-lamination_type">
 						<option>N/A</option>
 						<option>GLOSS Lamination</option>
 						<option>MATT Lamination</option>
@@ -52,14 +52,14 @@
 					</select>
 				</td>
 				<td>
-					<select name="out[lamination_side]" class="form-control">
+					<select name="out[lamination_side]" class="form-control out-lamination_side">
 						<option>SINGLE</option>
 						<option>FRONT BACK</option>
 					</select>
 				</td>
-				<td><input value="0" step="1" min="0"  class="form-control" type="number" name="out[qty]"> </td>
+				<td><input value="0" step="1" min="0"  class="form-control" type="number" name="out[qty]"  onchange="autoFillJNotes(event)"> </td>
 				
-				<td><textarea  class="form-control" name="out[notes]"></textarea></td>
+				<td><textarea  class="form-control out-notes" name="out[notes]"></textarea></td>
 				<td>
 					<a href="javascript:void(0);" class="add-new-row">Add</a>
 					<a style="display: none;" href="javascript:void(0);" class="remove-new-row">Remove</a>
@@ -160,5 +160,21 @@ function saveOutStationJob()
 				}
 			}
 	  });
+}
+
+
+function autoFillJNotes(event)
+{
+	var currentElement = $(event.target),
+			nearRow  			 = $(event.target).closest('.table-tr');
+
+	
+	var loc 	= nearRow.find('.out-location').val();
+	var size 	= nearRow.find('.out-size').val();
+	var ltype = nearRow.find('.out-lamination_type').val();
+	var lside = nearRow.find('.out-lamination_side').val();
+	var f = size +" - "+ ltype +" - "+ lside  +" - "+ currentElement.val()+" SHEETS";
+
+	nearRow.find('.out-notes').val(f);
 }
 </script>
