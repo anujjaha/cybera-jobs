@@ -659,10 +659,7 @@ function sendEstimationEmail($to, $from,$subject="Cybera Email System",$content=
 	$mail->Body     = $content;
 	if(!$mail->Send()) {
 	  echo 'Message was not sent.';
-	 	pr($mail);
 	} else {
-		echo "xc";
-		pr($mail);
 	  return true;
 	}
 }	

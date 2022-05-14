@@ -29,7 +29,8 @@ class Prints extends CI_Controller {
             $this->template->load('print', 'index', $data);
 		
 	}
-	public function update_job_status($job_id=null,$status) {
+	public function update_job_status($job_id=null,$status = null) 
+	{
             if(! $job_id) {
                 return false;
             }
