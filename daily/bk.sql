@@ -1,0 +1,1 @@
+ALTER TABLE `job` ADD `cyb_porter` INT NOT NULL DEFAULT '0' AFTER `party_pay`, ADD `cyb_porter_details` TEXT NULL AFTER `cyb_porter`, ADD `cyb_porter_mobile` VARCHAR(90) NULL AFTER `cyb_porter_details`, ADD `cyb_porter_pay` VARCHAR(60) NULL AFTER `cyb_porter_mobile`;
