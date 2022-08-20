@@ -70,6 +70,10 @@ die;*/
 				<button data-id="<?= $result['id'];?>" 
 				data-values="'<?= json_encode($result);?>'"
 				class="btn btn-sm btn-primary copyBtn">Copy</button>
+
+				<button data-id="<?= $result['id'];?>" 
+				data-values="'<?= json_encode($result);?>'"
+				class="btn btn-sm btn-primary copyBtn">Print</button>
 			</td>
 		</tr>
 		<?php $sr++; } ?>
@@ -403,4 +407,5 @@ function print_transport_list() {
           });
 
 }
+
 </script>

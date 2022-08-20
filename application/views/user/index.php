@@ -1,9 +1,10 @@
 <?php
 
-if($this->session->userdata['user_id'] == 6 )
-{
-	//specify for BINA - Test User only
-}
+//specify for BINA - Test User only
+// if(toTest())
+// {
+// 
+// }
 
 if(!isset($_SESSION['estimate_title_data']))
 {
@@ -96,6 +97,11 @@ if(strtolower($this->session->userdata['department']) == "master")
 		$processedJobs = [];
 		foreach($jobs as $job) { 
 
+			// if(toTest())
+			// {
+			// 	pr($job);
+			// }
+
 			if(in_array($job['job_id'], $processedJobs))
 			{
 				continue;
@@ -109,6 +115,18 @@ if(strtolower($this->session->userdata['department']) == "master")
 		</td>
 		<td>
 			<?php
+				if(isset($job['cyb_porter']) && $job['cyb_porter'] == 1)
+				{
+				?>
+					<span class="green">PORTER</span>
+					<br />
+					<span><strong>Address:</strong> <?=$job['cyb_porter_details'];?> </span>
+					<br />
+					<span><strong>Mobile:</strong> <?=$job['cyb_porter_mobile'];?></span>
+					<br />
+					<span><strong>Payby:</strong> <?=$job['cyb_porter_pay'];?></span>
+				<?php
+				}
 
 				if($job['is_pin'] == 1)
 				{

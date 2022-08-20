@@ -2050,7 +2050,7 @@ class Ajax extends CI_Controller {
 				{
 					$status = $this->out_model->update($outJob->id, $inputData);
 
-					if($status)
+					if(1 == 1)
 					{
 						$this->out_model->flushDetails($outJob->id);
 					}
@@ -2059,7 +2059,6 @@ class Ajax extends CI_Controller {
 				}	
 				else
 				{
-
 					$outJobId = $this->out_model->create($inputData);
 				}
 				
@@ -2390,5 +2389,28 @@ class Ajax extends CI_Controller {
 			'result' => $waRecord
 		));
 		die();
+	}
+
+	public function generateWA($waId = null)
+	{
+		if($waId )
+		{
+			$this->load->model('wa_model');
+			
+			$data['waInfo'] 	= $this->wa_model->getById($waId);
+			$html 				= $this->load->view('common/wa_pdf.php', $data, true);
+			$pdfFile 	= create_pdf($html, 'A5');
+
+			echo json_encode(array(
+				'status' => true,
+				'link'	 => $pdfFile
+			));
+			die;
+		}
+
+		echo json_encode(array(
+			'status' => false,
+		));
+		die;
 	}
 }

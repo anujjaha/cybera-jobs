@@ -1490,10 +1490,13 @@ public function edit($job_id=null)
 
 	public function test()
 	{  
+    $attachment ="account_pdf_report/1617_cybera.pdf";
+    $content = "Hello Shaishav, \n\n <br><br>
+              Application First Login - ".date('d-m-Y H:i A')."
+              Please find attached PDF For Due Amount List with Company Names." ;
+        $subject = 'List of Companies Due Amount - '.date('d-m-Y H:i A');
+        $status = send_email_attachment('er.anujjaha@gmail.com', $subject, $content, $attachment);
 
-    $to = ['er.anujjaha@gmail.com'];
-    $content = '<p>Hey I got the custom mai response<p><b>Thank you</b>';
-    sendBulkEmail($to, 'cyberaprintart@gmail.com', 'JOB-1001 NOtification', $content);
     die('11');
    $ci = & get_instance();
     $ci->load->model('menu_model'); 

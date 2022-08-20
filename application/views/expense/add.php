@@ -54,7 +54,7 @@
 					</option>
 
 					<option value="7">
-						Foil
+						Naitik (Foil)
 					</option>
 
 					<option value="2">

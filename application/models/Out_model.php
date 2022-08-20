@@ -31,8 +31,6 @@ class Out_model extends CI_Model {
             return $this->db->where('id', $outId)
             ->update($this->table, $data);
     	}
-    	
-    	return false;
     }
 
 
@@ -106,7 +104,7 @@ class Out_model extends CI_Model {
     {
         if($outId)
         {
-            return $this->db->where('out_id', $outId)
+            return $this->db->where('out_id', (int)$outId)
             ->delete($this->tableDetails);
         }
         return true;

@@ -564,31 +564,63 @@ function send_mail($to, $from,$subject="Cybera Email System",$content=null)
 
 function send_email_attachment($to, $subject="Cybera Email System", $content=null, $attachment = null)
 {
-	$fromMail = getFromEmailId();
-	$mail = new PHPMailer();
-	$mail->Host     	= "smtp.gmail.com"; // SMTP server
-	$mail->SMTPAuth    	= TRUE; // enable SMTP authentication
-	$mail->SMTPSecure  	= "tls"; //Secure conection
-	$mail->Port        	= 587; // set the SMTP port
-	$mail->Username    	= $fromMail['emailId']; // SMTP account username
-	$mail->Password     = $fromMail['password']; // SMTP account password
-	$mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
-	$mail->AddAddress($to);	
-	$mail->isHTML( TRUE );
-	$mail->Subject  = $subject;
-	$mail->Body     = $content;
-	if($attachment)
+	if(isset($attachment))
 	{
-		$mail->AddAttachment($attachment);
-	}
+		//create curl file
+		$cfile = curl_file_create($attachment, 'application/pdf', 'customer-due-list.pdf');
+		$headers = array(
+		'Content-type: multipart/form-data'
+		); 
+		$request = [
+			'secret'	=> '1234567890',
+			'to' 		=> $to,
+			'subject' 	=> $subject,
+			'body'		=> $content,
+			"file" 		=> $cfile
+		];
+		$url = 'http://email.cyberaprint.com/attach.php';
+		$url = urlencode($url);
+		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, urldecode($url));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+		$response = curl_exec($ch);
 
-	if(!$mail->Send()) 
-	{
-		return false;
-	}else
-	{
+		curl_close($ch);
 		addDueEmailToday();	
 	}
+		
+	
+	return true;
+
+	// $fromMail = getFromEmailId();
+	// $mail = new PHPMailer();
+	// $mail->Host     	= "smtp.gmail.com"; // SMTP server
+	// $mail->SMTPAuth    	= TRUE; // enable SMTP authentication
+	// $mail->SMTPSecure  	= "tls"; //Secure conection
+	// $mail->Port        	= 587; // set the SMTP port
+	// $mail->Username    	= $fromMail['emailId']; // SMTP account username
+	// $mail->Password     = $fromMail['password']; // SMTP account password
+	// $mail->SetFrom($fromMail['emailId'], 'Cybera Print Art');
+	// $mail->AddAddress($to);	
+	// $mail->isHTML( TRUE );
+	// $mail->Subject  = $subject;
+	// $mail->Body     = $content;
+	// if($attachment)
+	// {
+	// 	$mail->AddAttachment($attachment);
+	// }
+
+	// if(!$mail->Send()) 
+	// {
+	// 	return false;
+	// }else
+	// {
+	// 	addDueEmailToday();	
+	// }
 	return true;
 }
 
@@ -2243,4 +2275,14 @@ function getEstimateTitles()
 	}
 
 	return json_encode($output);	
+}
+
+function toTest()
+{
+	$ci = & get_instance();
+	if($ci->session->userdata['user_id'] == 6)
+	{
+		return true;
+	}
+	return false;
 }

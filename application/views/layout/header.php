@@ -322,8 +322,47 @@ function copyCNotesNow()
 	+ cnoteTerms.toUpperCase()
 	+ eValidTill.toUpperCase()
 	);
+
+
+	// enable Currnet Print
+	enableCurrentPrint();
 }
 
+function enableCurrentPrint()
+{
+	console.log("E C P");
+	$("#copy-p-data").show();
+}
+
+function printCNotesNow()
+{
+	if($("#lastEId").val() != '')
+	{
+		printWAHeader($("#lastEId").val());
+	}
+}
+
+function printWAHeader(id)
+{
+	console.log(id);
+	jQuery.ajax({
+		url: "<?php echo site_url();?>/ajax/generateWA/"+id,
+		method: "GET",
+		dataType: 'JSON',
+		success: function(data)
+		{
+			if(data.status == true)
+			{
+				window.open(data.link);
+			}
+			else
+			{
+				alert("Unable to Create PDF");
+			}
+		}
+	});
+
+}
 
 function copySNotesNow()
 {
@@ -513,6 +552,7 @@ function saveWAestimate()
 		printB = '',
 		gPay   = '',
 		payTm  = '';
+		pHDFC  = '';
 
 	if(showB.length > 0 && showB != '' && $("#cnotes_b_show").val() == 'Yes')
 	{
@@ -537,6 +577,21 @@ function saveWAestimate()
 	{
 		payTm = '';
 	}
+
+
+	if($("#e_hdfc_bank").is(':checked'))
+	{
+		pHDFC = '\n' + `BANK DETAILS :: 
+A/C NAME : CYBERA PRINT ART
+BANK NAME : HDFC BANK
+BRANCH : NR. ST XAVIER'S COLLEGE, NAVRANGPURA, AHMEDABAD.
+A/C No : 50200026815682     IFSC Code : HDFC0003905     MICR Code : 380240067`;
+	}
+	else
+	{
+		pHDFC = '';
+	}
+	
 
     $.ajax({
        	type: "POST",
@@ -569,12 +624,15 @@ function saveWAestimate()
         	{
         		var oldVal = $("#resEstimateData").val();
 
-        		$("#resEstimateData").val(oldVal + printB + '\n\n*EST-ID-'+ data.id + '*'+ gPay +payTm);
+        		$("#resEstimateData").val(oldVal + printB + '\n\n*EST-ID-'+ data.id + '*'+ gPay +payTm  +pHDFC);
         		$("#resEstimateData").select();
 				document.execCommand('copy');	
+
+				$("#lastEId").val(data.id);
         	}
         	else
         	{
+        		$("#lastEId").val('');
         		console.log('out side');
         		$("#resEstimateData").select();
 				document.execCommand('copy');
@@ -1873,6 +1931,7 @@ function bindAddJobReview()
 	  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
 	  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
 	  					<option value="- Delivery charges extra">Delivery charges extra</option>
+	  					<option value="- Designing charges extra">Designing charges extra</option>
 	  					<option value="- Please confirm design before Adjusting Whole File ( Setting all data )">Please confirm design before Adjusting Whole File ( Setting all data )</option>
 	  					<option value="- Please check sampl before placing final order">Please check sampl before placing final order</option>
 	  					<option value="- Color variation can be seen in bulk quantity CMYK digital printing">Color variation can be seen in bulk quantity CMYK digital printing</option>
@@ -2312,6 +2371,7 @@ function bindAddJobReview()
 		  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
 		  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
 		  					<option value="- Delivery charges extra">Delivery charges extra</option>
+		  					<option value="- Designing charges extra">Designing charges extra</option>
 		  					<option value="- Please confirm design before Adjusting Whole File ( Setting all data )">Please confirm design before Adjusting Whole File ( Setting all data )</option>
 		  					<option value="- Please check sampl before placing final order">Please check sampl before placing final order</option>
 		  					<option value="- Color variation can be seen in bulk quantity CMYK digital printing">Color variation can be seen in bulk quantity CMYK digital printing</option>
@@ -2342,7 +2402,7 @@ function bindAddJobReview()
 				<div class="col-md-6">
 
 					<div class="col-md-6">
-						<div class="form-group">
+						<div class="row form-group">
 							<label>Approx Delivery Time ( in Days ):</label>
 			  				<input type="number" step="1" min="0" value="0" name="e_approx_delivery" id="e_approx_delivery" class="form-control">
 						</div>
@@ -2355,8 +2415,8 @@ function bindAddJobReview()
 						</div>
 					</div>
 
-					<div class="col-md-6">
-						<div class="form-group">
+					<div class="col-md-4">
+						<div class="row form-group">
 							<label>
 								<input type="checkbox" name="e_p_g_pay" id="e_p_g_pay" value="1">
 								Phone / Google Pay
@@ -2364,7 +2424,7 @@ function bindAddJobReview()
 						</div>
 					</div>
 
-					<div class="col-md-6">
+					<div class="col-md-4">
 						<div class="form-group">
 							<label>
 								<input type="checkbox" name="e_pay_tm" id="e_pay_tm" value="1">
@@ -2373,11 +2433,23 @@ function bindAddJobReview()
 						</div>
 					</div>
 
+					<div class="col-md-4">
+						<div class="form-group">
+							<label>
+								<input type="checkbox" name="e_hdfc_bank" id="e_hdfc_bank" value="1">
+								BANK (HDFC)
+							</label>
+						</div>
+					</div>
+
 				</div>
 
 				<div class="col-md-6">
 					<div class="form-group">
+						<input type="hidden" name="lastEId" id="lastEId" value="">
 						<a style="margin-top: 5px;" href="javascript:void(0);" class="btn btn-lg btn-primary" id="copy-c-data" onclick="copyCNotesNow()">Copy</a>
+
+						<a style="display:none; margin-top: 5px;" href="javascript:void(0);" class="btn btn-lg btn-primary" id="copy-p-data" onclick="printCNotesNow()">Print Now</a>
 					</div>
 				</div>
 
@@ -2609,6 +2681,7 @@ function bindAddJobReview()
 		  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
 		  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
 		  					<option value="- Delivery charges extra">Delivery charges extra</option>
+		  					<option value="- Designing charges extra">Designing charges extra</option>
 
 		  					<option value="- Please confirm design before Adjusting Whole File ( Setting all data )">Please confirm design before Adjusting Whole File ( Setting all data )</option>
 		  					<option value="- Do Not Paste the Stickers without washing/cleaning the vehicle for long life of the Stickers">Do Not Paste the Stickers without washing/cleaning the vehicle for long life of the Stickers</option>

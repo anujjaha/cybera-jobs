@@ -89,13 +89,13 @@
                         </li>
 
                         <li class="active">
-                            <a href="javascript:void(0);" class="" id="popupBoxGEstimate" onclick="openPopupBoxGEstimate();">
+                            <a target="_blank" href="<?php echo base_url();?>/user/blank?open=menuEstimate" class="" id="popupBoxGEstimate">
                                 <i class="fa fa-dashboard"></i> <span>Estimate</span>
                             </a>
                         </li>
 
                         <li class="active">
-                            <a href="<?php echo base_url();?>wa" class="">
+                            <a  target="_blank" href="<?php echo base_url();?>wa" class="">
                                 <i class="fa fa-dashboard"></i> <span>Estimate List</span>
                             </a>
                         </li>

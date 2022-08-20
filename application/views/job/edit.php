@@ -35,7 +35,7 @@ function showSaveButton()
 $(document).ready(function() 
 {
 	// Default Port Hide
-	$(".showPorter").hide();
+	//$(".showPorter").hide();
 
 	bindPorterEvent();
     jQuery(".select-mask").on('change', function(e)
@@ -1533,23 +1533,7 @@ $this->load->helper('general'); ?>
 			<table border="2" class="table">
 				<tr>
 					
-					<td>
-						<label>
-							<input type="checkbox" name="is_hold" value="1">
-							Payment Pending
-						</label>
-
-						<!-- <label>
-							<input type="radio" id="is_hold" checked="checked" name="is_hold" value="1">
-							Payment Pending
-						</label>
-						<label>
-							<input type="radio" name="is_hold" value="0">
-							Payment Received
-						</label> -->
-						<br>
-						<input type="text" name="payment_details" id="payment_details"  class="form-control" value="">
-					</td>
+					
 					<td>
 						<label>
 							<input type="checkbox" name="is_pickup" value="1">
@@ -1584,6 +1568,61 @@ $this->load->helper('general'); ?>
 
                     <td>
                         <label>
+                            <input type="checkbox" name="cyb_porter"  id="cyb_porter" value="1">
+                            Porter
+                        </label>
+                        <div class="row">
+                            <div class="col-md-12 showPorter">
+                                <div class="col-md-7">
+                                        <label>
+                                            Address:
+                                        </label>
+                                        
+                                        <textarea rows="1" name="cyb_porter_details" id="cyb_porter_details"  class="form-control"></textarea>
+                                </div>
+
+                                <div class="col-md-3">
+                                        <label>
+                                            Mobile:
+                                        </label>
+                                        <input type="text" name="cyb_porter_mobile" id="cyb_porter_mobile"  class="form-control" value="">
+                                </div>
+
+                                <div class="col-md-2">
+                                        <label>
+                                            Payment:
+                                        </label>
+                                        <select name="cyb_porter_pay" id="cyb_porter_pay"  class="form-control" >
+                                            <option>Self</option>
+                                            <option>Party</option>
+                                        </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>
+                            <input type="checkbox" name="is_hold" value="1">
+                            Payment Pending
+                        </label>
+
+                        <!-- <label>
+                            <input type="radio" id="is_hold" checked="checked" name="is_hold" value="1">
+                            Payment Pending
+                        </label>
+                        <label>
+                            <input type="radio" name="is_hold" value="0">
+                            Payment Received
+                        </label> -->
+                        <br>
+                        <input type="text" name="payment_details" id="payment_details"  class="form-control" value="">
+                    </td>
+
+                    <td>
+                        <label>
                             <input type="checkbox" name="is_5_gst" id="is_5_gst"  value="1">
                             FIX 5% GST
                         </label>
@@ -1592,71 +1631,30 @@ $this->load->helper('general'); ?>
                     </td>
 
                     <td>
-                        <label>
-                            <input type="checkbox" name="is_job_invoice" id="is_job_invoice"  value="1">
-                            Invoice
-                        </label>
-                        <br>
-                        <input type="text" name="invoice_details" id="invoice_details"  class="form-control" value="">
+                        <div class="col-md-12">
+                            <div class="col-md-6">
+                                <label>
+                                    <input type="checkbox" name="is_job_invoice" id="is_job_invoice"  value="1">
+                                    Invoice
+                                </label>
+                                <br>
+                                <input type="text" name="invoice_details" id="invoice_details"  class="form-control" value="">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label><input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
+                                Print CYBERA 
+                                </label>
+                                <br />
+                                <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
+                            </div>
+
+                        </div>
+                        
                     </td>
-
-					<td>
-
-                            <label><input checked="checked" type="checkbox" name="is_print_cybera" value="1" id="is_print_cybera">
-                            Print CYBERA 
-                            </label>
-                            <br />
-                            <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
-                        
-						<!-- <label>
-							<input type="checkbox" name="is_manual" value="1">
-							Complete ON
-						</label>
-						<br>
-						<input type="text" name="manual_complete" id="manual_complete"  class="form-control" value=""> -->
-
-                        
-                        <!-- <label>
-                            <input type="radio" id="cyb_delivery" name="cyb_delivery" value="1">
-                            Delivery Done
-                        </label> -->
-					</td>
-				</tr>
-				<tr style="height: 70px;">
-					<td>
-						<label>
-							<input type="checkbox" name="cyb_porter"  id="cyb_porter" value="1">
-							Porter
-						</label>
-					</td>
-					<td colspan="2">
-						<div class="showPorter">
-							<label>
-								Address:
-							</label>
-							
-							<textarea name="cyb_porter_details" id="cyb_porter_details"  class="form-control"></textarea>
-						</div>
-					</td>
-					<td  colspan="2">
-						<div class="showPorter">
-							<label>
-								Mobile:
-							</label>
-							<input type="text" name="cyb_porter_mobile" id="cyb_porter_mobile"  class="form-control" value="">
-						</div>
-					</td>
-					<td>
-						<div class="showPorter">
-							<label>
-								Payment:
-							</label>
-							<select name="cyb_porter_pay" id="cyb_porter_pay"  class="form-control" >
-								<option>Self</option>
-								<option>Party</option>
-							</select>
-						</div>
-					</td>
+                </tr>
+				<tr >
+					
 				</tr>
 			</table>
 		</td>
@@ -2223,7 +2221,7 @@ function bindPorterEvent()
 	{
 	    if(this.checked) // if changed state is "CHECKED"
 	    {
-	    	$(".showPorter").show();
+	    	//$(".showPorter").show();
 	    	$("#cyb_porter_details").attr('required', 'required');
 	    	$("#cyb_porter_mobile").attr('required', 'required');
 	    }
@@ -2231,7 +2229,7 @@ function bindPorterEvent()
 	    {
 	    	$("#cyb_porter_details").removeAttr('required');
 	    	$("#cyb_porter_mobile").removeAttr('required');
-	    	$(".showPorter").hide();
+	    	//$(".showPorter").hide();
 
 	    }
 	});

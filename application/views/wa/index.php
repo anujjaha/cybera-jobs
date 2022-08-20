@@ -48,6 +48,11 @@ die;*/
 				<button data-id="<?= $result['id'];?>" 
 				data-values="'<?= json_encode($result);?>'"
 				class="btn btn-sm btn-primary copyBtn">Copy</button>
+				|| 
+				<a href="javascript:void(0)" data-id="<?= $result['id'];?>" 
+				data-values="'<?= json_encode($result);?>'"
+				onclick="printWA(<?= $result['id'];?>)"
+				class="link">Print</a>
 			</td>
 		</tr>
 		<?php $sr++; } ?>
@@ -382,6 +387,29 @@ function print_transport_list() {
             	window.open(data);
 	        }
           });
+
+}
+
+
+function printWA(id)
+{
+	console.log(id);
+	jQuery.ajax({
+		url: "<?php echo site_url();?>/ajax/generateWA/"+id,
+		method: "GET",
+		dataType: 'JSON',
+		success: function(data)
+		{
+			if(data.status == true)
+			{
+				window.open(data.link);
+			}
+			else
+			{
+				alert("Unable to Create PDF");
+			}
+		}
+	});
 
 }
 </script>

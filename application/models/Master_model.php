@@ -88,7 +88,12 @@ class Master_model extends CI_Model {
 				 LEFT JOIN customer
 				 ON job.customer_id = customer.id
 				 WHERE 
-				 job.verify_id = 0 
+				 (
+				 job.verify_id = 0
+				 	OR
+				 job.verify_id IS NULL
+				 )
+				 
 				 order by job.id DESC
 				";
 		/*$this->db->select("*,job.id as job_id, job.created as created")
@@ -97,6 +102,7 @@ class Master_model extends CI_Model {
 				->where('verify_id',0)
 				->order_by('job.id','DESC');
 		$query = $this->db->get();*/
+		//pr($sql);
 		$query = $this->db->query($sql);
 		return $query->result_array();
 	}
