@@ -159,9 +159,9 @@ if($customer_details->ctype == 1 )
 										<tr>
 											<td style="font-size:11px;"> '.$j1 .'</td>
 											<td style="font-size:11px;"> '.$job_details[$i]['jdetails'].'</td>
-											<td style="font-size:11px;"> '.$job_details[$i]['jqty'].'</td>
-											<td style="font-size:11px;"> '.$job_details[$i]['jrate'].' </td>
-											<td style="font-size:11px;" align="right"> '.$job_details[$i]['jamount'].'</td>
+											<td style="font-size:11px;"> '.getNumbeFormat($job_details[$i]['jqty']).'</td>
+											<td style="font-size:11px;"> '.getNumbeFormat($job_details[$i]['jrate']).' </td>
+											<td style="font-size:11px;" align="right"> '.getNumbeFormat($job_details[$i]['jamount']).'</td>
 										</tr>';
 										} else {
 											break;

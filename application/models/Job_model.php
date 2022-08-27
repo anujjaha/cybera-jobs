@@ -27,6 +27,11 @@ class Job_model extends CI_Model {
 			$data['user_id'] = 1;	
 		}
 
+		if(isset($data['subtotal']) && !empty($data['subtotal']))
+		{
+			$data['subtotal'] = number_format($data['subtotal'], 2);
+		}
+
 		$this->db->insert($this->table, $data);
 		$job_id = $this->db->insert_id();
 
@@ -82,6 +87,12 @@ class Job_model extends CI_Model {
 	public function update_job($job_id=null,$data=array()) {
 		if($job_id) {
 			$data['modified'] = date('Y-m-d H:i:s');
+
+			if(isset($data['subtotal']) && !empty($data['subtotal']))
+			{
+				$data['subtotal'] = number_format($data['subtotal'], 2);
+			}
+			
 			$this->db->where('id',$job_id);
 			return $this->db->update($this->table,$data);
 		}

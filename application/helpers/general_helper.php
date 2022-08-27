@@ -1411,9 +1411,9 @@ function sendDealerJobTicket($customer_details, $job_data, $job_details, $isMenu
 										<tr>
 											<td style="font-size:9px;"> '.$j1 .'</td>
 											<td style="font-size:9px;"> '.$job_details[$i]['jdetails'].'</td>
-											<td style="font-size:9px;"> '.$job_details[$i]['jqty'].'</td>
-											<td style="font-size:9px;"> '.$job_details[$i]['jrate'].' </td>
-											<td style="font-size:9px;" align="right"> '.$job_details[$i]['jamount'].'</td>
+											<td style="font-size:9px;"> '.getNumbeFormat($job_details[$i]['jqty']).'</td>
+											<td style="font-size:9px;"> '.getNumbeFormat($job_details[$i]['jrate']).' </td>
+											<td style="font-size:9px;" align="right"> '.getNumbeFormat($job_details[$i]['jamount']).'</td>
 										</tr>';
 										} else {
 											break;
@@ -2285,4 +2285,9 @@ function toTest()
 		return true;
 	}
 	return false;
+}
+
+function getNumbeFormat($num)
+{
+	return number_format($num, 2);
 }
