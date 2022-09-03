@@ -29,7 +29,7 @@ class Job_model extends CI_Model {
 
 		if(isset($data['subtotal']) && !empty($data['subtotal']))
 		{
-			$data['subtotal'] = number_format($data['subtotal'], 2);
+			$data['subtotal'] = getNumbeFormat($data['subtotal']);
 		}
 
 		$this->db->insert($this->table, $data);
@@ -90,9 +90,9 @@ class Job_model extends CI_Model {
 
 			if(isset($data['subtotal']) && !empty($data['subtotal']))
 			{
-				$data['subtotal'] = number_format($data['subtotal'], 2);
+				$data['subtotal'] = getNumbeFormat($data['subtotal']);
 			}
-			
+
 			$this->db->where('id',$job_id);
 			return $this->db->update($this->table,$data);
 		}

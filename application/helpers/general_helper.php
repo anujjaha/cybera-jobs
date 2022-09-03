@@ -2289,5 +2289,5 @@ function toTest()
 
 function getNumbeFormat($num)
 {
-	return number_format($num, 2);
+	return round($num);
 }

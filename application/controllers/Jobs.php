@@ -397,6 +397,8 @@ public function edit($job_id=null)
                   $jobdata['cyb_porter_details']    = $this->input->post('cyb_porter_details');
                   $jobdata['cyb_porter_mobile']     = $this->input->post('cyb_porter_mobile');
                 }
+
+                
                 
                 $job_id = $this->job_model->insert_job($jobdata);
 				$j_status =$this->add_job_transaction($job_id,JOB_PENDING);
