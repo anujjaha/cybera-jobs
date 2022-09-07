@@ -19,6 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 //$config['base_url'] = 'http://111.111.111.2/ncybera/';
 $config['base_url'] = 'http://111.111.111.148/ncybera/';
+//$config['base_url'] = 'http://localhost/ncybera/';
 #$config['base_url'] = 'http://cyb.local/';
 //$config['base_url'] = 'http://localhost/ncybera/';
 //$config['base_url'] = 'http://webportal.cyberaprint.com/';
