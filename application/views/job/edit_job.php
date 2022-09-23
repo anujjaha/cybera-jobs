@@ -1116,6 +1116,9 @@ $modified_by = $this->session->userdata['user_id'];
 
 <label><input <?php echo $job_data->is_print_cybera == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_print_cybera" id="is_print_cybera">Print CYBERA</label>
 <br />
+
+<label><input type="checkbox" <?php echo $job_data->print_invoice == 1 ? 'checked="checked"' : '';?> id="print_invoice" name="print_invoice" value="1">Print Invoice</label><br />
+
 <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
 Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">
 		<input type="submit" name="save" value="Save" class="btn btn-success btn-lg">

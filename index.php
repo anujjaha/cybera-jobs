@@ -1,5 +1,5 @@
 <?php
-
+header('Access-Control-Allow-Origin: *');
 //die('<center><h1>Work In Progress</h1></center>');
 // phpinfo();
 // die;

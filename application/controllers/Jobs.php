@@ -338,6 +338,8 @@ public function edit($job_id=null)
 			//Print CYBERA IN Cutting SLIP
 			$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
+      $jobdata['print_invoice']     = $this->input->post('print_invoice') ? $this->input->post('print_invoice') : 0;
+
 
 			$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
 
@@ -900,6 +902,8 @@ public function edit($job_id=null)
 
 				//Print CYBERA IN Cutting SLIP
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
+
+        $jobdata['print_invoice']     = $this->input->post('print_invoice') ? $this->input->post('print_invoice') : 0;
 
 				$jobdata['is_customer_waiting'] = $this->input->post('is_customer_waiting');
 
@@ -1719,6 +1723,8 @@ public function edit($job_id=null)
 
 			//Print CYBERA IN Cutting SLIP
 			$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
+
+      $jobdata['print_invoice']     = $this->input->post('print_invoice') ? $this->input->post('print_invoice') : 0;
 
 
 			$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';

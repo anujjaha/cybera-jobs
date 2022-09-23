@@ -1930,9 +1930,12 @@ function bindAddJobReview()
 	  					<option value="- Lamination is recommended for better Finishing">Lamination is recommended for better finishing</option>
 	  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
 	  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
+	  					<option value="- Packing charges extra">Packing charges extra</option>
 	  					<option value="- Delivery charges extra">Delivery charges extra</option>
 	  					<option value="- Designing charges extra">Designing charges extra</option>
+	  					
 	  					<option value="- Please confirm design before Adjusting Whole File ( Setting all data )">Please confirm design before Adjusting Whole File ( Setting all data )</option>
+	  					<option value="- Exact die line required for box cutting as per image shown">Exact die line required for box cutting as per image shown</option>
 	  					<option value="- Please check sampl before placing final order">Please check sampl before placing final order</option>
 	  					<option value="- Color variation can be seen in bulk quantity CMYK digital printing">Color variation can be seen in bulk quantity CMYK digital printing</option>
 	  					<option value="- Color variation can be seen in offset printed jobs">Color variation can be seen in offset printed jobs</option>
@@ -2370,9 +2373,11 @@ function bindAddJobReview()
 		  					<option value="- Lamination is recommended for better Finishing">Lamination is recommended for better finishing</option>
 		  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
 		  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
+		  					<option value="- Packing charges extra">Packing charges extra</option>
 		  					<option value="- Delivery charges extra">Delivery charges extra</option>
 		  					<option value="- Designing charges extra">Designing charges extra</option>
 		  					<option value="- Please confirm design before Adjusting Whole File ( Setting all data )">Please confirm design before Adjusting Whole File ( Setting all data )</option>
+		  					<option value="- Exact die line required for box cutting as per image shown">Exact die line required for box cutting as per image shown</option>
 		  					<option value="- Please check sampl before placing final order">Please check sampl before placing final order</option>
 		  					<option value="- Color variation can be seen in bulk quantity CMYK digital printing">Color variation can be seen in bulk quantity CMYK digital printing</option>
 		  					<option value="- Color variation can be seen in offset printed jobs">Color variation can be seen in offset printed jobs</option>
@@ -2680,10 +2685,11 @@ function bindAddJobReview()
 		  					<option value="- Lamination is recommended for better Finishing">Lamination is recommended for better finishing</option>
 		  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
 		  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
+		  					<option value="- Packing charges extra">Packing charges extra</option>
 		  					<option value="- Delivery charges extra">Delivery charges extra</option>
 		  					<option value="- Designing charges extra">Designing charges extra</option>
-
 		  					<option value="- Please confirm design before Adjusting Whole File ( Setting all data )">Please confirm design before Adjusting Whole File ( Setting all data )</option>
+		  					<option value="- Exact die line required for box cutting as per image shown">Exact die line required for box cutting as per image shown</option>
 		  					<option value="- Do Not Paste the Stickers without washing/cleaning the vehicle for long life of the Stickers">Do Not Paste the Stickers without washing/cleaning the vehicle for long life of the Stickers</option>
 		  					<option value="- Please check sampl before placing final order">Please check sampl before placing final order</option>
 		  					<option value="- Color variation can be seen in bulk quantity CMYK digital printing">Color variation can be seen in bulk quantity CMYK digital printing</option>

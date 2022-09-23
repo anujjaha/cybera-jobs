@@ -102,6 +102,15 @@ $created_info = get_user_by_param('id',$job_data->user_id);
 $show_name = $customer_details->companyname ? $customer_details->companyname :$customer_details->name;
 $content ='';
 $customerTitle = "Name";
+$noInvoice = '';
+if($job_data->print_invoice == 1)
+{
+	$noInvoice = '<tr style="border: 0px;">
+			<td align="center" style="font-size:12px;" colspan="2">
+				<h3>NO INVOICE</h3>
+			</td>
+		</tr>';
+}
 if($customer_details->ctype == 1 )
 {
 	$customerTitle = "Dealer";
@@ -112,7 +121,7 @@ if($customer_details->ctype == 1 )
 			 $mobileNumber = $customer_details->mobile.$mobileNumber;
 			$content .= '
 				<table align="center" width="90%" border="0" style="border:0px solid;font-size:11px;height:3in;">
-				<tr>
+				<tr>'. $noInvoice .'
 				<td width="100%" align="left">
 					<table width="100%"  align="left" style="border:1px solid;font-size:11px;">
 						<tr>
@@ -222,7 +231,10 @@ if($customer_details->ctype == 1 )
 							</td>
 						</tr>
 						<tr>
-							<td colspan="2" style="text-align: right; font-size: 16px; font-weight: bold;">
+						<td style="font-size: 12px; ">
+								Payment Type : <strong>'. $job_data->pay_type  .'</strong>
+							</td>
+							<td style="text-align: right; font-size: 16px; font-weight: bold;">
 								Total due : '. get_acc_balance($customer_details->id)  .'
 							</td>
 						</tr>
@@ -293,8 +305,10 @@ if($customer_details->ctype == 1 )
 		{
 			$content .='
 				<br />
-				<p><span style="font-size: 20px;">Porter </span></p>
-				<p><span style="font-size: 15px;">Address:'.$job_data->cyb_porter_details.'</span>  <span style="font-size: 15px;">| Mobile:'. $job_data->cyb_porter_mobile .'</span><span style="font-size: 14px;"> | Pay:'. $job_data->cyb_porter_pay .'</span></p>';					
+				<div style="padding-left: 40px;">
+				<p><span style="marging-left: 100px;font-size: 20px;">Porter </span></p>
+				<p><span style="font-size: 15px;">Address:'.$job_data->cyb_porter_details.'</span>  <span style="font-size: 15px;">| Mobile:'. $job_data->cyb_porter_mobile .'</span><span style="font-size: 14px;"> | Pay:'. $job_data->cyb_porter_pay .'</span></p>
+				</div>';					
 		}
 
 echo $content;

@@ -258,7 +258,8 @@ function update_box() {
                     <label><input type="radio" <?php if($cutting_details->c_packing == "Loose") { echo "checked='checked'";}?>  id="packing" name="c_packing" value="Loose">Loose</label>
                     <label><input type="radio" <?php if($cutting_details->c_packing == "Plastic Bag") { echo "checked='checked'";}?> id="packing" name="c_packing" value="Plastic Bag">Plastic Bag</label>
                     <label><input type="radio" <?php if($cutting_details->c_packing == "Letter Head") { echo "checked='checked'";}?> id="packing" name="c_packing" value="Letter Head">Letter Head</label>
-                    <label><input type="radio" <?php if($cutting_details->c_packing == "Parcel") { echo "checked='checked'";}?> id="packing" name="packing" value="c_Parcel">Parcel</label>
+                    <label><input type="radio" <?php if($cutting_details->c_packing == "Parcel") { echo "checked='checked'";}?> id="packing" name="c_packing" value="Parcel">Parcel</label>
+                    <label><input type="radio" <?php if($cutting_details->c_packing == "Porter") { echo "checked='checked'";}?> id="packing" name="c_packing" value="Porter">Porter</label>
                 </td>
             </tr>
             

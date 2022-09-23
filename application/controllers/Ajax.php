@@ -2413,4 +2413,22 @@ class Ajax extends CI_Controller {
 		));
 		die;
 	}
+
+	public function ajax_mail_dashboard()
+	{
+		$this->load->model('job_model');
+		$data = array();
+		$data['jobs'] = $this->job_model->get_dashboard_details();
+		$data['title'] = "Dashboard List : " . date('m-d-y H:i:s');
+		$html = $this->load->view('user/mail-list', $data, true);
+		$subject = 'Dashboard Job List ' . date('Y-m-d H:i');
+		
+		sendBulkEmail(['shaishav77@gmail.com'], 'cyberaprintart@gmail.com', $subject, $html);
+		
+			
+		echo json_encode(array(
+				'status' => true,
+		));
+		die;
+	}
 }

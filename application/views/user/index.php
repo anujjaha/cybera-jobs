@@ -40,6 +40,9 @@ if(strtolower($this->session->userdata['department']) == "master")
 	<a href="javascript:void(0);" onclick="print_pending_list();" class="btn btn-info">
 		Print List
 	</a>
+	<a href="javascript:void(0);" onclick="mail_dashboard_list();" class="btn btn-info">
+		Mail List
+	</a>
 <?php		
 	}
 ?>
@@ -934,6 +937,21 @@ function pinJob(element)
 	  });
 	}
 
+}
+
+function mail_dashboard_list()
+{
+	$.ajax({
+         type: "POST",
+         url: "<?php echo site_url();?>/ajax/ajax_mail_dashboard/",
+         data : {
+         	'all': 1
+         }, 
+         success: 
+            function(data){
+            	alert('Mail Send Successfully.');
+	        }
+          });	
 }
 
 function print_pending_list() {

@@ -1647,6 +1647,7 @@ $this->load->helper('general'); ?>
                                 </label>
                                 <br />
                                 <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
+                                <label><input type="checkbox" id="print_invoice" name="print_invoice" value="1">Print Invoice</label><br />
                             </div>
 
                         </div>
@@ -1935,6 +1936,7 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
                     <label><input type="radio" id="packing" name="packing" value="Plastic Bag">Plastic Bag</label>
                     <label><input type="radio" id="packing" name="packing" value="Letter Head">Letter Head</label>
                     <label><input type="radio" id="packing" name="packing" value="Parcel">Parcel</label>
+                    <label><input type="radio" id="packing" name="packing" value="Porter">Porter</label>
                 </td>
             </tr>
 
