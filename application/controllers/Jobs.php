@@ -45,6 +45,7 @@ class Jobs extends CI_Controller {
       $jobdata['advance'] = 0;
       $jobdata['due'] = $jobData->total;
       $jobdata['notes'] = $jobData->notes;
+      $jobdata['rate_notes'] = $jobData->rate_notes;
       $jobdata['extra_notes'] = $jobData->extra_notes;
       $jobdata['receipt'] = '';
       $jobdata['voucher_number'] = '';
@@ -339,6 +340,7 @@ public function edit($job_id=null)
 			$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
       $jobdata['print_invoice']     = $this->input->post('print_invoice') ? $this->input->post('print_invoice') : 0;
+      $jobdata['no_print_invoice']     = $this->input->post('no_print_invoice') ? $this->input->post('no_print_invoice') : 0;
 
 
 			$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
@@ -380,6 +382,7 @@ public function edit($job_id=null)
                 $jobdata['advance'] = $this->input->post('advance');
                 $jobdata['due'] = $this->input->post('due');
                 $jobdata['notes'] = $this->input->post('notes');
+                $jobdata['rate_notes'] = $this->input->post('rate_notes');
                 $jobdata['extra_notes'] = $this->input->post('extra_notes');
                 $jobdata['mail_note'] = $this->input->post('mail_note');
                 $jobdata['receipt'] = $this->input->post('receipt');
@@ -483,6 +486,10 @@ public function edit($job_id=null)
                                        'c_binding'=>$this->input->post('c_binding_'.$i),
                                        'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
                                        'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
+
+                                       'c_packing_other_details'=>$this->input->post('c_packing_other_details_'.$i),
+                                        'c_pickup_details'=>$this->input->post('c_pickup_details_'.$i),
+
                                        'c_checking'=>$this->input->post('c_checking_'.$i),
                                        'c_packing'=>$this->input->post('c_packing_'.$i),
                                        'c_corner'=>$this->input->post('c_corner_'.$i),
@@ -736,6 +743,7 @@ public function edit($job_id=null)
                 $jobdata['advance'] = $this->input->post('advance');
                 $jobdata['due'] = $this->input->post('due');
                 $jobdata['notes'] = $this->input->post('notes');
+                $jobdata['rate_notes'] = $this->input->post('rate_notes');
                 $jobdata['receipt'] = $this->input->post('receipt');
                 $jobdata['voucher_number'] = $this->input->post('voucher_number');
                 $jobdata['bill_number'] = $this->input->post('bill_number');
@@ -777,6 +785,8 @@ public function edit($job_id=null)
                                        'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
                                        'c_binding'=>$this->input->post('c_binding_'.$i),
                                        'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
+                                       'c_packing_other_details'=>$this->input->post('c_packing_other_details_'.$i),
+                                        'c_pickup_details'=>$this->input->post('c_pickup_details_'.$i),
                                        'c_checking'=>$this->input->post('c_checking_'.$i),
                                        'c_packing'=>$this->input->post('c_packing_'.$i),
                                        'c_corner'=>$this->input->post('c_corner_'.$i),
@@ -904,6 +914,7 @@ public function edit($job_id=null)
 				$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
         $jobdata['print_invoice']     = $this->input->post('print_invoice') ? $this->input->post('print_invoice') : 0;
+        $jobdata['no_print_invoice']     = $this->input->post('no_print_invoice') ? $this->input->post('no_print_invoice') : 0;
 
 				$jobdata['is_customer_waiting'] = $this->input->post('is_customer_waiting');
 
@@ -963,6 +974,7 @@ public function edit($job_id=null)
 				$jobdata['advance'] = $this->input->post('advance');
 				$jobdata['due'] = $this->input->post('due');
 				$jobdata['notes'] = $this->input->post('notes');
+        $jobdata['rate_notes'] = $this->input->post('rate_notes');
         $jobdata['extra_notes'] = $this->input->post('extra_notes');
         $jobdata['mail_note'] = $this->input->post('mail_note');
 				$jobdata['bill_number'] = $this->input->post('bill_number');
@@ -1725,6 +1737,7 @@ public function edit($job_id=null)
 			$jobdata['is_print_cybera'] 		= $this->input->post('is_print_cybera') ? $this->input->post('is_print_cybera') : 0;
 
       $jobdata['print_invoice']     = $this->input->post('print_invoice') ? $this->input->post('print_invoice') : 0;
+      $jobdata['no_print_invoice']     = $this->input->post('no_print_invoice') ? $this->input->post('no_print_invoice') : 0;
 
 
 			$jobdata['approx_completion'] = $this->input->post('approx_completion') ? $this->input->post('approx_completion') : '';
@@ -1764,6 +1777,7 @@ public function edit($job_id=null)
             $jobdata['advance'] = $this->input->post('advance');
             $jobdata['due'] = $this->input->post('due');
             $jobdata['notes'] = $this->input->post('notes');
+            $jobdata['rate_notes'] = $this->input->post('rate_notes');
             $jobdata['extra_notes'] = $this->input->post('extra_notes');
             $jobdata['mail_note'] = $this->input->post('mail_note');
             $jobdata['receipt'] = $this->input->post('receipt');
@@ -1822,6 +1836,10 @@ public function edit($job_id=null)
 		                                       'c_binding'=>$this->input->post('c_binding_'.$i),
 		                                       'c_blade_per_sheet'=>$this->input->post('c_blade_per_sheet_'.$i),
 		                                       'c_bindinginfo'=>$this->input->post('c_bindinginfo_'.$i),
+
+                                           'c_packing_other_details'=>$this->input->post('c_packing_other_details_'.$i),
+                                           'c_pickup_details'=>$this->input->post('c_pickup_details_'.$i),
+
 		                                       'c_checking'=>$this->input->post('c_checking_'.$i),
 		                                       'c_packing'=>$this->input->post('c_packing_'.$i),
 		                                       'c_corner'=>$this->input->post('c_corner_'.$i),

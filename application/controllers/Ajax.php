@@ -764,6 +764,9 @@ class Ajax extends CI_Controller {
 			$created_info 		= get_user_by_param('id', $jobData->user_id);
 			$isContinue 		= '';
 
+			$cOther = '';
+			$cPickup = '';
+
 			if($jobData->is_continue == 1)
 			{
 				$isContinue = '<br/>Continue Parcel';
@@ -982,6 +985,21 @@ class Ajax extends CI_Controller {
 				{
 					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Dubby : </td><td style="font-size:16px;"><strong> YES </strong></td></tr>';
 				}
+
+				if(isset($cutting['c_box_dubby']) && strtolower($cutting['c_box_dubby']) == 'no')
+				{
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Dubby : </td><td style="font-size:16px;"><strong> NO </strong></td></tr>';
+				}
+
+				if(isset($cutting['c_corner']) && $cutting['c_corner'] == 'Yes')
+				{
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Corner Cutting: </td><td style="font-size:16px;"><strong> YES </strong></td></tr>';
+				}
+
+				if(isset($cutting['c_corner']) && strtolower($cutting['c_corner']) == 'no')
+				{
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Corner Cutting: </td><td style="font-size:16px;"><strong> NO </strong></td></tr>';
+				}
 				
 				if(strlen($cornerBlock) > 1 )
 				{
@@ -1012,6 +1030,14 @@ class Ajax extends CI_Controller {
 				
 				if(!empty($cutting['c_packing'])) {
 					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Packing Details : </td><td style="font-size:16px;"><strong>'.$cutting['c_packing'].'</strong></td></tr>';
+				}
+
+				if(!empty($cutting['c_packing_other_details'])) {
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Special Note: </td><td style="font-size:16px;">'.$cutting['c_packing_other_details'].'</td></tr>';
+				}
+
+				if(!empty($cutting['c_pickup_details'])) {
+					$pcontent .= '<tr><td style="width:40px; font-size: 16px;">Pickup (Time): </td><td style="font-size:16px;">'.$cutting['c_pickup_details'].'</td></tr>';
 				}
 
 			
@@ -2178,10 +2204,13 @@ class Ajax extends CI_Controller {
 		{
 			$data = array(
 				'code' 			=> $this->input->post('code'),
+				'short_name' 			=> $this->input->post('short_name'),
 				'title'  		=> $this->input->post('title'),
 				'price'  		=> $this->input->post('price'),
 				'qty'  			=> $this->input->post('qty'),
 				'extra'  		=> $this->input->post('extra'),
+				'working_days'  		=> $this->input->post('working_days'),
+				'notes'  		=> $this->input->post('notes'),
 				'created_at'  => date('Y-m-d H:i:s')
 			);
 

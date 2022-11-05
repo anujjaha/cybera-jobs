@@ -103,11 +103,21 @@ $show_name = $customer_details->companyname ? $customer_details->companyname :$c
 $content ='';
 $customerTitle = "Name";
 $noInvoice = '';
+$noPrintInvoice = '';
 if($job_data->print_invoice == 1)
 {
 	$noInvoice = '<tr style="border: 0px;">
 			<td align="center" style="font-size:12px;" colspan="2">
-				<h3>NO INVOICE</h3>
+				<h3>MAKE INVOICE</h3>
+			</td>
+		</tr>';
+}
+
+if($job_data->no_print_invoice == 1)
+{
+	$noPrintInvoice = '<tr style="border: 0px;">
+			<td align="center" style="font-size:12px;" colspan="2">
+				<h3>No INVOICE</h3>
 			</td>
 		</tr>';
 }
@@ -115,13 +125,19 @@ if($customer_details->ctype == 1 )
 {
 	$customerTitle = "Dealer";
 }
+
+$rNotes = '';
+if(isset($job_data->rate_notes) && !empty($job_data->rate_notes)){
+	$rNotes = '<br />'.$job_data->rate_notes;
+}
 		 for($j=0; $j<1; $j++)
 		 {
 			 $mobileNumber = (strlen($job_data->jsmsnumber) > 1 ) ? "-".$job_data->jsmsnumber : '';
 			 $mobileNumber = $customer_details->mobile.$mobileNumber;
 			$content .= '
 				<table align="center" width="90%" border="0" style="border:0px solid;font-size:11px;height:3in;">
-				<tr>'. $noInvoice .'
+				'. $noInvoice .'
+				'. $noPrintInvoice .'
 				<td width="100%" align="left">
 					<table width="100%"  align="left" style="border:1px solid;font-size:11px;">
 						<tr>
@@ -241,7 +257,8 @@ if($customer_details->ctype == 1 )
 						<tr>
 							<td colspan="2">
 								<span style="font-size:11px;">
-								<strong>Note :</strong>'.$job_data->notes.'
+								<strong>Note :</strong>'.$job_data->notes . $rNotes .'
+
 								</span>
 							</td>
 						</tr>';
@@ -530,7 +547,6 @@ echo $pcontent;
 					<tr><td>&nbsp;</td><td><strong>CYBERA PRINT ART</strong> </td></tr>
 					<tr><td>&nbsp;</td><td>G/3, Samudra Annexe, Nr. Girish Cold Drinks Cross Road,</td></tr>
 					<tr><td>&nbsp;</td><td>Off C.G. Road, Navrangpura, Ahmedabad - 009</td></tr>
-					<tr><td>&nbsp;</td><td>Call : 079-26565720 / 26465720</td></tr>
 					<tr><td>&nbsp;</td><td>Mobile : 9898309897</td></tr>
 				</table>
 				</td>
@@ -642,7 +658,7 @@ echo $pcontent;
 						<br>
 						Off C.G. Road, Navrangpura Ahmedabad - 009
 						<br>
-						Call : 079-26565720 / 26465720 | 9898309897</td>
+						Call : 9898309897</td>
 					</tr>
 					<?php
 						}

@@ -14,32 +14,31 @@
 <table class="table" border="2">
 	<tr>
 		<td> &nbsp; </td>
-		<td class="other" align="center">Transparent Cards
+		<td align="center">Transparent Cards
 			<br>
 			<!--<strong>Code 01 to 31</strong>-->
 		 </td>
 
-		<td class="other"  align="center">Semi Transparent Cards
+		<td align="center">Semi Transparent Cards
 			<br>
 			<!--<strong>Code 01 to 31</strong>-->
 		 </td>
 
-		<td  class="dealer" align="center">Dealer Transparent Cards
+		<td  align="center">Velvet Semi Transparent Cards
 			<br>
-			<!--<strong>Code 01 to 31</strong>-->
-		 </td>
-
-		<td class="dealer" align="center">Dealer Semi Transparent Cards
-			<br>
-			<!--<strong>Code 01 to 31</strong>-->
 		</td>
 
-		<td align="center">Frosted Visiting Cards
+		<td align="center">Sparkle Visiting Cards
 			<br>
 			<!--<strong>Code 32 to 70</strong>-->
 		</td>
 
-		<td colspan="2" align="center">White with Multi Color Printing 
+		<td align="center">Double Thick
+			<br>
+			<!--<strong>Code 32 to 70</strong>-->
+		</td>
+
+		<td colspan="2" align="center">350 GSM EMBOSSING FOIL & UV
 			<br>
 			<!--<strong>Code 32 to 70</strong>-->
 		</td>
@@ -47,16 +46,13 @@
 	
 	<tr>
 		<td> Qty </td>
-		<td class="other"> Single Side / Double Side </td>
-		<td class="other"> Single Side / Double Side </td>
-		<td class="dealer"> Single Side / Double Side </td>
-		<td class="dealer"> Single Side / Double Side </td>
-		
-		<td> Single Side </td>
+		<td> Single Side / Double Side </td>
+		<td> Single Side / Double Side </td>
+		<td> Single Side / Double Side </td>
+		<td> Single Side / Double Side </td>
+		<td> Single Side / Double Side </td>
 		<td> Single Side </td>
 		<td> Double Side </td>
-		
-	
 		</tr>
 	
 	<tr class="rowQty-bw" id="qty_96">
@@ -67,47 +63,45 @@
 		</td>
 		
 		
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="700" data-card="Transparent_Cards" data-type="SS">
-				700
-			</span>
-		</td>
-
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="700" data-card="Semi_Transparent_Cards" data-type="SS">
-				700
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="700" data-card="Transparent_Cards" data-type="SS">
-				700
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="700" data-card="Semi_Transparent_Cards" data-type="SS">
-				700
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="800" data-card="Transparent_Cards" data-type="SS">
+				800
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="700" data-card="Frosted_Visiting_Cards" data-type="SS">
-				700
+			<span class="price-bw btn btn-primary etc" data-price="800" data-card="Semi_Transparent_Cards" data-type="SS">
+				800
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="700" data-card="White_with_Multi_Color_Printing" data-type="SS">
-				700
+			<span class="price-bw btn btn-primary etc" data-price="800" data-card="Velvet_Semi_Transparent_Cards" data-type="SS">
+				800
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="1300" data-card="Sparkle_Visiting_Cards" data-type="SS">
+				1300
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="1100" data-card="Double_Thick" data-type="SS">
+				1100
 			</span>
 		</td>
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="1050" data-card="White_with_Multi_Color_Printing" data-type="FB">
-				1050
+			<span class="price-bw btn btn-primary ptc" data-price="1200" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="SS">
+				1200
 			</span>
 		</td>
-		
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="1800" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="FB">
+				1800
+			</span>
+		</td>
 	</tr>
 	
 	<tr  class="rowQty-bw" id="qty_192">
@@ -124,48 +118,47 @@
 		</td>-->
 		
 
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="1600" data-card="Transparent_Cards" data-type="SS">
+				1600
+			</span>
+		</td>
+		
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="1600" data-card="Semi_Transparent_Cards" data-type="SS">
+				1600
+			</span>
+		</td>
+		
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="1600" data-card="Velvet_Semi_Transparent_Cards" data-type="SS">
+				1600
+			</span>
+		</td>
+
 		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Transparent_Cards" data-type="SS">
-				1300
-			</span>
-		</td>
-		
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Semi_Transparent_Cards" data-type="SS">
-				1300
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Transparent_Cards" data-type="SS">
-				1300
-			</span>
-		</td>
-		
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="1300" data-card="Semi_Transparent_Cards" data-type="SS">
-				1300
-			</span>
-		</td>
-
-		
-		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="1300" data-card="Frosted_Visiting_Cards" data-type="SS">
-				1300
+			<span class="price-bw btn btn-primary etc" data-price="2400" data-card="Sparkle_Visiting_Cards" data-type="SS">
+				2400
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="1050" data-card="White_with_Multi_Color_Printing" data-type="SS">
-				1050
+			<span class="price-bw btn btn-primary ptc" data-price="1500" data-card="Double_Thick" data-type="SS">
+				1500
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="1800" data-card="White_with_Multi_Color_Printing" data-type="FB">
-				1800
+			<span class="price-bw btn btn-primary ptc" data-price="2000" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="SS">
+				2000
 			</span>
 		</td>
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="3000" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="FB">
+				3000
+			</span>
+		</td>
+		
 	</tr>
 	
 	<tr  class="rowQty-bw" id="qty_288">
@@ -181,44 +174,43 @@
 			</span>
 		</td>-->
 		
-		<td  class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Transparent_Cards" data-type="SS">
-				1900
-			</span>
-		</td>
-
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Semi_Transparent_Cards" data-type="SS">
-				1900
-			</span>
-		</td>
-
-		<td  class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Transparent_Cards" data-type="SS">
-				1900
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Semi_Transparent_Cards" data-type="SS">
-				1900
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="2400" data-card="Transparent_Cards" data-type="SS">
+				2400
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary etc" data-price="1900" data-card="Frosted_Visiting_Cards" data-type="SS">
-				1900
+			<span class="price-bw btn btn-primary etc" data-price="2400" data-card="Semi_Transparent_Cards" data-type="SS">
+				2400
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="1800" data-card="White_with_Multi_Color_Printing" data-type="SS">
-				1800
+			<span class="price-bw btn btn-primary etc" data-price="2400" data-card="Velvet_Semi_Transparent_Cards" data-type="SS">
+				2400
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="2700" data-card="Sparkle_Visiting_Cards" data-type="SS">
+				2700
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="2000" data-card="Double_Thick" data-type="SS">
+				2000
 			</span>
 		</td>
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="2500" data-card="White_with_Multi_Color_Printing" data-type="FB">
-				2500
+			<span class="price-bw btn btn-primary ptc" data-price="2700" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="SS">
+				2700
+			</span>
+		</td>
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="4300" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="FB">
+				4300
 			</span>
 		</td>
 	</tr>
@@ -236,44 +228,43 @@
 			</span>
 		</td>-->
 		
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Transparent_Cards" data-type="SS">
-				2800
-			</span>
-		</td>
-
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Semi_Transparent_Cards" data-type="SS">
-				2800
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Transparent_Cards" data-type="SS">
-				2800
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Semi_Transparent_Cards" data-type="SS">
-				2800
-			</span>
-		</td>
-		
 		<td> 
-			<span class="price-bw btn btn-primary etc" data-price="2800" data-card="Frosted_Visiting_Cards" data-type="SS">
-				2800
+			<span class="price-bw btn btn-primary etc" data-price="3600" data-card="Transparent_Cards" data-type="SS">
+				3600
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="2700" data-card="White_with_Multi_Color_Printing" data-type="SS">
-				2700
+			<span class="price-bw btn btn-primary etc" data-price="3600" data-card="Semi_Transparent_Cards" data-type="SS">
+				3600
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="3600" data-card="Velvet_Semi_Transparent_Cards" data-type="SS">
+				3600
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="4300" data-card="Sparkle_Visiting_Cards" data-type="SS">
+				4300
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="2900" data-card="Double_Thick" data-type="SS">
+				2900
 			</span>
 		</td>
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="4100" data-card="White_with_Multi_Color_Printing" data-type="FB">
-				4100
+			<span class="price-bw btn btn-primary ptc" data-price="4500" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="SS">
+				4500
+			</span>
+		</td>
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="7200" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="FB">
+				7200
 			</span>
 		</td>
 	</tr>
@@ -285,50 +276,44 @@
 			</a> 
 		</td>
 		
-		<!--<td> 
-			<span class="price-bw btn btn-primary etc" data-price="3500" data-card="Metalic_Color_Card" data-type="SS">
-				3500
-			</span>
-		</td>-->
 		
-		<td class="other">  
-			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Transparent_Cards" data-type="SS">
-				5400
-			</span>
-		</td>
-
-		<td class="other"> 
-			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Semi_Transparent_Cards" data-type="SS">
-				5400
-			</span>
-		</td>
-
-		<td class="dealer">  
-			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Transparent_Cards" data-type="SS">
-				5400
-			</span>
-		</td>
-
-		<td class="dealer"> 
-			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Semi_Transparent_Cards" data-type="SS">
-				5400
+		<td>  
+			<span class="price-bw btn btn-primary etc" data-price="7000" data-card="Transparent_Cards" data-type="SS">
+				7000
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary etc" data-price="5400" data-card="Frosted_Visiting_Cards" data-type="SS">
-				5400
+			<span class="price-bw btn btn-primary etc" data-price="7000" data-card="Semi_Transparent_Cards" data-type="SS">
+				7000
 			</span>
 		</td>
 
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="5000" data-card="White_with_Multi_Color_Printing" data-type="SS">
+			<span class="price-bw btn btn-primary etc" data-price="7000" data-card="Velvet_Semi_Transparent_Cards" data-type="SS">
+				7000
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary etc" data-price="7500" data-card="Sparkle_Visiting_Cards" data-type="SS">
+				7500
+			</span>
+		</td>
+
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="5000" data-card="Double_Thick" data-type="SS">
 				5000
 			</span>
 		</td>
 		<td> 
-			<span class="price-bw btn btn-primary ptc" data-price="6500" data-card="White_with_Multi_Color_Printing" data-type="FB">
-				6500
+			<span class="price-bw btn btn-primary ptc" data-price="6300" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="SS">
+				6300
+			</span>
+		</td>
+		<td> 
+			<span class="price-bw btn btn-primary ptc" data-price="9200" data-card="350_GSM_EMBOSSING_FOIL_UV" data-type="FB">
+				9200
 			</span>
 		</td>
 	</tr>

@@ -11,6 +11,7 @@ class Menu_model extends CI_Model {
     public function getAll() {
 		$this->db->select('*, UPPER(title) as title')
 				->from($this->table)
+				->where('status', 1)
 				->order_by('code');
 		$query = $this->db->get();
 		return $query->result_array();

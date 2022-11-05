@@ -167,6 +167,10 @@ die;*/
 					<label>Working Days</label>
 					<input type="text" class="form-control" name="add_working_days" id="add_working_days" placeholder="Working Days" value="" required="required">
 				</div>
+				<div class="form-group">
+					<label>Notes</label>
+					<textarea class="form-control" name="add_notes" id="add_notes" placeholder="Notes" value="" required="required"></textarea>
+				</div>
 			</div>
 			</form>
 	      </div>
@@ -259,6 +263,7 @@ function add_menu()
 	$("#add_price").val('');
 	$("#add_price").val('');
 	$("#add_extra").val('');
+	$("#add_notes").val('');
 	$("#add_working_days").val('');
 	$("#add_menu_id").val('');
 }
@@ -298,12 +303,13 @@ function addMenu()
         url: "<?php echo site_url();?>/ajax/ajax_menu_add", 
         data : {
 			"code" : 	$("#add_code").val(),
-			"short_name" : 	$("#short_name").val(),
+			"short_name" : 	$("#add_short_name").val(),
 			"title" : 	$("#add_title").val(),
 			"qty" : 	$("#add_qty").val(),
 			"price" : 	$("#add_price").val(),
 			"price" : 	$("#add_price").val(),
 			"extra" : 	$("#add_extra").val(),
+			"notes" : 	$("#add_notes").val(),
 			"working_days" : 	$("#add_working_days").val(),
 			"menu_id" : $("#add_menu_id").val()
 		},

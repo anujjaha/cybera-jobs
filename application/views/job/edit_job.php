@@ -647,7 +647,9 @@ $modified_by = $this->session->userdata['user_id'];
         	<table>
         			<tr>
 	        			<td>
-	        				Notes : <textarea name="notes" cols="40" rows="5"><?php echo $job_data->notes;?></textarea>
+	        				Notes : <textarea name="notes" cols="40" rows="2"><?php echo $job_data->notes;?></textarea>
+	        				<br />
+	        				Rate Notes : <textarea name="rate_notes" cols="40" rows="2"><?php echo $job_data->rate_notes;?></textarea>
 	        			</td>
 			            <td>&nbsp;</td>
 			            <td>
@@ -1117,7 +1119,9 @@ $modified_by = $this->session->userdata['user_id'];
 <label><input <?php echo $job_data->is_print_cybera == 1 ? 'checked="checked"' : '';?> value="1"  type="checkbox" name="is_print_cybera" id="is_print_cybera">Print CYBERA</label>
 <br />
 
-<label><input type="checkbox" <?php echo $job_data->print_invoice == 1 ? 'checked="checked"' : '';?> id="print_invoice" name="print_invoice" value="1">Print Invoice</label><br />
+<label><input type="checkbox" <?php echo $job_data->print_invoice == 1 ? 'checked="checked"' : '';?> id="print_invoice" name="print_invoice" value="1">Make Invoice</label><br />
+
+<label><input type="checkbox" <?php echo $job_data->no_print_invoice == 1 ? 'checked="checked"' : '';?> id="no_print_invoice" name="no_print_invoice" value="1">No Invoice</label><br />
 
 <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
 Confirm : 1 <input type="text" name="confirmation" id="confirmation" value="">

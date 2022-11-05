@@ -36,7 +36,7 @@ $(document).ready(function()
 {
 	// Default Port Hide
 	//$(".showPorter").hide();
-
+    bindHideShowOtherPacking();
 	bindPorterEvent();
     jQuery(".select-mask").on('change', function(e)
     {
@@ -101,6 +101,29 @@ $(document).ready(function()
 
         $("#save_button").trigger('click');
 	});
+
+    jQuery("#skip_save_button_2").on('click', function(event)
+    {
+        if($("#notes").val().length == 0)
+        {
+            $("#notes").val('N/A'); 
+        }
+
+         if($("#rate_notes").val().length == 0)
+        {
+            $("#rate_notes").val('N/A'); 
+        }
+        
+
+        hideSaveButton();
+
+        setTimeout(function()
+        {
+            showSaveButton();
+        }, 5000);
+
+        $("#save_button").trigger('click');
+    });
 
 
 	jQuery(document).on('click', '.show-offset-modal-box', function()
@@ -494,6 +517,9 @@ function set_cutting_details_box(id)
         packing =  $('input:radio[name=packing]:checked').val(); //printing jQuery("#packing").val();
         cCorner =  $('input:radio[name=c_corner]:checked').val(); //printing jQuery("#c_corner").val();
 
+        packing_other_details = jQuery("#packing_other_details").val();
+        pickup_details = jQuery("#cutting_pickup_details").val();
+
         console.log('C-', machine);
         console.log('C-Q', jQuery("#qty_"+data_id).val());
         console.log('C-size', size);
@@ -509,6 +535,13 @@ function set_cutting_details_box(id)
         jQuery("#c_details_"+data_id).val(details);
         jQuery("#c_lamination_"+data_id).val(lamination);
         jQuery("#c_print_"+data_id).val(printing);
+
+
+        jQuery("#c_packing_other_details_"+data_id).val(packing_other_details);
+        jQuery("#c_pickup_details_"+data_id).val(pickup_details);
+
+
+
         jQuery("#c_packing_"+data_id).val(packing);
         jQuery("#c_laminationinfo_"+data_id).val(lamination_info);
         jQuery("#c_sizeinfo_"+data_id).val(size_info);
@@ -526,6 +559,11 @@ function set_cutting_details_box(id)
         
         jQuery("#c_lamination_cutting_"+data_id).val($("#c_lamination_cutting").val());
         
+        jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
+
+
+
+        jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
         jQuery("#c_cornerdie_"+data_id).val($("#c_cornerdie").val());
         
 
@@ -1305,7 +1343,10 @@ $this->load->helper('general'); ?>
         	<table>
         			<tr>
         			<td>
-                        Sheet Qty : <textarea name="notes" id="notes" cols="40" rows="5" required="required"></textarea>
+                        Sheet Qty : <textarea name="notes" id="notes" cols="40" rows="2" required="required"></textarea>
+                        <br />
+                        Rate Details : <textarea name="rate_notes" id="rate_notes" cols="40" rows="2" required="required"></textarea>
+
                     </td>
                     <td>&nbsp;</td>
                     <td>
@@ -1647,7 +1688,8 @@ $this->load->helper('general'); ?>
                                 </label>
                                 <br />
                                 <label><input type="checkbox" checked="checked" name="sendUpdateMail" value="1">Mail</label><br />
-                                <label><input type="checkbox" id="print_invoice" name="print_invoice" value="1">Print Invoice</label><br />
+                                <label><input type="checkbox" id="print_invoice" name="print_invoice" value="1">Make Invoice</label><br />
+                                <label><input type="checkbox" id="no_print_invoice" name="no_print_invoice" value="1">No Invoice</label><br />
                             </div>
 
                         </div>
@@ -1736,6 +1778,7 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
 			<input type="submit" name="save" id="save_button"  value="Save" class="btn btn-success btn-lg">
 
             <a href="javascript:void(0);" id="skip_save_button" class="btn btn-success btn-lg">QT & Save</a>
+            <a href="javascript:void(0);" id="skip_save_button_2" class="btn btn-success btn-lg">QT Note & Save</a>
 </div>
 <input type="hidden" name="is_outside" id="is_outside" value="0">
 </form>
@@ -1927,6 +1970,8 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
                     <textarea name="details" id="details" rows="4" cols="40"></textarea>
                 </td>
             </tr>
+
+           
             
             <tr id="popup_packing">
                 <td align="right">Packing:</td>
@@ -1939,7 +1984,17 @@ Confirm : 1 <input type="text" name="confirmation" style="width: 30px;" id="conf
                     <label><input type="radio" id="packing" name="packing" value="Porter">Porter</label>
                 </td>
             </tr>
+            <tr id="other_packing">
+                <td align="right">Special Note:</td>
+                <td> <input type="text" name="packing_other_details" class="form-control" id="packing_other_details"></td>
+            </tr>
 
+             <tr>
+                <td align="right">Pickup (Time):</td>
+                <td>
+                    <input type="text" name="cutting_pickup_details" class="form-control" id="cutting_pickup_details">
+                </td>
+            </tr>
             
             <tr>
                 <td colspan="2" align="center">
@@ -2088,6 +2143,10 @@ for($i=1;$i<6;$i++) { ?>
     <input type="text" name="c_sizeinfo_<?php echo $i;?>" id="c_sizeinfo_<?php echo $i;?>">
     <input type="text" name="c_sheetinfo_<?php echo $i;?>" id="c_sheetinfo_<?php echo $i;?>">
     <input type="text" name="c_bindinginfo_<?php echo $i;?>" id="c_bindinginfo_<?php echo $i;?>">
+
+
+    <input type="text" name="c_packing_other_details_<?php echo $i;?>" id="c_packing_other_details_<?php echo $i;?>">
+    <input type="text" name="c_pickup_details_<?php echo $i;?>" id="c_pickup_details_<?php echo $i;?>">
     
     
     <input type="text" name="c_blade_per_sheet_<?php echo $i;?>" id="c_blade_per_sheet_<?php echo $i;?>">
@@ -2248,4 +2307,10 @@ function mandatoryTransporter(data)
 
 	$("#transporter_id").removeAttr('required');
 }
+
+function bindHideShowOtherPacking()
+{
+    
+}
+
 </script>

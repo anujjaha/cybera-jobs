@@ -1929,6 +1929,7 @@ function bindAddJobReview()
 	  					<option value="- Soft copy will be required in corel draw format">Soft copy will be required in corel draw format</option>
 	  					<option value="- Lamination is recommended for better Finishing">Lamination is recommended for better finishing</option>
 	  					<option value="- No Guarantee for Lamination in Digital Printed Jobs">No Guarantee for Lamination in Digital Printed Jobs</option>
+	  					<option value="- Scratches can be seen clearly in full transparent cards">Scratches can be seen clearly in full transparent cards</option>
 	  					<option value="- Delivery from CYBERA C G Road office">Delivery from CYBERA C G Road office</option>
 	  					<option value="- Packing charges extra">Packing charges extra</option>
 	  					<option value="- Delivery charges extra">Delivery charges extra</option>
@@ -1939,6 +1940,7 @@ function bindAddJobReview()
 	  					<option value="- Please check sampl before placing final order">Please check sampl before placing final order</option>
 	  					<option value="- Color variation can be seen in bulk quantity CMYK digital printing">Color variation can be seen in bulk quantity CMYK digital printing</option>
 	  					<option value="- Color variation can be seen in offset printed jobs">Color variation can be seen in offset printed jobs</option>
+	  					<option value="- Color will be seen completely dull matt finish in offset printing in maplitho or alabaster paper ( please check sample physically)">Color will be seen completely dull matt finish in offset printing in maplitho or alabaster paper ( please check sample physically)	</option>
 	  					<option value="- Delivery time depends on courier service provider's policy, cybera will not responsible for late deliveries.">Delivery time depends on courier service provider's policy, cybera will not responsible for late deliveries.
 	  					</option>
 	  					<option value="- Customer have to pick their parcel from Courier office if on site deliveries not available">Customer have to pick their parcel from Courier office if on site deliveries not available</option>

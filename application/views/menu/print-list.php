@@ -31,6 +31,15 @@ foreach($menus as $menu)
 	</td>
 	<td style="border: solid 1px; padding: 5px; font-size: 14pt; font-weight: bold;" > 
 		<?php echo $menu['title'];?>
+		<?php
+			if(isset($menu['notes']) && !empty($menu['notes'])) 
+			{
+		?>
+			<br />
+			Notes: <?= $menu['notes'];?>
+		<?php
+			}
+		?>
 	</td>
 	<td style="border: solid 1px; padding: 5px; font-size: 14pt; font-weight: bold;" > 
 		<?php echo $menu['qty'];?>

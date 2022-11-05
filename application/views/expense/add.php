@@ -33,6 +33,10 @@
 						Petrol - EA-6640
 					</option>
 
+					<option value="15">
+						Petrol - PULSAR
+					</option>
+
 					<option value="13">
 						Mask
 					</option>

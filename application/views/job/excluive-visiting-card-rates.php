@@ -24,9 +24,9 @@
 		</td>
 		<!--<td colspan="2" align="center">350 GSM Velvet Touch Card 
 		</td>-->
-		<td colspan="2" align="center">Velvet Touch 
+		<td colspan="2" align="center">350 GSM
 			<br>
-			<strong>Code 101</strong>
+			<strong>Velvet Touch</strong>
 		</td>
 	</tr>
 	
@@ -41,8 +41,7 @@
 		<td> Single Side </td>
 		<td> Double Side </td>
 		
-		<td> Single Side </td>
-		<td> Double Side </td>
+		<td> Single Side /  Double Side </td>
 		</tr>
 	
 	<tr class="rowQty-ex" id="qty_96">
@@ -75,26 +74,22 @@
 		</td>
 		
 		<!--<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="700" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+			<span class="price-ex btn btn-primary eetc" data-price="700" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="SS">
 				700
 			</span>
 		</td>
 		<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="700" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+			<span class="price-ex btn btn-primary eetc" data-price="700" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="FB">
 				700
 			</span>
 		</td>-->
 		
 		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="500" data-card="Velvet_Touch_Card" data-type="SS">
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="500" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
 				500
 			</span>
 		</td>
-		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="500" data-card="Velvet_Touch_Card" data-type="FB">
-				500
-			</span>
-		</td>
+		
 	</tr>
 	
 	<tr  class="rowQty-ex" id="qty_192">
@@ -127,26 +122,22 @@
 		</td>
 		
 		<!--<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="1050" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+			<span class="price-ex btn btn-primary eetc" data-price="1050" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="SS">
 				1050
 			</span>
 		</td>
 		<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="1050" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+			<span class="price-ex btn btn-primary eetc" data-price="1050" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="FB">
 				1050
 			</span>
 		</td>-->
 		
 		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="900" data-card="Velvet_Touch_Card" data-type="SS">
-				900
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="1000" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+				1000
 			</span>
 		</td>
-		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="900" data-card="Velvet_Touch_Card" data-type="FB">
-				900
-			</span>
-		</td>
+		
 	</tr>
 	
 	<tr  class="rowQty-ex" id="qty_288">
@@ -179,26 +170,22 @@
 		</td>
 		
 		<!--<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="1500" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+			<span class="price-ex btn btn-primary eetc" data-price="1500" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="SS">
 				1500
 			</span>
 		</td>
 		<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="1500" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+			<span class="price-ex btn btn-primary eetc" data-price="1500" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="FB">
 				1500
 			</span>
 		</td>-->
 		
 		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="1300" data-card="Velvet_Touch_Card" data-type="SS">
-				1300
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="1350" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+				1350
 			</span>
 		</td>
-		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="1300" data-card="GSM_Velvet_Touch_Card" data-type="FB">
-				1300
-			</span>
-		</td>
+		
 	</tr>
 	
 	<tr  class="rowQty-ex" id="qty_500">
@@ -231,26 +218,22 @@
 		</td>
 		
 		<!--<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="2250" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+			<span class="price-ex btn btn-primary eetc" data-price="2250" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="SS">
 				2250
 			</span>
 		</td>
 		<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="2250" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+			<span class="price-ex btn btn-primary eetc" data-price="2250" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="FB">
 				2250
 			</span>
 		</td>-->
 		
 		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="2000" data-card="Velvet_Touch_Card" data-type="SS">
-				2000
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="1700" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+				1700
 			</span>
 		</td>
-		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="2000" data-card="Velvet_Touch_Card" data-type="FB">
-				2000
-			</span>
-		</td>
+		
 	</tr>
 	
 	<tr  class="rowQty-ex"  id="qty_1000">
@@ -283,26 +266,22 @@
 		</td>
 		
 		<!--<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="3700" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+			<span class="price-ex btn btn-primary eetc" data-price="3700" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="SS">
 				3700
 			</span>
 		</td>
 		<td> 
-			<span class="price-ex btn btn-primary eetc" data-price="3700" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+			<span class="price-ex btn btn-primary eetc" data-price="3700" data-card="350_GSM_350_GSM_Velvet_Touch_Card" data-type="FB">
 				3700
 			</span>
 		</td>-->
 		
 		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="3600" data-card="Velvet_Touch_Card" data-type="SS">
-				3600
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="3000" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+				3000
 			</span>
 		</td>
-		<td>
-			<span class="price-ex btn btn-primary gsmVelvet" data-price="3600" data-card="Velvet_Touch_Card" data-type="FB">
-				3600
-			</span>
-		</td>
+		
 	</tr>
 </table>
 

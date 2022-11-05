@@ -109,6 +109,12 @@ die;*/
 					<label>Working Days</label>
 					<input type="text" class="form-control" name="working_days" id="working_days" placeholder="Working Days" value="" required="required">
 				</div>
+
+				<div class="form-group">
+					<label>Notes</label>
+					<textarea class="form-control" name="notes" id="notes" ></textarea>
+				</div>
+				
 			</div>
 				<input type="hidden" name="menu_id" id="menu_id">
 			</form>
@@ -167,6 +173,12 @@ die;*/
 					<label>Working Days</label>
 					<input type="text" class="form-control" name="add_working_days" id="add_working_days" placeholder="Working Days" value="" required="required">
 				</div>
+
+				<div class="form-group">
+					<label>Notes</label>
+					<textarea class="form-control" name="add_notes" id="add_notes" placeholder="Note"></textarea>
+				</div>
+
 			</div>
 			</form>
 	      </div>
@@ -245,6 +257,7 @@ function edit_menu(element)
 	$("#qty").val(data.qty);
 	$("#price").val(data.price);
 	$("#extra").val(data.extra);
+	$("#notes").val(data.notes);
 	$("#menu_id").val(data.id);
 	$("#working_days").val(data.working_days);
 }
@@ -257,8 +270,8 @@ function add_menu()
 	$("#add_title").val('');
 	$("#add_qty").val('');
 	$("#add_price").val('');
-	$("#add_price").val('');
 	$("#add_extra").val('');
+	$("#add_notes").val('');
 	$("#add_working_days").val('');
 	$("#add_menu_id").val('');
 }
@@ -276,8 +289,8 @@ function updateMenu()
 			"title" : 	$("#title").val(),
 			"qty" : 	$("#qty").val(),
 			"price" : 	$("#price").val(),
-			"price" : 	$("#price").val(),
 			"extra" : 	$("#extra").val(),
+			"notes" : 	$("#notes").val(),
 			"working_days" : 	$("#working_days").val(),
 			"menu_id" : $("#menu_id").val()
 		},
@@ -298,12 +311,12 @@ function addMenu()
         url: "<?php echo site_url();?>/ajax/ajax_menu_add", 
         data : {
 			"code" : 	$("#add_code").val(),
-			"short_name" : 	$("#short_name").val(),
+			"short_name" : 	$("#add_short_name").val(),
 			"title" : 	$("#add_title").val(),
 			"qty" : 	$("#add_qty").val(),
 			"price" : 	$("#add_price").val(),
-			"price" : 	$("#add_price").val(),
 			"extra" : 	$("#add_extra").val(),
+			"notes" : 	$("#add_notes").val(),
 			"working_days" : 	$("#add_working_days").val(),
 			"menu_id" : $("#add_menu_id").val()
 		},
