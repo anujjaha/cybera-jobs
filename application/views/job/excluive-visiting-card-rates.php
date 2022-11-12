@@ -41,7 +41,8 @@
 		<td> Single Side </td>
 		<td> Double Side </td>
 		
-		<td> Single Side /  Double Side </td>
+		<td> Single Side </td>
+		<td> Double Side </td>
 		</tr>
 	
 	<tr class="rowQty-ex" id="qty_96">
@@ -86,6 +87,12 @@
 		
 		<td>
 			<span class="price-ex btn btn-primary gsmVelvet" data-price="500" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+				500
+			</span>
+		</td>
+
+		<td>
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="500" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
 				500
 			</span>
 		</td>
@@ -137,6 +144,11 @@
 				1000
 			</span>
 		</td>
+		<td>
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="1000" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+				1000
+			</span>
+		</td>
 		
 	</tr>
 	
@@ -185,6 +197,12 @@
 				1350
 			</span>
 		</td>
+
+		<td>
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="1350" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
+				1350
+			</span>
+		</td>
 		
 	</tr>
 	
@@ -230,6 +248,11 @@
 		
 		<td>
 			<span class="price-ex btn btn-primary gsmVelvet" data-price="1700" data-card="350_GSM_Velvet_Touch_Card" data-type="SS">
+				1700
+			</span>
+		</td>
+		<td>
+			<span class="price-ex btn btn-primary gsmVelvet" data-price="1700" data-card="350_GSM_Velvet_Touch_Card" data-type="FB">
 				1700
 			</span>
 		</td>
@@ -578,7 +601,7 @@ function updateQtyEx()
 
 jQuery('.gsmVelvet').on('click', function()
 {
-	jQuery("#paper_code-ex").val('101');
+	//jQuery("#paper_code-ex").val('');
 	jQuery("#paperCodeMsg").html('');
 	jQuery("#paper_code-ex").attr('max', '105');
 	jQuery("#paper_code-ex").attr('min', '100');
@@ -612,10 +635,10 @@ function doCustomValidation()
 
 	if(jQuery("#current-type").val() == 'velvet')
 	{
-		if(jQuery("#paper_code-ex").val() != 101)
-		{
-			return false;
-		}
+		// if(jQuery("#paper_code-ex").val() != 101)
+		// {
+		// 	return false;
+		// }
 	}
 
 	return true;

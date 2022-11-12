@@ -107,7 +107,7 @@ $noPrintInvoice = '';
 if($job_data->print_invoice == 1)
 {
 	$noInvoice = '<tr style="border: 0px;">
-			<td align="center" style="font-size:12px;" colspan="2">
+			<td align="center" style="font-size:8px;" colspan="2">
 				<h3>MAKE INVOICE</h3>
 			</td>
 		</tr>';
@@ -116,7 +116,7 @@ if($job_data->print_invoice == 1)
 if($job_data->no_print_invoice == 1)
 {
 	$noPrintInvoice = '<tr style="border: 0px;">
-			<td align="center" style="font-size:12px;" colspan="2">
+			<td align="center" style="font-size:8px;" colspan="2">
 				<h3>No INVOICE</h3>
 			</td>
 		</tr>';
